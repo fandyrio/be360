@@ -54,4 +54,8 @@ Homestead.json
 .env.production
 .phpactor.json
 auth.json
+<<<<<<< HEAD
 >>>>>>> 9d4884b (Initial commit)
+=======
+*.log
+>>>>>>> 2096da6 (initial commit)
