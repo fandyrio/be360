@@ -154,12 +154,6 @@ Route::middleware(['checkSign'])->group(function(){
 
 Route::get('list-observee/{id_zonasi}', 'api\zonasiController@observer');
 Route::get('encdec/{method}/{string}', 'api\zonasiController@enc');
-<<<<<<< HEAD
-Route::get('test', function(){
-    return dd(Cache::getPrefix());
-});
-=======
 // Route::get('test', function(){
 //     return dd(Cache::getPrefix());
 // });
->>>>>>> 2096da6 (initial commit)
