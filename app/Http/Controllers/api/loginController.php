@@ -19,11 +19,11 @@ class loginController extends Controller
                 'password'=>['required', 'min:5']
             ]);
             $get_data=Tref_users::where('Uname', $request->username)
-                        ->join('Idtref_roles', function($join){
-                            $join->on('Idtref_roles.IdRole', '=', 'tref_users.IdRole')
-                                ->where('Idtref_roles.is_active', true);
+                        ->join('idtref_roles', function($join){
+                            $join->on('idtref_roles.IdRole', '=', 'tref_users.IdRole')
+                                ->where('idtref_roles.is_active', true);
                         })
-                        ->select('tref_users.*', 'Idtref_roles.rolename')
+                        ->select('tref_users.*', 'idtref_roles.rolename')
                         ->first();
             if(!is_null($get_data)){
                 $check_pwd=Hash::check($request->password, $get_data['passwd']);
