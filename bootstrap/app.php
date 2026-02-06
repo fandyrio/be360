@@ -22,14 +22,14 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withSchedule(function(Schedule $schedule){
         $schedule->call(function(){
-            //schedule untuk zonasi yang end_date nya lebih kecil dari hari ini
+            //schedule untuk zonasi yang end_date nya lebih kecil dari hari ini (Menungug tanggal mulai)
             $effected=Tref_zonasi::where('end_date', '>=', today())
                         ->where('start_date', '<=', today())
-                        ->where('proses_id', '<', 4)
+                        ->where('proses_id', 4)
                         ->pluck('IdZona')->toArray();
             //Otomatisasi selesai setelah tanggal 
             $effected_ids=Tref_zonasi::where('end_date', '<', today())
-                                    ->where('proses_id', 5)
+                                    ->where('proses_id', '<=', 5)
                                     ->pluck('IdZona')->toArray();
             if(count($effected) > 0){
                 Tref_zonasi::whereIn('IdZona', $effected)->update(['proses_id' => 5]);
