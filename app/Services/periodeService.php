@@ -105,6 +105,7 @@ use PDO;
                                         $mapping_jabatan_periode[]=[
                                             'id_periode'=>$id_periode,
                                             'id_mapping_jabatan'=>$list_mapping_jabatan['id'],
+                                            'threshold'=>$list_mapping_jabatan['threshold']
                                         ];
                                     }
 
