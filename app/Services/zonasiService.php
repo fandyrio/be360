@@ -653,6 +653,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
         }
 
         public function getPeserta($id_zonasi_enc){
+            ini_set('memory_limit', '512M');
             $status=false;
             $id_zonasi_dec=Hashids::decode($id_zonasi_enc);
             if(empty($id_zonasi_dec)){
