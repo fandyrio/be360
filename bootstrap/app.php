@@ -25,7 +25,7 @@ return Application::configure(basePath: dirname(__DIR__))
             //schedule untuk zonasi yang end_date nya lebih kecil dari hari ini
             $effected=Tref_zonasi::where('end_date', '>=', today())
                         ->where('start_date', '<=', today())
-                        ->where('proses_id', 4)
+                        ->where('proses_id', '<', 4)
                         ->pluck('IdZona')->toArray();
             //Otomatisasi selesai setelah tanggal 
             $effected_ids=Tref_zonasi::where('end_date', '<', today())
