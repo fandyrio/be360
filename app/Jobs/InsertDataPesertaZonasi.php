@@ -56,7 +56,7 @@ class InsertDataPesertaZonasi implements ShouldQueue
             $log_msg=new Log_msg;
             $log_msg->data_id=$this->id_zonasi;
             $log_msg->category='failed_job_peserta';
-            $log_msg->msg="Job InsertDataPesertaZonasi gagal: ";
+            $log_msg->msg="Job InsertDataPesertaZonasi gagal: ".substr($msg, 0, 550);
             $log_msg->status="error_job";
             $log_msg->save();
 
@@ -64,7 +64,7 @@ class InsertDataPesertaZonasi implements ShouldQueue
             Zonasi_satker::where('IdZona', $this->id_zonasi)->update(['entry_job'=>false]);
             Trans_observee::whereIn('IdZonaSatker', $get_zonasi_satker)->update(['entry_job'=>false]);
 
-            Log::error("Job InsertDataPesertaZonasi gagal: ");
+            Log::error("Job InsertDataPesertaZonasi gagal: " . $e->getMessage());
             throw $e;   
         }
     }

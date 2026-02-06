@@ -87,7 +87,7 @@ class zonasiController extends Controller
                 $status=$regenerate['status'];
                 $msg=$regenerate['msg'];
             }catch(\Exception $e){
-                Log::error($e->getTrace());
+                Log::error($e->getMessage());
                 $msg=$e->getMessage()." ".$e->getFile()." ".$e->getLine();
             }
         }catch(ValidationException $e){
