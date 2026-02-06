@@ -927,7 +927,8 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                         // echo $variable_penilai;die();
                                         // echo $data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['is_plt'].", ";
                                         // Log::error($s.", ".$variable_penilai." ".${"pointer_{$variable_penilai}"}." ".$variable_jabatan_peserta);
-                                        if($data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['is_plt'] === "true" && (int)$data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['id_pegawai'] === 0){
+                                        if($data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['is_plt'] === 
+                                        "true" && (int)$data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['id_pegawai'] === 0){
                                             $id_pegawai_penilai=null; 
                                             if(!in_array($mapping['id_jabatan_penilai']."-".$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker'], $id_jabatan_kosong)){
                                                 if(($is_pt[$s] === "true" && (int)$mapping['id_jabatan_penilai'] !== 2) || ($is_pt[$s] === "false" && (int)$mapping['id_jabatan_penilai'] >= 1)){
