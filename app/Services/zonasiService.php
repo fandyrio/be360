@@ -653,7 +653,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
         }
 
         public function getPeserta($id_zonasi_enc){
-            ini_set('memory_limit', '512M');
+            ini_set('memory_limit', '2G');
             $status=false;
             $id_zonasi_dec=Hashids::decode($id_zonasi_enc);
             if(empty($id_zonasi_dec)){
@@ -1063,7 +1063,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                      $this->saveLog($id_zonasi, $category, $msg, "prepare");
                 DB::commit();
                 $status=true;
-                $chunks=array_chunk($data, 1000);
+                $chunks=array_chunk($data, 500);
                 foreach($chunks as $chunk){
                     dispatch(new InsertDataPesertaZonasi($chunk, $id_zonasi, $total_batch+$current_job))->onQueue("insert_data_peserta_".$id_zonasi);
                 }
