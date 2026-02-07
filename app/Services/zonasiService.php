@@ -838,13 +838,19 @@ use Symfony\Component\CssSelector\Node\HashNode;
                 }
                 $index_satker++;
             }
-            var_dump($data_peserta[1]['panitera_muda']);
+            // var_dump($data_peserta[1]['panitera_muda']);
             $data=[];
             $data_kosong=[];
             $jumlah_satker=$index_satker-1;
             for($s=0;$s<=$jumlah_satker;$s++){
                 // echo "<b>".$satker[$s]."</b><br />";
                 $jlh_jabatan_peserta=count($variable_jabatan_peserta_arr[$s]);
+
+                //setiap ganti satker, set pointer ke 0
+                foreach($get_jabatan_peserta as $list_jabatan_peserta){
+                    $variable=str_replace(' ','_', strtolower($list_jabatan_peserta['jabatan']));
+                    ${"pointer_{$variable}"}=0;
+                }
                 
                 for($x=0;$x<$jlh_jabatan_peserta;$x++){   
                     $variable_jabatan_peserta=$variable_jabatan_peserta_arr[$s][$x];
@@ -1090,7 +1096,6 @@ use Symfony\Component\CssSelector\Node\HashNode;
                 'msg'=>$msg
             ];
         }
-
         public function getKPT($id_zonasi_satker){
             $get_zonasi=Zonasi_satker::where('IdZonaSatker', $id_zonasi_satker)
                                 ->first();
