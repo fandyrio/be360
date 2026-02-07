@@ -841,7 +841,6 @@ use Symfony\Component\CssSelector\Node\HashNode;
             $data=[];
             $data_kosong=[];
             $jumlah_satker=$index_satker-1;
-            echo $jumlah_satker;
             for($s=0;$s<=$jumlah_satker;$s++){
                 // echo "<b>".$satker[$s]."</b><br />";
                 $jlh_jabatan_peserta=count($variable_jabatan_peserta_arr[$s]);
