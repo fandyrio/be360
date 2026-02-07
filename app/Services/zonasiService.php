@@ -1005,7 +1005,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                 }
                                  //end lopping mapping jabatan
                             }
-                            echo "<br />";
+                            // echo "<br />";
                             // echo $variable_jabatan_peserta." - ";
                             $id_kelompok_jabatan_peserta_before=$data_peserta[$s][$variable_jabatan_peserta][$a]['id_kelompok_jabatan'];
                             if($a < $jlh_pegawai_perjabatan-1 && $jlh_mapping > 0){
