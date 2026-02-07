@@ -879,7 +879,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                         // echo $pointer_wakil_ketua_pengadilan;
                         // echo "<b>".$variable_jabatan_peserta[$a]['nama']." : "."</b>";
                         if($data_peserta[$s][$variable_jabatan_peserta][$a]['is_plt'] === "false"){
-                            echo "<b>".$data_peserta[$s][$variable_jabatan_peserta][$a]['nama']." : </b>";
+                            // echo "<b>".$data_peserta[$s][$variable_jabatan_peserta][$a]['nama']." : </b>";
 
                             if($variable_jabatan_peserta === "ketua_pengadilan" && $data_peserta[$s][$variable_jabatan_peserta][$a]['is_plt'] === "false" && $is_pt[$s] === "false"){
                                 $get_kpt=$this->getKPT($id_zonasi_satker[$s]);
@@ -948,7 +948,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                         // Log::error($s.", ".$variable_penilai." ".${"pointer_{$variable_penilai}"}." ".$variable_jabatan_peserta);
                                         // echo "data_peserta_".$s."_".$variable_penilai."_"."pointer_".${"pointer_{$variable_penilai}"}."_jumlahPointer:_".count($data_peserta[$s][$variable_penilai]);
                                         // var_dump($data_peserta[$s]['panitera_muda']);
-                                        echo ${"pointer_{$variable_penilai}"};
+                                        // /echo ${"pointer_{$variable_penilai}"};
                                         if($data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['is_plt'] === 
                                         "true" && (int)$data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['id_pegawai'] === 0){
                                             $id_pegawai_penilai=null; 
@@ -975,7 +975,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                             'id_pegawai_penilai'=>$id_pegawai_penilai,
                                             'id_jabatan_plt'=>$data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['is_plt'] === "true" ?  $mapping["id_jabatan_penilai"] : null
                                         ];
-                                        echo $data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['nama'].", "; 
+                                        // echo $data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['nama'].", "; 
                                         $data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['jlh_menilai']+=1;
                                         ${"pointer_{$variable_penilai}"}++;
                                     }
