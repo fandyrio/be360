@@ -909,10 +909,17 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                 }
                                 if($jlh_penilai > 2){
                                     ${"batas_{$variable_penilai}"}=ceil($mapping['threshold']*$jlh_penilai / 100);
+                                    if($variable_penilai === $variable_jabatan_peserta){
+                                        $jlh_penilai-=1;
+                                        ${"batas_{$variable_penilai}"}=ceil($mapping['threshold']*$jlh_penilai / 100);
+                                    }
                                 }else if($jlh_penilai === 2){
                                     ${"batas_{$variable_penilai}"}=1;
                                 }else if($jlh_penilai === 1){
                                     ${"batas_{$variable_penilai}"}=1;
+                                    if($variable_penilai === $variable_jabatan_peserta){
+                                        ${"batas_{$variable_penilai}"}=0;
+                                    }
                                 }
                                 // echo  $variable_penilai." ".$jlh_penilai.", ";
                                 if($jlh_penilai > 0){
