@@ -135,7 +135,6 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                     DB::rollBack();
                                     $msg="Data satker tidak ditemukan ";
                                 }else{
-                                    DB::commit();
                                     $save=true;
                                     $msg="Berhasil menyimpan Data Awal Zonasi ";
                                     $generate_peserta=$this->getPeserta(Hashids::encode($id_zonasi));
@@ -146,10 +145,10 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                 $msg="Ada Satker telah didaftarkan dizonasi lain dalam periode yang sama";
                             }
                         }
-                    // DB::commit();
+                    DB::commit();
                 }catch(\Exception $e){
                     DB::rollback();
-                    $msg="Terjadi kesalahan sistem saat menyimpan zonasi ".$e->getFile()." : ".$e->getMessage()." : ".$e->getLine()." : ";
+                    $msg.="Terjadi kesalahan sistem saat menyimpan zonasi ".$e->getFile()." : ".$e->getMessage()." : ".$e->getLine()." : ";
                     Log::error("Job InsertDataPesertaZonasi gagal: ", ['trace'=>$e->getTrace()]);
                 }
             }else{
