@@ -837,7 +837,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                 }
                 $index_satker++;
             }
-            // var_dump($data_peserta[1]);die();
+            var_dump($data_peserta);die();
             $data=[];
             $data_kosong=[];
             $jumlah_satker=$index_satker-1;
