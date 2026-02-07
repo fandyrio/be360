@@ -884,6 +884,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                             }
 
                             $jlh_mapping=$get_mapping->count();
+                            //Looping mapping jabatan dan threshold
                             foreach($get_mapping as $mapping){
                                 $variable_penilai=str_replace(' ','_', strtolower($mapping['jabatan_penilai']));
                                 ${"counter_{$variable_penilai}"}+=1;
@@ -898,6 +899,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                     }
                                 }
                                 if($jlh_penilai > 2){
+                                    if((int)$mapping['threshold'])
                                     ${"batas_{$variable_penilai}"}=ceil($mapping['threshold']*$jlh_penilai / 100);
                                 }else if($jlh_penilai === 2){
                                     ${"batas_{$variable_penilai}"}=1;
@@ -906,8 +908,10 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                 }
                                 // echo  $variable_penilai." ".$jlh_penilai.", ";
                                 if($jlh_penilai > 0){
+                                    //looping batas penilaian berdasarkan threshold
                                     for($c=0;$c<${"batas_{$variable_penilai}"};$c++){
-                                        // echo ${"pointer_{$variable_penilai}"};
+                                        // echo ${"pointer_{$variable_penilai}"};]
+                                        //check kalau pointer penilai lebih besar dari jumlah penilai
                                         if(${"pointer_{$variable_penilai}"} > $jlh_penilai -1){
                                             ${"pointer_{$variable_penilai}"}=0;
                                         }
@@ -920,6 +924,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                                 ${"pointer_{$variable_penilai}"}=0;
                                             }else{
                                                 if($data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['is_plt'] === "false"){
+                                                    echo "-sama-";
                                                     ${"pointer_{$variable_penilai}"}+=1;
                                                 }
                                             }
@@ -958,6 +963,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                         $data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['jlh_menilai']+=1;
                                         ${"pointer_{$variable_penilai}"}++;
                                     }
+                                    //end looping batas penilaian berdasarkan threshold
                                 }else{
                                     if(!in_array($mapping['id_jabatan_penilai']."-".$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker'], $id_jabatan_kosong)){
                                         if(($is_pt[$s] === "true" && (int)$mapping['id_jabatan_penilai'] !== 2) || ($is_pt[$s] === "false" && (int)$mapping['id_jabatan_penilai'] >= 1)){
@@ -981,6 +987,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                     }
                                     // echo "Tidak ada ".$variable_penilai.", ";
                                 }
+                                 //end lopping mapping jabatan
                             }
                             // echo "<br />";
                             // echo $variable_jabatan_peserta." - ";
