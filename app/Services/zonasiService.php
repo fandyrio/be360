@@ -735,6 +735,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     $nama_jabatan_arr[$index_satker][]=$list_jabatan_peserta['jabatan'];
                     $index_jabatan++;
                 }
+                var_dump($data_peserta[1]['panitera_muda']);
 
                 //check apakah ketua dan wakil tidak ada
                 if(!isset($data_peserta[$index_satker]['ketua_pengadilan']) && !isset($data_peserta[$index_satker]['wakil_ketua_pengadilan'])){
