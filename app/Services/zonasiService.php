@@ -867,7 +867,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     $id_kelompok_jabatan_peserta_before=null;
                     for($a=0;$a<$jlh_pegawai_perjabatan;$a++){
                         // echo $pointer_wakil_ketua_pengadilan;
-                        // echo "<b>".$$variable_jabatan_peserta[$a]['nama']." : "."</b>";
+                        echo "<b>".$$variable_jabatan_peserta[$a]['nama']." : "."</b>";
                         if($data_peserta[$s][$variable_jabatan_peserta][$a]['is_plt'] === "false"){
                             // echo "<b>".$data_peserta[$s][$variable_jabatan_peserta][$a]['nama']." : </b>";
 
@@ -914,7 +914,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                         //check peserta penilai jangan sampai menilai dirinya sendiri
                                         // echo  $data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['is_plt'].", ";
                                         if($data_peserta[$s][$variable_jabatan_peserta][$a]['id_pegawai'] === $data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['id_pegawai']){
-                                            // echo "penilai dan dinilai sama: ".$$variable_jabatan_peserta[$a]['nama']." : ".$$variable_penilai[${"pointer_{$variable_penilai}"}]['nama'];
+                                            echo "penilai dan dinilai sama: ".$$variable_jabatan_peserta[$a]['nama']." : ".$$variable_penilai[${"pointer_{$variable_penilai}"}]['nama'];
                                             if(${"pointer_{$variable_penilai}"} > $jlh_penilai -1){
                                                 // echo "set ".$variable_penilai." ke 0, ";
                                                 ${"pointer_{$variable_penilai}"}=0;
@@ -927,7 +927,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                         // echo $variable_penilai;die();
                                         // echo $data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['is_plt'].", ";
                                         // Log::error($s.", ".$variable_penilai." ".${"pointer_{$variable_penilai}"}." ".$variable_jabatan_peserta);
-                                        echo "data_peserta_".$s."_".$variable_penilai."_"."pointer_".${"pointer_{$variable_penilai}"}."_jumlahPointer:_".count($data_peserta[$s][$variable_penilai]);
+                                        // echo "data_peserta_".$s."_".$variable_penilai."_"."pointer_".${"pointer_{$variable_penilai}"}."_jumlahPointer:_".count($data_peserta[$s][$variable_penilai]);
                                         if($data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['is_plt'] === 
                                         "true" && (int)$data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['id_pegawai'] === 0){
                                             $id_pegawai_penilai=null; 
