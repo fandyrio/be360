@@ -69,6 +69,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
 
         public function saveZonasi($request, $id_tahun_penilaian){
             $save=false;
+            $msg="";
             $get_data=Tahun_penilaian::where('IdTahunPenilaian', $id_tahun_penilaian)
                             ->where('proses_id', '<=', 4)
                             ->first();
@@ -100,7 +101,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                             $id_satker=Hashids::decode($request->id_satker[$x]);
                             if(empty($id_satker)){
                                 $error=true;
-                                $msg="Satker tidak dikenali";
+                                $msg.="Satker tidak dikenali";
                                 break;
                             }
                             $id_satker_selected[]=$id_satker[0];
@@ -148,7 +149,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     // DB::commit();
                 }catch(\Exception $e){
                     DB::rollback();
-                    $msg="Terjadi kesalahan sistem saat menyimpan zonasi ".$e->getMessage()." : ".$e->getLine()." : ";
+                    $msg="Terjadi kesalahan sistem saat menyimpan zonasi ".$e->getFile()." : ".$e->getMessage()." : ".$e->getLine()." : ";
                     Log::error("Job InsertDataPesertaZonasi gagal: ", ['trace'=>$e->getTrace()]);
                 }
             }else{
