@@ -1004,6 +1004,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                         }else{
                                             
                                             if($variable ===  $variable_jabatan_peserta){
+                                                echo "--masuk sini--";
                                                 ${"pointer_{$variable}"}=$a+2;
                                             }else{
                                                 if(${"pointer_{$variable}"} > 0){
