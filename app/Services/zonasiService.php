@@ -914,7 +914,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                         //check peserta penilai jangan sampai menilai dirinya sendiri
                                         // echo  $data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['is_plt'].", ";
                                         if($data_peserta[$s][$variable_jabatan_peserta][$a]['id_pegawai'] === $data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['id_pegawai']){
-                                            echo "penilai dan dinilai sama: ".$$variable_jabatan_peserta[$a]['nama']." : ".$$variable_penilai[${"pointer_{$variable_penilai}"}]['nama'];
+                                            // echo "penilai dan dinilai sama: ".$$variable_jabatan_peserta[$a]['nama']." : ".$$variable_penilai[${"pointer_{$variable_penilai}"}]['nama'];
                                             if(${"pointer_{$variable_penilai}"} > $jlh_penilai -1){
                                                 // echo "set ".$variable_penilai." ke 0, ";
                                                 ${"pointer_{$variable_penilai}"}=0;
@@ -954,7 +954,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                             'id_pegawai_penilai'=>$id_pegawai_penilai,
                                             'id_jabatan_plt'=>$data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['is_plt'] === "true" ?  $mapping["id_jabatan_penilai"] : null
                                         ];
-                                        // echo $data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['nama'].", "; 
+                                        echo $data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['nama'].", "; 
                                         $data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['jlh_menilai']+=1;
                                         ${"pointer_{$variable_penilai}"}++;
                                     }
