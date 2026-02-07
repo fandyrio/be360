@@ -1068,7 +1068,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
             }
             // print("<pre>".print_r($data, true)."</pre>");die();
             // var_dump($data_kosong);
-            $total_batch=ceil(count($data)/1000);
+            $total_batch=ceil(count($data)/500);
             $category="jobs_peserta";
             $current_job=Jobs::where('queue', 'insert_data_peserta')->count();
             $get_log=Log_msg::where('data_id', $id_zonasi)->where('category', 'jobs_peserta')->orderBy('id', 'desc')->first();
