@@ -910,7 +910,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                 if($jlh_penilai > 0){
                                     //looping batas penilaian berdasarkan threshold
                                     for($c=0;$c<${"batas_{$variable_penilai}"};$c++){
-                                        // echo ${"pointer_{$variable_penilai}"};]
+                                        echo ${"pointer_{$variable_penilai}"}."<br />";
                                         //check kalau pointer penilai lebih besar dari jumlah penilai
                                         if(${"pointer_{$variable_penilai}"} > $jlh_penilai -1){
                                             ${"pointer_{$variable_penilai}"}=0;
@@ -933,7 +933,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                         // echo $data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['is_plt'].", ";
                                         // Log::error($s.", ".$variable_penilai." ".${"pointer_{$variable_penilai}"}." ".$variable_jabatan_peserta);
                                         // echo "data_peserta_".$s."_".$variable_penilai."_"."pointer_".${"pointer_{$variable_penilai}"}."_jumlahPointer:_".count($data_peserta[$s][$variable_penilai]);
-                                        var_dump($data_peserta[$s]['panitera_muda']);
+                                        // var_dump($data_peserta[$s]['panitera_muda']);
                                         if($data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['is_plt'] === 
                                         "true" && (int)$data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['id_pegawai'] === 0){
                                             $id_pegawai_penilai=null; 
