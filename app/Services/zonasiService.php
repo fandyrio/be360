@@ -1395,6 +1395,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
             if($jumlah > 0){
                 $sent=0;
                 foreach($get_data as $list_admin){
+                    //wa MA
                     $msg=getWAMsg("jabatan_kosong", "");
                     $no_hp=$list_admin['no_hp'];
                     $no_hp="081273861528";
