@@ -1019,7 +1019,6 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                         }else{
                                             
                                             if($variable ===  $variable_jabatan_peserta){
-                                                echo "(next tambah 2)<br />";
                                                 //+2 itu supaya yang next menilai adalah orang yang next index dari yang dinilai
                                                 ${"pointer_{$variable}"}=$a+2;
                                             }else{
