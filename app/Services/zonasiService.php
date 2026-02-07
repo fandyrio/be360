@@ -872,6 +872,8 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                         ->select('tref_mapping_jabatan.*', 'tjp.jabatan as jabatan_penilai')
                                         ->get();
                     $id_kelompok_jabatan_peserta_before=null;
+
+                    //looping berdasarkan jumlah peserta (yang dinilai)
                     for($a=0;$a<$jlh_pegawai_perjabatan;$a++){
                         // echo $pointer_wakil_ketua_pengadilan;
                         // echo "<b>".$variable_jabatan_peserta[$a]['nama']." : "."</b>";
@@ -906,18 +908,15 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                     }
                                 }
                                 if($jlh_penilai > 2){
-                                    if((int)$mapping['threshold'])
+                                    $jlh_penilai-=1;
                                     ${"batas_{$variable_penilai}"}=ceil($mapping['threshold']*$jlh_penilai / 100);
-                                }else if($jlh_penilai === 2){
-                                    ${"batas_{$variable_penilai}"}=1;
-                                }else if($jlh_penilai === 1){
+                                }else if($jlh_penilai <= 2 && $jlh_penilai > 0){
                                     ${"batas_{$variable_penilai}"}=1;
                                 }
                                 // echo  $variable_penilai." ".$jlh_penilai.", ";
                                 if($jlh_penilai > 0){
                                     //looping batas penilaian berdasarkan threshold
                                     for($c=0;$c<${"batas_{$variable_penilai}"};$c++){
-                                        echo ${"pointer_{$variable_penilai}"}."<br />";
                                         //check kalau pointer penilai lebih besar dari jumlah penilai
                                         if(${"pointer_{$variable_penilai}"} > $jlh_penilai -1){
                                             ${"pointer_{$variable_penilai}"}=0;
@@ -931,7 +930,6 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                                 ${"pointer_{$variable_penilai}"}=0;
                                             }else{
                                                 if($data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['is_plt'] === "false"){
-                                                    echo "-sama-";
                                                     ${"pointer_{$variable_penilai}"}+=1;
                                                 }
                                             }
@@ -941,6 +939,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                         // Log::error($s.", ".$variable_penilai." ".${"pointer_{$variable_penilai}"}." ".$variable_jabatan_peserta);
                                         // echo "data_peserta_".$s."_".$variable_penilai."_"."pointer_".${"pointer_{$variable_penilai}"}."_jumlahPointer:_".count($data_peserta[$s][$variable_penilai]);
                                         // var_dump($data_peserta[$s]['panitera_muda']);
+                                        echo ${"pointer_{$variable_penilai}"};
                                         if($data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['is_plt'] === 
                                         "true" && (int)$data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['id_pegawai'] === 0){
                                             $id_pegawai_penilai=null; 
@@ -1011,7 +1010,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                         }else{
                                             
                                             if($variable ===  $variable_jabatan_peserta){
-                                                echo "--masuk sini--";
+                                                //+2 itu supaya yang next menilai adalah orang yang next index dari yang dinilai
                                                 ${"pointer_{$variable}"}=$a+2;
                                             }else{
                                                 if(${"pointer_{$variable}"} > 0){
