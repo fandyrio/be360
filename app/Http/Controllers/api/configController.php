@@ -499,7 +499,7 @@ class configController extends Controller
                 'id_jabatan_penilai.*'=>['string'],
                 'token_peserta'=>['required', 'string'],
                 'bobot'=>['required', 'array'],
-                'bobot.*'=>['integer', 'min:0', 'max:100']
+                'bobot.*'=>['integer', 'min:1', 'max:100']
             ]);
             try{
                 $token_peserta_dec=Hashids::decode($request->token_peserta);
