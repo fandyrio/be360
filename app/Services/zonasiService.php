@@ -705,7 +705,9 @@ use Symfony\Component\CssSelector\Node\HashNode;
                 $data_peserta[$index_satker]['nama_satker']=$list_satker['NamaSatker'];
                 $data_peserta[$index_satker]['id_zonasi_satker']=$list_satker['IdZonaSatker'];
                 foreach($get_jabatan_peserta as $list_jabatan_peserta){
+
                     //check apakah masuk jabatan gabungan
+                    //perlu di sederhanakan
                     if(!is_null($list_jabatan_peserta['id_jabatan_gabungan'])){
                         $get_parent=Tref_jabatan_peserta::where('id', $list_jabatan_peserta['id_jabatan_gabungan'])->first();
                         $variable=str_replace(' ', '_', $get_parent['jabatan']);
@@ -730,6 +732,15 @@ use Symfony\Component\CssSelector\Node\HashNode;
                         ${"index_{$variable}"}=0;
                         ${"counter_{$variable}"}=0;
                     }
+
+                    if(!is_null($id_satker_before) && (int)$id_satker_before !== $list_satker['IdSatker']){
+                        ${"pointer_{$variable}"}=0;
+                        $$variable=null;
+                        ${"index_{$variable}"}=0;
+                        ${"counter_{$variable}"}=0;
+                    }
+                    //sampai sini harus disederhanakan nanti ya..
+
                     // $data_peserta[$index_satker]['jabatan_peserta'][$index_jabatan]=$variable;
                     foreach($getPeserta as $list_peserta){
                         if((int)$list_peserta['id_kelompok_jabatan'] === (int)$list_jabatan_peserta['id_kelompok_jabatan'] && $list_satker['IdZonaSatker'] === $list_peserta['IdZonaSatker']){
@@ -900,7 +911,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     for($a=0;$a<$jlh_pegawai_perjabatan;$a++){
                         // echo $pointer_wakil_ketua_pengadilan;
                         // echo "<b>".$variable_jabatan_peserta[$a]['nama']." : "."</b>";
-                        echo $variable_jabatan_peserta;
+                        // echo $variable_jabatan_peserta;
                         if($data_peserta[$s][$variable_jabatan_peserta][$a]['is_plt'] === "false"){
                             // echo "<b>".$data_peserta[$s][$variable_jabatan_peserta][$a]['nama']." : </b>";
 
