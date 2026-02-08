@@ -706,7 +706,6 @@ use Symfony\Component\CssSelector\Node\HashNode;
                 $data_peserta[$index_satker]['id_zonasi_satker']=$list_satker['IdZonaSatker'];
                 $index_jabatan=0;
                 foreach($get_jabatan_peserta as $list_jabatan_peserta){
-                     $variable=str_replace(' ','_', strtolower($list_jabatan_peserta['jabatan']));
                     //check apakah masuk jabatan gabungan
                     if(!is_null($list_jabatan_peserta['id_jabatan_gabungan'])){
                         $get_parent=Tref_jabatan_peserta::where('id', $list_jabatan_peserta['id_jabatan_gabungan'])->first();
@@ -722,6 +721,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                             ${"counter_{$variable}"}+=1;
                         }
                     }else{
+                        $variable=str_replace(' ','_', strtolower($list_jabatan_peserta['jabatan']));
                         ${"pointer_{$variable}"}=0;
                         $$variable=null;
                         ${"index_{$variable}"}=0;
