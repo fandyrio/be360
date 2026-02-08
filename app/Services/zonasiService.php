@@ -693,6 +693,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
             $satker_pimpinan_kosong=[];
             $is_pt=[];
             $id_zonasi_satker=[];
+            $id_satker_before=null;
             foreach($get_satker_zonasi as $list_satker){
                 $satker[]=$list_satker['NamaSatker'];
                 $id_satker[]=$list_satker['IdSatker'];
@@ -871,6 +872,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     }
                 }
                 $index_satker++;
+                $id_satker_before=$list_satker['IdSatker'];
             }
             // var_dump($data_peserta[1]['panitera_muda']);
             $data=[];
