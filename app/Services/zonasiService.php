@@ -900,6 +900,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     for($a=0;$a<$jlh_pegawai_perjabatan;$a++){
                         // echo $pointer_wakil_ketua_pengadilan;
                         // echo "<b>".$variable_jabatan_peserta[$a]['nama']." : "."</b>";
+                        echo $variable_jabatan_peserta;
                         if($data_peserta[$s][$variable_jabatan_peserta][$a]['is_plt'] === "false"){
                             // echo "<b>".$data_peserta[$s][$variable_jabatan_peserta][$a]['nama']." : </b>";
 
