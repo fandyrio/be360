@@ -13,8 +13,8 @@ use Illuminate\Support\Facades\Hash;
 
     class userService{
         public function isSuperAdmin($user_id){
-            $get_user=Tref_users::join('Idtref_roles', function($join){
-                                    $join->on('Idtref_roles.IdRole', '=', 'tref_users.IdRole')
+            $get_user=Tref_users::join('idtref_roles', function($join){
+                                    $join->on('idtref_roles.IdRole', '=', 'tref_users.IdRole')
                                     ->where('tref_users.IdRole', 1);
                                 })
                                 ->where('IdUser', $user_id)
@@ -27,8 +27,8 @@ use Illuminate\Support\Facades\Hash;
         }
 
         public function isAdminBadilum($user_id){
-            $get_user=Tref_users::join('Idtref_roles', function($join){
-                                    $join->on('Idtref_roles.IdRole', '=', 'tref_users.IdRole')
+            $get_user=Tref_users::join('idtref_roles', function($join){
+                                    $join->on('idtref_roles.IdRole', '=', 'tref_users.IdRole')
                                     ->where('tref_users.IdRole', 2);
                                 })
                                 ->join('v_satker', function($join){
@@ -45,8 +45,8 @@ use Illuminate\Support\Facades\Hash;
         }
 
         public function isAdminSatker($user_id){
-            $get_user=Tref_users::join('Idtref_roles', function($join){
-                                    $join->on('Idtref_roles.IdRole', '=', 'tref_users.IdRole')
+            $get_user=Tref_users::join('idtref_roles', function($join){
+                                    $join->on('idtref_roles.IdRole', '=', 'tref_users.IdRole')
                                     ->where('tref_users.IdRole', 3);
                                 })
                                 ->join('v_satker', 'v_satker.IdSatker', '=', 'tref_users.IdSatker')
@@ -71,8 +71,8 @@ use Illuminate\Support\Facades\Hash;
             $skip=$page * $limit - $limit;
             if($total > 0){
                 $get_data=Tref_users::leftJoin('v_satker', 'v_satker.IdSatker', '=', 'tref_users.IdSatker')
-                                ->join('Idtref_roles', 'Idtref_roles.IdRole', '=', 'tref_users.IdRole')
-                                ->select('tref_users.*', 'v_satker.NamaSatker', 'Idtref_roles.rolename')
+                                ->join('idtref_roles', 'idtref_roles.IdRole', '=', 'tref_users.IdRole')
+                                ->select('tref_users.*', 'v_satker.NamaSatker', 'idtref_roles.rolename')
                                 ->skip($skip)->take($limit)->get();
                 $x=0;
                 foreach($get_data as $list_data){
