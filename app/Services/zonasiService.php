@@ -706,11 +706,27 @@ use Symfony\Component\CssSelector\Node\HashNode;
                 $data_peserta[$index_satker]['id_zonasi_satker']=$list_satker['IdZonaSatker'];
                 $index_jabatan=0;
                 foreach($get_jabatan_peserta as $list_jabatan_peserta){
-                    $variable=str_replace(' ','_', strtolower($list_jabatan_peserta['jabatan']));
-                    ${"pointer_{$variable}"}=0;
-                    $$variable=null;
-                    ${"index_{$variable}"}=0;
-                    ${"counter_{$variable}"}=0;
+                     $variable=str_replace(' ','_', strtolower($list_jabatan_peserta['jabatan']));
+                    //check apakah masuk jabatan gabungan
+                    if(!is_null($list_jabatan_peserta['id_jabatan_gabungan'])){
+                        $get_parent=Tref_jabatan_peserta::where('id', $list_jabatan_peserta['id_jabatan_gabungan'])->first();
+                        $variable=str_replace(' ', '_', $get_parent['jabatan']);
+                        if(!isset(${"pointer_$variable"})){
+                            ${"pointer_{$variable}"}=0;
+                            $$variable=null;
+                            ${"index_{$variable}"}=0;
+                            ${"counter_{$variable}"}=0;
+                        }else{
+                            ${"poitner_{$variable}"}+=1;
+                            ${"index_{$variable}"}+=1;
+                            ${"counter_{$variable}"}+=1;
+                        }
+                    }else{
+                        ${"pointer_{$variable}"}=0;
+                        $$variable=null;
+                        ${"index_{$variable}"}=0;
+                        ${"counter_{$variable}"}=0;
+                    }
                     // $data_peserta[$index_satker]['jabatan_peserta'][$index_jabatan]=$variable;
                     foreach($getPeserta as $list_peserta){
                         if((int)$list_peserta['id_kelompok_jabatan'] === (int)$list_jabatan_peserta['id_kelompok_jabatan'] && $list_satker['IdZonaSatker'] === $list_peserta['IdZonaSatker']){
@@ -719,6 +735,9 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                 $include="false";
                             }
                             if($include === "true"){
+                                
+                                //set new variable bila 
+                                
                                 $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['nama']=$list_peserta['nama_pegawai'];
                                 $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['id_pegawai']=$list_peserta['IdPegawai'];
                                 $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['id_pegawai_observee']=$list_peserta['IdObservee'];
