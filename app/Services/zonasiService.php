@@ -874,7 +874,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                 $index_satker++;
                 $id_satker_before=$list_satker['IdSatker'];
             }
-            var_dump($variable_jabatan_peserta_arr);exit();
+            var_dump($data_peserta[0]['pegawai']);exit();
             // ketua_pengadilan
             $data=[];
             $data_kosong=[];
