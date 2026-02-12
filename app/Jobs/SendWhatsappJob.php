@@ -53,7 +53,8 @@ class SendWhatsappJob implements ShouldQueue
         $zonasiService=resolve(\App\Services\zonasiService::class);
         try{
             $send_wa=sendWa($this->msg_wa, $this->no_wa);
-            if($send_wa['status'] === "ok"){
+            //response status = 'success' <- kalau wa pn | kalau wa MA = ok
+            if($send_wa['status'] === "success"){
                 $get_jobs=Log_msg::where('category', 'jobs_notif')
                             ->where('status', 'prepare')
                             ->where('data_id', $this->id_zonasi)
