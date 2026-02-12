@@ -799,14 +799,13 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     $data_peserta[$index_satker]["wakil_ketua_pengadilan"][0]['is_plt']="true";
                     $data_peserta[$index_satker]["wakil_ketua_pengadilan"][0]['jlh_menilai']=0;
                     $pointer_wakil_ketua_pengadilan=0;
-                    $variable_jabatan_peserta_arr[$index_satker][]="wakil_ketua_pengadilan";
+                    // $variable_jabatan_peserta_arr[$index_satker][]="wakil_ketua_pengadilan";
                     $id_jabatan_peserta_arr[$index_satker][]=4;
                     $nama_jabatan_arr[$index_satker][]="Wakil Ketua Pengadilan";
                 }
 
                  //kalau ketua ga ada, tapi wakil ada
                 if(isset($data_peserta[$index_satker]['wakil_ketua_pengadilan']) && !isset($data_peserta[$index_satker]['ketua_pengadilan'])){
-                    echo "ga ada ketua ".$index_satker;
                     $data_peserta[$index_satker]["ketua_pengadilan"][0]['nama']=$data_peserta[$index_satker]["wakil_ketua_pengadilan"][0]['nama'];
                     $data_peserta[$index_satker]["ketua_pengadilan"][0]['id_pegawai']=$data_peserta[$index_satker]["wakil_ketua_pengadilan"][0]['id_pegawai'];
                     $data_peserta[$index_satker]["ketua_pengadilan"][0]['id_pegawai_observee']=$data_peserta[$index_satker]["wakil_ketua_pengadilan"][0]['id_pegawai_observee'];
@@ -815,7 +814,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     $data_peserta[$index_satker]["ketua_pengadilan"][0]['is_plt']="true";
                     $data_peserta[$index_satker]["ketua_pengadilan"][0]['jlh_menilai']=0;
                     $pointer_ketua_pengadilan=0;
-                    $variable_jabatan_peserta_arr[$index_satker][]="ketua_pengadilan_plt";
+                    // $variable_jabatan_peserta_arr[$index_satker][]="ketua_pengadilan";
                     $id_jabatan_peserta_arr[$index_satker][]=1;
                     $nama_jabatan_arr[$index_satker][]="Ketua Pengadilan";
                 }
@@ -831,7 +830,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     $data_peserta[$index_satker]["juru_sita"][0]['is_plt']="true";
                     $data_peserta[$index_satker]["juru_sita"][0]['jlh_menilai']=0;
                     $pointer_juru_sita=0;
-                    $variable_jabatan_peserta_arr[$index_satker][]="juru_sita";
+                    // $variable_jabatan_peserta_arr[$index_satker][]="juru_sita";
                     $id_jabatan_peserta_arr[$index_satker][]=1;
                     $nama_jabatan_arr[$index_satker][]="Juru Sita";
                 }
@@ -846,7 +845,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     $data_peserta[$index_satker]["panitera_pengganti"][0]['is_plt']="true";
                     $data_peserta[$index_satker]["panitera_pengganti"][0]['jlh_menilai']=0;
                     $pointer_juru_sita=0;
-                    $variable_jabatan_peserta_arr[$index_satker][]="panitera_pengganti";
+                    // $variable_jabatan_peserta_arr[$index_satker][]="panitera_pengganti";
                     $id_jabatan_peserta_arr[$index_satker][]=1;
                     $nama_jabatan_arr[$index_satker][]="Panitera Pengganti";
                 }
@@ -1099,13 +1098,13 @@ use Symfony\Component\CssSelector\Node\HashNode;
                         }
                     }
                 }
-                Trans_observee::where('IdZonaSatker', $id_zonasi_satker[$s])->update(['entry_job'=>true]);
-                $get_zonasi_satker=Zonasi_satker::where('IdZonaSatker', $id_zonasi_satker[$s])->first();
-                $get_zonasi_satker->entry_job=true;
-                $get_zonasi_satker->update();
+                // Trans_observee::where('IdZonaSatker', $id_zonasi_satker[$s])->update(['entry_job'=>true]);
+                // $get_zonasi_satker=Zonasi_satker::where('IdZonaSatker', $id_zonasi_satker[$s])->first();
+                // $get_zonasi_satker->entry_job=true;
+                // $get_zonasi_satker->update();
             }
             // print("<pre>".print_r($data, true)."</pre>");die();
-            // var_dump($data_kosong);
+            var_dump($data);exit();
             $total_batch=ceil(count($data)/500);
             $category="jobs_peserta";
             $current_job=Jobs::where('queue', 'insert_data_peserta')->count();
