@@ -874,7 +874,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                 $index_satker++;
                 $id_satker_before=$list_satker['IdSatker'];
             }
-            // var_dump($variable_jabatan_peserta_arr);exit();
+            var_dump($variable_jabatan_peserta_arr);exit();
             // ketua_pengadilan
             $data=[];
             $data_kosong=[];
@@ -1104,7 +1104,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                 // $get_zonasi_satker->update();
             }
             // print("<pre>".print_r($data, true)."</pre>");die();
-            var_dump($data);exit();
+            // var_dump($data);exit();
             $total_batch=ceil(count($data)/500);
             $category="jobs_peserta";
             $current_job=Jobs::where('queue', 'insert_data_peserta')->count();
