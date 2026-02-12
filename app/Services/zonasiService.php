@@ -774,7 +774,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
 
                 //check apakah ketua dan wakil tidak ada
                 if(!isset($data_peserta[$index_satker]['ketua_pengadilan']) && !isset($data_peserta[$index_satker]['wakil_ketua_pengadilan'])){
-                    echo "ga ada ketua dan wakil";
+                    echo "ga ada ketua dan wakil nya";
                     $satker_pimpinan_kosong[]=$list_satker['IdSatker'];
                     $data_peserta[$index_satker]["plt_ketua"][0]['nama']="plt_ketua_pengadilan";
                     $data_peserta[$index_satker]["plt_ketua"][0]['id_pegawai']=0;
