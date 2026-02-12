@@ -766,7 +766,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                             // shuffle($$variable);
                         }
                     }
-                    echo $index_satker;
+                    // echo $index_satker;
                     if(count($variable_jabatan_peserta_arr) > 0 && isset($variable_jabatan_peserta_arr[$index_satker])){
                         $flip=array_flip($variable_jabatan_peserta_arr[$index_satker]);
                         if(!isset($flip[$variable])){
@@ -884,7 +884,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                 $index_satker++;
                 $id_satker_before=$list_satker['IdSatker'];
             }
-            var_dump($data_peserta[6]['pegawai']);exit();
+            var_dump($variable_jabatan_peserta_arr);exit();
             // ketua_pengadilan
             $data=[];
             $data_kosong=[];
