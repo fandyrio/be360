@@ -711,7 +711,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     //perlu di sederhanakan
                     if(!is_null($list_jabatan_peserta['id_jabatan_gabungan'])){
                         $get_parent=Tref_jabatan_peserta::where('id', $list_jabatan_peserta['id_jabatan_gabungan'])->first();
-                        $variable=str_replace(' ', '_', $get_parent['jabatan']);
+                        $variable=str_replace(' ', '_', strtolower($get_parent['jabatan']));
                         $jabatan_peserta_=$get_parent['jabatan'];
                         $id_jabatan_peserta_=$get_parent['id'];
                         if(!isset(${"pointer_$variable"})){
@@ -774,6 +774,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
 
                 //check apakah ketua dan wakil tidak ada
                 if(!isset($data_peserta[$index_satker]['ketua_pengadilan']) && !isset($data_peserta[$index_satker]['wakil_ketua_pengadilan'])){
+                    echo "ga ada ketua dan wakil";
                     $satker_pimpinan_kosong[]=$list_satker['IdSatker'];
                     $data_peserta[$index_satker]["plt_ketua"][0]['nama']="plt_ketua_pengadilan";
                     $data_peserta[$index_satker]["plt_ketua"][0]['id_pegawai']=0;
@@ -865,7 +866,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                         $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['id_pegawai']=0;
                         $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['id_pegawai_observee']=0;
                         $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['id_kelompok_jabatan']=31;
-                        $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['id_zona_satker']=$list_peserta['IdZonaSatker'];
+                        $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['id_zona_satker']=$list_satker['IdZonaSatker'];
                         $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['is_plt']="true";
                         $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['jlh_menilai']=0;
                         ${"index_{$variable}"}+=1;
