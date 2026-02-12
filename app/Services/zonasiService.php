@@ -767,7 +767,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                         }
                     }
                     // if($variable)
-                    $flip=array_flip($variable_jabatan_peserta[$index_satker]);
+                    $flip=array_flip($variable_jabatan_peserta_arr[$index_satker]);
                     if(!isset($flip[$variable])){
                         $variable_jabatan_peserta_arr[$index_satker][]=$variable;
                         $id_jabatan_peserta_arr[$index_satker][]=$id_jabatan_peserta_;
