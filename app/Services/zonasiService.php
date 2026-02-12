@@ -806,6 +806,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
 
                  //kalau ketua ga ada, tapi wakil ada
                 if(isset($data_peserta[$index_satker]['wakil_ketua_pengadilan']) && !isset($data_peserta[$index_satker]['ketua_pengadilan'])){
+                    echo "ga ada ketua ".$index_satker;
                     $data_peserta[$index_satker]["ketua_pengadilan"][0]['nama']=$data_peserta[$index_satker]["wakil_ketua_pengadilan"][0]['nama'];
                     $data_peserta[$index_satker]["ketua_pengadilan"][0]['id_pegawai']=$data_peserta[$index_satker]["wakil_ketua_pengadilan"][0]['id_pegawai'];
                     $data_peserta[$index_satker]["ketua_pengadilan"][0]['id_pegawai_observee']=$data_peserta[$index_satker]["wakil_ketua_pengadilan"][0]['id_pegawai_observee'];
