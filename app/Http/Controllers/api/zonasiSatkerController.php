@@ -227,7 +227,7 @@ class zonasiSatkerController extends Controller
 
                     $config=Tref_sys_config::where('config_name', 'msg_per_minutes')->first();
                     $msg_per_minutes=(int)$config['config_value_str'];
-                    $jlh_menit=$jumlah_jobs / $msg_per_minutes;
+                    $jlh_menit=ceil($jumlah_jobs / $msg_per_minutes);
                     $detik=$jlh_menit * 60;
                     $max_time=$detik + 60;
 
