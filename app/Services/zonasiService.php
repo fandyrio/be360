@@ -884,7 +884,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                 $index_satker++;
                 $id_satker_before=$list_satker['IdSatker'];
             }
-            var_dump($variable_jabatan_peserta_arr);exit();
+            // var_dump($variable_jabatan_peserta_arr);exit();
             // ketua_pengadilan
             $data=[];
             $data_kosong=[];
@@ -1108,10 +1108,10 @@ use Symfony\Component\CssSelector\Node\HashNode;
                         }
                     }
                 }
-                // Trans_observee::where('IdZonaSatker', $id_zonasi_satker[$s])->update(['entry_job'=>true]);
-                // $get_zonasi_satker=Zonasi_satker::where('IdZonaSatker', $id_zonasi_satker[$s])->first();
-                // $get_zonasi_satker->entry_job=true;
-                // $get_zonasi_satker->update();
+                Trans_observee::where('IdZonaSatker', $id_zonasi_satker[$s])->update(['entry_job'=>true]);
+                $get_zonasi_satker=Zonasi_satker::where('IdZonaSatker', $id_zonasi_satker[$s])->first();
+                $get_zonasi_satker->entry_job=true;
+                $get_zonasi_satker->update();
             }
             // print("<pre>".print_r($data, true)."</pre>");die();
             // var_dump($data);exit();
