@@ -874,7 +874,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                 $index_satker++;
                 $id_satker_before=$list_satker['IdSatker'];
             }
-            // var_dump($data_peserta[1]['panitera_muda']);
+            var_dump($data_peserta);exit();
             $data=[];
             $data_kosong=[];
             $jumlah_satker=$index_satker-1;
