@@ -814,7 +814,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     $data_peserta[$index_satker]["ketua_pengadilan"][0]['is_plt']="true";
                     $data_peserta[$index_satker]["ketua_pengadilan"][0]['jlh_menilai']=0;
                     $pointer_ketua_pengadilan=0;
-                    $variable_jabatan_peserta_arr[$index_satker][]="ketua_pengadilan";
+                    $variable_jabatan_peserta_arr[$index_satker][]="ketua_pengadilan_plt";
                     $id_jabatan_peserta_arr[$index_satker][]=1;
                     $nama_jabatan_arr[$index_satker][]="Ketua Pengadilan";
                 }
