@@ -766,9 +766,13 @@ use Symfony\Component\CssSelector\Node\HashNode;
                             // shuffle($$variable);
                         }
                     }
-                    $variable_jabatan_peserta_arr[$index_satker][]=$variable;
-                    $id_jabatan_peserta_arr[$index_satker][]=$id_jabatan_peserta_;
-                    $nama_jabatan_arr[$index_satker][]=$jabatan_peserta_;
+                    // if($variable)
+                    $flip=array_flip($variable_jabatan_peserta[$index_satker]);
+                    if(!isset($flip[$variable])){
+                        $variable_jabatan_peserta_arr[$index_satker][]=$variable;
+                        $id_jabatan_peserta_arr[$index_satker][]=$id_jabatan_peserta_;
+                        $nama_jabatan_arr[$index_satker][]=$jabatan_peserta_;
+                    }
                 }
                 
 
@@ -874,7 +878,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                 $index_satker++;
                 $id_satker_before=$list_satker['IdSatker'];
             }
-            var_dump($data_peserta[0]['pegawai']);exit();
+            // var_dump($data_peserta[6]['pegawai']);exit();
             // ketua_pengadilan
             $data=[];
             $data_kosong=[];
