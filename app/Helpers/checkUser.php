@@ -38,8 +38,10 @@ use Illuminate\Support\Facades\DB;
             $status=$decode_response->status;
             $msg="Tidak bisa mengirimkan pesan Whatsapp ".$reciver;
             if($status==="success"){
-                $status=true;
+                $status="ok";
                 $msg="Berhasil mengirimkan Pesan Whatsapp ke ".$reciver;
+            }else{
+                $status="not_ok";
             }
             // $data_return=array('status'=>$status, 'success'=>$succemsgss);
             return ['status'=>$status, 'msg'=>$msg];
