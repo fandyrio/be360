@@ -25,11 +25,11 @@ class ThrottleIsiSurvey
 
         $exceuted=RateLimiter::attempt(
                 $key,
-                5,
+                20,
                 function(){
                     return true;
                 },
-                60
+                10
         );
         
         if(!$exceuted){

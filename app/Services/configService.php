@@ -2,20 +2,20 @@
     namespace App\Services;
 
     use App\Models\Idtref_roles;
-use App\Models\Tahun_penilaian;
-use App\Models\Trans_peserta_zonasi;
-use App\Models\Tref_users;
+    use App\Models\Tahun_penilaian;
+    use App\Models\Trans_peserta_zonasi;
+    use App\Models\Tref_users;
     use App\Models\Tref_mapping_jabatan;
     use App\Models\Tref_jabatan_peserta;
     use App\Models\V_kelompok_jabatan;
     use Illuminate\Support\Facades\DB;
     use App\Models\Tref_bobot_penilaian;
-use App\Models\Tref_jawaban_bundle;
-use App\Models\Tref_pertanyaan;
-use Vinkla\Hashids\Facades\Hashids;
+    use App\Models\Tref_jawaban_bundle;
+    use App\Models\Tref_pertanyaan;
+    use Vinkla\Hashids\Facades\Hashids;
     use App\Models\Variable_pertanyaan;
-use GuzzleHttp\Promise\Is;
-use Illuminate\Support\Facades\Cache;
+    use GuzzleHttp\Promise\Is;
+    use Illuminate\Support\Facades\Cache;
 
     class configService{
         public function listRole($page){
