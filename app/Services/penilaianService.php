@@ -676,7 +676,7 @@ use Vinkla\Hashids\Facades\Hashids;
                                             ->join('tref_jabatan_peserta as tjp', 'tjp.id_kelompok_jabatan', '=', 'to.id_kelompok_jabatan')
                                             ->join('trans_observee as to2', 'to2.IdObservee', '=', 'trans_peserta_zonasi.id_pegawai_penilai')
                                             ->join('tref_jabatan_peserta as tjp2', 'tjp2.id_kelompok_jabatan', '=', 'to2.id_kelompok_jabatan')
-                                            ->select('tjp.id as id_jabatan_peserta', 'tjp2.id as id_jabatan_penilai', 'trans_peserta_zonasi.id_jabatan_plt', 'trans_peserta_zonasi.nilai', 'tjp.id_kelompok_jabatan as id_kelompok_jabatan_peserta', 'tjp2.id_kelompok_jabatan as id_kelompok_jabatan_penilai', 'trans_peserta_zonasi.id_pegawai_peserta')
+                                            ->select('tjp.id as id_jabatan_peserta', 'tjp.id_jabatan_gabungan as id_jabatan_gabungan_peserta', 'tjp2.id as id_jabatan_penilai', 'tjp2.id_jabatan_gabungan as id_jabatan_gabungan_penilai', 'trans_peserta_zonasi.id_jabatan_plt', 'trans_peserta_zonasi.nilai', 'tjp.id_kelompok_jabatan as id_kelompok_jabatan_peserta', 'tjp2.id_kelompok_jabatan as id_kelompok_jabatan_penilai', 'trans_peserta_zonasi.id_pegawai_peserta')
                                 ->whereIn('trans_peserta_zonasi.id', $id_peserta_zonasi_arr)
                                 ->get();
             $bobot=$this->bobotJabatanPeriode($id_periode);
@@ -690,6 +690,15 @@ use Vinkla\Hashids\Facades\Hashids;
                     $id_jabatan_penilai=$list_jabatan['id_jabatan_plt'];
                     $is_plt=true;
                 }
+
+                if(!is_null($list_jabatan['id_jabatan_gabungan_peserta'])){
+                    $id_jabatan_peserta=$list_jabatan['id_jabatan_gabungan_peserta'];
+                }
+
+                if(!is_null($list_jabatan['id_jabatan_gabungan_penilai']) && $is_plt === false){
+                    $id_jabatan_penilai=$list_jabatan['id_jabatan_gabungan_penilai'];
+                }
+
                 $bobot_penilaian=$bobot["bobot_{$id_jabatan_peserta}_{$id_jabatan_penilai}"];
                 $jumlah_penilai=$this->countJabatanPenilaiSatker($id_zonasi_satker, $list_jabatan['id_kelompok_jabatan_penilai'], $list_jabatan['id_pegawai_peserta']);
                 if($jumlah_penilai === 0 && $is_plt === true){
