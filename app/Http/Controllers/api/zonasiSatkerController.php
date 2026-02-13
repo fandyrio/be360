@@ -246,7 +246,7 @@ class zonasiSatkerController extends Controller
                     $date_now=new DateTime(date('Y-m-d H:i:s'));
                     $date_now->modify("+ ".$jlh_menit." minutes");
 
-                    exec("php ".base_path('artisan'). " queue:work --queue=send_wa_peserta_".$id_zonasi[0]." --sleep=10 --tries=3 --timeout=120 --max-time=".$max_time." > /dev/null 2>%1 &");
+                    exec("php ".base_path('artisan'). " queue:work --queue=send_wa_peserta_".$id_zonasi[0]." --sleep=10 --tries=3 --timeout=120 --max-time=".$max_time." > /dev/null 2>&1 &");
                     // Artisan::call("queue:work --queue=send_wa_peserta  --sleep=10 --tries=3 --timeout=120 --max-time={$max_time}");
                     $status=true;
                     $msg="Queue Send Peserta sedang berjalan. Akan memakan waktu ".$time_display;
