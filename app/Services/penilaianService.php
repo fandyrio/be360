@@ -765,7 +765,7 @@ use Vinkla\Hashids\Facades\Hashids;
                                 }
                             }catch(\Exception $e){
                                 DB::rollBack();
-                                $msg="Error Sistem Penilaian";
+                                $msg="Error Sistem Penilaian : ".$e->getMessage();
                             }
                         }else{
                             $msg="Data peserta tidak ditemukan";

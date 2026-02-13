@@ -13,7 +13,7 @@ use Vinkla\Hashids\Facades\Hashids;
             $jumlah_config=0;
             $config=[];
             $get_all=Tref_sys_config::all();
-            $jumlah=$get_all->count();
+            $jumlah_config=$get_all->count();
             $x=0;
             foreach($get_all as $list_sysConfig){
                 $config[$x]['config_name']=$list_sysConfig['config_name'];
@@ -21,7 +21,10 @@ use Vinkla\Hashids\Facades\Hashids;
                 $config[$x]['value']=$list_sysConfig['config_value_str'];
                 $x++;
             }
-            
+            return [
+                'jumlah'=>$jumlah_config,
+                'config'=>$config
+            ];
         }
     }
 ?>
