@@ -339,7 +339,7 @@ class penilaianController extends Controller
                  $fetch_jawaban=$this->fetchParamsLocked($request->params, $fetch_headers['data']['id_periode_1_hashed']);
                  if($fetch_jawaban['status'] === true){
                     $id_zs_payload=$fetch_headers['data']['id_zonasi_satker'];
-                    $id_pz=$fetch_headers['data']['id_pz'];
+                    $id_pz=$fetch_headers['data']['id_pz'];//id peserta zonasi bisa lebih dari 1 karena ada yang mengisi sebagai PLT
                     $id_periode=$fetch_headers['data']['id_periode'];
                     $can_edit=$fetch_headers['data']['can_edit'];
 

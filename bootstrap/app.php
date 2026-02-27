@@ -36,7 +36,7 @@ return Application::configure(basePath: dirname(__DIR__))
                 
                 $get_zonasi_satker=Zonasi_satker::whereIn('IdZona', $effected)->get();
                 foreach($get_zonasi_satker as $list_data){
-                    Cache::store('redis')->forget("zonasi_satker1_{$list_data['IdZonaSatker']}");
+                    Cache::store('redis')->forget("zonasi_satker_{$list_data['IdZonaSatker']}");
                 }
                 sendWaObserveeHelpers();
             }
@@ -45,7 +45,7 @@ return Application::configure(basePath: dirname(__DIR__))
                 
                 $get_zonasi_satker=Zonasi_satker::whereIn('IdZona', $effected_ids)->get();
                 foreach($get_zonasi_satker as $list_data){
-                    Cache::store('redis')->forget("zonasi_satker1_{$list_data['IdZonaSatker']}");
+                    Cache::store('redis')->forget("zonasi_satker_{$list_data['IdZonaSatker']}");
                 }
             }
         })->everyMinute();
