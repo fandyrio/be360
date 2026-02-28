@@ -125,7 +125,7 @@ use Illuminate\Support\Facades\DB;
             }
             
             return [
-                'status' => $status,
+                'status' => $response->status,
                 'msg' => $msg
             ];
         }
