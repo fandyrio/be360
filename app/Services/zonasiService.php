@@ -1611,7 +1611,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
 
                     // $data_peserta[$index_satker]['jabatan_peserta'][$index_jabatan]=$variable;
                     foreach($getPeserta as $list_peserta){
-                        if((int)$list_peserta['id_kelompok_jabatan'] === (int)$list_jabatan_peserta['id_kelompok_jabatan'] && $list_satker['IdZonaSatker'] === $list_peserta['IdZonaSatker']){
+                        if((int)$list_peserta['id_kelompok_jabatan'] === (int)$list_jabatan_peserta['id_kelompok_jabatan']){
                             $include="true";
                             if($variable === "juru_sita" && (int)$list_satker['IdSatkerBanding'] === (int)$list_satker['IdSatker']){
                                 $include="false";
@@ -1734,7 +1734,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                 }
                 // echo $list_satker['jumlah_panmud']." : ".$jlh_panmud;
                 if((int)$jlh_panmud !== 3){
-                    $selisih=(int)$list_satker['jumlah_panmud'] - (int)$jlh_panmud;
+                    $selisih=3-(int)$jlh_panmud;
                     // echo "selisih".$list_satker['jumlah_panmud']."-".$jlh_panmud;
                     for($p=0;$p<$selisih;$p++){
                         $variable="panitera_muda";
