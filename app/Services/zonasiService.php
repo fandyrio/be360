@@ -1749,7 +1749,8 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     }
                 }
                 $index_satker++;
-        $jlh_jabatan_peserta=count($variable_jabatan_peserta_arr[0]);
+                $s=0;
+        $jlh_jabatan_peserta=count($variable_jabatan_peserta_arr[$s]);
         foreach($get_jabatan_peserta as $list_jabatan_peserta){
                     $variable=str_replace(' ','_', strtolower($list_jabatan_peserta['jabatan']));
                     ${"pointer_{$variable}"}=0;
