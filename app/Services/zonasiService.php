@@ -1777,7 +1777,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                         ->select('tref_mapping_jabatan.*', 'tjp.jabatan as jabatan_penilai')
                                         ->get();
                     $id_kelompok_jabatan_peserta_before=null;
-
+                    var_dump($jlh_pegawai_perjabatan." - ".$data_peserta[$s][$variable_jabatan_peserta]);
                     //looping berdasarkan jumlah peserta (yang dinilai)
                     for($a=0;$a<$jlh_pegawai_perjabatan;$a++){
                         // echo $pointer_wakil_ketua_pengadilan;
