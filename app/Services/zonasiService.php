@@ -1897,7 +1897,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                                 'id_zonasi_satker'=>$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker'],
                                                 'id_jabatan_kosong'=>$mapping['id_jabatan_penilai'],
                                                 'created_at'=>date('Y-m-d H:i:s'),
-                                                'id_observee'=>null
+                                                'id_observee'=>$variable_jabatan_peserta
                                             ];
                                             $id_jabatan_kosong[]=$mapping['id_jabatan_penilai']."-".$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker'];
 
@@ -1971,7 +1971,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     }
                 }
             
-            // return ['data'=>$data, 'kosong'=>$data_kosong];
+            return ['data'=>$data, 'kosong'=>$data_kosong];
             
         }
     }
