@@ -1780,9 +1780,9 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     var_dump($jlh_pegawai_perjabatan." - ".$variable_jabatan_peserta);
                     //looping berdasarkan jumlah peserta (yang dinilai)
                     for($a=0;$a<$jlh_pegawai_perjabatan;$a++){
-                        if($variable_jabatan_peserta === "pegawai"){
-                            echo "Pegawai ".$jlh_pegawai_perjabatan;
-                        }
+                        // if($variable_jabatan_peserta === "pegawai"){
+                            echo $variable_jabatan_peserta." : ".$jlh_pegawai_perjabatan."<br />";
+                        // }
                         // echo $pointer_wakil_ketua_pengadilan;
                         // echo "<b>".$variable_jabatan_peserta[$a]['nama']." : "."</b>";
                         // echo $variable_jabatan_peserta;
