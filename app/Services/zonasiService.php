@@ -1830,7 +1830,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     $variable=str_replace(' ','_', strtolower($list_jabatan_peserta['jabatan']));
                     ${"pointer_{$variable}"}=0;
                 }
-                var_dump($variable_jabatan_peserta_arr[0]);
+                // var_dump($variable_jabatan_peserta_arr[0]);
                 for($x=0;$x<$jlh_jabatan_peserta;$x++){   
                     $variable_jabatan_peserta=$variable_jabatan_peserta_arr[$s][$x];
                     $id_jabatan_peserta=$id_jabatan_peserta_arr[$s][$x];
@@ -1983,8 +1983,8 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                                 'id_zonasi'=>$id_zonasi,
                                                 'id_zona_satker'=>$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker'],
                                                 'id_pegawai_peserta'=>$data_peserta[$s][$variable_jabatan_peserta][$a]['id_pegawai_observee'],
+                                                'id_jabatan_plt'=>$mapping['id_jabatan_penilai'],
                                                 'id_pegawai_penilai'=>null,
-                                                'id_jabatan_plt'=>$mapping['id_jabatan_penilai']
                                             ];
                                         }
                                     }
