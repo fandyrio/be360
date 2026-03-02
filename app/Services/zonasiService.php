@@ -706,7 +706,6 @@ use Symfony\Component\CssSelector\Node\HashNode;
                 $data_peserta[$index_satker]['nama_satker']=$list_satker['NamaSatker'];
                 $data_peserta[$index_satker]['id_zonasi_satker']=$list_satker['IdZonaSatker'];
                 foreach($get_jabatan_peserta as $list_jabatan_peserta){
-
                     //check apakah masuk jabatan gabungan
                     //perlu di sederhanakan
                     if(!is_null($list_jabatan_peserta['id_jabatan_gabungan'])){
@@ -1555,6 +1554,201 @@ use Symfony\Component\CssSelector\Node\HashNode;
             }
 
             return $data;
+        }
+
+        public function generatePesertaTest($id_zonasi_satker){
+             $getPeserta=Trans_observee::join('trans_zonasi_satker as tzs', function($join) use ($id_zonasi_satker){
+                                                    $join->on('tzs.IdZonaSatker', '=', 'trans_observee.IdZonaSatker')
+                                                        // ->where('tzs.IdSatker', $id_satker)
+                                                        ->where('tzs.IdZonaSatker', $id_zonasi_satker);
+                                                })
+                                        ->join('tref_pegawai', 'tref_pegawai.id_pegawai', '=', 'trans_observee.IdPegawai')
+                                        ->select('trans_observee.*', 'tref_pegawai.nama_pegawai', 'tref_pegawai.nip', 'tref_pegawai.status_pegawai', 'tzs.IdZonaSatker')
+                                        ->orderBy('trans_observee.IdZonaSatker', 'desc')
+                                        ->where('trans_observee.entry_job', false)
+                                        ->get();
+
+            $get_jabatan_peserta=Tref_jabatan_peserta::where("active", true)->get();
+            foreach($get_jabatan_peserta as $list_jabatan_peserta){
+                    //check apakah masuk jabatan gabungan
+                    //perlu di sederhanakan
+                    if(!is_null($list_jabatan_peserta['id_jabatan_gabungan'])){
+                        $get_parent=Tref_jabatan_peserta::where('id', $list_jabatan_peserta['id_jabatan_gabungan'])->first();
+                        $variable=str_replace(' ', '_', strtolower($get_parent['jabatan']));
+                        $jabatan_peserta_=$get_parent['jabatan'];
+                        $id_jabatan_peserta_=$get_parent['id'];
+                        if(!isset(${"pointer_$variable"})){
+                            ${"pointer_{$variable}"}=0;
+                            $$variable=null;
+                            ${"index_{$variable}"}=0;
+                            ${"counter_{$variable}"}=0;
+                        }else{
+                            ${"pointer_{$variable}"}+=1;
+                            ${"index_{$variable}"}+=1;
+                            ${"counter_{$variable}"}+=1;
+                        }
+                    }else{
+                        $variable=str_replace(' ','_', strtolower($list_jabatan_peserta['jabatan']));
+                        $id_jabatan_peserta_=$list_jabatan_peserta['id'];
+                        $jabatan_peserta_=$list_jabatan_peserta['jabatan'];
+                        ${"pointer_{$variable}"}=0;
+                        $$variable=null;
+                        ${"index_{$variable}"}=0;
+                        ${"counter_{$variable}"}=0;
+                    }
+
+                    if(!is_null($id_satker_before) && (int)$id_satker_before !== $list_satker['IdSatker']){
+                        ${"pointer_{$variable}"}=0;
+                        $$variable=null;
+                        ${"index_{$variable}"}=0;
+                        ${"counter_{$variable}"}=0;
+                    }
+                    //sampai sini harus disederhanakan nanti ya..
+
+                    // $data_peserta[$index_satker]['jabatan_peserta'][$index_jabatan]=$variable;
+                    foreach($getPeserta as $list_peserta){
+                        if((int)$list_peserta['id_kelompok_jabatan'] === (int)$list_jabatan_peserta['id_kelompok_jabatan'] && $list_satker['IdZonaSatker'] === $list_peserta['IdZonaSatker']){
+                            $include="true";
+                            if($variable === "juru_sita" && (int)$list_satker['IdSatkerBanding'] === (int)$list_satker['IdSatker']){
+                                $include="false";
+                            }
+                            if($include === "true"){
+                                
+                                //set new variable bila 
+
+                                
+                                $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['nama']=$list_peserta['nama_pegawai'];
+                                $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['id_pegawai']=$list_peserta['IdPegawai'];
+                                $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['id_pegawai_observee']=$list_peserta['IdObservee'];
+                                $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['id_kelompok_jabatan']=$list_peserta['id_kelompok_jabatan'];
+                                $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['id_zona_satker']=$list_peserta['IdZonaSatker'];
+                                $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['is_plt']="false";
+                                $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['jlh_menilai']=0;
+                                ${"index_{$variable}"}+=1;
+                            }
+                            // shuffle($$variable);
+                        }
+                    }
+                    // echo $index_satker;
+                    if(count($variable_jabatan_peserta_arr) > 0 && isset($variable_jabatan_peserta_arr[$index_satker])){
+                        $flip=array_flip($variable_jabatan_peserta_arr[$index_satker]);
+                        if(!isset($flip[$variable])){
+                            $variable_jabatan_peserta_arr[$index_satker][]=$variable;
+                            $id_jabatan_peserta_arr[$index_satker][]=$id_jabatan_peserta_;
+                            $nama_jabatan_arr[$index_satker][]=$jabatan_peserta_;
+                        }
+                    }else{
+                        $variable_jabatan_peserta_arr[$index_satker][]=$variable;
+                        $id_jabatan_peserta_arr[$index_satker][]=$id_jabatan_peserta_;
+                        $nama_jabatan_arr[$index_satker][]=$jabatan_peserta_;
+                    }
+                }
+                
+
+                //check apakah ketua dan wakil tidak ada
+                if(!isset($data_peserta[$index_satker]['ketua_pengadilan']) && !isset($data_peserta[$index_satker]['wakil_ketua_pengadilan'])){
+                    $satker_pimpinan_kosong[]=$list_satker['IdSatker'];
+                    $data_peserta[$index_satker]["plt_ketua"][0]['nama']="plt_ketua_pengadilan";
+                    $data_peserta[$index_satker]["plt_ketua"][0]['id_pegawai']=0;
+                    $data_peserta[$index_satker]["plt_ketua"][0]['id_pegawai_observee']=0;
+                    $data_peserta[$index_satker]["plt_ketua"][0]['id_kelompok_jabatan']=15;//id_kelompok_jabatan ketua
+                    $data_peserta[$index_satker]["plt_ketua"][0]['id_zona_satker']=$list_satker['IdZonaSatker'];
+                    $data_peserta[$index_satker]["plt_ketua"][0]['is_plt']="true";
+                    $data_peserta[$index_satker]["plt_ketua"][0]['jlh_menilai']=0;
+                    $pointer_plt_ketua=0;
+                    $variable_jabatan_peserta_arr[$index_satker][]="plt_ketua_pengadilan";
+                    $id_jabatan_peserta_arr[$index_satker][]=1;
+                    $nama_jabatan_arr[$index_satker][]="Ketua Pengadilan";
+                }
+
+                //kalau wakil ga ada, tapi ketua ada
+                if(!isset($data_peserta[$index_satker]['wakil_ketua_pengadilan']) && isset($data_peserta[$index_satker]['ketua_pengadilan'])){
+                    // echo "ga ada wakil ada ketua";
+                    $data_peserta[$index_satker]["wakil_ketua_pengadilan"][0]['nama']=$data_peserta[$index_satker]["ketua_pengadilan"][0]['nama'];
+                    $data_peserta[$index_satker]["wakil_ketua_pengadilan"][0]['id_pegawai']=$data_peserta[$index_satker]["ketua_pengadilan"][0]['id_pegawai'];
+                    $data_peserta[$index_satker]["wakil_ketua_pengadilan"][0]['id_pegawai_observee']=$data_peserta[$index_satker]["ketua_pengadilan"][0]['id_pegawai_observee'];
+                    $data_peserta[$index_satker]["wakil_ketua_pengadilan"][0]['id_kelompok_jabatan']=$data_peserta[$index_satker]["ketua_pengadilan"][0]['id_kelompok_jabatan'];
+                    $data_peserta[$index_satker]["wakil_ketua_pengadilan"][0]['id_zona_satker']=$list_satker['IdZonaSatker'];
+                    $data_peserta[$index_satker]["wakil_ketua_pengadilan"][0]['is_plt']="true";
+                    $data_peserta[$index_satker]["wakil_ketua_pengadilan"][0]['jlh_menilai']=0;
+                    $pointer_wakil_ketua_pengadilan=0;
+                    // $variable_jabatan_peserta_arr[$index_satker][]="wakil_ketua_pengadilan";
+                    $id_jabatan_peserta_arr[$index_satker][]=4;
+                    $nama_jabatan_arr[$index_satker][]="Wakil Ketua Pengadilan";
+                }
+
+                 //kalau ketua ga ada, tapi wakil ada
+                if(isset($data_peserta[$index_satker]['wakil_ketua_pengadilan']) && !isset($data_peserta[$index_satker]['ketua_pengadilan'])){
+                    $data_peserta[$index_satker]["ketua_pengadilan"][0]['nama']=$data_peserta[$index_satker]["wakil_ketua_pengadilan"][0]['nama'];
+                    $data_peserta[$index_satker]["ketua_pengadilan"][0]['id_pegawai']=$data_peserta[$index_satker]["wakil_ketua_pengadilan"][0]['id_pegawai'];
+                    $data_peserta[$index_satker]["ketua_pengadilan"][0]['id_pegawai_observee']=$data_peserta[$index_satker]["wakil_ketua_pengadilan"][0]['id_pegawai_observee'];
+                    $data_peserta[$index_satker]["ketua_pengadilan"][0]['id_kelompok_jabatan']=$data_peserta[$index_satker]["wakil_ketua_pengadilan"][0]['id_kelompok_jabatan'];
+                    $data_peserta[$index_satker]["ketua_pengadilan"][0]['id_zona_satker']=$list_satker['IdZonaSatker'];
+                    $data_peserta[$index_satker]["ketua_pengadilan"][0]['is_plt']="true";
+                    $data_peserta[$index_satker]["ketua_pengadilan"][0]['jlh_menilai']=0;
+                    $pointer_ketua_pengadilan=0;
+                    // $variable_jabatan_peserta_arr[$index_satker][]="ketua_pengadilan";
+                    $id_jabatan_peserta_arr[$index_satker][]=1;
+                    $nama_jabatan_arr[$index_satker][]="Ketua Pengadilan";
+                }
+
+                //kalau jurusita ga ada, buat ke panitera
+                // echo (int)$list_satker['IdSatkerBanding'] ."!==". (int)$list_satker['IdSatker'];
+                if(!isset($data_peserta[$index_satker]['juru_sita']) && (int)$list_satker['IdSatkerBanding'] !== (int)$list_satker['IdSatker']){
+                    $data_peserta[$index_satker]["juru_sita"][0]['nama']=isset($data_peserta[$index_satker]["panitera"]) ? $data_peserta[$index_satker]["panitera"][0]['nama'] : 'plt_panitera';
+                    $data_peserta[$index_satker]["juru_sita"][0]['id_pegawai']=isset($data_peserta[$index_satker]["panitera"]) ? $data_peserta[$index_satker]["panitera"][0]['id_pegawai'] : 0;
+                    $data_peserta[$index_satker]["juru_sita"][0]['id_pegawai_observee']=isset($data_peserta[$index_satker]["panitera"]) ? $data_peserta[$index_satker]["panitera"][0]['id_pegawai_observee'] : 0;
+                    $data_peserta[$index_satker]["juru_sita"][0]['id_kelompok_jabatan']=isset($data_peserta[$index_satker]["panitera"]) ? $data_peserta[$index_satker]["panitera"][0]['id_kelompok_jabatan'] : 16;
+                    $data_peserta[$index_satker]["juru_sita"][0]['id_zona_satker']=$list_satker['IdZonaSatker'];
+                    $data_peserta[$index_satker]["juru_sita"][0]['is_plt']="true";
+                    $data_peserta[$index_satker]["juru_sita"][0]['jlh_menilai']=0;
+                    $pointer_juru_sita=0;
+                    // $variable_jabatan_peserta_arr[$index_satker][]="juru_sita";
+                    $id_jabatan_peserta_arr[$index_satker][]=1;
+                    $nama_jabatan_arr[$index_satker][]="Juru Sita";
+                }
+
+                //kalaau panitera pengganti tidak ada
+                if(!isset($data_peserta[$index_satker]['panitera_pengganti'])){
+                    $data_peserta[$index_satker]["panitera_pengganti"][0]['nama']=isset($data_peserta[$index_satker]["panitera"]) ? $data_peserta[$index_satker]["panitera"][0]['nama'] : 'plt_panitera';
+                    $data_peserta[$index_satker]["panitera_pengganti"][0]['id_pegawai']=isset($data_peserta[$index_satker]["panitera"]) ? $data_peserta[$index_satker]["panitera"][0]['id_pegawai'] : 0;
+                    $data_peserta[$index_satker]["panitera_pengganti"][0]['id_pegawai_observee']=isset($data_peserta[$index_satker]["panitera"]) ? $data_peserta[$index_satker]["panitera"][0]['id_pegawai_observee'] : 0;
+                    $data_peserta[$index_satker]["panitera_pengganti"][0]['id_kelompok_jabatan']=isset($data_peserta[$index_satker]["panitera"]) ? $data_peserta[$index_satker]["panitera"][0]['id_kelompok_jabatan'] : 16;
+                    $data_peserta[$index_satker]["panitera_pengganti"][0]['id_zona_satker']=$list_satker['IdZonaSatker'];
+                    $data_peserta[$index_satker]["panitera_pengganti"][0]['is_plt']="true";
+                    $data_peserta[$index_satker]["panitera_pengganti"][0]['jlh_menilai']=0;
+                    $pointer_juru_sita=0;
+                    // $variable_jabatan_peserta_arr[$index_satker][]="panitera_pengganti";
+                    $id_jabatan_peserta_arr[$index_satker][]=1;
+                    $nama_jabatan_arr[$index_satker][]="Panitera Pengganti";
+                }
+
+                //check total panmud = data peserta panmud
+                $jlh_panmud=0;
+                if(isset($data_peserta[$index_satker]['panitera_muda'])){
+                    $jlh_panmud=count($data_peserta[$index_satker]['panitera_muda']);
+                }
+                // echo $list_satker['jumlah_panmud']." : ".$jlh_panmud;
+                if((int)$list_satker['jumlah_panmud'] !== (int)$jlh_panmud){
+                    $selisih=(int)$list_satker['jumlah_panmud'] - (int)$jlh_panmud;
+                    // echo "selisih".$list_satker['jumlah_panmud']."-".$jlh_panmud;
+                    for($p=0;$p<$selisih;$p++){
+                        $variable="panitera_muda";
+                        $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['nama']='plt_panitera_muda';
+                        $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['id_pegawai']=0;
+                        $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['id_pegawai_observee']=0;
+                        $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['id_kelompok_jabatan']=31;
+                        $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['id_zona_satker']=$list_satker['IdZonaSatker'];
+                        $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['is_plt']="true";
+                        $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['jlh_menilai']=0;
+                        ${"index_{$variable}"}+=1;
+                    }
+                }
+                $index_satker++;
+                $id_satker_before=$list_satker['IdSatker'];
+            
+            return $data_peserta;
+            
         }
     }
 
