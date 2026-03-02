@@ -1814,7 +1814,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                         $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['id_pegawai']=0;
                         $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['id_pegawai_observee']=0;
                         $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['id_kelompok_jabatan']=31;
-                        $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['id_zona_satker']=$list_satker['IdZonaSatker'];
+                        $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['id_zona_satker']=0;
                         $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['bagian']=$panmud_not_exists[$p];
                         $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['index_jabatan']=$p;
                         $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['is_plt']="true";
@@ -1945,7 +1945,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                                         'id_observee'=>null,
                                                         'created_at'=> date('Y-m-d H:i:s')
                                                     ];
-                                                    $id_jabatan_kosong[]=$mapping['id_jabatan_penilai']."-".$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker'];
+                                                    $id_jabatan_kosong[]=$mapping['id_jabatan_penilai']."-".$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker']."-".$data_peserta[$s][$variable_jabatan_peserta][$a]['index_jabatan'];
                                                 }
                                             }
                                         }else{
@@ -2047,7 +2047,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     }
                 }
             
-            return ['data'=>$data, 'kosong'=>$data_kosong];
+            return ['data'=>$data, 'peserta'=>$data_peserta, 'kosong'=>$data_kosong];
             
         }
     }
