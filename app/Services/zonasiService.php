@@ -1613,9 +1613,9 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     foreach($getPeserta as $list_peserta){
                         if((int)$list_peserta['id_kelompok_jabatan'] === (int)$list_jabatan_peserta['id_kelompok_jabatan']){
                             $include="true";
-                            if($variable === "juru_sita" && (int)$list_satker['IdSatkerBanding'] === (int)$list_satker['IdSatker']){
-                                $include="false";
-                            }
+                            // if($variable === "juru_sita" && (int)$list_satker['IdSatkerBanding'] === (int)$list_satker['IdSatker']){
+                            //     $include="false";
+                            // }
                             if($include === "true"){
                                 
                                 //set new variable bila 
@@ -1749,7 +1749,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     }
                 }
                 $index_satker++;
-        
+        $jlh_jabatan_peserta=count($variable_jabatan_peserta_arr[$s]);
         foreach($get_jabatan_peserta as $list_jabatan_peserta){
                     $variable=str_replace(' ','_', strtolower($list_jabatan_peserta['jabatan']));
                     ${"pointer_{$variable}"}=0;
@@ -1965,7 +1965,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     }
                 }
             
-            return $data_peserta;
+            return ['data'=>$data, 'kosong'=>$data_kosong];
             
         }
     }
