@@ -1755,7 +1755,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     $variable=str_replace(' ','_', strtolower($list_jabatan_peserta['jabatan']));
                     ${"pointer_{$variable}"}=0;
                 }
-                
+                var_dump($variable_jabatan_peserta_arr[0]);
                 for($x=0;$x<$jlh_jabatan_peserta;$x++){   
                     $variable_jabatan_peserta=$variable_jabatan_peserta_arr[$s][$x];
                     $id_jabatan_peserta=$id_jabatan_peserta_arr[$s][$x];
