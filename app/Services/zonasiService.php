@@ -1783,7 +1783,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     $get_panmud_satker=DB::select("CALL SPGetPanmudSatker('861')");
                     $panmud_satker_arr=[];
                     foreach($get_panmud_satker as $list_panmud_satker){
-                        $panmud_satker_arr[]=$list_panmud_satker['NamaStruktur'];
+                        $panmud_satker_arr[]=$list_panmud_satker->NamaStruktur;
                     }
 
                     $panmud_not_exists=[];
