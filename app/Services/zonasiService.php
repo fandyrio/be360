@@ -1651,12 +1651,12 @@ use Symfony\Component\CssSelector\Node\HashNode;
 
                 //check apakah ketua dan wakil tidak ada
                 if(!isset($data_peserta[$index_satker]['ketua_pengadilan']) && !isset($data_peserta[$index_satker]['wakil_ketua_pengadilan'])){
-                    $satker_pimpinan_kosong[]=$list_satker['IdSatker'];
+                    // $satker_pimpinan_kosong[]=$list_satker['IdSatker'];
                     $data_peserta[$index_satker]["plt_ketua"][0]['nama']="plt_ketua_pengadilan";
                     $data_peserta[$index_satker]["plt_ketua"][0]['id_pegawai']=0;
                     $data_peserta[$index_satker]["plt_ketua"][0]['id_pegawai_observee']=0;
                     $data_peserta[$index_satker]["plt_ketua"][0]['id_kelompok_jabatan']=15;//id_kelompok_jabatan ketua
-                    $data_peserta[$index_satker]["plt_ketua"][0]['id_zona_satker']=$list_satker['IdZonaSatker'];
+                    // $data_peserta[$index_satker]["plt_ketua"][0]['id_zona_satker']=$list_satker['IdZonaSatker'];
                     $data_peserta[$index_satker]["plt_ketua"][0]['is_plt']="true";
                     $data_peserta[$index_satker]["plt_ketua"][0]['jlh_menilai']=0;
                     $pointer_plt_ketua=0;
@@ -1698,19 +1698,19 @@ use Symfony\Component\CssSelector\Node\HashNode;
 
                 //kalau jurusita ga ada, buat ke panitera
                 // echo (int)$list_satker['IdSatkerBanding'] ."!==". (int)$list_satker['IdSatker'];
-                if(!isset($data_peserta[$index_satker]['juru_sita']) && (int)$list_satker['IdSatkerBanding'] !== (int)$list_satker['IdSatker']){
-                    $data_peserta[$index_satker]["juru_sita"][0]['nama']=isset($data_peserta[$index_satker]["panitera"]) ? $data_peserta[$index_satker]["panitera"][0]['nama'] : 'plt_panitera';
-                    $data_peserta[$index_satker]["juru_sita"][0]['id_pegawai']=isset($data_peserta[$index_satker]["panitera"]) ? $data_peserta[$index_satker]["panitera"][0]['id_pegawai'] : 0;
-                    $data_peserta[$index_satker]["juru_sita"][0]['id_pegawai_observee']=isset($data_peserta[$index_satker]["panitera"]) ? $data_peserta[$index_satker]["panitera"][0]['id_pegawai_observee'] : 0;
-                    $data_peserta[$index_satker]["juru_sita"][0]['id_kelompok_jabatan']=isset($data_peserta[$index_satker]["panitera"]) ? $data_peserta[$index_satker]["panitera"][0]['id_kelompok_jabatan'] : 16;
-                    $data_peserta[$index_satker]["juru_sita"][0]['id_zona_satker']=$list_satker['IdZonaSatker'];
-                    $data_peserta[$index_satker]["juru_sita"][0]['is_plt']="true";
-                    $data_peserta[$index_satker]["juru_sita"][0]['jlh_menilai']=0;
-                    $pointer_juru_sita=0;
-                    // $variable_jabatan_peserta_arr[$index_satker][]="juru_sita";
-                    $id_jabatan_peserta_arr[$index_satker][]=1;
-                    $nama_jabatan_arr[$index_satker][]="Juru Sita";
-                }
+                // if(!isset($data_peserta[$index_satker]['juru_sita']) && (int)$list_satker['IdSatkerBanding'] !== (int)$list_satker['IdSatker']){
+                //     $data_peserta[$index_satker]["juru_sita"][0]['nama']=isset($data_peserta[$index_satker]["panitera"]) ? $data_peserta[$index_satker]["panitera"][0]['nama'] : 'plt_panitera';
+                //     $data_peserta[$index_satker]["juru_sita"][0]['id_pegawai']=isset($data_peserta[$index_satker]["panitera"]) ? $data_peserta[$index_satker]["panitera"][0]['id_pegawai'] : 0;
+                //     $data_peserta[$index_satker]["juru_sita"][0]['id_pegawai_observee']=isset($data_peserta[$index_satker]["panitera"]) ? $data_peserta[$index_satker]["panitera"][0]['id_pegawai_observee'] : 0;
+                //     $data_peserta[$index_satker]["juru_sita"][0]['id_kelompok_jabatan']=isset($data_peserta[$index_satker]["panitera"]) ? $data_peserta[$index_satker]["panitera"][0]['id_kelompok_jabatan'] : 16;
+                //     $data_peserta[$index_satker]["juru_sita"][0]['id_zona_satker']=$list_satker['IdZonaSatker'];
+                //     $data_peserta[$index_satker]["juru_sita"][0]['is_plt']="true";
+                //     $data_peserta[$index_satker]["juru_sita"][0]['jlh_menilai']=0;
+                //     $pointer_juru_sita=0;
+                //     // $variable_jabatan_peserta_arr[$index_satker][]="juru_sita";
+                //     $id_jabatan_peserta_arr[$index_satker][]=1;
+                //     $nama_jabatan_arr[$index_satker][]="Juru Sita";
+                // }
 
                 //kalaau panitera pengganti tidak ada
                 if(!isset($data_peserta[$index_satker]['panitera_pengganti'])){
@@ -1718,7 +1718,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     $data_peserta[$index_satker]["panitera_pengganti"][0]['id_pegawai']=isset($data_peserta[$index_satker]["panitera"]) ? $data_peserta[$index_satker]["panitera"][0]['id_pegawai'] : 0;
                     $data_peserta[$index_satker]["panitera_pengganti"][0]['id_pegawai_observee']=isset($data_peserta[$index_satker]["panitera"]) ? $data_peserta[$index_satker]["panitera"][0]['id_pegawai_observee'] : 0;
                     $data_peserta[$index_satker]["panitera_pengganti"][0]['id_kelompok_jabatan']=isset($data_peserta[$index_satker]["panitera"]) ? $data_peserta[$index_satker]["panitera"][0]['id_kelompok_jabatan'] : 16;
-                    $data_peserta[$index_satker]["panitera_pengganti"][0]['id_zona_satker']=$list_satker['IdZonaSatker'];
+                    // $data_peserta[$index_satker]["panitera_pengganti"][0]['id_zona_satker']=$list_satker['IdZonaSatker'];
                     $data_peserta[$index_satker]["panitera_pengganti"][0]['is_plt']="true";
                     $data_peserta[$index_satker]["panitera_pengganti"][0]['jlh_menilai']=0;
                     $pointer_juru_sita=0;
@@ -1733,7 +1733,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     $jlh_panmud=count($data_peserta[$index_satker]['panitera_muda']);
                 }
                 // echo $list_satker['jumlah_panmud']." : ".$jlh_panmud;
-                if((int)$list_satker['jumlah_panmud'] !== (int)$jlh_panmud){
+                if((int)$jlh_panmud !== 3){
                     $selisih=(int)$list_satker['jumlah_panmud'] - (int)$jlh_panmud;
                     // echo "selisih".$list_satker['jumlah_panmud']."-".$jlh_panmud;
                     for($p=0;$p<$selisih;$p++){
@@ -1742,7 +1742,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                         $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['id_pegawai']=0;
                         $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['id_pegawai_observee']=0;
                         $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['id_kelompok_jabatan']=31;
-                        $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['id_zona_satker']=$list_satker['IdZonaSatker'];
+                        // $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['id_zona_satker']=$list_satker['IdZonaSatker'];
                         $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['is_plt']="true";
                         $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['jlh_menilai']=0;
                         ${"index_{$variable}"}+=1;
