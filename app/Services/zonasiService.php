@@ -1935,7 +1935,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                         if($data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['is_plt'] === 
                                         "true" && (int)$data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['id_pegawai'] === 0){
                                             $id_pegawai_penilai=null; 
-                                            $mapping_jabatan_kosong=$mapping['id_jabatan_penilai']."-".$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker']."-".$data_peserta[$s][$variable_jabatan_peserta][$a]['index_jabatan'];
+                                            $mapping_jabatan_kosong=$mapping['id_jabatan_penilai']."-".$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker']."-".$a;
                                             if(!in_array($mapping_jabatan_kosong, $id_jabatan_kosong)){
                                                 $is_pt[0]="false";
                                                 if(($is_pt[$s] === "true" && (int)$mapping['id_jabatan_penilai'] !== 2) || ($is_pt[$s] === "false" && (int)$mapping['id_jabatan_penilai'] >= 1)){
