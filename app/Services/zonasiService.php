@@ -915,7 +915,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                         })
                                         ->where('id_jabatan_peserta', $id_jabatan_peserta)
                                         ->where('tref_mapping_jabatan.active', true)
-                                        ->select('tref_mapping_jabatan.*', 'tjp.jabatan as jabatan_penilai')
+                                        ->select('tref_mapping_jabatan.*', 'tjp.jabatan as jabatan_penilai', 'tjp.ada_plt')
                                         ->get();
                     $id_kelompok_jabatan_peserta_before=null;
 
@@ -1028,7 +1028,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                     //end looping batas penilaian berdasarkan threshold
                                 }else{
                                     if(!in_array($mapping['id_jabatan_penilai']."-".$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker'], $id_jabatan_kosong)){
-                                        if(($is_pt[$s] === "true" && (int)$mapping['id_jabatan_penilai'] !== 2) || ($is_pt[$s] === "false" && (int)$mapping['id_jabatan_penilai'] >= 1)){
+                                        if((int)$mapping['ada_plt'] === 1){
                                             $data_kosong[]=[
                                                 'id_zonasi'=>$id_zonasi,
                                                 'id_zonasi_satker'=>$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker'],

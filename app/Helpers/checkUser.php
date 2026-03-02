@@ -25,109 +25,109 @@ use Illuminate\Support\Facades\DB;
     if(!function_exists('sendWa')){
         function sendWa($msg_wa, $reciver){
 
-            // $var['api_id'] = '4132';
-            // $var['api_key'] = '2NfSdNV3tagyBrFcmA7kAXezOY6ICYeA1';#flag1
-            // // $var['phone'] = $reciver;
-            // $var['phone'] = "081273861528";
-            // $var['text'] = $msg_wa;
-            // $ch = curl_init('https://wa3.otomat.web.id');
-            // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            // curl_setopt($ch, CURLOPT_POSTFIELDS, $var);
-            // $response = curl_exec($ch);
-            // curl_close($ch);
-            // $decode_response=json_decode($response);
-            // $status=$decode_response->status;
-            // $msg="Tidak bisa mengirimkan pesan Whatsapp ".$reciver;
-            // if($status==="success"){
-            //     $status="ok";
-            //     $msg="Berhasil mengirimkan Pesan Whatsapp ke ".$reciver;
-            // }else{
-            //     $status="not_ok";
-            // }
-            // // $data_return=array('status'=>$status, 'success'=>$succemsgss);
-            // return ['status'=>$status, 'msg'=>$msg];
-
-
-            //wa ma
-            $msg="";
-            $waUrl = 'https://webservice.mahkamahagung.go.id/';
-            // $this->token = 'c97f462b-b1aa-4417-b0a0-ab146c8c954e';
-            $token = 'e25ca442-c4dd-4e7b-bdbb-ccd95c90f7d7';
-            
-           $body = $msg_wa;
-            // $body .= PHP_EOL . PHP_EOL . "Silahkan login ke " . $this->baseUrl . " untuk info lebih lanjut." . PHP_EOL . "Terima Kasih.";
-
-            $headers    = array(
-                'User-Agent: SIGANIS Badilum',
-                // 'token: d4b32588-ec99-4262-b6f9-4888bd13b628',
-                'token: ' . $token,
-                'names: siganis',
-                'Content-Type: application/json'
-            );
-            $get_config=Tref_sys_config::where('config_name', 'environment')->first();
-            if(!is_null($get_config)){
-                $env=strip_tags($get_config['config_value_str']);
-                if($env === "production"){
-                    $telepon=$reciver;
-                }else if($env === "testing" || $env === "development"){
-                    $telepon_arr=["081273861528", "0895397184103", "082144819197"];
-                    $rand=rand(0,2);
-                    $telepon=$telepon_arr[$rand];
-                }
+            $var['api_id'] = '4132';
+            $var['api_key'] = '2NfSdNV3tagyBrFcmA7kAXezOY6ICYeA1';#flag1
+            // $var['phone'] = $reciver;
+            $var['phone'] = "081273861528";
+            $var['text'] = $msg_wa;
+            $ch = curl_init('https://wa3.otomat.web.id');
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $var);
+            $response = curl_exec($ch);
+            curl_close($ch);
+            $decode_response=json_decode($response);
+            $status=$decode_response->status;
+            $msg="Tidak bisa mengirimkan pesan Whatsapp ".$reciver;
+            if($status==="success"){
+                $status="ok";
+                $msg="Berhasil mengirimkan Pesan Whatsapp ke ".$reciver;
             }else{
-                $telepon="081273861528";
+                $status="not_ok";
             }
-            $postfield  = json_encode(array(
-                "variable"  => "_Ini adalah pesan otomatis Aplikasi Sistem Pembinaan Tenaga Teknis (SIGANIS)_",
-                "variable2" =>  preg_replace("/\n/m", '\n', "$body"),
-                "phone"     =>  "$telepon",
-            ));
+            // $data_return=array('status'=>$status, 'success'=>$succemsgss);
+            return ['status'=>$status, 'msg'=>$msg];
 
-            $curl = curl_init();
 
-            curl_setopt_array($curl, array(
-                // CURLOPT_URL                 => 'https://webservice.mahkamahagung.go.id/wa_gateway/send_wa',
-                CURLOPT_URL                 => $waUrl . 'wa_gateway/send_wa',
-                CURLOPT_RETURNTRANSFER      => true,
-                CURLOPT_ENCODING            => '',
-                CURLOPT_MAXREDIRS           => 10,
-                CURLOPT_TIMEOUT             => 0,
-                CURLOPT_FOLLOWLOCATION      => true,
-                CURLOPT_HTTP_VERSION        => CURL_HTTP_VERSION_1_1,
-                CURLOPT_SSL_VERIFYPEER      => false,
-                CURLOPT_SSL_VERIFYHOST      => false,
-                CURLOPT_CUSTOMREQUEST       => 'POST',
-                CURLOPT_POSTFIELDS          => $postfield,
-                CURLOPT_HTTPHEADER          => $headers,
-            ));
-
-            $response = curl_exec($curl);
-
-            $info = curl_getinfo($curl);
-            curl_close($curl);
-            $response = json_decode($response);
-            $status=$response->status;
-            if ($info['http_code'] != 200) {
-                $msg = "HTTP Error API WA. (HTTP " . $info['http_code'] . ")";
-                $msg .= "\nPostdata:\n" . $postfield;
-                $msg .= "\nResponse:\n" . $response;
-                $status=false;
-                // return false;
-            }
+        //     //wa ma
+        //     $msg="";
+        //     $waUrl = 'https://webservice.mahkamahagung.go.id/';
+        //     // $this->token = 'c97f462b-b1aa-4417-b0a0-ab146c8c954e';
+        //     $token = 'e25ca442-c4dd-4e7b-bdbb-ccd95c90f7d7';
             
-            if (json_last_error() !== JSON_ERROR_NONE) {
-                $msg = "Komunikasi Bermasalah dengan Server API WA";
-                // return false;
-            }
-            if ($response->status != 'ok') {
-                $msg = $response->response;
-                // return false;
-            }
+        //    $body = $msg_wa;
+        //     // $body .= PHP_EOL . PHP_EOL . "Silahkan login ke " . $this->baseUrl . " untuk info lebih lanjut." . PHP_EOL . "Terima Kasih.";
+
+        //     $headers    = array(
+        //         'User-Agent: SIGANIS Badilum',
+        //         // 'token: d4b32588-ec99-4262-b6f9-4888bd13b628',
+        //         'token: ' . $token,
+        //         'names: siganis',
+        //         'Content-Type: application/json'
+        //     );
+        //     $get_config=Tref_sys_config::where('config_name', 'environment')->first();
+        //     if(!is_null($get_config)){
+        //         $env=strip_tags($get_config['config_value_str']);
+        //         if($env === "production"){
+        //             $telepon=$reciver;
+        //         }else if($env === "testing" || $env === "development"){
+        //             $telepon_arr=["081273861528", "0895397184103", "082144819197"];
+        //             $rand=rand(0,2);
+        //             $telepon=$telepon_arr[$rand];
+        //         }
+        //     }else{
+        //         $telepon="081273861528";
+        //     }
+        //     $postfield  = json_encode(array(
+        //         "variable"  => "_Ini adalah pesan otomatis Aplikasi Sistem Pembinaan Tenaga Teknis (SIGANIS)_",
+        //         "variable2" =>  preg_replace("/\n/m", '\n', "$body"),
+        //         "phone"     =>  "$telepon",
+        //     ));
+
+        //     $curl = curl_init();
+
+        //     curl_setopt_array($curl, array(
+        //         // CURLOPT_URL                 => 'https://webservice.mahkamahagung.go.id/wa_gateway/send_wa',
+        //         CURLOPT_URL                 => $waUrl . 'wa_gateway/send_wa',
+        //         CURLOPT_RETURNTRANSFER      => true,
+        //         CURLOPT_ENCODING            => '',
+        //         CURLOPT_MAXREDIRS           => 10,
+        //         CURLOPT_TIMEOUT             => 0,
+        //         CURLOPT_FOLLOWLOCATION      => true,
+        //         CURLOPT_HTTP_VERSION        => CURL_HTTP_VERSION_1_1,
+        //         CURLOPT_SSL_VERIFYPEER      => false,
+        //         CURLOPT_SSL_VERIFYHOST      => false,
+        //         CURLOPT_CUSTOMREQUEST       => 'POST',
+        //         CURLOPT_POSTFIELDS          => $postfield,
+        //         CURLOPT_HTTPHEADER          => $headers,
+        //     ));
+
+        //     $response = curl_exec($curl);
+
+        //     $info = curl_getinfo($curl);
+        //     curl_close($curl);
+        //     $response = json_decode($response);
+        //     $status=$response->status;
+        //     if ($info['http_code'] != 200) {
+        //         $msg = "HTTP Error API WA. (HTTP " . $info['http_code'] . ")";
+        //         $msg .= "\nPostdata:\n" . $postfield;
+        //         $msg .= "\nResponse:\n" . $response;
+        //         $status=false;
+        //         // return false;
+        //     }
             
-            return [
-                'status' => $response->status,
-                'msg' => $msg
-            ];
+        //     if (json_last_error() !== JSON_ERROR_NONE) {
+        //         $msg = "Komunikasi Bermasalah dengan Server API WA";
+        //         // return false;
+        //     }
+        //     if ($response->status != 'ok') {
+        //         $msg = $response->response;
+        //         // return false;
+        //     }
+            
+        //     return [
+        //         'status' => $response->status,
+        //         'msg' => $msg
+        //     ];
         }
     }
 
