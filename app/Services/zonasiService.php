@@ -1858,6 +1858,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                         "true" && (int)$data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['id_pegawai'] === 0){
                                             $id_pegawai_penilai=null; 
                                             if(!in_array($mapping['id_jabatan_penilai']."-".$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker'], $id_jabatan_kosong)){
+                                                $is_pt[0]="false";
                                                 if(($is_pt[$s] === "true" && (int)$mapping['id_jabatan_penilai'] !== 2) || ($is_pt[$s] === "false" && (int)$mapping['id_jabatan_penilai'] >= 1)){
                                                     $data_kosong[]=[
                                                         'id_zonasi'=>$id_zonasi,
@@ -1874,7 +1875,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                         }
 
                                         $data[]=[
-                                            'id_zonasi'=>$id_zonasi,
+                                            'id_zonasi'=>1,
                                             'id_zona_satker'=>$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker'],
                                             'id_pegawai_peserta'=>$data_peserta[$s][$variable_jabatan_peserta][$a]['id_pegawai_observee'],
                                             'id_pegawai_penilai'=>$id_pegawai_penilai,
@@ -1889,7 +1890,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                     if(!in_array($mapping['id_jabatan_penilai']."-".$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker'], $id_jabatan_kosong)){
                                         if(($is_pt[$s] === "true" && (int)$mapping['id_jabatan_penilai'] !== 2) || ($is_pt[$s] === "false" && (int)$mapping['id_jabatan_penilai'] >= 1)){
                                             $data_kosong[]=[
-                                                'id_zonasi'=>$id_zonasi,
+                                                'id_zonasi'=>1,
                                                 'id_zonasi_satker'=>$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker'],
                                                 'id_jabatan_kosong'=>$mapping['id_jabatan_penilai'],
                                                 'created_at'=>date('Y-m-d H:i:s'),
