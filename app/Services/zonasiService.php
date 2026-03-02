@@ -1764,8 +1764,9 @@ use Symfony\Component\CssSelector\Node\HashNode;
                         $jlh_pegawai_perjabatan=count($data_peserta[$s][$variable_jabatan_peserta]);
                     }
                     // $jlh_pegawai_perjabatan=count($$variable_jabatan_peserta);
-                    $get_periode=Tref_zonasi::where('IdZona', $id_zonasi)->first();
-                    $id_periode=$get_periode['IdTahunPenilaian'];
+                    // $get_periode=Tref_zonasi::where('IdZona', $id_zonasi)->first();
+                    // $id_periode=$get_periode['IdTahunPenilaian'];
+                    $id_periode = 41;
                     $get_mapping=Tref_mapping_jabatan::join('tref_jabatan_peserta as tjp', 'tjp.id', '=', 'tref_mapping_jabatan.id_jabatan_penilai')
                                         ->join('trans_mapping_jabatan_periode as tmjp', function($join) use($id_periode){
                                             $join->on('tmjp.id_mapping_jabatan', '=', 'tref_mapping_jabatan.id')
@@ -1785,17 +1786,17 @@ use Symfony\Component\CssSelector\Node\HashNode;
                         if($data_peserta[$s][$variable_jabatan_peserta][$a]['is_plt'] === "false"){
                             // echo "<b>".$data_peserta[$s][$variable_jabatan_peserta][$a]['nama']." : </b>";
 
-                            if($variable_jabatan_peserta === "ketua_pengadilan" && $data_peserta[$s][$variable_jabatan_peserta][$a]['is_plt'] === "false" && $is_pt[$s] === "false"){
-                                $get_kpt=$this->getKPT($id_zonasi_satker[$s]);
-                                $data[]=[
-                                        'id_zonasi'=>$id_zonasi,
-                                        'id_zona_satker'=>$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker'],
-                                        'id_pegawai_peserta'=>$data_peserta[$s][$variable_jabatan_peserta][$a]['id_pegawai_observee'],
-                                        'id_pegawai_penilai'=>$get_kpt['id_pegawai_kpt'],
-                                        // 'id_jabatan_plt'=>$get_kpt['is_plt'] === "true" ?  1 : null
-                                        'id_jabatan_plt'=>$get_kpt['is_plt'] === "true" ?  1 : null
-                                    ];
-                            }
+                            // if($variable_jabatan_peserta === "ketua_pengadilan" && $data_peserta[$s][$variable_jabatan_peserta][$a]['is_plt'] === "false" && $is_pt[$s] === "false"){
+                            //     $get_kpt=$this->getKPT($id_zonasi_satker[$s]);
+                            //     $data[]=[
+                            //             'id_zonasi'=>$id_zonasi,
+                            //             'id_zona_satker'=>$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker'],
+                            //             'id_pegawai_peserta'=>$data_peserta[$s][$variable_jabatan_peserta][$a]['id_pegawai_observee'],
+                            //             'id_pegawai_penilai'=>$get_kpt['id_pegawai_kpt'],
+                            //             // 'id_jabatan_plt'=>$get_kpt['is_plt'] === "true" ?  1 : null
+                            //             'id_jabatan_plt'=>$get_kpt['is_plt'] === "true" ?  1 : null
+                            //         ];
+                            // }
 
                             $jlh_mapping=$get_mapping->count();
                             //Looping mapping jabatan dan threshold
