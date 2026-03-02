@@ -1557,6 +1557,9 @@ use Symfony\Component\CssSelector\Node\HashNode;
         }
 
         public function generatePesertaTest($id_zonasi_satker){
+            $variable_jabatan_peserta_arr=[];
+            $id_jabatan_peserta_arr=[];
+            $id_jabatan_kosong=[];
              $getPeserta=Trans_observee::join('trans_zonasi_satker as tzs', function($join) use ($id_zonasi_satker){
                                                     $join->on('tzs.IdZonaSatker', '=', 'trans_observee.IdZonaSatker')
                                                         // ->where('tzs.IdSatker', $id_satker)
@@ -1597,12 +1600,12 @@ use Symfony\Component\CssSelector\Node\HashNode;
                         ${"counter_{$variable}"}=0;
                     }
 
-                    if(!is_null($id_satker_before) && (int)$id_satker_before !== $list_satker['IdSatker']){
-                        ${"pointer_{$variable}"}=0;
-                        $$variable=null;
-                        ${"index_{$variable}"}=0;
-                        ${"counter_{$variable}"}=0;
-                    }
+                    // if(!is_null($id_satker_before) && (int)$id_satker_before !== $list_satker['IdSatker']){
+                    //     ${"pointer_{$variable}"}=0;
+                    //     $$variable=null;
+                    //     ${"index_{$variable}"}=0;
+                    //     ${"counter_{$variable}"}=0;
+                    // }
                     //sampai sini harus disederhanakan nanti ya..
 
                     // $data_peserta[$index_satker]['jabatan_peserta'][$index_jabatan]=$variable;
