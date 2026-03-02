@@ -1695,6 +1695,8 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     // $data_peserta[$index_satker]["plt_ketua"][0]['id_zona_satker']=$list_satker['IdZonaSatker'];
                     $data_peserta[$index_satker]["plt_ketua"][0]['is_plt']="true";
                     $data_peserta[$index_satker]["plt_ketua"][0]['jlh_menilai']=0;
+                    $data_peserta[$index_satker]["plt_ketua"][0]['index_jabatan']=0;
+                    $data_peserta[$index_satker]['plt_ketua'][0]['bagian']="PLT Ketua Pengadilan";
                     $pointer_plt_ketua=0;
                     $variable_jabatan_peserta_arr[$index_satker][]="plt_ketua_pengadilan";
                     $id_jabatan_peserta_arr[$index_satker][]=1;
@@ -1711,6 +1713,8 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     $data_peserta[$index_satker]["wakil_ketua_pengadilan"][0]['id_zona_satker']=$list_satker['IdZonaSatker'];
                     $data_peserta[$index_satker]["wakil_ketua_pengadilan"][0]['is_plt']="true";
                     $data_peserta[$index_satker]["wakil_ketua_pengadilan"][0]['jlh_menilai']=0;
+                    $data_peserta[$index_satker]["wakil_ketua_pengadilan"][0]['index_jabatan']=0;
+                    $data_peserta[$index_satker]['wakil_ketua_pegnadilan'][0]['bagian']="Wakil Ketua Pengadilan";
                     $pointer_wakil_ketua_pengadilan=0;
                     // $variable_jabatan_peserta_arr[$index_satker][]="wakil_ketua_pengadilan";
                     $id_jabatan_peserta_arr[$index_satker][]=4;
@@ -1724,8 +1728,11 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     $data_peserta[$index_satker]["ketua_pengadilan"][0]['id_pegawai_observee']=$data_peserta[$index_satker]["wakil_ketua_pengadilan"][0]['id_pegawai_observee'];
                     $data_peserta[$index_satker]["ketua_pengadilan"][0]['id_kelompok_jabatan']=$data_peserta[$index_satker]["wakil_ketua_pengadilan"][0]['id_kelompok_jabatan'];
                     $data_peserta[$index_satker]["ketua_pengadilan"][0]['id_zona_satker']=$list_satker['IdZonaSatker'];
+                    $data_peserta[$index_satker]['ketua_pegnadilan'][0]['bagian']="Ketua Pengadilan";
                     $data_peserta[$index_satker]["ketua_pengadilan"][0]['is_plt']="true";
                     $data_peserta[$index_satker]["ketua_pengadilan"][0]['jlh_menilai']=0;
+                    $data_peserta[$index_satker]["ketua_pengadilan"][0]['index_jabatan']=0;
+                    $data_peserta[$index_satker]['ketua_pegnadilan'][0]['bagian']="Ketua Pengadilan";
                     $pointer_ketua_pengadilan=0;
                     // $variable_jabatan_peserta_arr[$index_satker][]="ketua_pengadilan";
                     $id_jabatan_peserta_arr[$index_satker][]=1;
@@ -1757,6 +1764,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     // $data_peserta[$index_satker]["panitera_pengganti"][0]['id_zona_satker']=$list_satker['IdZonaSatker'];
                     $data_peserta[$index_satker]["panitera_pengganti"][0]['is_plt']="true";
                     $data_peserta[$index_satker]["panitera_pengganti"][0]['jlh_menilai']=0;
+                    $data_peserta[$index_satker]["panitera_pengganti"][0]['index_jabatan']=0;
                     $pointer_juru_sita=0;
                     // $variable_jabatan_peserta_arr[$index_satker][]="panitera_pengganti";
                     $id_jabatan_peserta_arr[$index_satker][]=1;
@@ -1808,6 +1816,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                         $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['id_kelompok_jabatan']=31;
                         $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['id_zona_satker']=$list_satker['IdZonaSatker'];
                         $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['bagian']=$panmud_not_exists[$p];
+                        $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['index_jabatan']=$p;
                         $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['is_plt']="true";
                         $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['jlh_menilai']=0;
                         ${"index_{$variable}"}+=1;
@@ -1926,7 +1935,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                         if($data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['is_plt'] === 
                                         "true" && (int)$data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['id_pegawai'] === 0){
                                             $id_pegawai_penilai=null; 
-                                            if(!in_array($mapping['id_jabatan_penilai']."-".$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker'], $id_jabatan_kosong)){
+                                            if(!in_array($mapping['id_jabatan_penilai']."-".$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker']."-".$data_peserta[$s][$variable_jabatan_peserta][$a]['index_jabatan'], $id_jabatan_kosong)){
                                                 $is_pt[0]="false";
                                                 if(($is_pt[$s] === "true" && (int)$mapping['id_jabatan_penilai'] !== 2) || ($is_pt[$s] === "false" && (int)$mapping['id_jabatan_penilai'] >= 1)){
                                                     $data_kosong[]=[
