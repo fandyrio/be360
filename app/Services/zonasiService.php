@@ -1560,6 +1560,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
             $variable_jabatan_peserta_arr=[];
             $id_jabatan_peserta_arr=[];
             $id_jabatan_kosong=[];
+            $index_satker=0;
              $getPeserta=Trans_observee::join('trans_zonasi_satker as tzs', function($join) use ($id_zonasi_satker){
                                                     $join->on('tzs.IdZonaSatker', '=', 'trans_observee.IdZonaSatker')
                                                         // ->where('tzs.IdSatker', $id_satker)
@@ -1748,7 +1749,6 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     }
                 }
                 $index_satker++;
-                $id_satker_before=$list_satker['IdSatker'];
             
             return $data_peserta;
             
