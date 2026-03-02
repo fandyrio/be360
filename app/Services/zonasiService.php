@@ -1893,7 +1893,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                     if(!in_array($mapping['id_jabatan_penilai']."-".$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker'], $id_jabatan_kosong)){
                                         if((int)$mapping['ada_plt'] === 1){
                                             $data_kosong[]=[
-                                                'id_zonasi'=>1,
+                                                'id_zonasi'=>12,
                                                 'id_zonasi_satker'=>$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker'],
                                                 'id_jabatan_kosong'=>$mapping['id_jabatan_penilai'],
                                                 'created_at'=>date('Y-m-d H:i:s'),
