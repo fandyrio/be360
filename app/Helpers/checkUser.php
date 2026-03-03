@@ -26,7 +26,8 @@ use Illuminate\Support\Facades\DB;
         function sendWa($msg_wa, $reciver){
 
             $var['api_id'] = '4132';
-            $var['api_key'] = '2NfSdNV3tagyBrFcmA7kAXezOY6ICYeA';#flag1
+            #flag1
+            $var['api_key'] = '2NfSdNV3tagyBrFcmA7kAXezOY6ICYeA';
             // $var['phone'] = $reciver;
             $var['phone'] = "081273861528";
             $var['text'] = $msg_wa;

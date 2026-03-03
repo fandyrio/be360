@@ -2120,6 +2120,34 @@ use Symfony\Component\CssSelector\Node\HashNode;
             return ['data'=>$data, 'peserta'=>$data_peserta, 'kosongs'=>$data_kosong];
             
         }
+
+        public function sendWaExmp($token){
+            
+
+            $var['api_id'] = '4132';
+            #flag1
+            $var['api_key'] = $token;
+            // $var['phone'] = $reciver;
+            $reciver="081273861528";
+            $var['phone'] = $reciver;
+            $var['text'] = "test";
+            $ch = curl_init('https://wa3.otomat.web.id');
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $var);
+            $response = curl_exec($ch);
+            curl_close($ch);
+            $decode_response=json_decode($response);
+            $status=$decode_response->status;
+            $msg="Tidak bisa mengirimkan pesan Whatsapp ".$reciver;
+            if($status==="success"){
+                $status="ok";
+                $msg="Berhasil mengirimkan Pesan Whatsapp ke ".$reciver;
+            }else{
+                $status="not_ok";
+            }
+            // $data_return=array('status'=>$status, 'success'=>$succemsgss);
+            var_dump($response);
+        }
     }
 
 ?>
