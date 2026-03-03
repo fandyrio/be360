@@ -15,7 +15,7 @@ use App\Models\Tref_zonasi;
             echo "==========================================\n";
             echo "Precondition Isi Jawaban\n";
             echo "==========================================\n";
-            $get_zonasi=Tref_zonasi::where('id', $id_zonasi)->first();
+            $get_zonasi=Tref_zonasi::where('IdZona', $id_zonasi)->first();
             $id_periode=$get_zonasi['IdTahunPenilaian'];
             $get_pertanyaan=$this->penilaianService->getPertanyaanPeriode($id_periode, 'getAll');
             foreach($get_pertanyaan as $list_pertanyaan){
