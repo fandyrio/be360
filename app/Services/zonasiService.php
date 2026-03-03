@@ -500,8 +500,9 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     $satker[]=$data_satker['satker'];
                 }
             }
-           
-            $get_pt=Cache::store('redis')->remember("satker_pt", 3600*24*360, function () {
+
+            Cache::store('redis')->forget("satker_pt");
+            $get_pt=Cache::store('redis')->remember("satker_pt", 3600*24*1, function () {
                 return Satker::join('v_total_peserta_per_satker as a', 'a.IdSatker', '=', 'v_satker.IdSatker')
                             ->select('v_satker.*', 'a.jumlah_peserta')
                             ->where('v_satker.ParentIdSatker', 3)->get();  
@@ -512,8 +513,8 @@ use Symfony\Component\CssSelector\Node\HashNode;
             foreach($get_pt as $list_satker){
                 $disabled_pt=false;
                 $parent_satker=$list_satker['IdSatker'];
-
-                $get_pn=Cache::store('redis')->remember("satker_pn_{$parent_satker}", 3600*24*360, function () use($parent_satker) {
+                 Cache::store('redis')->forget("satker_pn_{$parent_satker}");
+                $get_pn=Cache::store('redis')->remember("satker_pn_{$parent_satker}", 3600*24*1, function () use($parent_satker) {
                     return Satker::join('v_total_peserta_per_satker as a', 'a.IdSatker', '=', 'v_satker.IdSatker')
                             ->select('v_satker.*', 'a.jumlah_peserta')
                             ->where('v_satker.ParentIdSatker', $parent_satker)->get(); 
