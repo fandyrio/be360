@@ -1387,7 +1387,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
             $get_jabatan_kosong=Trans_jabatan_kosong::join('tref_jabatan_peserta as tjp', 'tjp.id', '=', 'trans_jabatan_kosong.id_jabatan_kosong')
                                         ->join('trans_zonasi_satker as tzs', 'tzs.IdZonaSatker', '=', 'trans_jabatan_kosong.id_zonasi_satker')
                                         ->join('v_satker as vs', 'vs.IdSatker', '=', 'tzs.IdSatker')
-                                        ->select('vs.NamaSatker', 'tjp.jabatan', 'trans_jabatan_kosong.id_observee', 'trans_jabatan_kosong.status')
+                                        ->select('vs.NamaSatker', 'tjp.jabatan', 'trans_jabatan_kosong.id_observee', 'trans_jabatan_kosong.status', 'trans_jabatan_kosong.bagian')
                                         ->skip($skip)->take($limit)
                                         ->where('trans_jabatan_kosong.id_zonasi', $id_zonasi)
                                         ->get();
@@ -1397,7 +1397,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                 $x=0;
                 foreach($get_jabatan_kosong as $list_jabatan){
                     $data[$x]['nama_satker']=$list_jabatan['NamaSatker'];
-                    $data[$x]['jabatan']=$list_jabatan['jabatan'];
+                    $data[$x]['jabatan']=$list_jabatan['jabatan']." (".$list_jabatan['bagian'].")";
                     $data[$x]['filled']=(int)$list_jabatan['status'] === 1 ? "Y" : "N";
                     $x++;
                 }
