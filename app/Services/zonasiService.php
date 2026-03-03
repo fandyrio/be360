@@ -1060,7 +1060,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                         if($data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['is_plt'] === 
                                         "true" && (int)$data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['id_pegawai'] === 0){
                                             $id_pegawai_penilai=null; 
-                                            $mapping_jabatan_kosong=$mapping['id_jabatan_penilai']."-".$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker']."-".$data_peserta[$x][$variable_jabatan_peserta][$a]['index_jabatan_plt'];
+                                            $mapping_jabatan_kosong=$mapping['id_jabatan_penilai']."-".$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker']."-".$data_peserta[$x][$variable_penilai][$a]['index_jabatan_plt'];
                                             if(!in_array($mapping_jabatan_kosong, $id_jabatan_kosong)){
                                                 if((int)$mapping['ada_plt'] === 1){
                                                     $data_kosong[]=[
@@ -1091,8 +1091,8 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                     }
                                     //end looping batas penilaian berdasarkan threshold
                                 }else{
-                                    //panitera, pegawai masuk sini kalau ga ada (Khusus yang ga di definisikan di data_peserta)
-                                     $mapping_jabatan_kosong=$mapping['id_jabatan_penilai']."-".$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker']."-".$data_peserta[$x][$variable_jabatan_peserta][$a]['index_jabatan_plt'];
+                                    //panitera, pegawai masuk sini kalau ga ada (Khusus yang ga di definisikan di data_peserta) hanya untuk 1 orang dalam jabatan. seperti panitera
+                                     $mapping_jabatan_kosong=$mapping['id_jabatan_penilai']."-".$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker'];
 
                                     if(!in_array($mapping_jabatan_kosong, $id_jabatan_kosong)){
                                         if((int)$mapping['ada_plt'] === 1){
