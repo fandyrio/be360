@@ -45,7 +45,7 @@ use App\Models\Tref_zonasi;
                     $nilai_tmp=$nilai*$bobot["bobot_{$list_nilai['id_pertanyaan']}"] / 100;
                     $current_nilai += $nilai_tmp;
                 }
-                var_dump($current_nilai);
+                var_dump($list_peserta_zonasi);
                 //Trans_peserta_zonasi::where('id', $list_peserta_zonasi['id'])->update(['nilai', $current_nilai]);
                 //clone $get_nilai->update(['locked'=>true, 'updated_at'=>date('Y-m-d H:i:s')]);
             }
