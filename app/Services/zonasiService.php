@@ -862,7 +862,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     //check jumlah Panmud
                     if($jlh_panmud > 0){
                         //kalau panmud ada, maka  panmud akan menilai sebagai PP
-                        for($pm=0;$pm<$jlh_panmud;$pp++){
+                        for($pm=0;$pm<$jlh_panmud;$pm++){
                             $data_pp[$pm]['nama_panmud']=$data_peserta[$index_satker]["panitera_muda"][$pm]['nama'];
                             $data_pp[$pm]['id_pegawai']=$data_peserta[$index_satker]['panitera_muda'][$pm]['id_pegawai'];
                             $data_pp[$pm]['id_pegawai_observee']=$data_peserta[$index_satker]["panitera_muda"][$pm]['id_pegawai_observee'];
