@@ -850,7 +850,9 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     $id_jabatan_peserta_arr[$index_satker][]=1;
                     $nama_jabatan_arr[$index_satker][]="Juru Sita";
                 }
-
+                
+                 //check total panmud = data peserta panmud
+                $jlh_panmud=0;
                 if(isset($data_peserta[$index_satker]['panitera_muda'])){
                     $jlh_panmud=count($data_peserta[$index_satker]['panitera_muda']);
                 }
@@ -894,9 +896,6 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     $id_jabatan_peserta_arr[$index_satker][]=1;
                     $nama_jabatan_arr[$index_satker][]="Panitera Pengganti";
                 }
-
-                //check total panmud = data peserta panmud
-                $jlh_panmud=0;
                 
                 // echo $list_satker['jumlah_panmud']." : ".$jlh_panmud;
                 if((int)$list_satker['jumlah_panmud'] !== (int)$jlh_panmud){
