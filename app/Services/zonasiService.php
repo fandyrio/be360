@@ -1650,7 +1650,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                         ->orderBy('trans_observee.IdZonaSatker', 'desc')
                                         ->where('trans_observee.entry_job', false)
                                         ->get();
-                if($getPeserta->count === 0){
+                if($getPeserta->count() === 0){
                     return ['status'=>false, 'msg'=>"Data Peserta tidak ditemukan"];
                 }
 
