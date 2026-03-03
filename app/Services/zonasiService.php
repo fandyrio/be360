@@ -1045,7 +1045,6 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                             ${"pointer_{$variable_penilai}"}=0;
                                         }
                                         //check peserta penilai jangan sampai menilai dirinya sendiri
-                                        // echo  $data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['is_plt'].", ";
                                         if($data_peserta[$s][$variable_jabatan_peserta][$a]['id_pegawai'] === $data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['id_pegawai']){
                                             // echo "penilai dan dinilai sama: ".$$variable_jabatan_peserta[$a]['nama']." : ".$$variable_penilai[${"pointer_{$variable_penilai}"}]['nama'];
                                             if(${"pointer_{$variable_penilai}"} > $jlh_penilai -1){
@@ -1057,16 +1056,11 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                                 }
                                             }
                                         }
-                                        // echo $variable_penilai;die();
-                                        // echo $data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['is_plt'].", ";
-                                        // Log::error($s.", ".$variable_penilai." ".${"pointer_{$variable_penilai}"}." ".$variable_jabatan_peserta);
-                                        // echo "data_peserta_".$s."_".$variable_penilai."_"."pointer_".${"pointer_{$variable_penilai}"}."_jumlahPointer:_".count($data_peserta[$s][$variable_penilai]);
-                                        // var_dump($data_peserta[$s]['panitera_muda']);
-                                        // /echo ${"pointer_{$variable_penilai}"};
+                                        
                                         if($data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['is_plt'] === 
                                         "true" && (int)$data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['id_pegawai'] === 0){
                                             $id_pegawai_penilai=null; 
-                                            $mapping_jabatan_kosong=$mapping['id_jabatan_penilai']."-".$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker']."-".$data_peserta[$x][$variable_jabatan_peserta][$a]['index_Jabatan_plt'];
+                                            $mapping_jabatan_kosong=$mapping['id_jabatan_penilai']."-".$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker']."-".$data_peserta[$x][$variable_jabatan_peserta][$a]['index_jabatan_plt'];
                                             if(!in_array($mapping_jabatan_kosong, $id_jabatan_kosong)){
                                                 if((int)$mapping['ada_plt'] === 1){
                                                     $data_kosong[]=[
