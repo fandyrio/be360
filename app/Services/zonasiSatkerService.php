@@ -146,7 +146,7 @@ use PDO;
                 foreach($get_jabatan_kososng as $list_jabatan_kosong){
                     $editable=true;
                     $data[$x]['token_jabatan_kosong']=Hashids::encode($list_jabatan_kosong['id']);
-                    $data[$x]['jabatan_kosong']=$list_jabatan_kosong['jabatan_kosong'];
+                    $data[$x]['jabatan_kosong']=$list_jabatan_kosong['jabatan_kosong']." (".$list_jabatan_kosong['bagian'].")";
                     $data[$x]['nama_pegawai']=$list_jabatan_kosong['nama_pegawai'];
                     $data[$x]['jabatan_pegawai']=$list_jabatan_kosong['NamaJabatan'];
                     if(!is_null($list_jabatan_kosong['id_observee']) && $list_jabatan_kosong['status'] === 0){
