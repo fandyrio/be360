@@ -931,7 +931,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     
                     $jumlah_panmud_not_exists=count($panmud_not_exists);
                     if($jumlah_panmud_not_exists !== $selisih){
-                        return ['status'=>false, 'msg'=>"Jumlah Panmud tidak sesuai. "];
+                        return ['status'=>false, 'msg'=>"Jumlah Panmud tidak sesuai. Satker: ".$list_satker['NamaSatker'].". Jumlah Panmud yang tidak ada: ".$jumlah_panmud_not_exists.". Selisih Panmud :".$selisih];
                     }
 
                     // echo "selisih".$list_satker['jumlah_panmud']."-".$jlh_panmud;
