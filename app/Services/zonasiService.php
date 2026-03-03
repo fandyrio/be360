@@ -1069,6 +1069,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                                         'id_zonasi_satker'=>$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker'],
                                                         'id_jabatan_kosong'=>$mapping['id_jabatan_penilai'],
                                                         'bagian'=>$data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['bagian'],
+                                                        'index_plt'=>$data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['index_jabatan_plt'],
                                                         'id_observee'=>null,
                                                         'created_at'=> date('Y-m-d H:i:s')
                                                     ];
@@ -1105,6 +1106,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                                 'id_jabatan_kosong'=>$mapping['id_jabatan_penilai'],
                                                 'created_at'=>date('Y-m-d H:i:s'),
                                                 'bagian'=>$mapping['jabatan_penilai'],
+                                                'index_plt'=>0,
                                                 'id_observee'=>null
                                             ];
                                             $id_jabatan_kosong[]=$mapping['id_jabatan_penilai']."-".$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker'];
