@@ -2097,7 +2097,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     }
                 }
             
-            return ['data'=>$id_jabatan_kosong, 'peserta'=>$data_peserta, 'kosongs'=>$data_kosong];
+            return ['data'=>$data, 'peserta'=>$data_peserta, 'kosongs'=>$data_kosong];
             
         }
     }
