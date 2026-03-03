@@ -750,10 +750,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                 $include="false";
                             }
                             if($include === "true"){
-                                
                                 //set new variable bila 
-
-                                
                                 $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['nama']=$list_peserta['nama_pegawai'];
                                 $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['id_pegawai']=$list_peserta['IdPegawai'];
                                 $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['id_pegawai_observee']=$list_peserta['IdObservee'];
@@ -881,16 +878,16 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     for($x=0;$x<count($data_pp);$x++){
                         $data_peserta[$index_satker]["panitera_pengganti"][$x]['nama']=$data_pp[$x]['nama_panmud'];
                     
-                        $data_peserta[$index_satker]["panitera_pengganti"][0]['id_pegawai']=$data_pp[$x]['id_pegawai'];
+                        $data_peserta[$index_satker]["panitera_pengganti"][$x]['id_pegawai']=$data_pp[$x]['id_pegawai'];
 
-                        $data_peserta[$index_satker]["panitera_pengganti"][0]['id_pegawai_observee']=$data_pp[$x]['id_pegawai_observee'];
+                        $data_peserta[$index_satker]["panitera_pengganti"][$x]['id_pegawai_observee']=$data_pp[$x]['id_pegawai_observee'];
 
-                        $data_peserta[$index_satker]["panitera_pengganti"][0]['id_kelompok_jabatan']=$data_pp[$x]['id_kelompok_jabatan'];
-                        $data_peserta[$index_satker]["panitera_pengganti"][0]['id_zona_satker']=$list_satker['IdZonaSatker'];
-                        $data_peserta[$index_satker]["panitera_pengganti"][0]['bagian']="Panitera Pengganti";
-                        $data_peserta[$index_satker]["panitera_pengganti"][0]['is_plt']="true";
-                        $data_peserta[$index_satker]['panitera_pengganti'][0]['index_jabatan_plt']=$data_pp[$x]['index_jabatan_plt'];
-                        $data_peserta[$index_satker]["panitera_pengganti"][0]['jlh_menilai']=0;
+                        $data_peserta[$index_satker]["panitera_pengganti"][$x]['id_kelompok_jabatan']=$data_pp[$x]['id_kelompok_jabatan'];
+                        $data_peserta[$index_satker]["panitera_pengganti"][$x]['id_zona_satker']=$list_satker['IdZonaSatker'];
+                        $data_peserta[$index_satker]["panitera_pengganti"][$x]['bagian']="Panitera Pengganti";
+                        $data_peserta[$index_satker]["panitera_pengganti"][$x]['is_plt']="true";
+                        $data_peserta[$index_satker]['panitera_pengganti'][$x]['index_jabatan_plt']=$data_pp[$x]['index_jabatan_plt'];
+                        $data_peserta[$index_satker]["panitera_pengganti"][$x]['jlh_menilai']=0;
                     }
                     $pointer_panitera_pengganti=0;
                     // $variable_jabatan_peserta_arr[$index_satker][]="panitera_pengganti";
