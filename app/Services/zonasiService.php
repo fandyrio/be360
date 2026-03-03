@@ -1067,7 +1067,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                                         'id_zonasi'=>$id_zonasi,
                                                         'id_zonasi_satker'=>$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker'],
                                                         'id_jabatan_kosong'=>$mapping['id_jabatan_penilai'],
-                                                        'bagian'=>$data_peserta[$s][$variable_jabatan_peserta][$a]['bagian'],
+                                                        'bagian'=>$data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['bagian'],
                                                         'id_observee'=>null,
                                                         'created_at'=> date('Y-m-d H:i:s')
                                                     ];
