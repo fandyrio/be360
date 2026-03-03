@@ -1802,26 +1802,50 @@ use Symfony\Component\CssSelector\Node\HashNode;
                 // }
 
                 //kalaau panitera pengganti tidak ada
+                $jlh_panmud=0;
+                if(isset($data_peserta[$index_satker]['panitera_muda'])){
+                    $jlh_panmud=count($data_peserta[$index_satker]['panitera_muda']);
+                }
                 if(!isset($data_peserta[$index_satker]['panitera_pengganti'])){
-                    $data_peserta[$index_satker]["panitera_pengganti"][0]['nama']=isset($data_peserta[$index_satker]["panitera"]) ? $data_peserta[$index_satker]["panitera"][0]['nama'] : 'plt_panitera';
-                    $data_peserta[$index_satker]["panitera_pengganti"][0]['id_pegawai']=isset($data_peserta[$index_satker]["panitera"]) ? $data_peserta[$index_satker]["panitera"][0]['id_pegawai'] : 0;
-                    $data_peserta[$index_satker]["panitera_pengganti"][0]['id_pegawai_observee']=isset($data_peserta[$index_satker]["panitera"]) ? $data_peserta[$index_satker]["panitera"][0]['id_pegawai_observee'] : 0;
-                    $data_peserta[$index_satker]["panitera_pengganti"][0]['id_kelompok_jabatan']=isset($data_peserta[$index_satker]["panitera"]) ? $data_peserta[$index_satker]["panitera"][0]['id_kelompok_jabatan'] : 16;
-                    // $data_peserta[$index_satker]["panitera_pengganti"][0]['id_zona_satker']=$list_satker['IdZonaSatker'];
-                    $data_peserta[$index_satker]["panitera_pengganti"][0]['is_plt']="true";
-                    $data_peserta[$index_satker]["panitera_pengganti"][0]['jlh_menilai']=0;
-                    $data_peserta[$index_satker]["panitera_pengganti"][0]['index_jabatan']=0;
-                    $pointer_juru_sita=0;
+                    if($jlh_panmud > 0){
+                        //kalau panmud ada, maka  panmud akan menilai sebagai PP
+                        for($pm=0;$pm<$jlh_panmud;$pp++){
+                            $data_pp[$pm]['nama_panmud']=$data_peserta[$index_satker]["panitera_muda"][$pm]['nama'];
+                            $data_pp[$pm]['id_pegawai']=$data_peserta[$index_satker]['panitera_muda'][$pm]['id_pegawai'];
+                            $data_pp[$pm]['id_pegawai_observee']=$data_peserta[$index_satker]["panitera_muda"][$pm]['id_pegawai_observee'];
+                            $data_pp[$pm]['id_kelompok_jabatan']=32;
+                            $data_pp[$pm]['index_jabatan_plt']=$pm;
+                        }
+                    }else if(isset($data_peserta[$index_satker]["panitera"])){
+                        $data_pp[0]['nama_panmud']=$data_peserta[$index_satker]["panitera"][0]['nama'];
+                        $data_pp[0]['id_pegawai']=$data_peserta[$index_satker]['panitera'][0]['id_pegawai'];
+                        $data_pp[0]['id_pegawai_observee']=$data_peserta[$index_satker]["panitera"][0]['id_pegawai_observee'];
+                        $data_pp[0]['id_kelompok_jabatan']=32;
+                        $data_pp[0]['index_jabatan_plt']=0;
+                    }
+
+                    for($x=0;$x<count($data_pp);$x++){
+                        $data_peserta[$index_satker]["panitera_pengganti"][$x]['nama']=$data_pp[$x]['nama_panmud'];
+                    
+                        $data_peserta[$index_satker]["panitera_pengganti"][0]['id_pegawai']=$data_pp[$x]['id_pegawai'];
+
+                        $data_peserta[$index_satker]["panitera_pengganti"][0]['id_pegawai_observee']=$data_pp[$x]['id_pegawai_observee'];
+
+                        $data_peserta[$index_satker]["panitera_pengganti"][0]['id_kelompok_jabatan']=$data_pp[$x]['id_kelompok_jabatan'];
+                        $data_peserta[$index_satker]["panitera_pengganti"][0]['id_zona_satker']=$list_satker['IdZonaSatker'];
+                        $data_peserta[$index_satker]["panitera_pengganti"][0]['bagian']="Panitera Pengganti";
+                        $data_peserta[$index_satker]["panitera_pengganti"][0]['is_plt']="true";
+                        $data_peserta[$index_satker]['panitera_pengganti'][0]['index_jabatan_plt']=$data_pp[$x]['index_jabatan_plt'];
+                        $data_peserta[$index_satker]["panitera_pengganti"][0]['jlh_menilai']=0;
+                    }
+                    $pointer_panitera_pengganti=0;
                     // $variable_jabatan_peserta_arr[$index_satker][]="panitera_pengganti";
                     $id_jabatan_peserta_arr[$index_satker][]=1;
                     $nama_jabatan_arr[$index_satker][]="Panitera Pengganti";
                 }
 
                 //check total panmud = data peserta panmud
-                $jlh_panmud=0;
-                if(isset($data_peserta[$index_satker]['panitera_muda'])){
-                    $jlh_panmud=count($data_peserta[$index_satker]['panitera_muda']);
-                }
+                
                 // echo $list_satker['jumlah_panmud']." : ".$jlh_panmud;
                 if((int)$jlh_panmud !== 3){
                     $selisih=3-(int)$jlh_panmud;
