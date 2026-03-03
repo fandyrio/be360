@@ -932,8 +932,8 @@ use Symfony\Component\CssSelector\Node\HashNode;
                         }
                     }
                     
-                    $jumlah_penmud_not_exists=count($panmud_not_exists);
-                    if($jumlah_penmud_not_exists !== $selisih){
+                    $jumlah_panmud_not_exists=count($panmud_not_exists);
+                    if($jumlah_panmud_not_exists !== $selisih){
                         return ['status'=>false, 'msg'=>"Jumlah Panmud tidak sesuai. "];
                     }
 
@@ -1650,6 +1650,9 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                         ->orderBy('trans_observee.IdZonaSatker', 'desc')
                                         ->where('trans_observee.entry_job', false)
                                         ->get();
+                if($getPeserta->count === 0){
+                    return ['status'=>false, 'msg'=>"Data Peserta tidak ditemukan"];
+                }
 
             $get_jabatan_peserta=Tref_jabatan_peserta::where("active", true)->get();
             foreach($get_jabatan_peserta as $list_jabatan_peserta){
