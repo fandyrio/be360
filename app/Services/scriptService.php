@@ -125,7 +125,7 @@ use Illuminate\Support\Facades\DB;
                                             ->get();
                         $id_observee=[];                    
                         foreach($get_observee as $list_observee){
-                            $id_observee[]=$list_observee['id'];
+                            $id_observee[]=$list_observee['IdObservee'];
                         }
                         $jlh_penilaian=Trans_peserta_zonasi::whereIn("id_pegawai_penilai", $id_observee)
                                                         ->where("id_pegawai_peserta", $list_peserta_zonasi['id_pegawai_peserta'])
@@ -134,7 +134,7 @@ use Illuminate\Support\Facades\DB;
                         for($x=0;$x<count($id_observee);$x++){
                             echo "Id pegawai peserta : ".$list_peserta_zonasi['id_pegawai_peserta']." - id pegawai penilai: ".$id_observee[$x]."\n";
                         }
-                        echo "Jumlah Penilai: ".$id_kelompok_jabatan_penilai."\n";
+                        echo "Jumlah Penilai: ".$jlh_penilaian."\n";
                         if($is_plt === true){
                             $jlh_penilaian+=1;
                         }
