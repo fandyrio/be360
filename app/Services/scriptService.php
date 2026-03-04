@@ -51,6 +51,7 @@ use Illuminate\Support\Facades\DB;
                                                     "trans_peserta_zonasi.id_pegawai_peserta", 
                                                     "trans_peserta_zonasi.id_pegawai_penilai", 
                                                     "trans_peserta_zonasi.nilai", 
+                                                    "trans_peserta_zonasi.id as id_peserta_zonasi",
                                                     "tjp.id_jabatan_gabungan as id_jabatan_gabungan_peserta", 
                                                     "tjp.id_kelompok_jabatan as id_kelompok_jabatan_peserta", 
                                                     "tjp2.id_jabatan_gabungan as id_jabatan_gabungan_penilai", 
@@ -110,7 +111,7 @@ use Illuminate\Support\Facades\DB;
                         foreach($get_pertanyaan as $list_pertanyaan){
                             $nilai=$range[array_rand($range)];
                             $data_insert[]=[
-                                "id_peserta_zonasi"=>$list_peserta_zonasi['id'],
+                                "id_peserta_zonasi"=>$list_peserta_zonasi['id_peserta_zonasi'],
                                 "id_pertanyaan"=>$list_pertanyaan['id_pertanyaan_periode'],
                                 "id_reference"=>$id_reference,
                                 "nilai"=>$nilai,
