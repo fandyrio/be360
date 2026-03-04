@@ -46,7 +46,8 @@ use Illuminate\Support\Facades\DB;
                                                     ->join("tref_jabatan_peserta as tjp", "tjp.id_kelompok_jabatan", '=', 'to1.id_kelompok_jabatan')
                                                     ->join("trans_observee as to2", "to2.IdObservee", "=", "trans_peserta_zonasi.id_pegawai_penilai")
                                                     ->join("tref_jabatan_peserta as tjp2", "tjp2.id_kelompok_jabatan", "=", "to2.id_kelompok_jabatan")
-                                                    ->select("trans_peserta_zonasi.id_jabatan_plt", 
+                                                    ->select("trans_peserta_zonasi.id_zona_satker,
+                                                    trans_peserta_zonasi.id_jabatan_plt", 
                                                     "trans_peserta_zonasi.id_pegawai_peserta", 
                                                     "trans_peserta_zonasi.id_pegawai_penilai", 
                                                     "trans_peserta_zonasi.nilai", 
@@ -129,9 +130,9 @@ use Illuminate\Support\Facades\DB;
                         $jlh_penilaian=Trans_peserta_zonasi::whereIn("id_pegawai_penilai", $id_observee)
                                                         ->where("id_pegawai_peserta", $list_peserta_zonasi['id_pegawai_peserta'])
                                                         ->count();
-                        echo "<br />Id Penilaian: ";
+                        echo "\rId Penilaian: ";
                         for($x=0;$x<count($id_observee);$x++){
-                            echo "Id pegawai peserta : ".$list_peserta_zonasi['id_pegawai_peserta']." - id pegawai penilai: ".$id_observee[$x]."<br />";
+                            echo "Id pegawai peserta : ".$list_peserta_zonasi['id_pegawai_peserta']." - id pegawai penilai: ".$id_observee[$x]."\r";
                         }
                         if($is_plt === true){
                             $jlh_penilaian+=1;
