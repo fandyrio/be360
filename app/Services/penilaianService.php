@@ -665,8 +665,11 @@ use Vinkla\Hashids\Facades\Hashids;
             foreach($get_observee as $list_observee){
                 $id_observee[]=$list_observee['IdObservee'];
             }
+            //gimana dengan yang plt, belum kehitung disini.
+
             $jumlah_penilai=Trans_peserta_zonasi::where('id_pegawai_peserta', $id_observee_peserta)
                                                 ->whereIn('id_pegawai_penilai', $id_observee)
+                                                ->where("id_zona_satker", $id_zonasi_satker)
                                                 ->count();
             return $jumlah_penilai;     
         }
@@ -686,8 +689,11 @@ use Vinkla\Hashids\Facades\Hashids;
                 $id_jabatan_peserta=$list_jabatan['id_jabatan_peserta'];
                 if(is_null($list_jabatan['id_jabatan_plt'])){
                     $id_jabatan_penilai=$list_jabatan['id_jabatan_penilai'];
+                    $id_kelompok_jabatan_penilai=$list_jabatan['id_kelompok_jabatan_penilai'];
                 }else{
                     $id_jabatan_penilai=$list_jabatan['id_jabatan_plt'];
+                    $get_kelompok_jabatan=Tref_jabatan_peserta::where("id", $id_jabatan_penilai)->first();
+                    $id_kelompok_jabatan_penilai=$get_kelompok_jabatan["id_kelompok_jabatan"];
                     $is_plt=true;
                 }
 
@@ -700,9 +706,9 @@ use Vinkla\Hashids\Facades\Hashids;
                 }
 
                 $bobot_penilaian=$bobot["bobot_{$id_jabatan_peserta}_{$id_jabatan_penilai}"];
-                $jumlah_penilai=$this->countJabatanPenilaiSatker($id_zonasi_satker, $list_jabatan['id_kelompok_jabatan_penilai'], $list_jabatan['id_pegawai_peserta']);
-                if($jumlah_penilai === 0 && $is_plt === true){
-                    $jumlah_penilai = 1;
+                $jumlah_penilai=$this->countJabatanPenilaiSatker($id_zonasi_satker, $id_kelompok_jabatan_penilai, $list_jabatan['id_pegawai_peserta']);
+                if($is_plt === true){
+                    $jumlah_penilai += 1;
                 }
                 $nilai_akhir+=(($current_nilai_peserta*$bobot_penilaian) / 100 ) / $jumlah_penilai;
                 $id_observee_peserta=$list_jabatan['id_pegawai_peserta'];
@@ -752,6 +758,7 @@ use Vinkla\Hashids\Facades\Hashids;
                                             $get_observee=Trans_observee::where('IdObservee', $nilai_observee['id_observee_peserta'])
                                                                         ->lockForUpdate()    
                                                                         ->first();
+                                            
                                             $total_nilai_terakhir=$get_observee['total_nilai'];
                                             $total_nilai_terakhir+=$nilai_observee['nilai_akhir'];
                                             $get_observee->total_nilai=$total_nilai_terakhir;
