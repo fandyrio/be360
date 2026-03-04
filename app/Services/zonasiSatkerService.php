@@ -626,7 +626,7 @@ use PDO;
                                         $status=true;
                                         $msg="Berahasil mengirimkan penilaian ke Badilum";
                                     }else{
-                                        throw new \Exception("Data Penilaian tidak sesuai");
+                                        throw new \Exception("Data Penilaian tidak sesuai ".$update_peserta." : ".$jumlah_penilaian);
                                     }
                             }catch(\Exception $e){
                                 DB::rollBack();
