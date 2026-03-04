@@ -75,8 +75,8 @@ use Illuminate\Support\Facades\DB;
                 $id_jabatan_penilai=$list_peserta_zonasi['id_jabatan_penilai'];
                 $id_jabatan_peserta=$list_peserta_zonasi['id_jabatan_peserta'];
                 $get_nilai=Trans_nilai_peserta_zonasi::where('id_peserta_zonasi', $list_peserta_zonasi['id_peserta_zonasi'])
-                        ->where('nilai', 0)
-                        ->where('locked', false);
+                        ->where('nilai', '>', 0)
+                        ->where('locked', true);
                 $nilai_peserta=clone $get_nilai->get();
                 $current_nilai=0;
                 if($nilai_peserta->count() === 0){
