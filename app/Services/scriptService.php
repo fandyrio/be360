@@ -165,13 +165,14 @@ use Illuminate\Support\Facades\DB;
                         $current_total=$get_current_nilai['total_nilai']+=$nilai_total;
                         try{
                             DB::beginTransaction();
-                                Trans_peserta_zonasi::table('trans_nilai_peserta_zonasi')->insert($data_insert);
+                                DB::table('trans_nilai_peserta_zonasi')->insert($data_insert);
                                 $get_current_nilai->total_nilai=$current_total;
                                 $get_current_nilai->update();
                             DB::commit();
                         }catch(\Exception $e){
                             DB::rollBack();
-                            $msg=$e->getMessage();
+                            $msg=$e->getMessage()." ".$e->getLine();
+                            echo $msg;
                         }
                     }catch(\Exception $e){
                         echo "Error: ".$e->getMessage()." ".$e->getLine();
