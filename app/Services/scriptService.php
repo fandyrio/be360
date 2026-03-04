@@ -136,7 +136,7 @@ use Illuminate\Support\Facades\DB;
                         //     $bobot_penilaian=100;
                         // }else{
                             $bobot_penilaian=$bobot_penilaian_jabatan["bobot_{$id_jabatan_penilai}_{$id_jabatan_peserta}"];
-                            echo $bobot."<br />";
+                            echo $bobot_penilaian."<br />";
                         // }
                         $nilai_total=((($nilai_peserta * $bobot_penilaian) / 100) / $jlh_penilaian);
                         $get_current_nilai=Trans_observee::where("id", $id_pegawai_peserta)->first();
