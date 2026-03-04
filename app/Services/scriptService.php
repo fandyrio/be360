@@ -28,7 +28,7 @@ use Illuminate\Support\Facades\DB;
             }
 
             #get Bobot penilaian masing - masing jabatan
-            $get_bobot_penilaian_jabatan=Trans_bobot_penilaian_periode::join("tref_bobot_penilai as tbp", function($join) use($id_periode){
+            $get_bobot_penilaian_jabatan=Trans_bobot_penilaian_periode::join("tref_bobot_penilaian as tbp", function($join) use($id_periode){
                                             $join->on("tbp.id", "=", "trans_bobot_penilaian_periode.id_bobot_penilai")
                                             ->where("id_periode", $id_periode);
                                         })
