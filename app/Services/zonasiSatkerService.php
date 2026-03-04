@@ -529,6 +529,12 @@ use PDO;
                         if($peserta_blm_nilai > 0){
                             $zonasi_aktif=false;
                         }
+                        $get_observee = Trans_observee::where("IdZonaSatker", $id_zonasi_satker)
+                                            ->where('send_to_badilum', 1)
+                                            ->exists();
+                        if($get_observee){
+                            $zonasi_aktif=true;
+                        }
                     }else{
                         $msg="Zonasi telah selesai";
                     }
@@ -622,6 +628,8 @@ use PDO;
                                     $update_peserta=Trans_peserta_zonasi::where('id_zona_satker', $id_zonasi_satker)
                                                 ->update(['status'=> true]);
                                     // if($update_peserta === (int)$jumlah_penilaian){
+                                        $update_observee=Trans_observee::where("IdZonaSatker", $id_zonasi_satker)
+                                                    ->update(['send_to_badulum' => true]);
                                         DB::commit();
                                         $status=true;
                                         $msg="Berahasil mengirimkan penilaian ke Badilum";
