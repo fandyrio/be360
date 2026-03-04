@@ -46,8 +46,8 @@ use Illuminate\Support\Facades\DB;
                                                     ->join("tref_jabatan_peserta as tjp", "tjp.id_kelompok_jabatan", '=', 'to1.id_kelompok_jabatan')
                                                     ->join("trans_observee as to2", "to2.IdObservee", "=", "trans_peserta_zonasi.id_pegawai_penilai")
                                                     ->join("tref_jabatan_peserta as tjp2", "tjp2.id_kelompok_jabatan", "=", "to2.id_kelompok_jabatan")
-                                                    ->select("trans_peserta_zonasi.id_zona_satker,
-                                                    trans_peserta_zonasi.id_jabatan_plt", 
+                                                    ->select("trans_peserta_zonasi.id_zona_satker",
+                                                    "trans_peserta_zonasi.id_jabatan_plt", 
                                                     "trans_peserta_zonasi.id_pegawai_peserta", 
                                                     "trans_peserta_zonasi.id_pegawai_penilai", 
                                                     "trans_peserta_zonasi.nilai", 
