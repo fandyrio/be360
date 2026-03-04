@@ -69,7 +69,7 @@ use Illuminate\Support\Facades\DB;
 
             
             foreach($get_peserta_zonasi as $list_peserta_zonasi){
-                $data_insert[]=[];
+                $data_insert=[];
                 $is_plt=false;
                 $id_pegawai_penilai=$list_peserta_zonasi['id_pegawai_penilai'];
                 $id_pegawai_peserta=$list_peserta_zonasi['id_pegawai_peserta'];
