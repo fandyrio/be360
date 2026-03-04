@@ -170,7 +170,7 @@ use Illuminate\Support\Facades\DB;
                             DB::beginTransaction();
                                 DB::table('trans_nilai_peserta_zonasi')->insert($data_insert);
                                 $get_current_nilai->total_nilai=$current_total;
-                                $get_current_nilai->updated_at=date("Y-m-d H:i:s");
+                                // $get_current_nilai->updated_at=date("Y-m-d H:i:s");
                                 $get_current_nilai->update();
                             DB::commit();
                         }catch(\Exception $e){
@@ -180,7 +180,7 @@ use Illuminate\Support\Facades\DB;
                         }
                     }catch(\Exception $e){
                         echo "Error: ".$e->getMessage()." ".$e->getLine();
-                        break;
+                        exit();
                     }
                     #3. Simpan Nilai masing - masing
                     echo "\n======================================\n";
