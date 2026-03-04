@@ -67,13 +67,15 @@ use Illuminate\Support\Facades\DB;
             $range=[1,2,3,4,5];
 
 
-            $data_insert=[];
+            
             foreach($get_peserta_zonasi as $list_peserta_zonasi){
+                $data_insert=[];
                 $is_plt=false;
                 $id_pegawai_penilai=$list_peserta_zonasi['id_pegawai_penilai'];
                 $id_pegawai_peserta=$list_peserta_zonasi['id_pegawai_peserta'];
                 $id_jabatan_penilai=$list_peserta_zonasi['id_jabatan_penilai'];
                 $id_jabatan_peserta=$list_peserta_zonasi['id_jabatan_peserta'];
+                
                 $get_nilai=Trans_nilai_peserta_zonasi::where('id_peserta_zonasi', $list_peserta_zonasi['id_peserta_zonasi'])
                         ->where('nilai', '>', 0)
                         ->where('locked', true);
@@ -168,6 +170,7 @@ use Illuminate\Support\Facades\DB;
                             DB::beginTransaction();
                                 DB::table('trans_nilai_peserta_zonasi')->insert($data_insert);
                                 $get_current_nilai->total_nilai=$current_total;
+                                $get_current_nilai->updated_at=date("Y-m-d H:i:s");
                                 $get_current_nilai->update();
                             DB::commit();
                         }catch(\Exception $e){
@@ -177,6 +180,7 @@ use Illuminate\Support\Facades\DB;
                         }
                     }catch(\Exception $e){
                         echo "Error: ".$e->getMessage()." ".$e->getLine();
+                        break;
                     }
                     #3. Simpan Nilai masing - masing
                     echo "\n======================================\n";
