@@ -629,7 +629,7 @@ use PDO;
                                                 ->update(['status'=> true]);
                                     // if($update_peserta === (int)$jumlah_penilaian){
                                         $update_observee=Trans_observee::where("IdZonaSatker", $id_zonasi_satker)
-                                                    ->update(['send_to_badulum' => true]);
+                                                    ->update(['send_to_badilum' => true]);
                                         DB::commit();
                                         $status=true;
                                         $msg="Berahasil mengirimkan penilaian ke Badilum";
