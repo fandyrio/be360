@@ -351,6 +351,7 @@ class zonasiController extends Controller
             $id_zonasi=$id_zonasi[0];
             if(!is_null($refresh) && $refresh === "true"){
                 $limit = 50;
+                
                 Cache::store('redis')->forget("monitoring_badilum_{$id_zonasi}_{$page}_{$limit}");
             }
             $monitoring=$this->zonasiService->monitoringBadilum($id_zonasi, $page);
