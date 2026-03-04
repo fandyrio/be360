@@ -134,7 +134,7 @@ use Illuminate\Support\Facades\DB;
                         for($x=0;$x<count($id_observee);$x++){
                             echo "Id pegawai peserta : ".$list_peserta_zonasi['id_pegawai_peserta']." - id pegawai penilai: ".$id_observee[$x]."\n";
                         }
-                        echo "Jumlah Penilai: ".$jlh_penilaian."\n";
+                        echo "Jumlah Penilai: ".$id_kelompok_jabatan_penilai."\n";
                         if($is_plt === true){
                             $jlh_penilaian+=1;
                         }
