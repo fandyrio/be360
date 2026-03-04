@@ -7,6 +7,7 @@ use App\Models\Trans_observee;
 use App\Models\Trans_peserta_zonasi;
 use App\Models\Tref_jabatan_peserta;
 use App\Models\Tref_zonasi;
+use Exception;
 use Illuminate\Support\Facades\DB;
 
     class scriptService{
@@ -99,51 +100,58 @@ use Illuminate\Support\Facades\DB;
                         $id_jabatan_penilai=$list_peserta_zonasi['id_jabatan_gabungan_penilai'];
                     }
 
-
-                    $nilai_peserta=0;
-                    foreach($get_pertanyaan as $list_pertanyaan){
-                        $nilai=$range[array_rand($range)];
-                        $data_insert[]=[
-                            "id_peserta_zonasi"=>$list_peserta_zonasi['id'],
-                            "id_pertanyaan"=>$list_pertanyaan['id'],
-                            "id_reference"=>$id_reference,
-                            "nilai"=>$nilai,
-                            "locked"=>1,
-                            "updated_at"=>date("Y-m-d H:i:s")
-                        ];
-                        #3. Convert ke nilai Bobot Perentase masing - masing pertanyaan 
-                        $nilai_bobot=$list_pertanyaan['bobot'] * $nilai / 100; 
-                        $nilai_peserta+=$nilai_bobot;
-                    }
-
-                    
-                    #hitung orang yang ada di jabatan itu
-                    $get_observee=Trans_observee::where("id_kelompok_jabatan", $id_kelompok_jabatan_penilai)
-                                        ->where("IdZonaSatker", $list_peserta_zonasi['id_zona_satker'])
-                                        ->get();
-                    $id_observee=[];                    
-                    foreach($get_observee as $list_observee){
-                        $id_observee[]=$list_observee['id'];
-                    }
-                    $jlh_penilaian=Trans_peserta_zonasi::whereIn("id_pegawai_penilai", $id_observee)
-                                                    ->where("id_pegawai_peserta", $list_peserta_zonasi['id_pegawai_peserta'])
-                                                    ->count();
-                    if($is_plt === true){
-                        $jlh_penilaian+=1;
-                    }
-                    $bobot_penilaian=$bobot_penilaian_jabatan["bobot_{$id_jabatan_penilai}_{$id_jabatan_peserta}"];
-                    $nilai_total=((($nilai_peserta * $bobot_penilaian) / 100) / $jlh_penilaian);
-                    $get_current_nilai=Trans_observee::where("id", $id_pegawai_peserta)->first();
-                    $current_total=$get_current_nilai['total_nilai']+=$nilai_total;
                     try{
-                        DB::beginTransaction();
-                            Trans_peserta_zonasi::table('trans_nilai_peserta_zonasi')->insert($data_insert);
-                            $get_current_nilai->total_nilai=$current_total;
-                            $get_current_nilai->update();
-                        DB::commit();
-                    }catch(\Exception $e){
-                        DB::rollBack();
-                        $msg=$e->getMessage();
+                        $nilai_peserta=0;
+                        foreach($get_pertanyaan as $list_pertanyaan){
+                            $nilai=$range[array_rand($range)];
+                            $data_insert[]=[
+                                "id_peserta_zonasi"=>$list_peserta_zonasi['id'],
+                                "id_pertanyaan"=>$list_pertanyaan['id'],
+                                "id_reference"=>$id_reference,
+                                "nilai"=>$nilai,
+                                "locked"=>1,
+                                "updated_at"=>date("Y-m-d H:i:s")
+                            ];
+                            #3. Convert ke nilai Bobot Perentase masing - masing pertanyaan 
+                            $nilai_bobot=$list_pertanyaan['bobot'] * $nilai / 100; 
+                            $nilai_peserta+=$nilai_bobot;
+                        }
+
+                        
+                        #hitung orang yang ada di jabatan itu
+                        $get_observee=Trans_observee::where("id_kelompok_jabatan", $id_kelompok_jabatan_penilai)
+                                            ->where("IdZonaSatker", $list_peserta_zonasi['id_zona_satker'])
+                                            ->get();
+                        $id_observee=[];                    
+                        foreach($get_observee as $list_observee){
+                            $id_observee[]=$list_observee['id'];
+                        }
+                        $jlh_penilaian=Trans_peserta_zonasi::whereIn("id_pegawai_penilai", $id_observee)
+                                                        ->where("id_pegawai_peserta", $list_peserta_zonasi['id_pegawai_peserta'])
+                                                        ->count();
+                        if($is_plt === true){
+                            $jlh_penilaian+=1;
+                        }
+                        // if($id_jabatan_penilai === 1 && $id_jabatan_peserta === 1){
+                        //     $bobot_penilaian=100;
+                        // }else{
+                            $bobot_penilaian=$bobot_penilaian_jabatan["bobot_{$id_jabatan_penilai}_{$id_jabatan_peserta}"];
+                        // }
+                        $nilai_total=((($nilai_peserta * $bobot_penilaian) / 100) / $jlh_penilaian);
+                        $get_current_nilai=Trans_observee::where("id", $id_pegawai_peserta)->first();
+                        $current_total=$get_current_nilai['total_nilai']+=$nilai_total;
+                        try{
+                            DB::beginTransaction();
+                                Trans_peserta_zonasi::table('trans_nilai_peserta_zonasi')->insert($data_insert);
+                                $get_current_nilai->total_nilai=$current_total;
+                                $get_current_nilai->update();
+                            DB::commit();
+                        }catch(\Exception $e){
+                            DB::rollBack();
+                            $msg=$e->getMessage();
+                        }
+                    }catch(Exception $e){
+                        echo $e->getMessage();
                     }
                     #3. Simpan Nilai masing - masing
                 }
