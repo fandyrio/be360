@@ -87,7 +87,10 @@ use Illuminate\Support\Facades\DB;
                                         ->whereRaw("id_jabatan_plt is not null")
                                         ->first();
                         $id_reference=$check_pz_plt['id'];
-                        $id_kelompok_jabatan_penilai=$list_peserta_zonasi['id_jabatan_plt'];
+                        $id_jabatan_plt=$list_peserta_zonasi['id_jabatan_plt'];
+                        $get_data=Tref_jabatan_peserta::where("id", $id_jabatan_plt)->first();
+                        $id_kelompok_jabatan_penilai=$get_data['id_kelompok_jabatan'];
+                        $id_jabatan_penilai=$list_peserta_zonasi['id_jabatan_plt'];
                         $is_plt=true;
                         // var_dump($id_kelompok_jabatan_penilai);
                     }else{
@@ -124,7 +127,9 @@ use Illuminate\Support\Facades\DB;
                         $get_observee=Trans_observee::where("id_kelompok_jabatan", $id_kelompok_jabatan_penilai)
                                             ->where("IdZonaSatker", $list_peserta_zonasi['id_zona_satker'])
                                             ->get();
+
                         echo "\nid kelompok jabatan penilai: ".$id_kelompok_jabatan_penilai;
+
                         $id_observee=[];                    
                         foreach($get_observee as $list_observee){
                             $id_observee[]=$list_observee['IdObservee'];
@@ -132,15 +137,17 @@ use Illuminate\Support\Facades\DB;
                         $jlh_penilaian=Trans_peserta_zonasi::whereIn("id_pegawai_penilai", $id_observee)
                                                         ->where("id_pegawai_peserta", $list_peserta_zonasi['id_pegawai_peserta'])
                                                         ->count();
-                        echo "\nId Penilaian: ";
+
+                        echo "\nId Penilaian: \n";
+
                         for($x=0;$x<count($id_observee);$x++){
                             echo "Id pegawai peserta : ".$list_peserta_zonasi['id_pegawai_peserta']." - id pegawai penilai: ".$id_observee[$x]."\n";
                         }
-                        echo "\nJumlah Penilai: ".$jlh_penilaian."\n";
+                        echo "\n";
                         if($is_plt === true){
                             $jlh_penilaian+=1;
                         }
-                        
+                        echo "\nJumlah Penilai: ".$jlh_penilaian."\n";
                             $bobot_penilaian=$bobot_penilaian_jabatan["bobot_{$id_jabatan_penilai}_{$id_jabatan_peserta}"];
                             echo $id_jabatan_penilai." : ".$id_jabatan_peserta." = ".$bobot_penilaian."\n";
                         
@@ -161,6 +168,7 @@ use Illuminate\Support\Facades\DB;
                         echo "Error: ".$e->getMessage()." ".$e->getLine();
                     }
                     #3. Simpan Nilai masing - masing
+                    echo "\n======================================\n";
                 }
                 
             }
