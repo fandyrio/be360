@@ -52,7 +52,7 @@ use Illuminate\Support\Facades\DB;
                                                     "tjp.id_jabatan_gabungan as id_jabatan_gabungan_peserta", 
                                                     "tjp.id_kelompok_jabatan as id_kelompok_jabatan_peserta", 
                                                     "tjp2.id_jabatan_gabungan as id_jabatan_gabungan_penilai", 
-                                                    "tjp2/id_kelompok_jabatan as id_kelompok_jabatan_penilai", 
+                                                    "tjp2.id_kelompok_jabatan as id_kelompok_jabatan_penilai", 
                                                     "tjp.id as id_jabatan_peserta", 
                                                     "tjp2.id as id_jabatan_penilai")
                                                 ->where('trans_peserta_zonasi.id_zonasi', $id_zonasi)->get();
