@@ -533,7 +533,7 @@ use PDO;
                                             ->where('send_to_badilum', 1)
                                             ->exists();
                         if($get_observee){
-                            $zonasi_aktif=true;
+                            $zonasi_aktif=false;
                         }
                     }else{
                         $msg="Zonasi telah selesai";
