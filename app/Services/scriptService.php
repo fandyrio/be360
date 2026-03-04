@@ -88,9 +88,9 @@ use Illuminate\Support\Facades\DB;
                                         ->first();
                         $id_reference=$check_pz_plt['id'];
                         $id_kelompok_jabatan_penilai=$list_peserta_zonasi['id_jabatan_plt'];
+                        $is_plt=true;
                         // var_dump($id_kelompok_jabatan_penilai);
                     }else{
-                        $is_plt=true;
                         $id_kelompok_jabatan_penilai=$list_peserta_zonasi['id_kelompok_jabatan_penilai'];
                     }
                     
