@@ -19,10 +19,10 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
             $id_periode=$get_zonasi['id_periode'];
             if((int)$id_periode_ctrl === $id_periode){
                 /** @var \Illuminate\Support\Collection $get_jabatan_periode */
-                if($refesh === true){
+                // if($refesh === true){
                     Cache::store('redis')->forget("jabatan_periode_{$id_periode}");
                     Cache::store('redis')->forget("report_periode_zs_{$id_periode}_{$id_zonasi_satker}_{$id_zonasi}");
-                }
+                // }
                 $get_jabatan_periode=Cache::store('redis')->remember("jabatan_periode_{$id_periode}", 3600*24*24, function() use($id_periode){
                     return DB::table("tref_jabatan_peserta as tjp")
                                 ->whereRaw("id IN (SELECT DISTINCT(id_jabatan_peserta) from tref_mapping_jabatan as tmj 
