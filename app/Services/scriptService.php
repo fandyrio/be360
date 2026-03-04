@@ -87,11 +87,11 @@ use Illuminate\Support\Facades\DB;
                                         ->whereRaw("id_jabatan_plt is not null")
                                         ->first();
                         $id_reference=$check_pz_plt['id'];
-                        $id_kelompok_jabatan_penilai=$list_peserta_zonasi['id_kelompok_jabatan_penilai'];
-                        var_dump($id_kelompok_jabatan_penilai);
+                        $id_kelompok_jabatan_penilai=$list_peserta_zonasi['id_jabatan_plt'];
+                        // var_dump($id_kelompok_jabatan_penilai);
                     }else{
                         $is_plt=true;
-                        $id_kelompok_jabatan_penilai=$list_peserta_zonasi['id_jabatan_plt'];
+                        $id_kelompok_jabatan_penilai=$list_peserta_zonasi['id_kelompok_jabatan_penilai'];
                     }
                     
                     if(!is_null($list_peserta_zonasi['id_jabatan_gabungan_peserta'])){
