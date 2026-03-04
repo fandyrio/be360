@@ -69,7 +69,7 @@ use Illuminate\Support\Facades\DB;
 
             
             foreach($get_peserta_zonasi as $list_peserta_zonasi){
-                $data_insert=[];
+                $data_insert[]=[];
                 $is_plt=false;
                 $id_pegawai_penilai=$list_peserta_zonasi['id_pegawai_penilai'];
                 $id_pegawai_peserta=$list_peserta_zonasi['id_pegawai_peserta'];
@@ -150,6 +150,7 @@ use Illuminate\Support\Facades\DB;
                         if($is_plt === true){
                             $jlh_penilaian+=1;
                         }
+                        //tambah ke prod
                         if($jlh_penilaian === 0 && $id_jabatan_penilai === 1 && $id_jabatan_peserta === 1){
                             $get_penilaian=Trans_peserta_zonasi::where("id_pegawai_penilai", $id_pegawai_penilai)
                                                 ->where("id_pegawai_peserta", $id_pegawai_peserta)
@@ -172,6 +173,11 @@ use Illuminate\Support\Facades\DB;
                                 $get_current_nilai->total_nilai=$current_total;
                                 // $get_current_nilai->updated_at=date("Y-m-d H:i:s");
                                 $get_current_nilai->update();
+
+                                $get_peserta_zonasi=Trans_peserta_zonasi::where("id", $list_peserta_zonasi['id_peserta_zonasi'])->first();
+                                $get_peserta_zonasi->nilai=$nilai_peserta;
+                                $get_peserta_zonasi->update();
+
                             DB::commit();
                         }catch(\Exception $e){
                             DB::rollBack();
