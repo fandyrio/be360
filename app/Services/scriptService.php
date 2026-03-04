@@ -151,7 +151,7 @@ use Illuminate\Support\Facades\DB;
                             $msg=$e->getMessage();
                         }
                     }catch(Exception $e){
-                        echo $e->getMessage();
+                        echo "Error: ".$e->getMessage()." ".$e->getLine();
                     }
                     #3. Simpan Nilai masing - masing
                 }
