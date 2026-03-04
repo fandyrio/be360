@@ -620,7 +620,7 @@ use PDO;
                             try{
                                 DB::beginTransaction();
                                     $update_peserta=Trans_peserta_zonasi::where('id_zona_satker', $id_zonasi_satker)
-                                                ->update(['status', true]);
+                                                ->update(['status'=> true]);
                                     if($update_peserta === (int)$jumlah_penilaian){
                                         DB::commit();
                                         $status=true;
