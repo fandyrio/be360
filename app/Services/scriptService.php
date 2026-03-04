@@ -111,7 +111,7 @@ use Illuminate\Support\Facades\DB;
                             $nilai=$range[array_rand($range)];
                             $data_insert[]=[
                                 "id_peserta_zonasi"=>$list_peserta_zonasi['id'],
-                                "id_pertanyaan"=>$list_pertanyaan['id'],
+                                "id_pertanyaan"=>$list_pertanyaan['id_pertanyaan_periode'],
                                 "id_reference"=>$id_reference,
                                 "nilai"=>$nilai,
                                 "locked"=>1,
