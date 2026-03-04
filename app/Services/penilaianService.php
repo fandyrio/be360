@@ -715,7 +715,7 @@ use Vinkla\Hashids\Facades\Hashids;
                                                 ->where("id_pegawai_peserta", $list_jabatan['id_pegawai_peserta'])
                                                 ->first();
                     if(!is_null($get_penilaian)){
-                        $jlh_penilaian=1;
+                        $jumlah_penilai=1;
                     }
                 }
                 $nilai_akhir+=(($current_nilai_peserta*$bobot_penilaian) / 100 ) / $jumlah_penilai;
