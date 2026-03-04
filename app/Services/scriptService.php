@@ -111,7 +111,7 @@ use Illuminate\Support\Facades\DB;
                                 "id_reference"=>$id_reference,
                                 "nilai"=>$nilai,
                                 "locked"=>1,
-                                "updated_at"=>date("Y-m-d H:i:s")
+                                "created_at"=>date("Y-m-d H:i:s")
                             ];
                             #3. Convert ke nilai Bobot Perentase masing - masing pertanyaan 
                             $nilai_bobot=$list_pertanyaan['bobot'] * $nilai / 100; 
@@ -123,6 +123,7 @@ use Illuminate\Support\Facades\DB;
                         $get_observee=Trans_observee::where("id_kelompok_jabatan", $id_kelompok_jabatan_penilai)
                                             ->where("IdZonaSatker", $list_peserta_zonasi['id_zona_satker'])
                                             ->get();
+                        echo "\nid kelompok jabatan penilai: ".$id_kelompok_jabatan_penilai;
                         $id_observee=[];                    
                         foreach($get_observee as $list_observee){
                             $id_observee[]=$list_observee['IdObservee'];
@@ -134,16 +135,14 @@ use Illuminate\Support\Facades\DB;
                         for($x=0;$x<count($id_observee);$x++){
                             echo "Id pegawai peserta : ".$list_peserta_zonasi['id_pegawai_peserta']." - id pegawai penilai: ".$id_observee[$x]."\n";
                         }
-                        echo "Jumlah Penilai: ".$jlh_penilaian."\n";
+                        echo "\nJumlah Penilai: ".$jlh_penilaian."\n";
                         if($is_plt === true){
                             $jlh_penilaian+=1;
                         }
-                        // if($id_jabatan_penilai === 1 && $id_jabatan_peserta === 1){
-                        //     $bobot_penilaian=100;
-                        // }else{
+                        
                             $bobot_penilaian=$bobot_penilaian_jabatan["bobot_{$id_jabatan_penilai}_{$id_jabatan_peserta}"];
                             echo $id_jabatan_penilai." : ".$id_jabatan_peserta." = ".$bobot_penilaian."\n";
-                        // }
+                        
                         $nilai_total=((($nilai_peserta * $bobot_penilaian) / 100) / $jlh_penilaian);
                         $get_current_nilai=Trans_observee::where("IdObservee", $id_pegawai_peserta)->first();
                         $current_total=$get_current_nilai['total_nilai']+=$nilai_total;
