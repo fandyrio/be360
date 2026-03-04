@@ -130,10 +130,11 @@ use Illuminate\Support\Facades\DB;
                         $jlh_penilaian=Trans_peserta_zonasi::whereIn("id_pegawai_penilai", $id_observee)
                                                         ->where("id_pegawai_peserta", $list_peserta_zonasi['id_pegawai_peserta'])
                                                         ->count();
-                        echo "\rId Penilaian: ";
+                        echo "\nId Penilaian: ";
                         for($x=0;$x<count($id_observee);$x++){
-                            echo "Id pegawai peserta : ".$list_peserta_zonasi['id_pegawai_peserta']." - id pegawai penilai: ".$id_observee[$x]."\r";
+                            echo "Id pegawai peserta : ".$list_peserta_zonasi['id_pegawai_peserta']." - id pegawai penilai: ".$id_observee[$x]."\n";
                         }
+                        echo "Jumlah Penilai: ".$jlh_penilaian."\n";
                         if($is_plt === true){
                             $jlh_penilaian+=1;
                         }
@@ -141,7 +142,7 @@ use Illuminate\Support\Facades\DB;
                         //     $bobot_penilaian=100;
                         // }else{
                             $bobot_penilaian=$bobot_penilaian_jabatan["bobot_{$id_jabatan_penilai}_{$id_jabatan_peserta}"];
-                            echo $id_jabatan_penilai." : ".$id_jabatan_peserta." = ".$bobot_penilaian."<br />";
+                            echo $id_jabatan_penilai." : ".$id_jabatan_peserta." = ".$bobot_penilaian."\n";
                         // }
                         $nilai_total=((($nilai_peserta * $bobot_penilaian) / 100) / $jlh_penilaian);
                         $get_current_nilai=Trans_observee::where("id", $id_pegawai_peserta)->first();
