@@ -147,6 +147,15 @@ use Illuminate\Support\Facades\DB;
                         if($is_plt === true){
                             $jlh_penilaian+=1;
                         }
+                        if($jlh_penilaian === 0 && $id_jabatan_penilai === 1 && $id_jabatan_peserta === 1){
+                            $get_penilaian=Trans_peserta_zonasi::where("id_pegawai_penilai", $id_pegawai_penilai)
+                                                ->where("id_pegawai_peserta", $id_pegawai_peserta)
+                                                ->first();
+                            if(!is_null($get_penilaian)){
+                                $jlh_penilaian=1;
+                            }
+                            echo "\nKetua Menilai ketua: \n";
+                        }
                         echo "\nJumlah Penilai: ".$jlh_penilaian."\n";
                             $bobot_penilaian=$bobot_penilaian_jabatan["bobot_{$id_jabatan_penilai}_{$id_jabatan_peserta}"];
                             echo $id_jabatan_penilai." : ".$id_jabatan_peserta." = ".$bobot_penilaian."\n";
