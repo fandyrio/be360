@@ -37,7 +37,7 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
                         CASE 
                             WHEN toe.id_kelompok_jabatan = {$row->id_kelompok_jabatan} 
                                 THEN 1
-                            WHEN tjp.id_jabatan_gabungan = {$row->id_kelompok_jabatan}
+                            WHEN tjp.id_jabatan_gabungan is not null and tjp.id_jabatan_gabungan = {$row->id}
                                 THEN 1 
                             ELSE 0 
                         END) AS `{$row->jabatan}`";
