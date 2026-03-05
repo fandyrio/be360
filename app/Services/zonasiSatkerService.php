@@ -562,7 +562,7 @@ use PDO;
                             $data[$x]['status_nilai'] = $list_data->nilai;
                             $x++;
                         }
-                        $payload=Hashids::encode($id_zonasi_satker)."-".Hashids::encode($id_satker_ctlr)."-".Hashids::encode($jumlah_data);
+                        $payload=Hashids::encode($id_zonasi_satker)."-".Hashids::encode($id_satker_ctlr)."-".Hashids::encode($total);
                         $signature=generateSignature($payload);
                     }else{
                         $msg="Data tidak ditemukan :1";
