@@ -29,7 +29,7 @@ class ThrottleIsiSurvey
                 function(){
                     return true;
                 },
-                10
+                120
         );
         
         if(!$exceuted){
@@ -38,5 +38,5 @@ class ThrottleIsiSurvey
         }
         return $next($request);
         
-    }
+}
 }
