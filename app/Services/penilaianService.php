@@ -416,6 +416,7 @@ use Vinkla\Hashids\Facades\Hashids;
                                                     "trans_nilai_peserta_zonasi.id_peserta_zonasi",
                                                     "trans_nilai_peserta_zonasi.nilai",
                                                     "trans_nilai_peserta_zonasi.id_pertanyaan",
+                                                    "trans_nilai_peserta_zonasi.id_reference",
                                                     "trans_nilai_peserta_zonasi.locked") 
                                                     ->whereIn('id_peserta_zonasi', $id_peserta_zonasi)
                                                     ->orderBy('trans_nilai_peserta_zonasi.id_peserta_zonasi', 'asc')
@@ -437,7 +438,7 @@ use Vinkla\Hashids\Facades\Hashids;
                         $edit_nilai=[];
                         foreach($get_existed_nilai as $list_pertanyaan){
                             //untuk set 1 orang saja
-                            if(is_null($id_peserta_zonasi_before) || (int)$list_pertanyaan['id_peserta_zonasi'] === (int)$id_peserta_zonasi_before){
+                            if(is_null($list_pertanyaan['id_reference']) && (is_null($id_peserta_zonasi_before) || (int)$list_pertanyaan['id_peserta_zonasi'] === (int)$id_peserta_zonasi_before)){
                                 if((int)$list_pertanyaan['locked'] === 1){
                                     $edit_nilai[$a]=0;
                                 }
@@ -577,6 +578,7 @@ use Vinkla\Hashids\Facades\Hashids;
                                             $msg="Jawaban berhasil disimpan ".$affected_nilai;
                                         }else{
                                             $debug=$id_nilai." - ".$parent_zonasi." ".$id_pertanyaan_periode;
+                                            // [1:2 : 7813 - 36840 133]
                                             throw new \Exception("Tidak dapat menyimpan jawaban anda code [".$affected_nilai.":".$jumlah_peserta_zonasi." : ".$debug."]");
                                         }
                                     }catch(\Exception $e){
