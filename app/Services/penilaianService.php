@@ -97,7 +97,6 @@ use Vinkla\Hashids\Facades\Hashids;
                                                 'tp2.nama_pegawai as nama_penilai', 
                                                 'tp2.foto_pegawai as foto_penilai',
                                                 'trans_peserta_zonasi.id as id_peserta_zonasi')
-                                            ->where("id_pegawai_penilai", $id_observee)
                                             ->where('to2.NIPBaru', $nip_penilai)
                                             ->where("to2.IdZonaSatker", $id_zonasi_satker)
                                             ->get();
@@ -109,7 +108,7 @@ use Vinkla\Hashids\Facades\Hashids;
                     $params_before=null;
                     foreach($get_peserta as $list_peserta){
                         if($x === 0){
-                            $data['penilai']['nama']=$list_peserta['nama_penilai'];
+                            $data['penilai']['nama']=$list_peserta['nama_penilai']." ".$id_observee;
                             $data['penilai']['nip_penilai']=$list_peserta['nip_penilai'];
                             $data['penilai']['foto_penilai']=$list_peserta['foto_penilai'];
 
