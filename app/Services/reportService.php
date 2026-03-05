@@ -52,8 +52,8 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
                     JOIN trans_observee as toe2 on toe2.IdObservee = tpz.id_pegawai_peserta
                     JOIN tref_pegawai as tp on tp.id_pegawai = toe2.IdPegawai
                     where tpz.id_zonasi = ? and id_zona_satker = ?
-                    order by nilai desc
                     group by tp.nama_pegawai, toe2.NamaJabatan
+                    order by nilai desc
                 ";
 
                 $data_report=Cache::store('redis')->remember("report_periode_zs_satker_{$id_periode}_{$id_zonasi_satker}_{$id_zonasi}", 3600*24*365, function() use($sql, $id_zonasi, $id_zonasi_satker){
