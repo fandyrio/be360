@@ -112,6 +112,7 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
                                             ->join("variable_pertanyaan as vp", "vp.id", "tpp.id_variable")
                                             ->join("trans_observee as to", "to.IdObservee", "tpz.id_pegawai_penilai")
                                             ->join("tref_pegawai as tp", "tp.id_pegawai", "to.IdPegawai")
+                                            ->select("tp.nama_pegawai", "to.NamaJabatan as jabatan", "to.bagian", "vp.variable", "tn.nilai")
                                             ->where("tpz.id_pegawai_peserta", $id_observee)
                                             ->where("tpp.id_periode", $id_periode)
                                             ->get();
