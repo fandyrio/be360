@@ -1,6 +1,8 @@
 <?php
     namespace App\Services;
 
+use App\Models\Trans_observee;
+use App\Models\Trans_peserta_zonasi;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpKernel\HttpCache\Store;
@@ -79,6 +81,33 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
                 'msg'=>$msg,
                 'data'=>$data_report
             ];
+        }
+
+        public function reportIndividualBadilum($id_periode, $id_observee){
+            #1. Ambil data personal
+            $data_personal = null;
+            $data_jlh_penilai=null;
+            $data_personal=Trans_observee::join("tref_pegawai as tp", "tp.id_pegawai", "trans_observee.IdPegawai")
+                            ->where("trans_observee.IdObservee", $id_observee)
+                            ->first();
+            if(!is_null($data_personal)){
+                #2. Statistik Jumlah Jabatan Penilaian
+                $data_jlh_penilai=Trans_peserta_zonasi::join("trans_observee as to", "to.IdObservee", "trans_peserta_zonasi.id_pegawai_penilai")
+                                    ->join("trans_zonasi_satker as tzs", "tzs.IdZonaSatker", "to.IdZonaSatker")
+                                    ->join("tref_zonasi as tz", "tz.IdZona", "tzs.IdZona")
+                                    ->join("tref_tahun_penilaian as ttp", "ttp.IdTahunPenilaian", "tz.IdTahunPenilaian")
+                                    ->join("tref_jabatan_peserta as tjp", "tjp.id_kelompok_jabatan", "to.id_kelompok_jabatan")
+                                    ->where("trans_peserta_zonasi.id_pegawai_peserta", $id_observee)
+                                    ->where("ttp.IdTahunPenilaian", $id_periode)
+                                    ->select("tjp.jabatan", "COUNT(to.id_kelompok_jabatan) as jumlah_jabatan_penilai")
+                                    ->groupBy("tjp.jabatan");
+                
+            }else{
+                $msg="Data Peserta tidak ditemukan";
+            }
+
+            return ['data_personla'=>$data_personal, "data_penilai"=>$data_jlh_penilai];
+
         }
     }
 
