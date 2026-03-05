@@ -51,12 +51,12 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
                     JOIN tref_jabatan_peserta as tjp on tjp.id_kelompok_jabatan = toe.id_kelompok_jabatan
                     JOIN trans_observee as toe2 on toe2.IdObservee = tpz.id_pegawai_peserta
                     JOIN tref_pegawai as tp on tp.id_pegawai = toe2.IdPegawai
-                    where tpz.id_zonasi = {$id_zonasi} and id_zona_satker = {$id_zonasi_satker}
+                    where tpz.id_zonasi = ? and id_zona_satker = ?
                     group by tp.nama_pegawai, toe2.NamaJabatan
                 ";
 
-                $data_report=Cache::store('redis')->remember("report_periode_zs_satker_{$id_periode}_{$id_zonasi_satker}_{$id_zonasi}", 3600*24*365, function() use($sql){
-                    return DB::select($sql);
+                $data_report=Cache::store('redis')->remember("report_periode_zs_satker_{$id_periode}_{$id_zonasi_satker}_{$id_zonasi}", 3600*24*365, function() use($sql, $id_zonasi, $id_zonasi_satker){
+                    return DB::select($sql, [$id_zonasi, $id_zonasi_satker]);
                 });
                 $status=true;
             }else{
