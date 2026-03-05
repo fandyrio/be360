@@ -100,7 +100,7 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
                                     ->join("tref_jabatan_peserta as tjp", "tjp.id_kelompok_jabatan", "to.id_kelompok_jabatan")
                                     ->where("trans_peserta_zonasi.id_pegawai_peserta", $id_observee)
                                     ->where("ttp.IdTahunPenilaian", $id_periode)
-                                    ->select("tjp.jabatan", "COUNT(to.id_kelompok_jabatan) as jumlah_jabatan_penilai")
+                                    ->selectRaw("tjp.jabatan, COUNT(to.id_kelompok_jabatan) as jumlah_jabatan_penilai")
                                     ->groupBy("tjp.jabatan")
                                     ->get();
                 
