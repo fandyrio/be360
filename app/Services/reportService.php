@@ -111,7 +111,7 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
                                             ->join("trans_pertanyaan_periode as tpp", "tpp.id", "tpz.id_pertanyaan")
                                             ->join("variable_pertanyaan as vp", "vp.id", "tpp.id_variable")
                                             ->join("trans_observee as to", "to.IdObservee", "tpz.id_pegawai_penilai")
-                                            ->join("tref_pegaawai as tp", "tp.id_pegawai", "to.IdPegawai")
+                                            ->join("tref_pegawai as tp", "tp.id_pegawai", "to.IdPegawai")
                                             ->where("tpz.id_pegawai_peserta", $id_observee)
                                             ->where("tpp.id_periode", $id_periode)
                                             ->get();
