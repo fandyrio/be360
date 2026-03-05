@@ -88,7 +88,7 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
             $data_personal = null;
             $data_jlh_penilai=null;
             $data_personal=Trans_observee::join("tref_pegawai as tp", "tp.id_pegawai", "trans_observee.IdPegawai")
-                            ->select("trans_observee.NIPBaru as nip", "trans_observee.NamaJabatan as jabatan", "trans_observee.bagian as bagian", "trans_observee.foto_pegawai" ,"trans_observee.total_nilai as nilai_akhir", "tp.nama_pegawai", "tp.foto_pagawai")
+                            ->select("trans_observee.NIPBaru as nip", "trans_observee.NamaJabatan as jabatan", "trans_observee.bagian as bagian",  "trans_observee.total_nilai as nilai_akhir", "tp.nama_pegawai", "tp.foto_pegawai")
                             ->where("trans_observee.IdObservee", $id_observee)
                             ->first();
             if(!is_null($data_personal)){
