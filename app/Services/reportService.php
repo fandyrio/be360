@@ -108,7 +108,7 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
                 if($data_jlh_penilai->count() > 0){
                     $get_report_penilaian=Trans_nilai_peserta_zonasi::from("trans_nilai_peserta_zonasi as tn")
                                             ->join("trans_peserta_zonasi as tpz", "tpz.id", "tn.id_peserta_zonasi")
-                                            ->join("trans_pertanyaan_periode as tpp", "tpp.id", "tpz.id_pertanyaan")
+                                            ->join("trans_pertanyaan_periode as tpp", "tpp.id", "tn.id_pertanyaan")
                                             ->join("variable_pertanyaan as vp", "vp.id", "tpp.id_variable")
                                             ->join("trans_observee as to", "to.IdObservee", "tpz.id_pegawai_penilai")
                                             ->join("tref_pegawai as tp", "tp.id_pegawai", "to.IdPegawai")
