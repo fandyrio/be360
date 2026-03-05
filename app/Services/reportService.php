@@ -22,7 +22,6 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
                 // if($refesh === true){
                     Cache::store('redis')->forget("jabatan_periode_{$id_periode}");
                     Cache::store('redis')->forget("report_periode_zs_satker_{$id_periode}_{$id_zonasi_satker}_{$id_zonasi}");
-                    die();
                 // }
                 $get_jabatan_periode=Cache::store('redis')->remember("jabatan_periode_{$id_periode}", 3600*24*24, function() use($id_periode){
                     return DB::table("tref_jabatan_peserta as tjp")
