@@ -88,6 +88,7 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
             $data_personal = null;
             $data_jlh_penilai=null;
             $data_personal=Trans_observee::join("tref_pegawai as tp", "tp.id_pegawai", "trans_observee.IdPegawai")
+                            ->select("trans_observee.NIPBaru as nip", "trans_observee.NamaJabatan as jabatan", "trans_observee.bagian as bagian", "trans_observee.foto_pegawai" ,"trans_observee.total_nilai as nilai_akhir", "tp.nama_pegawai", "tp.foto_pagawai")
                             ->where("trans_observee.IdObservee", $id_observee)
                             ->first();
             if(!is_null($data_personal)){
@@ -100,13 +101,14 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
                                     ->where("trans_peserta_zonasi.id_pegawai_peserta", $id_observee)
                                     ->where("ttp.IdTahunPenilaian", $id_periode)
                                     ->select("tjp.jabatan", "COUNT(to.id_kelompok_jabatan) as jumlah_jabatan_penilai")
-                                    ->groupBy("tjp.jabatan");
+                                    ->groupBy("tjp.jabatan")
+                                    ->get();
                 
             }else{
                 $msg="Data Peserta tidak ditemukan";
             }
 
-            return ['data_personla'=>$data_personal, "data_penilai"=>$data_jlh_penilai];
+            return ['data_personal'=>$data_personal, "data_penilai"=>$data_jlh_penilai];
 
         }
     }
