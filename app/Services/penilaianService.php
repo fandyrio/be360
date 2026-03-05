@@ -576,7 +576,7 @@ use Vinkla\Hashids\Facades\Hashids;
                                             $status=true;
                                             $msg="Jawaban berhasil disimpan ".$affected_nilai;
                                         }else{
-                                            throw new \Exception("Tidak dapat menyimpan jawaban anda");
+                                            throw new \Exception("Tidak dapat menyimpan jawaban anda code [".$affected_nilai.":".$jumlah_peserta_zonasi."]");
                                         }
                                     }catch(\Exception $e){
                                         DB::rollBack();
