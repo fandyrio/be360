@@ -52,6 +52,7 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
                     JOIN trans_observee as toe2 on toe2.IdObservee = tpz.id_pegawai_peserta
                     JOIN tref_pegawai as tp on tp.id_pegawai = toe2.IdPegawai
                     where tpz.id_zonasi = ? and id_zona_satker = ?
+                    order by nilai desc
                     group by tp.nama_pegawai, toe2.NamaJabatan
                 ";
 
