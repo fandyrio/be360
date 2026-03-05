@@ -170,7 +170,7 @@ use Illuminate\Support\Facades\DB;
                         try{
                             DB::beginTransaction();
                                 DB::table('trans_nilai_peserta_zonasi')->insert($data_insert);
-                                $get_current_nilai->total_nilai=$current_total;
+                                $get_current_nilai->total_nilai=$current_total*20;
                                 // $get_current_nilai->updated_at=date("Y-m-d H:i:s");
                                 $get_current_nilai->update();
 

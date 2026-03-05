@@ -79,12 +79,7 @@ use Vinkla\Hashids\Facades\Hashids;
             if(!is_null($get_observee)){
                 $get_peserta=Trans_peserta_zonasi::join('trans_observee as to', 'to.IdObservee', '=', 'trans_peserta_zonasi.id_pegawai_peserta')
                                             ->join('tref_pegawai as tp1', 'tp1.id_pegawai', '=', 'to.IdPegawai')
-                                            ->join('trans_observee as to2', function($join) use($nip_penilai, $id_observee, $id_zonasi_satker){
-                                                        $join->on('to2.IdObservee', '=', 'trans_peserta_zonasi.id_pegawai_penilai')
-                                                                ->where('to2.NIPBaru', $nip_penilai)
-                                                                ->where('to2.IdObservee', $id_observee)
-                                                                         ->where('to2.IdZonaSatker', $id_zonasi_satker);   
-                                            })
+                                            ->join('trans_observee as to2', 'to2.IdObservee', '=', 'trans_peserta_zonasi.id_pegawai_penilai')
                                             ->join('tref_pegawai as tp2', 'tp2.id_pegawai', '=', 'to2.IdPegawai')
                                             ->select('trans_peserta_zonasi.*', 
                                                 'to.IdObservee as id_observee_peserta', 
@@ -102,6 +97,9 @@ use Vinkla\Hashids\Facades\Hashids;
                                                 'tp2.nama_pegawai as nama_penilai', 
                                                 'tp2.foto_pegawai as foto_penilai',
                                                 'trans_peserta_zonasi.id as id_peserta_zonasi')
+                                            ->where("id_pegawai_penilai", $id_observee)
+                                            ->where('to2.NIPBaru', $nip_penilai)
+                                            ->where("to2.IdZonaSatker", $id_zonasi_satker)
                                             ->get();
                 $jumlah_peserta=$get_peserta->count();
                 if($jumlah_peserta > 0){
@@ -768,7 +766,7 @@ use Vinkla\Hashids\Facades\Hashids;
                                                                         ->first();
                                             
                                             $total_nilai_terakhir=$get_observee['total_nilai'];
-                                            $total_nilai_terakhir+=$nilai_observee['nilai_akhir'];
+                                            $total_nilai_terakhir+=$nilai_observee['nilai_akhir']*20;
                                             $get_observee->total_nilai=$total_nilai_terakhir;
                                             $affected_observee = $get_observee->update();
                                             if($affected_observee === true){
