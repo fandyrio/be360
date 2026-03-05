@@ -129,6 +129,7 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
                                             ")
                                             ->where("tpz.id_pegawai_peserta", $id_observee)
                                             ->where("tpp.id_periode", $id_periode)
+                                            ->groupBy("vp.variable")
                                             ->get();
                     }
                 }
