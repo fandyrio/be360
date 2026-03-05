@@ -33,7 +33,14 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
                 });
 
                 $jabatan_cols=$get_jabatan_periode->map(function($row){
-                    return "SUM(CASE WHEN toe.id_kelompok_jabatan = {$row->id_kelompok_jabatan} THEN 1 ELSE 0 END) AS `{$row->jabatan}`";
+                    return "SUM(
+                        CASE 
+                            WHEN toe.id_kelompok_jabatan = {$row->id_kelompok_jabatan} 
+                                THEN 1
+                            WHEN toe.id_jabatan_gabungan = {$row->id_kelompok_jabatan}
+                                THEN 1 
+                            ELSE 0 
+                        END) AS `{$row->jabatan}`";
                 })->implode(', ');
 
                 $sql="
@@ -41,6 +48,7 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
                     tp.nama_pegawai, toe2.NamaJabatan as jabatan, $jabatan_cols, MAX(toe2.total_nilai) as nilai
                     from trans_peserta_zonasi as tpz
                     JOIN trans_observee as toe on toe.IdObservee = tpz.id_pegawai_penilai
+                    JOIN tref_jabatan_peserta as tjp on tjp.id_kelompok_jabatan = toe.id_kelompok_jabatan
                     JOIN trans_observee as toe2 on toe2.IdObservee = tpz.id_pegawai_peserta
                     JOIN tref_pegawai as tp on tp.id_pegawai = toe2.IdPegawai
                     where tpz.id_zonasi = {$id_zonasi} and id_zona_satker = {$id_zonasi_satker}
