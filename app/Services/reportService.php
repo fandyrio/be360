@@ -89,6 +89,7 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
             $data_personal = null;
             $data_jlh_penilai=null;
             $get_report_penilaian=null;
+            $get_rata=null;
             $data_personal=Trans_observee::join("tref_pegawai as tp", "tp.id_pegawai", "trans_observee.IdPegawai")
                             ->select("trans_observee.NIPBaru as nip", "trans_observee.NamaJabatan as jabatan", "trans_observee.bagian as bagian",  "trans_observee.total_nilai as nilai_akhir", "tp.nama_pegawai", "tp.foto_pegawai")
                             ->where("trans_observee.IdObservee", $id_observee)
@@ -116,13 +117,27 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
                                             ->where("tpz.id_pegawai_peserta", $id_observee)
                                             ->where("tpp.id_periode", $id_periode)
                                             ->get();
+                    if($get_report_penilaian->count() > 0){
+                        $get_rata_rata=Trans_nilai_peserta_zonasi::from("trans_nilai_peserta_zonasi as tn")
+                                            ->join("trans_peserta_zonasi as tpz", "tpz.id", "tn.id_peserta_zonasi")
+                                            ->join("trans_pertanyaan_periode as tpp", "tpp.id", "tn.id_pertanyaan")
+                                            ->join("variable_pertanyaan as vp", "vp.id", "tpp.id_variable")
+                                            ->join("trans_observee as to", "to.IdObservee", "tpz.id_pegawai_penilai")
+                                            ->join("tref_pegawai as tp", "tp.id_pegawai", "to.IdPegawai")
+                                            ->selectRaw("vp.variable, 
+                                                (SUM(tn.nilai)/(SELECT count(tp.nama_pegawai) from tref_pegawai as tp2 where tp2.id_pegawai = tp.id_pegawai group by tp.nama_pegawai)) as rata_rata
+                                            ")
+                                            ->where("tpz.id_pegawai_peserta", $id_observee)
+                                            ->where("tpp.id_periode", $id_periode)
+                                            ->get();
+                    }
                 }
                 
             }else{
                 $msg="Data Peserta tidak ditemukan";
             }
 
-            return ['data_personal'=>$data_personal, "data_penilai"=>$data_jlh_penilai, 'data_report_penilaian'=>$get_report_penilaian];
+            return ['data_personal'=>$data_personal, "data_penilai"=>$data_jlh_penilai, 'data_report_penilaian'=>$get_report_penilaian, 'data_rata_rata'=>$get_rata_rata];
 
         }
     }
