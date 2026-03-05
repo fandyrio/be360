@@ -575,12 +575,12 @@ use Vinkla\Hashids\Facades\Hashids;
                                         if($affected_nilai === $jumlah_peserta_zonasi){
                                             DB::commit();
                                             $status=true;
-                                            $msg="Jawaban berhasil disimpan ".$affected_nilai;
+                                            $msg="Jawaban berhasil disimpan ";
                                         }else{
-                                            $debug=$id_nilai." - ".$parent_zonasi." ".$id_pertanyaan_periode;
+                                            $debug=$id_nilai." - ".$parent_zonasi." ".$id_pertanyaan_periode."[".$affected_nilai.":".$jumlah_peserta_zonasi;
                                             // [1:2 : 7813 - 36840 133]
                                             // Tidak dapat menyimpan jawaban anda code [0:1 : 7854 - 36872 138]
-                                            throw new \Exception("Tidak dapat menyimpan jawaban anda code [".$affected_nilai.":".$jumlah_peserta_zonasi." : ".$debug."]");
+                                            throw new \Exception("Tidak dapat menyimpan jawaban anda code");
                                         }
                                     }catch(\Exception $e){
                                         DB::rollBack();

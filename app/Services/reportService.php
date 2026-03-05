@@ -45,7 +45,16 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
 
                 $sql="
                     SELECT  
-                    tp.nama_pegawai, toe2.NamaJabatan as jabatan, $jabatan_cols, MAX(toe2.total_nilai) as nilai
+                    tp.nama_pegawai, 
+                        CASE
+                            when toe2.NamaJabatan = 'Panitera Muda'
+                                THEN 
+                                    toe2.bagian
+                                else
+                                    toe2.NamaJabatan
+                            end 
+                            as jabatan, 
+                        $jabatan_cols, MAX(toe2.total_nilai) as nilai
                     from trans_peserta_zonasi as tpz
                     JOIN trans_observee as toe on toe.IdObservee = tpz.id_pegawai_penilai
                     JOIN tref_jabatan_peserta as tjp on tjp.id_kelompok_jabatan = toe.id_kelompok_jabatan
