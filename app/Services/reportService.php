@@ -1,6 +1,7 @@
 <?php
     namespace App\Services;
 
+use App\Models\Trans_nilai_peserta_zonasi;
 use App\Models\Trans_observee;
 use App\Models\Trans_peserta_zonasi;
 use Illuminate\Support\Facades\Cache;
@@ -87,6 +88,7 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
             #1. Ambil data personal
             $data_personal = null;
             $data_jlh_penilai=null;
+            $get_report_penilaian=null;
             $data_personal=Trans_observee::join("tref_pegawai as tp", "tp.id_pegawai", "trans_observee.IdPegawai")
                             ->select("trans_observee.NIPBaru as nip", "trans_observee.NamaJabatan as jabatan", "trans_observee.bagian as bagian",  "trans_observee.total_nilai as nilai_akhir", "tp.nama_pegawai", "tp.foto_pegawai")
                             ->where("trans_observee.IdObservee", $id_observee)
@@ -103,12 +105,23 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
                                     ->selectRaw("tjp.jabatan, COUNT(to.id_kelompok_jabatan) as jumlah_jabatan_penilai")
                                     ->groupBy("tjp.jabatan")
                                     ->get();
+                if($data_jlh_penilai->count() > 0){
+                    $get_report_penilaian=Trans_nilai_peserta_zonasi::from("trans_nilai_peserta_zonasi as tn")
+                                            ->join("trans_peserta_zonasi as tpz", "tpz.id", "tn.id_peserta_zonasi")
+                                            ->join("trans_pertanyaan_periode as tpp", "tpp.id", "tpz.id_pertanyaan")
+                                            ->join("variable_pertanyaan as vp", "vp.id", "tpp.id_variable")
+                                            ->join("trans_observee as to", "to.IdObservee", "tpz.id_pegawai_penilai")
+                                            ->join("tref_pegaawai as tp", "tp.id_pegawai", "to.IdPegawai")
+                                            ->where("tpz.id_pegawai_peserta", $id_observee)
+                                            ->where("tpp.id_periode", $id_periode)
+                                            ->get();
+                }
                 
             }else{
                 $msg="Data Peserta tidak ditemukan";
             }
 
-            return ['data_personal'=>$data_personal, "data_penilai"=>$data_jlh_penilai];
+            return ['data_personal'=>$data_personal, "data_penilai"=>$data_jlh_penilai, 'data_report_penilaian'=>$get_report_penilaian];
 
         }
     }
