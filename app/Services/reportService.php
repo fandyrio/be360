@@ -195,8 +195,9 @@ use Vinkla\Hashids\Facades\Hashids;
                                 $data_jlh_penilai[]=[
                                     "jabatan"=>$list_jlh_penilai['jabatan'],
                                     "jumlah_jabatan_penilai"=>$list_jlh_penilai['jumlah_jabatan_penilai'],
-                                    "total_orang"=>$list_jlh_penilai['total_orang'],
-                                    "keterangan"=>(int)$list_jlh_penilai['jumlah_jabatan_penilai'] > (int)$list_jlh_penilai['total_orang'] ?  $list_jlh_penilai['threshold']."% dari ".$list_jlh_penilai['total_orang']." + ".((int)$list_jlh_penilai['jumlah_jabatan_penilai'] - (int)$list_jlh_penilai['total_orang'])." Jabatan PLT" : $list_jlh_penilai['threshold']."% dari ".$list_jlh_penilai['total_orang']
+                                    "total_orang"=>(int)$list_jlh_penilai['jumlah_jabatan_penilai'] > (int)$list_jlh_penilai['total_orang'] ? $list_jlh_penilai['total_orang']." + ".((int)$list_jlh_penilai['jumlah_jabatan_penilai'] - (int)$list_jlh_penilai['total_orang'])." Jabatan PLT" : $list_jlh_penilai['total_orang'],
+                                    
+                                    "keterangan"=>(int)$list_jlh_penilai['jumlah_jabatan_penilai'] > (int)$list_jlh_penilai['total_orang'] ?  $list_jlh_penilai['threshold']."% dari ".((int)$list_jlh_penilai['jumlah_jabatan_penilai'] + (int)$list_jlh_penilai['total_orang']) : $list_jlh_penilai['threshold']."% dari ".$list_jlh_penilai['total_orang']
                                 ];
                             }
 
