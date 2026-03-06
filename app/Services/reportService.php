@@ -100,7 +100,7 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
                 #2. Statistik Jumlah Jabatan Penilaian
                 $sub=Trans_observee::join("tref_jabatan_peserta as tjp", "tjp.id", "trans_observee.id_kelompok_jabatan")
                                 ->where("to.IdZonaSatker", $get_data_personal['IdZonaSatker'])
-                                ->select("tjp.jabatan", DB::raw("COUNT(to.id_kelompok_jabatan) as total_orang"))
+                                ->select("tjp.jabatan", DB::raw("COUNT(trans_observee.id_kelompok_jabatan) as total_orang"))
                                 ->groupBy("tjp.jabatan")
                                 ->get();
                 $get_data_jlh_penilai=Trans_peserta_zonasi::join("trans_observee as to", "to.IdObservee", "trans_peserta_zonasi.id_pegawai_penilai")
