@@ -131,7 +131,7 @@ use Vinkla\Hashids\Facades\Hashids;
                                                     END
                                         "))
                                             ->on("tmj.id_jabatan_peserta", "=", DB::raw("
-                                                    CASE WHEM tjp2.id_jabatan_gabungan is null then tjp2.id
+                                                    CASE WHEN tjp2.id_jabatan_gabungan is null then tjp2.id
                                                     else tjp2.id_jabatan_gabungan
                                                     END
                                             "))
