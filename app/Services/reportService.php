@@ -4,6 +4,7 @@
 use App\Models\Trans_nilai_peserta_zonasi;
 use App\Models\Trans_observee;
 use App\Models\Trans_peserta_zonasi;
+use App\Models\Tref_jabatan_peserta;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpKernel\HttpCache\Store;
@@ -90,20 +91,40 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
             $data_jlh_penilai=[];
             $data_report=null;
             $data_avg=null;
+            
             $get_data_personal=Trans_observee::join("tref_pegawai as tp", "tp.id_pegawai", "trans_observee.IdPegawai")
-                            ->select("trans_observee.NIPBaru as nip", "trans_observee.NamaJabatan as jabatan", "trans_observee.bagian as bagian",  "trans_observee.total_nilai as nilai_akhir", "tp.nama_pegawai", "tp.foto_pegawai")
+                            ->select("trans_observee.NIPBaru as nip", "trans_observee.NamaJabatan as jabatan", "trans_observee.bagian as bagian",  "trans_observee.total_nilai as nilai_akhir", "tp.nama_pegawai", "tp.foto_pegawai", "trans_observee.IdZonaSatker")
                             ->where("trans_observee.IdObservee", $id_observee)
                             ->first();
             if(!is_null($get_data_personal)){
                 #2. Statistik Jumlah Jabatan Penilaian
+                $sub=Trans_observee::join("tref_jabatan_peserta as tjp", "tjp.id", "trans_observee.id_kelompok_jabatan")
+                                ->where("to.IdZonaSatker", $get_data_personal['IdZonaSatker'])
+                                ->select("tjp.jabatan", DB::raw("COUNT(to.id_kelompok_jabatan) as total_orang"))
+                                ->groupBy("tjp.jabatan")
+                                ->get();
                 $get_data_jlh_penilai=Trans_peserta_zonasi::join("trans_observee as to", "to.IdObservee", "trans_peserta_zonasi.id_pegawai_penilai")
+                                    ->join("trans_observee to2", "to2.IdObservee", "trans_peserta_zonasi.id_pegawai_peserta")
                                     ->join("trans_zonasi_satker as tzs", "tzs.IdZonaSatker", "to.IdZonaSatker")
                                     ->join("tref_zonasi as tz", "tz.IdZona", "tzs.IdZona")
                                     ->join("tref_tahun_penilaian as ttp", "ttp.IdTahunPenilaian", "tz.IdTahunPenilaian")
                                     ->join("tref_jabatan_peserta as tjp", "tjp.id_kelompok_jabatan", "to.id_kelompok_jabatan")
+                                    ->join("tref_jabatan_peserta as tjp2", "tjp2.id_kelompok_jabatan", "to2.id_kelompok_jabatan")
+                                    ->join("tref_mapping_jabatan as tmj", function($join){
+                                        $join->on("tmj.id_jabatan_peserta", "tjp.id")
+                                            ->on("tmj.id_jabatan_peserta", "tjp2.id")
+                                            ->where("tmj.active", true);
+                                    })
+                                    ->join("trans_mapping_jabatan_periode tmjp", function($join){
+                                        $join->on("tmjp.id_mapping_jabatan", "tmj.id")
+                                        ->where("tmjo.id_periode", "ttp.IdTahunPenilaian");
+                                    })
+                                    ->joinSub($sub, "jumlah_orang", function($join){
+                                        $join->on("threshold.jabatan", "tjp.jabatan");
+                                    })
                                     ->where("trans_peserta_zonasi.id_pegawai_peserta", $id_observee)
                                     ->where("ttp.IdTahunPenilaian", $id_periode)
-                                    ->selectRaw("tjp.jabatan, COUNT(to.id_kelompok_jabatan) as jumlah_jabatan_penilai")
+                                    ->selectRaw("tjp.jabatan, COUNT(to.id_kelompok_jabatan) as jumlah_jabatan_penilai", "jumlah_orang.total_orang")
                                     ->groupBy("tjp.jabatan")
                                     ->get();
                 if($get_data_jlh_penilai->count() > 0){
@@ -142,7 +163,8 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
                             foreach($get_data_jlh_penilai as $list_jlh_penilai){
                                 $data_jlh_penilai[]=[
                                     "jabatan"=>$list_jlh_penilai['jabatan'],
-                                    "jumlah_jabatan_penilai"=>$list_jlh_penilai['jumlah_jabatan_penilai']
+                                    "jumlah_jabatan_penilai"=>$list_jlh_penilai['jumlah_jabatan_penilai'],
+                                    "total_orang"=>$list_jlh_penilai['total_orang']
                                 ];
                             }
 
