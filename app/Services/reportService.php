@@ -103,7 +103,7 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
                                 ->select("tjp.jabatan", DB::raw("COUNT(trans_observee.id_kelompok_jabatan) as total_orang"))
                                 ->groupBy("tjp.jabatan");
                 $get_data_jlh_penilai=Trans_peserta_zonasi::join("trans_observee as to", "to.IdObservee", "trans_peserta_zonasi.id_pegawai_penilai")
-                                    ->join("trans_observee to2", "to2.IdObservee", "trans_peserta_zonasi.id_pegawai_peserta")
+                                    ->join("trans_observee as to2", "to2.IdObservee", "trans_peserta_zonasi.id_pegawai_peserta")
                                     ->join("trans_zonasi_satker as tzs", "tzs.IdZonaSatker", "to.IdZonaSatker")
                                     ->join("tref_zonasi as tz", "tz.IdZona", "tzs.IdZona")
                                     ->join("tref_tahun_penilaian as ttp", "ttp.IdTahunPenilaian", "tz.IdTahunPenilaian")
