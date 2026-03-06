@@ -87,16 +87,16 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
         public function reportIndividualBadilum($id_periode, $id_observee){
             #1. Ambil data personal
             $data_personal = null;
-            $data_jlh_penilai=null;
+            $data_jlh_penilai=[];
             $get_report_penilaian=null;
             $get_rata=null;
-            $data_personal=Trans_observee::join("tref_pegawai as tp", "tp.id_pegawai", "trans_observee.IdPegawai")
+            $get_data_personal=Trans_observee::join("tref_pegawai as tp", "tp.id_pegawai", "trans_observee.IdPegawai")
                             ->select("trans_observee.NIPBaru as nip", "trans_observee.NamaJabatan as jabatan", "trans_observee.bagian as bagian",  "trans_observee.total_nilai as nilai_akhir", "tp.nama_pegawai", "tp.foto_pegawai")
                             ->where("trans_observee.IdObservee", $id_observee)
                             ->first();
             if(!is_null($data_personal)){
                 #2. Statistik Jumlah Jabatan Penilaian
-                $data_jlh_penilai=Trans_peserta_zonasi::join("trans_observee as to", "to.IdObservee", "trans_peserta_zonasi.id_pegawai_penilai")
+                $get_data_jlh_penilai=Trans_peserta_zonasi::join("trans_observee as to", "to.IdObservee", "trans_peserta_zonasi.id_pegawai_penilai")
                                     ->join("trans_zonasi_satker as tzs", "tzs.IdZonaSatker", "to.IdZonaSatker")
                                     ->join("tref_zonasi as tz", "tz.IdZona", "tzs.IdZona")
                                     ->join("tref_tahun_penilaian as ttp", "ttp.IdTahunPenilaian", "tz.IdTahunPenilaian")
@@ -106,7 +106,7 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
                                     ->selectRaw("tjp.jabatan, COUNT(to.id_kelompok_jabatan) as jumlah_jabatan_penilai")
                                     ->groupBy("tjp.jabatan")
                                     ->get();
-                if($data_jlh_penilai->count() > 0){
+                if($get_data_jlh_penilai->count() > 0){
                     $get_report_penilaian=Trans_nilai_peserta_zonasi::from("trans_nilai_peserta_zonasi as tn")
                                             ->join("trans_peserta_zonasi as tpz", "tpz.id", "tn.id_peserta_zonasi")
                                             ->join("trans_pertanyaan_periode as tpp", "tpp.id", "tn.id_pertanyaan")
@@ -131,6 +131,24 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
                                             ->where("tpp.id_periode", $id_periode)
                                             ->groupBy("vp.variable")
                                             ->get();
+                        
+                        
+                        if($get_rata_rata->count() > 0){
+                            $data_personal['nama']=$get_data_personal["nama_pegawai"];
+                            $data_personal['foto']=$get_data_personal['foto_pegawai'];
+                            $data_personal['nip']=$get_data_personal['nip'];
+                            $data_personal['jabatan']=$get_data_personal['jabatan'];
+                            $data_personal['bagian']=$get_data_personal['bagian'];
+                            $data_personal['nilai_akhir']=$get_data_personal['nilai_akhir'];
+
+                            foreach($get_data_jlh_penilai as $list_jlh_penilai){
+                                $data_jlh_penilai[]=[
+                                    "jabatan"=>$list_jlh_penilai['jabatan'],
+                                    "jumlah_jabatan_penilai"=>$list_jlh_penilai['jumlah_jabatan_penilai']
+                                ];
+                            }
+
+                        }
                     }
                 }
                 
