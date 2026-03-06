@@ -91,14 +91,14 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
             $data_jlh_penilai=[];
             $data_report=null;
             $data_avg=null;
-            
+            $status=false;
             $get_data_personal=Trans_observee::join("tref_pegawai as tp", "tp.id_pegawai", "trans_observee.IdPegawai")
                             ->select("trans_observee.NIPBaru as nip", "trans_observee.NamaJabatan as jabatan", "trans_observee.bagian as bagian",  "trans_observee.total_nilai as nilai_akhir", "tp.nama_pegawai", "tp.foto_pegawai", "trans_observee.IdZonaSatker")
                             ->where("trans_observee.IdObservee", $id_observee)
                             ->first();
             if(!is_null($get_data_personal)){
                 #2. Statistik Jumlah Jabatan Penilaian
-                $sub=Trans_observee::join("tref_jabatan_peserta as tjp", "tjp.id", "trans_observee.id_kelompok_jabatan")
+                $sub=Trans_observee::join("tref_jabatan_peserta as tjp", "tjp.id_kelompok_jabatan", "trans_observee.id_kelompok_jabatan")
                                 ->where("trans_observee.IdZonaSatker", $get_data_personal['IdZonaSatker'])
                                 ->select("tjp.jabatan", DB::raw("COUNT(trans_observee.id_kelompok_jabatan) as total_orang"))
                                 ->groupBy("tjp.jabatan");
@@ -123,9 +123,10 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
                                     })
                                     ->where("trans_peserta_zonasi.id_pegawai_peserta", $id_observee)
                                     ->where("ttp.IdTahunPenilaian", $id_periode)
-                                    ->selectRaw("tjp.jabatan, COUNT(to.id_kelompok_jabatan) as jumlah_jabatan_penilai, jumlah_orang.total_orang")
+                                    ->selectRaw("tjp.jabatan, COUNT(to.id_kelompok_jabatan) as jumlah_jabatan_penilai, jumlah_orang.total_orang, tmjp.threshold")
                                     ->groupBy("tjp.jabatan")
                                     ->groupBy("jumlah_orang.total_orang")
+                                    ->groupBy("tmjp.threshold")
                                     ->get();
                 if($get_data_jlh_penilai->count() > 0){
                     $get_report_penilaian=Trans_nilai_peserta_zonasi::from("trans_nilai_peserta_zonasi as tn")
@@ -193,16 +194,23 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
                                     "avg"=>$list_rata_rata['rata_rata']
                                 ];
                             }
-
+                            $status=true;
+                            $msg="Data already reserved";
+                        }else{
+                            $msg="Nilai Rata - rata tidak ditemukan";
                         }
+                    }else{
+                        $msg="Data Laporan Penilaian tidak ditemukan";
                     }
+                }else{
+                    $msg="Data Jumlah Peserta Tidak ditemukan";
                 }
                 
             }else{
                 $msg="Data Peserta tidak ditemukan";
             }
 
-            return ['data_personal'=>$data_personal, "data_penilai"=>$data_jlh_penilai, 'data_report_penilaian'=>$data_report, 'data_avg'=>$data_avg];
+            return ['status'=>$status, 'msg'=>$msg, 'data_personal'=>$data_personal, "data_penilai"=>$data_jlh_penilai, 'data_report_penilaian'=>$data_report, 'data_avg'=>$data_avg];
 
         }
     }
