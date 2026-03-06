@@ -127,11 +127,11 @@ class reportController extends Controller
                 //decode id_pegawai_peserta
                 $id_pegawai_peserta_dec=decodeInt($id_pegawai_peserta_enc);
                 if(empty($id_pegawai_peserta)){
-                    throw new \Exception($msg)."1";
+                    throw new \Exception($msg."1");
                 }
                 $id_periode_dec=decodeInt($id_periode_enc);
                 if(empty($id_periode_dec)){
-                    throw new \Exception($msg)."2";
+                    throw new \Exception($msg."2");
                 }
                 $id_pegawai_peserta=$id_pegawai_peserta_dec[0];
                 $id_periode=$id_periode_dec[0];
@@ -150,7 +150,7 @@ class reportController extends Controller
                 }
             }else{
                 // $msg="Link tidak valid";
-                throw new \Exception($msg)."3";
+                throw new \Exception($msg."3");
             }
         }catch(\Exception $e){
             $msg=$e->getMessage();
