@@ -125,8 +125,16 @@ use Vinkla\Hashids\Facades\Hashids;
                                     ->join("tref_jabatan_peserta as tjp", "tjp.id_kelompok_jabatan", "to.id_kelompok_jabatan")
                                     ->join("tref_jabatan_peserta as tjp2", "tjp2.id_kelompok_jabatan", "to2.id_kelompok_jabatan")
                                     ->join("tref_mapping_jabatan as tmj", function($join){
-                                        $join->on("tmj.id_jabatan_penilai", "tjp.id")
-                                            ->on("tmj.id_jabatan_peserta", "tjp2.id")
+                                        $join->on("tmj.id_jabatan_penilai", "=", DB::raw("
+                                                    CASE when tjp.id_jabatan_gabungan is null then tjp.id
+                                                    else tjp.id_jabatan_gabungan
+                                                    END
+                                        "))
+                                            ->on("tmj.id_jabatan_peserta", "=", DB::raw("
+                                                    CASE WHEM tjp2.id_jabatan_gabungan is null then tjp2.id
+                                                    else tjp2.id_jabatan_gabungan
+                                                    END
+                                            "))
                                             ->where("tmj.active", true);
                                     })
                                     ->join("trans_mapping_jabatan_periode as tmjp", function($join){
