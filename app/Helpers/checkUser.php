@@ -5,6 +5,7 @@
     use App\Models\Tref_sys_config;
 use App\Models\Tref_zonasi;
 use Illuminate\Support\Facades\DB;
+use Vinkla\Hashids\Facades\Hashids;
 
     if(!function_exists('checkDataAdminSatker')){
         function checkDataAdminSatker($username){
@@ -219,6 +220,18 @@ use Illuminate\Support\Facades\DB;
         if(!function_exists('generateNilaiPesertaZonasi')){
             function generateNilaiPesertaZonasi($id_peserta_zonasi, $id_zonasi_satker){
                 
+            }
+        }
+
+        if(!function_exists('enc')){
+            function encodeInt($int){
+                return Hashids::encode($int);
+            }
+        }
+
+        if(!function_exists('dec')){
+            function decodeInt($int){
+                return Hashids::decode($int);
             }
         }
     }

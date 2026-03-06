@@ -140,6 +140,7 @@ Route::middleware(['jwt.auth', 'isAdminBadilum'])->group(function(){
     Route::get('all-periode', 'api\reportController@getListPeriode');
     Route::get('zonasi-periode/{id_periode}', 'api\reportController@getZonasiPeriode');
     Route::get('zonasi-satker/{id_periode}/{id_zona}', 'api\reportController@getZonasiSatkerService');
+    Route::get("report-personal-badilum/{token}", "api\reportController@reportIndividualBadilum");
 
 });
 

@@ -6,7 +6,9 @@ use App\Services\periodeService;
 use App\Services\reportService;
 use App\Services\zonasiSatkerService;
 use App\Services\zonasiService;
+use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Validation\ValidationException;
 use Vinkla\Hashids\Facades\Hashids;
 
@@ -107,5 +109,53 @@ class reportController extends Controller
         }
 
         return response()->json(['status'=>$status, 'msg'=>$msg, 'data'=>$data]);
+    }
+
+    public function reportIndividualBadilum($token){
+        $data_personal=null;
+        $data_penilai=null;
+        $data_report_penilaian=null;
+        $data_avg=null;
+        $status=false;
+        $msg="Link tidak valid";
+        $token_explode=explode("063atam", $token);
+        try{
+            if(count($token_explode) === 3){
+                $id_observee_peserta_enc=$token_explode[0];
+                $id_pegawai_peserta_enc=$token_explode[1];
+                $id_periode_enc=$token_explode[2];
+                //decode id_pegawai_peserta
+                $id_pegawai_peserta_dec=decodeInt($id_pegawai_peserta_enc);
+                if(empty($id_pegawai_peserta)){
+                    throw new \Exception($msg);
+                }
+                $id_periode_dec=decodeInt($id_periode_enc);
+                if(empty($id_periode_dec)){
+                    throw new \Exception($msg);
+                }
+                $id_pegawai_peserta=$id_pegawai_peserta_dec[0];
+                $id_periode=$id_periode_dec[0];
+                //decrypt id observee
+                try{
+                    $id_observee_peserta=Crypt::decrypt($id_observee_peserta_enc);
+                    $report=$this->reportService->reportIndividualBadilum($id_periode, $id_observee_peserta, $id_pegawai_peserta);
+                    $status=$report['status'];
+                    $msg=$report['msg'];
+                    $data_personal=$report['data_personal'];
+                    $data_penilai=$report['data_penilai'];
+                    $data_report_penilaian=$report['data_report_penilaian'];
+                    $data_avg=$report['data_avg'];
+                }catch(DecryptException $e){
+                    $msg="Invalid token";
+                }
+            }else{
+                // $msg="Link tidak valid";
+                throw new \Exception($msg);
+            }
+        }catch(\Exception $e){
+            $msg=$e->getMessage();
+        }
+
+        return response()->json(['status'=>$status, 'msg'=>$msg, 'data_personal'=>$data_personal, 'data_penilai'=>$data_penilai, 'data_report_penilaian'=>$data_report_penilaian, 'data_avg'=>$data_avg]);
     }
 }

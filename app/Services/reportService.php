@@ -70,12 +70,13 @@ use Vinkla\Hashids\Facades\Hashids;
                     order by nilai desc
                 ";
 
-                $data_report=Cache::store('redis')->remember("report_periode_zs_satker_{$id_periode}_{$id_zonasi_satker}_{$id_zonasi}", 3600*24*365, function() use($sql, $id_zonasi, $id_zonasi_satker){
+                $data_report=Cache::store('redis')->remember("report_periode_zs_satker_{$id_periode}_{$id_zonasi_satker}_{$id_zonasi}", 3600*24*365, function() use($sql, $id_zonasi, $id_zonasi_satker, $id_periode){
                     $data = DB::select($sql, [$id_zonasi, $id_zonasi_satker]);
                     foreach($data as $list_data){
                         $token_o=Crypt::encrypt($list_data->id_observee_peserta);
-                        $token_p=Hashids::encode($list_data->id_pegawai_peserta);
-                        $endpoint=$token_o."063atam".$token_p;
+                        $token_p=encodeInt($list_data->id_pegawai_peserta);
+                        $token_periode=encodeInt($id_periode);
+                        $endpoint=$token_o."063atam".$token_p."063atam".$token_periode;
                         $list_data->endpoint=$endpoint;
                         unset($list_data->id_observee_peserta, $list_data->id_pegawai_peserta);
                     }
@@ -95,16 +96,18 @@ use Vinkla\Hashids\Facades\Hashids;
             ];
         }
 
-        public function reportIndividualBadilum($id_periode, $id_observee){
+        public function reportIndividualBadilum($id_periode, $id_observee, $id_pegawai){
             #1. Ambil data personal
             $data_personal = null;
             $data_jlh_penilai=[];
             $data_report=null;
             $data_avg=null;
             $status=false;
+
             $get_data_personal=Trans_observee::join("tref_pegawai as tp", "tp.id_pegawai", "trans_observee.IdPegawai")
                             ->select("trans_observee.NIPBaru as nip", "trans_observee.NamaJabatan as jabatan", "trans_observee.bagian as bagian",  "trans_observee.total_nilai as nilai_akhir", "tp.nama_pegawai", "tp.foto_pegawai", "trans_observee.IdZonaSatker")
                             ->where("trans_observee.IdObservee", $id_observee)
+                            ->where("trans_observee.IdPegawai", $id_pegawai)
                             ->first();
             // var_dump($get_data_personal['IdZonaSatker']);
             if(!is_null($get_data_personal)){
