@@ -124,7 +124,7 @@ use Vinkla\Hashids\Facades\Hashids;
                                     ->join("tref_tahun_penilaian as ttp", "ttp.IdTahunPenilaian", "tz.IdTahunPenilaian")
                                     ->join("tref_jabatan_peserta as tjp", function($join){
                                         $join->on("tjp.id_kelompok_jabatan", "=", DB::raw("
-                                            CASE when to.id_jabatan_plt is null then to.id_kelompok_jabatan
+                                            CASE when trans_peserta_zonasi.id_jabatan_plt is null then to.id_kelompok_jabatan
                                             else (SELECT id_kelompok_jabatan where id = trans_peserta_zonasi.id_jabatan_plt)
                                             END
                                         "));
