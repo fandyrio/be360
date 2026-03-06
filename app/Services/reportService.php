@@ -66,7 +66,7 @@ use Vinkla\Hashids\Facades\Hashids;
                     JOIN trans_observee as toe2 on toe2.IdObservee = tpz.id_pegawai_peserta
                     JOIN tref_pegawai as tp on tp.id_pegawai = toe2.IdPegawai
                     where tpz.id_zonasi = ? and id_zona_satker = ?
-                    group by tp.nama_pegawai, toe2.NamaJabatan, toe2.bagian
+                    group by tp.nama_pegawai, toe2.NamaJabatan, toe2.bagian,  toe2.IdObservee, tp.id
                     order by nilai desc
                 ";
 
