@@ -107,7 +107,7 @@ use Vinkla\Hashids\Facades\Hashids;
             $get_data_personal=Trans_observee::join("tref_pegawai as tp", "tp.id_pegawai", "trans_observee.IdPegawai")
                             ->select("trans_observee.NIPBaru as nip", "trans_observee.NamaJabatan as jabatan", "trans_observee.bagian as bagian",  "trans_observee.total_nilai as nilai_akhir", "tp.nama_pegawai", "tp.foto_pegawai", "trans_observee.IdZonaSatker")
                             ->where("trans_observee.IdObservee", $id_observee)
-                            ->where("trans_observee.IdPegawai", $id_pegawai)
+                            ->where("tp.id", $id_pegawai)
                             ->first();
             // var_dump($get_data_personal['IdZonaSatker']);
             if(!is_null($get_data_personal)){
