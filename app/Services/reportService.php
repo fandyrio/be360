@@ -76,7 +76,7 @@ use Vinkla\Hashids\Facades\Hashids;
                         $list_data->token_o=Crypt::encrypt($list_data->id_observee_peserta);
                         $list_data->token_p=Hashids::encode($list_data->id_pegawai_peserta);
                     }
-                    unset($list_data->id_observee, $list_data->id_pegawai);
+                    unset($list_data->id_observee_peserta, $list_data->id_pegawai_peserta);
                     return $data;
                 });
 
