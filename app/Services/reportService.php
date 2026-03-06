@@ -141,12 +141,13 @@ use Vinkla\Hashids\Facades\Hashids;
                                         $join->on("tmjp.id_mapping_jabatan", "=", "tmj.id")
                                         ->on("tmjp.id_periode", "=", "ttp.IdTahunPenilaian");
                                     })
-                                    ->leftJoinSub($sub, "jumlah_orang", function($join){
+                                    ->joinSub($sub, "jumlah_orang", function($join){
                                         $join->on("jumlah_orang.jabatan", "tjp.jabatan");
                                     })
+                                    ->join("tref_jabatan_peserta as tjp_penilai", "tjp_penilai.id", "tmj.id_jabatan_penilai")
                                     ->where("trans_peserta_zonasi.id_pegawai_peserta", $id_observee)
                                     ->where("ttp.IdTahunPenilaian", $id_periode)
-                                    ->selectRaw("tjp.jabatan, COUNT(to.id_kelompok_jabatan) as jumlah_jabatan_penilai, jumlah_orang.total_orang, tmjp.threshold")
+                                    ->selectRaw("tjp_penilai.jabatan, COUNT(to.id_kelompok_jabatan) as jumlah_jabatan_penilai, jumlah_orang.total_orang, tmjp.threshold")
                                     ->groupBy("tjp.jabatan")
                                     ->groupBy("jumlah_orang.total_orang")
                                     ->groupBy("tmjp.threshold")
