@@ -88,7 +88,7 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
             #1. Ambil data personal
             $data_personal = null;
             $data_jlh_penilai=[];
-            $get_report_penilaian=null;
+            $data_report=null;
             $get_rata_rata=null;
             $get_data_personal=Trans_observee::join("tref_pegawai as tp", "tp.id_pegawai", "trans_observee.IdPegawai")
                             ->select("trans_observee.NIPBaru as nip", "trans_observee.NamaJabatan as jabatan", "trans_observee.bagian as bagian",  "trans_observee.total_nilai as nilai_akhir", "tp.nama_pegawai", "tp.foto_pegawai")
@@ -146,6 +146,24 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
                                 ];
                             }
 
+                            $nama_pegawai_before=null;
+                            $x=0;
+                            foreach($get_report_penilaian as $list_report){
+                                if($nama_pegawai_before !== $list_report['nama_pegawai']){
+                                    if(!is_null($nama_pegawai_before)){
+                                        $x++;
+                                    }
+                                    $y=0;
+                                    $data_report[$x]['nama_penilai']=$list_report['nama_pegawai'];
+                                    $data_report[$x]['jabatan']=$list_report['jabatan'];
+                                    $data_report[$x]['bagian']=$list_report['bagian'];
+                                    $data_report[$x]['hasil']=[];
+                                }
+                                $data_report[$x]['hasil'][$y]['variable']=$list_report['variable'];
+                                $data_report[$x]['hasil'][$y]['nilai']=$list_report['nilai'];
+                                $y++;
+                            }
+
                         }
                     }
                 }
@@ -154,7 +172,7 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
                 $msg="Data Peserta tidak ditemukan";
             }
 
-            return ['data_personal'=>$data_personal, "data_penilai"=>$data_jlh_penilai, 'data_report_penilaian'=>$get_report_penilaian, 'data_rata_rata'=>$get_rata_rata];
+            return ['data_personal'=>$data_personal, "data_penilai"=>$data_jlh_penilai, 'data_report_penilaian'=>$data_report, 'data_rata_rata'=>$get_rata_rata];
 
         }
     }
