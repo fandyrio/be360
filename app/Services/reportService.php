@@ -96,7 +96,7 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
                             ->select("trans_observee.NIPBaru as nip", "trans_observee.NamaJabatan as jabatan", "trans_observee.bagian as bagian",  "trans_observee.total_nilai as nilai_akhir", "tp.nama_pegawai", "tp.foto_pegawai", "trans_observee.IdZonaSatker")
                             ->where("trans_observee.IdObservee", $id_observee)
                             ->first();
-            var_dump($get_data_personal['IdZonaSatker']);
+            // var_dump($get_data_personal['IdZonaSatker']);
             if(!is_null($get_data_personal)){
                 #2. Statistik Jumlah Jabatan Penilaian
                 $sub=Trans_observee::join("tref_jabatan_peserta as tjp", "tjp.id_kelompok_jabatan", "trans_observee.id_kelompok_jabatan")
@@ -111,7 +111,7 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
                                     ->join("tref_jabatan_peserta as tjp", "tjp.id_kelompok_jabatan", "to.id_kelompok_jabatan")
                                     ->join("tref_jabatan_peserta as tjp2", "tjp2.id_kelompok_jabatan", "to2.id_kelompok_jabatan")
                                     ->join("tref_mapping_jabatan as tmj", function($join){
-                                        $join->on("tmj.id_jabatan_peserta", "tjp.id")
+                                        $join->on("tmj.id_jabatan_penilai", "tjp.id")
                                             ->on("tmj.id_jabatan_peserta", "tjp2.id")
                                             ->where("tmj.active", true);
                                     })
