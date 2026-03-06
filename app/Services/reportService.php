@@ -50,7 +50,7 @@ use Vinkla\Hashids\Facades\Hashids;
                 })->implode(', ');
 
                 $sql="
-                    SELECT toe2.id as id_observee_peserta, tp.id as id_pegawai_peserta, tp.nama_pegawai, 
+                    SELECT toe2.IdObservee as id_observee_peserta, tp.id as id_pegawai_peserta, tp.nama_pegawai, 
                         CASE
                             when toe2.NamaJabatan = 'Panitera Muda'
                                 THEN 
