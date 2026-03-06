@@ -103,7 +103,7 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
                                 ->where("trans_observee.IdZonaSatker", $get_data_personal['IdZonaSatker'])
                                 ->select("tjp.jabatan", DB::raw("COUNT(trans_observee.id_kelompok_jabatan) as total_orang"))
                                 ->groupBy("tjp.jabatan");
-                var_dump($sub->get());
+                // var_dump($sub->get());
                 $get_data_jlh_penilai=Trans_peserta_zonasi::join("trans_observee as to", "to.IdObservee", "trans_peserta_zonasi.id_pegawai_penilai")
                                     ->join("trans_observee as to2", "to2.IdObservee", "trans_peserta_zonasi.id_pegawai_peserta")
                                     ->join("trans_zonasi_satker as tzs", "tzs.IdZonaSatker", "to.IdZonaSatker")
@@ -167,7 +167,8 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
                                 $data_jlh_penilai[]=[
                                     "jabatan"=>$list_jlh_penilai['jabatan'],
                                     "jumlah_jabatan_penilai"=>$list_jlh_penilai['jumlah_jabatan_penilai'],
-                                    "total_orang"=>$list_jlh_penilai['total_orang']
+                                    "total_orang"=>$list_jlh_penilai['total_orang'],
+                                    "keterangan"=>$list_jlh_penilai['threshold']."% dari ".$list_jlh_penilai['total_orang']
                                 ];
                             }
 
