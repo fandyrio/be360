@@ -148,7 +148,7 @@ use Vinkla\Hashids\Facades\Hashids;
                                     ->where("trans_peserta_zonasi.id_pegawai_peserta", $id_observee)
                                     ->where("ttp.IdTahunPenilaian", $id_periode)
                                     ->selectRaw("tjp_penilai.jabatan, COUNT(to.id_kelompok_jabatan) as jumlah_jabatan_penilai, jumlah_orang.total_orang, tmjp.threshold")
-                                    ->groupBy("tjp.jabatan")
+                                    ->groupBy("tjp_penilai.jabatan")
                                     ->groupBy("jumlah_orang.total_orang")
                                     ->groupBy("tmjp.threshold")
                                     ->get();
