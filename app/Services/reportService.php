@@ -6,8 +6,10 @@ use App\Models\Trans_observee;
 use App\Models\Trans_peserta_zonasi;
 use App\Models\Tref_jabatan_peserta;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpKernel\HttpCache\Store;
+use Vinkla\Hashids\Facades\Hashids;
 
     class reportService{
         protected $penilaianService;
@@ -48,7 +50,9 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
                 })->implode(', ');
 
                 $sql="
-                    SELECT  
+                    SELECT
+                    ".Crypt::encrypt("toe2.id")." as token_o,
+                    ".Hashids::encode("tp.id")." as token_p,
                     tp.nama_pegawai, 
                         CASE
                             when toe2.NamaJabatan = 'Panitera Muda'
@@ -72,6 +76,7 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
                 $data_report=Cache::store('redis')->remember("report_periode_zs_satker_{$id_periode}_{$id_zonasi_satker}_{$id_zonasi}", 3600*24*365, function() use($sql, $id_zonasi, $id_zonasi_satker){
                     return DB::select($sql, [$id_zonasi, $id_zonasi_satker]);
                 });
+
                 $status=true;
             }else{
                 $msg="Data tidak konsisten";
@@ -168,7 +173,7 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
                                     "jabatan"=>$list_jlh_penilai['jabatan'],
                                     "jumlah_jabatan_penilai"=>$list_jlh_penilai['jumlah_jabatan_penilai'],
                                     "total_orang"=>$list_jlh_penilai['total_orang'],
-                                    "keterangan"=>$list_jlh_penilai['threshold']."% dari ".$list_jlh_penilai['total_orang']
+                                    "keterangan"=>$list_jlh_penilai['threshold']."% dari ".$list_jlh_penilai['total_orang']." Orang"
                                 ];
                             }
 
