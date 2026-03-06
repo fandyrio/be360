@@ -123,7 +123,7 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
                                     })
                                     ->where("trans_peserta_zonasi.id_pegawai_peserta", $id_observee)
                                     ->where("ttp.IdTahunPenilaian", $id_periode)
-                                    ->selectRaw("tjp.jabatan, COUNT(to.id_kelompok_jabatan) as jumlah_jabatan_penilai", "jumlah_orang.total_orang")
+                                    ->selectRaw("tjp.jabatan, COUNT(to.id_kelompok_jabatan) as jumlah_jabatan_penilai, jumlah_orang.total_orang")
                                     ->groupBy("tjp.jabatan")
                                     ->get();
                 if($get_data_jlh_penilai->count() > 0){
