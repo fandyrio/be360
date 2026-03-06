@@ -133,7 +133,7 @@ use Vinkla\Hashids\Facades\Hashids;
                                         $join->on("tmjp.id_mapping_jabatan", "=", "tmj.id")
                                         ->on("tmjp.id_periode", "=", "ttp.IdTahunPenilaian");
                                     })
-                                    ->joinSub($sub, "jumlah_orang", function($join){
+                                    ->leftJoinSub($sub, "jumlah_orang", function($join){
                                         $join->on("jumlah_orang.jabatan", "tjp.jabatan");
                                     })
                                     ->where("trans_peserta_zonasi.id_pegawai_peserta", $id_observee)
