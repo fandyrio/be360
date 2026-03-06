@@ -122,7 +122,7 @@ use Vinkla\Hashids\Facades\Hashids;
                                     ->join("trans_zonasi_satker as tzs", "tzs.IdZonaSatker", "to.IdZonaSatker")
                                     ->join("tref_zonasi as tz", "tz.IdZona", "tzs.IdZona")
                                     ->join("tref_tahun_penilaian as ttp", "ttp.IdTahunPenilaian", "tz.IdTahunPenilaian")
-                                    ->join("tref_jabatan_peserta as tjp", "", function($join){
+                                    ->join("tref_jabatan_peserta as tjp", function($join){
                                         $join->on("tjp.id_kelompok_jabatan", "=", DB::raw("
                                             CASE when to.id_jabatan_plt is null then to.id_kelompok_jabatan
                                             else to.id_jabatan_plt
