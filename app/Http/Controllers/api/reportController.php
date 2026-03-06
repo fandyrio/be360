@@ -96,7 +96,7 @@ class reportController extends Controller
                 }
                 $report=$this->reportService->generateDataReport($zonasi_satker_id[0], $zonasi_id[0], $periode_id[0], $refresh);
                 $status=$report['status'];
-                $msg=$report['msg']." ".$zonasi_satker_id[0]." ".$zonasi_id[0]." ".$periode_id[0];
+                $msg=$report['msg'];
                 $data=$report['data'];
                 $status=true;
             }catch(\Exception $e){

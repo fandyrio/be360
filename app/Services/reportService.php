@@ -79,8 +79,8 @@ use Vinkla\Hashids\Facades\Hashids;
                     unset($list_data->id_observee_peserta, $list_data->id_pegawai_peserta);
                     return $data;
                 });
-
                 $status=true;
+                $msg="Data ditemukan";
             }else{
                 $msg="Data tidak konsisten";
             }
