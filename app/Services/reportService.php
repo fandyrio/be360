@@ -89,7 +89,7 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
             $data_personal = null;
             $data_jlh_penilai=[];
             $data_report=null;
-            $get_rata_rata=null;
+            $data_avg=null;
             $get_data_personal=Trans_observee::join("tref_pegawai as tp", "tp.id_pegawai", "trans_observee.IdPegawai")
                             ->select("trans_observee.NIPBaru as nip", "trans_observee.NamaJabatan as jabatan", "trans_observee.bagian as bagian",  "trans_observee.total_nilai as nilai_akhir", "tp.nama_pegawai", "tp.foto_pegawai")
                             ->where("trans_observee.IdObservee", $id_observee)
@@ -165,6 +165,13 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
                                 $nama_pegawai_before=$list_report['nama_pegawai'];
                             }
 
+                            foreach($get_rata_rata as $list_rata_rata){
+                                $data_avg[]=[
+                                    "variable"=>$list_rata_rata['variable'],
+                                    "avg"=>$list_rata_rata['rata_rata']
+                                ];
+                            }
+
                         }
                     }
                 }
@@ -173,7 +180,7 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
                 $msg="Data Peserta tidak ditemukan";
             }
 
-            return ['data_personal'=>$data_personal, "data_penilai"=>$data_jlh_penilai, 'data_report_penilaian'=>$data_report, 'data_rata_rata'=>$get_rata_rata];
+            return ['data_personal'=>$data_personal, "data_penilai"=>$data_jlh_penilai, 'data_report_penilaian'=>$data_report, 'data_avg'=>$data_avg];
 
         }
     }
