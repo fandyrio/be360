@@ -119,7 +119,7 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
                                         ->where("tmjp.id_periode", "ttp.IdTahunPenilaian");
                                     })
                                     ->joinSub($sub, "jumlah_orang", function($join){
-                                        $join->on("threshold.jabatan", "tjp.jabatan");
+                                        $join->on("jumlah_orang.jabatan", "tjp.jabatan");
                                     })
                                     ->where("trans_peserta_zonasi.id_pegawai_peserta", $id_observee)
                                     ->where("ttp.IdTahunPenilaian", $id_periode)
