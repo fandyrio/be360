@@ -116,7 +116,7 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
                                     })
                                     ->join("trans_mapping_jabatan_periode as tmjp", function($join){
                                         $join->on("tmjp.id_mapping_jabatan", "tmj.id")
-                                        ->where("tmjo.id_periode", "ttp.IdTahunPenilaian");
+                                        ->where("tmjp.id_periode", "ttp.IdTahunPenilaian");
                                     })
                                     ->joinSub($sub, "jumlah_orang", function($join){
                                         $join->on("threshold.jabatan", "tjp.jabatan");
