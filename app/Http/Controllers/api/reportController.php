@@ -126,7 +126,7 @@ class reportController extends Controller
                 $id_periode_enc=$token_explode[2];
                 //decode id_pegawai_peserta
                 $id_pegawai_peserta_dec=decodeInt($id_pegawai_peserta_enc);
-                if(empty($id_pegawai_peserta)){
+                if(empty($id_pegawai_peserta_dec)){
                     throw new \Exception($msg."1");
                 }
                 $id_periode_dec=decodeInt($id_periode_enc);
