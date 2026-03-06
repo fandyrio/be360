@@ -957,6 +957,10 @@ use Symfony\Component\CssSelector\Node\HashNode;
             $data=[];
             $data_kosong=[];
             $jumlah_satker=$index_satker-1;
+            
+            $get_periode=Tref_zonasi::where('IdZona', $id_zonasi)->first();
+            $id_periode=$get_periode['IdTahunPenilaian'];
+
             for($s=0;$s<=$jumlah_satker;$s++){
                 // echo "<b>".$satker[$s]."</b><br />";
                 $jlh_jabatan_peserta=count($variable_jabatan_peserta_arr[$s]);
@@ -967,16 +971,20 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     ${"pointer_{$variable}"}=0;
                 }
                 
+                //pertama: looping berdasarkan jabatan peserta yang ada di satker itu
                 for($x=0;$x<$jlh_jabatan_peserta;$x++){   
                     $variable_jabatan_peserta=$variable_jabatan_peserta_arr[$s][$x];
                     $id_jabatan_peserta=$id_jabatan_peserta_arr[$s][$x];
                     $jlh_pegawai_perjabatan=0;
+
+                    //jumlah orang di dalam jabatan itu
                     if(isset($data_peserta[$s][$variable_jabatan_peserta])){
                         $jlh_pegawai_perjabatan=count($data_peserta[$s][$variable_jabatan_peserta]);
                     }
                     // $jlh_pegawai_perjabatan=count($$variable_jabatan_peserta);
-                    $get_periode=Tref_zonasi::where('IdZona', $id_zonasi)->first();
-                    $id_periode=$get_periode['IdTahunPenilaian'];
+                    //naikkan ke atas di luar looping
+                    // $get_periode=Tref_zonasi::where('IdZona', $id_zonasi)->first();
+                    // $id_periode=$get_periode['IdTahunPenilaian'];
                     $get_mapping=Tref_mapping_jabatan::join('tref_jabatan_peserta as tjp', 'tjp.id', '=', 'tref_mapping_jabatan.id_jabatan_penilai')
                                         ->join('trans_mapping_jabatan_periode as tmjp', function($join) use($id_periode){
                                             $join->on('tmjp.id_mapping_jabatan', '=', 'tref_mapping_jabatan.id')
@@ -988,7 +996,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                         ->get();
                     $id_kelompok_jabatan_peserta_before=null;
 
-                    //looping berdasarkan jumlah peserta (yang dinilai)
+                    //looping berdasarkan jumlah peserta (yang dinilai). Jumlah peserta dalam jabatan yang dinilai. Misalnya, PP: 5 orang
                     for($a=0;$a<$jlh_pegawai_perjabatan;$a++){
                         // echo $pointer_wakil_ketua_pengadilan;
                         // echo "<b>".$variable_jabatan_peserta[$a]['nama']." : "."</b>";
@@ -1026,6 +1034,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                 }
                                 if($jlh_penilai > 2){
                                     ${"batas_{$variable_penilai}"}=ceil($mapping['threshold']*$jlh_penilai / 100);
+                                    //kalau jabatan yang dinilai sama dengan jabatan yang menilai
                                     if($variable_penilai === $variable_jabatan_peserta){
                                         $new_jlh_penilai=$jlh_penilai - 1;
                                         ${"batas_{$variable_penilai}"}=ceil($mapping['threshold']*$new_jlh_penilai / 100);
