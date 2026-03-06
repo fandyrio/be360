@@ -154,7 +154,7 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
                 $msg="Data Peserta tidak ditemukan";
             }
 
-            return ['data_personal'=>$get_data_personal, "data_penilai"=>$get_data_jlh_penilai, 'data_report_penilaian'=>$get_report_penilaian, 'data_rata_rata'=>$get_rata_rata];
+            return ['data_personal'=>$data_personal, "data_penilai"=>$data_jlh_penilai, 'data_report_penilaian'=>$get_report_penilaian, 'data_rata_rata'=>$get_rata_rata];
 
         }
     }
