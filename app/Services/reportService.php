@@ -162,6 +162,7 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
                                 $data_report[$x]['hasil'][$y]['variable']=$list_report['variable'];
                                 $data_report[$x]['hasil'][$y]['nilai']=$list_report['nilai'];
                                 $y++;
+                                $nama_pegawai_before=$list_report['nama_pegawai'];
                             }
 
                         }
