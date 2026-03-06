@@ -1120,8 +1120,8 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                                 'id_observee'=>null
                                             ];
                                             $id_jabatan_kosong[]=$mapping['id_jabatan_penilai']."-".$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker'];
-
-                                            $data[]=[
+                                        }
+                                        $data[]=[
                                                 'id_zonasi'=>$id_zonasi,
                                                 'id_zona_satker'=>$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker'],
                                                 'id_pegawai_peserta'=>$data_peserta[$s][$variable_jabatan_peserta][$a]['id_pegawai_observee'],
@@ -1129,7 +1129,6 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                                 'id_jabatan_plt'=>$mapping['id_jabatan_penilai'],
                                                 'index_plt'=>0
                                             ];
-                                        }
                                     }
                                     // echo "Tidak ada ".$variable_penilai.", ";
                                 }
