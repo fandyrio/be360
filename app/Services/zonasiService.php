@@ -1586,12 +1586,13 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     $page =1;
                 }
                 $skip=$page * $limit - $limit;
-                $get_summary_penilaian=Cache::store('redis')->remember("monitoring_badilum_{$id_zona}_{$page}_{$limit}", 3600*24*360, function () use($skip, $limit) {
+                $get_summary_penilaian=Cache::store('redis')->remember("monitoring_badilum_{$id_zona}_{$page}_{$limit}", 3600*24*360, function () use($skip, $limit, $id_zona) {
                      return DB::table('trans_peserta_zonasi as tpz')
                                     ->join('trans_zonasi_satker as tzs', 'tzs.IdZonaSatker', '=', 'tpz.id_zona_satker')
                                     ->join('v_satker as vs', 'vs.IdSatker', '=', 'tzs.IdSatker')
                                     ->select("NamaSatker", "id_zona_satker", DB::raw("COUNT(CASE WHEN tpz.nilai = 0 then 1 END) AS belum"), DB::raw("COUNT(CASE WHEN tpz.nilai > 0 then 1 END) AS sudah"), DB::raw("COUNT(id_zona_satker) AS total"))
                                     ->skip($skip)->take($limit)
+                                    ->where("tzs.IdZona", $id_zona)
                                     ->groupBy("id_zona_satker")
                                     ->groupBy("NamaSatker")
                                     ->get();
