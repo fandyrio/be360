@@ -180,7 +180,7 @@ curl_setopt_array($curl, array(
     "name" : "Fandy"
 }',
   CURLOPT_HTTPHEADER => array(
-    'Authorization: Bearer •••••••',
+    'Authorization: Bearer pBSpYVQFb3znpLfdaBdtkkJk-oPdObpt-RvGBNiF',
     'Content-Type: application/json'
   ),
 ));
