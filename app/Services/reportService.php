@@ -122,10 +122,8 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
                                             ->join("trans_peserta_zonasi as tpz", "tpz.id", "tn.id_peserta_zonasi")
                                             ->join("trans_pertanyaan_periode as tpp", "tpp.id", "tn.id_pertanyaan")
                                             ->join("variable_pertanyaan as vp", "vp.id", "tpp.id_variable")
-                                            ->join("trans_observee as to", "to.IdObservee", "tpz.id_pegawai_penilai")
-                                            ->join("tref_pegawai as tp", "tp.id_pegawai", "to.IdPegawai")
                                             ->selectRaw("vp.variable, 
-                                                (SUM(tn.nilai)/(SELECT count(tp.nama_pegawai) from tref_pegawai as tp2 where tp2.id_pegawai = tp.id_pegawai group by tp.nama_pegawai)) as rata_rata
+                                                AVG(tn.nilai) as rata_rata
                                             ")
                                             ->where("tpz.id_pegawai_peserta", $id_observee)
                                             ->where("tpp.id_periode", $id_periode)
