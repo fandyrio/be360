@@ -125,6 +125,7 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
                                     ->where("ttp.IdTahunPenilaian", $id_periode)
                                     ->selectRaw("tjp.jabatan, COUNT(to.id_kelompok_jabatan) as jumlah_jabatan_penilai, jumlah_orang.total_orang")
                                     ->groupBy("tjp.jabatan")
+                                    ->groupBy("jumlah_orang.total_orang")
                                     ->get();
                 if($get_data_jlh_penilai->count() > 0){
                     $get_report_penilaian=Trans_nilai_peserta_zonasi::from("trans_nilai_peserta_zonasi as tn")
