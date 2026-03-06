@@ -50,10 +50,7 @@ use Vinkla\Hashids\Facades\Hashids;
                 })->implode(', ');
 
                 $sql="
-                    SELECT
-                    ".Crypt::encrypt("toe2.id")." as token_o,
-                    ".Hashids::encode("tp.id")." as token_p,
-                    tp.nama_pegawai, 
+                    SELECT toe2.id as id_observee_peserta, tp.id ad id_pegawai_peserta, tp.nama_pegawai, 
                         CASE
                             when toe2.NamaJabatan = 'Panitera Muda'
                                 THEN 
@@ -74,7 +71,13 @@ use Vinkla\Hashids\Facades\Hashids;
                 ";
 
                 $data_report=Cache::store('redis')->remember("report_periode_zs_satker_{$id_periode}_{$id_zonasi_satker}_{$id_zonasi}", 3600*24*365, function() use($sql, $id_zonasi, $id_zonasi_satker){
-                    return DB::select($sql, [$id_zonasi, $id_zonasi_satker]);
+                    $data = DB::select($sql, [$id_zonasi, $id_zonasi_satker]);
+                    foreach($data as $list_data){
+                        $list_data->token_o=Crypt::encrypt($list_data->id_observee_peserta);
+                        $list_data->token_p=Hashids::encode($list_data->id_pegawai_peserta);
+                    }
+                    unset($list_data->id_observee, $list_data->id_pegawai);
+                    return $data;
                 });
 
                 $status=true;
