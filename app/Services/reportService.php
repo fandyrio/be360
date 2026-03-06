@@ -94,7 +94,7 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
                             ->select("trans_observee.NIPBaru as nip", "trans_observee.NamaJabatan as jabatan", "trans_observee.bagian as bagian",  "trans_observee.total_nilai as nilai_akhir", "tp.nama_pegawai", "tp.foto_pegawai")
                             ->where("trans_observee.IdObservee", $id_observee)
                             ->first();
-            if(!is_null($data_personal)){
+            if(!is_null($get_data_personal)){
                 #2. Statistik Jumlah Jabatan Penilaian
                 $get_data_jlh_penilai=Trans_peserta_zonasi::join("trans_observee as to", "to.IdObservee", "trans_peserta_zonasi.id_pegawai_penilai")
                                     ->join("trans_zonasi_satker as tzs", "tzs.IdZonaSatker", "to.IdZonaSatker")
