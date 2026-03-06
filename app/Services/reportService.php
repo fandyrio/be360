@@ -89,7 +89,7 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
             $data_personal = null;
             $data_jlh_penilai=[];
             $get_report_penilaian=null;
-            $get_rata=null;
+            $get_rata_rata=null;
             $get_data_personal=Trans_observee::join("tref_pegawai as tp", "tp.id_pegawai", "trans_observee.IdPegawai")
                             ->select("trans_observee.NIPBaru as nip", "trans_observee.NamaJabatan as jabatan", "trans_observee.bagian as bagian",  "trans_observee.total_nilai as nilai_akhir", "tp.nama_pegawai", "tp.foto_pegawai")
                             ->where("trans_observee.IdObservee", $id_observee)
@@ -156,7 +156,7 @@ use Symfony\Component\HttpKernel\HttpCache\Store;
                 $msg="Data Peserta tidak ditemukan";
             }
 
-            return ['data_personal'=>$data_personal, "data_penilai"=>$data_jlh_penilai, 'data_report_penilaian'=>$get_report_penilaian, 'data_rata_rata'=>$get_rata_rata];
+            return ['data_personal'=>$get_data_personal, "data_penilai"=>$get_data_jlh_penilai, 'data_report_penilaian'=>$get_report_penilaian, 'data_rata_rata'=>$get_rata_rata];
 
         }
     }
