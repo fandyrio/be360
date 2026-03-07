@@ -176,7 +176,7 @@ use Illuminate\Support\Facades\DB;
                         echo "\nJumlah Penilai: ".$jlh_penilaian."\n";
                             $bobot_penilaian=$bobot_penilaian_jabatan["bobot_{$id_jabatan_penilai}_{$id_jabatan_peserta}"];
                             // echo $id_jabatan_penilai." : ".$id_jabatan_peserta." = ".$bobot_penilaian."\n";
-                        
+                            echo "Bobot penilaian: ".$bobot_penilaian."\n";
                         $nilai_total=(($nilai_peserta * $bobot_penilaian) / 100) / $jlh_penilaian;
                         $nilai_total_round=round($nilai_total, 2);
                         echo "Nilai setelah dikali bobot dan dibagi jlh penilai: ".$nilai_total_round;
