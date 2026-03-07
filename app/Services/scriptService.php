@@ -215,6 +215,10 @@ use Illuminate\Support\Facades\DB;
                     }
                     #3. Simpan Nilai masing - masing
                     echo "\n======================================\n";
+                }else{
+                    echo "\n";
+                    echo $list_peserta_zonasi["nama_pegawai"];
+                    echo "\n";
                 }
             }
             
