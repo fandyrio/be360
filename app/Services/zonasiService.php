@@ -140,6 +140,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                     $msg="Berhasil menyimpan Data Awal Zonasi ";
                                     $generate_peserta=$this->getPeserta(Hashids::encode($id_zonasi));
                                     $msg.=" dan ".$generate_peserta['msg'];
+                                    Cache::store("redis")->forget("zonasi_periode_{$id_tahun_penilaian}");
                                 }
                             }else{
                                 DB::rollBack();

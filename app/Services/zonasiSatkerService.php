@@ -627,15 +627,15 @@ use PDO;
                                 DB::beginTransaction();
                                     $update_peserta=Trans_peserta_zonasi::where('id_zona_satker', $id_zonasi_satker)
                                                 ->update(['status'=> true]);
-                                    // if($update_peserta === (int)$jumlah_penilaian){
+                                    if($update_peserta === (int)$jumlah_penilaian){
                                         $update_observee=Trans_observee::where("IdZonaSatker", $id_zonasi_satker)
                                                     ->update(['send_to_badilum' => true]);
                                         DB::commit();
                                         $status=true;
                                         $msg="Berahasil mengirimkan penilaian ke Badilum";
-                                    // }else{
-                                    //     throw new \Exception("Data Penilaian tidak sesuai ".$update_peserta." : ".$jumlah_penilaian);
-                                    // }
+                                    }else{
+                                         throw new \Exception("Data Penilaian tidak sesuai ".$update_peserta." : ".$jumlah_penilaian);
+                                    }
                             }catch(\Exception $e){
                                 DB::rollBack();
                                 $msg=$e->getMessage();
