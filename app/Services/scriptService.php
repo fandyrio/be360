@@ -74,7 +74,7 @@ use Illuminate\Support\Facades\DB;
                 $percent = round(($x/$jumlah_peserta)*100);
                 $bar = str_repeat("=", (int) round($percent/2));
 
-                echo "\r[$bar] $x/$jumlah_peserta ($percent%)";
+                echo "\r[[$bar]] $x/$jumlah_peserta ($percent%)";
 
                 
                 $data_insert=[];
@@ -221,8 +221,8 @@ use Illuminate\Support\Facades\DB;
                         exit();
                     }
                 }
-                usleep(50000);
                 $x++;
+                usleep(50000);
             }
             echo "\nFinisjed. Thankyou.";
             // echo "\n======================================\n";
