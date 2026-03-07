@@ -84,7 +84,7 @@ use Illuminate\Support\Facades\DB;
                 $nilai_peserta=clone $get_nilai->get();
                 $current_nilai=0;
                 // echo $list_peserta_zonasi['id_peserta_zonasi']."";
-                if($nilai_peserta->count() === 0 && $list_peserta_zonasi['nama_pegawai'] === "Fetty Yuniza"){
+                if($nilai_peserta->count() === 0){
                     echo "\nNama Peserta = ".$list_peserta_zonasi["nama_pegawai"]." Dinilai oleh: ".$list_peserta_zonasi['nama_penilai']."\n";
                     #2. Kalau belum ada pertanyaan, generate pertanyaan
                     $id_reference=NULL;
