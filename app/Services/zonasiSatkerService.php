@@ -627,7 +627,7 @@ use PDO;
                                                     ->update(['send_to_badilum' => true]);
                                         #ubah status pengiriman nilai satker menjadi true
                                         $get_zonasi_satker=Zonasi_satker::where("IdZonaSatker", $id_zonasi_satker)->first();
-                                        $get_zonasi_satker->kirim_penilain=true;
+                                        $get_zonasi_satker->kirim_penilaian=true;
                                         $get_zonasi_satker->update();
                                         DB::commit();
                                         $status=true;
