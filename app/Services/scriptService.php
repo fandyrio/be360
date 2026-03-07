@@ -166,7 +166,7 @@ use Illuminate\Support\Facades\DB;
                         
                         $nilai_total=round(((($nilai_peserta * $bobot_penilaian) / 100) / $jlh_penilaian), 2);
                         $get_current_nilai=Trans_observee::where("IdObservee", $id_pegawai_peserta)->first();
-                        $current_total=$get_current_nilai['total_nilai']+=$nilai_total;
+                        $current_total=round(($get_current_nilai['total_nilai']+=$nilai_total), 2);
                         try{
                             DB::beginTransaction();
                                 DB::table('trans_nilai_peserta_zonasi')->insert($data_insert);
