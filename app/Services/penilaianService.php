@@ -771,7 +771,7 @@ use Vinkla\Hashids\Facades\Hashids;
                                             
                                             $total_nilai_terakhir=$get_observee['total_nilai'];
                                             $total_nilai_terakhir+=$nilai_observee['nilai_akhir']*20;
-                                            $get_observee->total_nilai=$total_nilai_terakhir;
+                                            $get_observee->total_nilai=round($total_nilai_terakhir, 2);
                                             $affected_observee = $get_observee->update();
                                             if($affected_observee === true){
                                                 DB::commit();
