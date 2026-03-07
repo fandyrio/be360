@@ -69,13 +69,13 @@ use Illuminate\Support\Facades\DB;
             // echo "Mengisi jawaban peserta ...";
             $range=[1,2,3,4,5];
 
-            $x=0;
+            $p=0;
             foreach($get_peserta_zonasi as $list_peserta_zonasi){
-                $x++;
-                $percent = round(($x/$jumlah_peserta)*100);
+                $p++;
+                $percent = round(($p/$jumlah_peserta)*100);
                 $bar = str_repeat("=", (int) round($percent/2));
 
-                echo "\r[[$bar]] $x/$jumlah_peserta ($percent%)";
+                echo "\r[[$bar]] $p/$jumlah_peserta ($percent%)";
 
                 
                 $data_insert=[];
