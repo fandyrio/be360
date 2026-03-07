@@ -71,6 +71,7 @@ use Illuminate\Support\Facades\DB;
 
             $x=0;
             foreach($get_peserta_zonasi as $list_peserta_zonasi){
+                $x++;
                 $percent = round(($x/$jumlah_peserta)*100);
                 $bar = str_repeat("=", (int) round($percent/2));
 
@@ -221,7 +222,6 @@ use Illuminate\Support\Facades\DB;
                         exit();
                     }
                 }
-                $x++;
                 usleep(50000);
             }
             echo "\nFinisjed. Thankyou.";
