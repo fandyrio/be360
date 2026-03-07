@@ -83,7 +83,7 @@ use Illuminate\Support\Facades\DB;
                         ->where('locked', true);
                 $nilai_peserta=clone $get_nilai->get();
                 $current_nilai=0;
-                if($nilai_peserta->count() === 0){
+                if($nilai_peserta->count() === 0 && $list_peserta_zonasi['nama_pegawai'] === "Fetty Yuniza"){
                     #2. Kalau belum ada pertanyaan, generate pertanyaan
                     $id_reference=NULL;
                     if(!is_null($list_peserta_zonasi['id_jabatan_plt'])){
@@ -216,7 +216,6 @@ use Illuminate\Support\Facades\DB;
                     #3. Simpan Nilai masing - masing
                     echo "\n======================================\n";
                 }
-                break;
             }
             
         }
