@@ -302,7 +302,7 @@ class zonasiSatkerController extends Controller
                 $page = 1;
             }
             $limit=50;
-            if(is_null($refresh)){
+            if(is_null($refresh) || $refresh === "null"){
                 $refresh=false;
             }else{
                 $refresh=true;
