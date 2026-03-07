@@ -1610,7 +1610,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                         $data[$x]['sudah_nilai']=$list_penilaian->sudah;
                         $data[$x]['total_penilaian']=$list_penilaian->total;
                         $data[$x]['percentage']=$list_penilaian->sudah / $list_penilaian->total * 100;
-                        $data[$x]['kirim_penilain']=(int)$list_penilaian['kirim_penilaian'] === 0 ? false : true;
+                        $data[$x]['kirim_penilain']=(int)$list_penilaian->kirim_penilaian === 0 ? false : true;
                         $x++;
                     }
                 }else{
