@@ -322,7 +322,7 @@ class zonasiSatkerController extends Controller
         }catch(\Exception $e){
             $msg=$e->getMessage();
         }
-        return response()->json(['status'=>$status, 'msg'=>$msg, 'send_to_badilum'=>$send_to_badilum, 'jumlah_halaman'=>$jumlah_halaman, 'page'=>$page, 'percentage'=>$percentage, 'sudah_menilai'=>$sudah_menilai, 'total_penilaian'=>$total_penilaian, 'token_monitoring'=>$token_monitoring, 'signature'=>$signature, 'data'=>$data]);
+        return response()->json(['status'=>$status, 'msg'=>$msg, 'send_to_badilum'=>$send_to_badilum, 'jumlah_halaman'=>$jumlah_halaman, 'page'=>$page, 'percentage'=>$percentage, 'sudah_menilai'=>$sudah_menilai, 'total_penilaian'=>$total_penilaian, 'token_monitoring'=>$token_monitoring, 'signature'=>$signature, 'data'=>$data, 'refresh'=>$refresh]);
     }
 
     public function sendPenilaianToBadilum(Request $request){
