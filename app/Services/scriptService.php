@@ -215,6 +215,7 @@ use Illuminate\Support\Facades\DB;
                     }
                     #3. Simpan Nilai masing - masing
                     echo "\n======================================\n";
+                    break;
                 }
                 
             }
