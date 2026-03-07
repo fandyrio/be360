@@ -140,10 +140,11 @@ use Illuminate\Support\Facades\DB;
                                             ->where("IdZonaSatker", $list_peserta_zonasi['id_zona_satker'])
                                             ->select("trans_observee.IdObservee", "tp.nama_pegawai")
                                             ->get();
-                        echo "id zonasi satker: ".$list_peserta_zonasi['id_zona_satker'];
+                        echo "\nid zonasi satker: ".$list_peserta_zonasi['id_zona_satker']."\n";
                         // echo "\nid kelompok jabatan penilai: ".$id_kelompok_jabatan_penilai;
 
-                        $id_observee=[];                    
+                        $id_observee=[]; 
+                        $nama_penilai=[];                   
                         foreach($get_observee as $list_observee){
                             $id_observee[]=$list_observee['IdObservee'];
                             $nama_penilai[] = $list_observee['nama_pegawai']; 
