@@ -224,8 +224,8 @@ use Illuminate\Support\Facades\DB;
                 usleep(50000);
                 $x++;
             }
-            echo "Finisjed. Thankyou.";
-            echo "\n======================================\n";
+            echo "\nFinisjed. Thankyou.";
+            // echo "\n======================================\n";
             
         }
 
