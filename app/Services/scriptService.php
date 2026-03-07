@@ -42,6 +42,7 @@ use Illuminate\Support\Facades\DB;
             echo "==========================================\n";
             echo "Running Script Isi Jawaban\n";
             echo "==========================================\n";
+            echo "Please wait ...\n";
             $get_peserta_zonasi=Trans_peserta_zonasi::join("trans_observee as to1", "to1.IdObservee", "=", "trans_peserta_zonasi.id_pegawai_peserta")
                                                     ->join("tref_jabatan_peserta as tjp", "tjp.id_kelompok_jabatan", '=', 'to1.id_kelompok_jabatan')
                                                     ->join("trans_observee as to2", "to2.IdObservee", "=", "trans_peserta_zonasi.id_pegawai_penilai")
@@ -62,14 +63,19 @@ use Illuminate\Support\Facades\DB;
                                                     "tjp2.id as id_jabatan_penilai")
                                                 ->where('trans_peserta_zonasi.id_zonasi', $id_zonasi)->get();
             $jumlah_peserta=$get_peserta_zonasi->count();
-            echo "Jumlah Penilaian: ".$jumlah_peserta."\n";
-            echo "==========================================\n";
+            // echo "Jumlah Penilaian: ".$jumlah_peserta."\n";
+            // echo "==========================================\n";
             #1. Get all peserta
-            echo "Mengisi jawaban peserta ...";
+            // echo "Mengisi jawaban peserta ...";
             $range=[1,2,3,4,5];
 
-            
+            $x=0;
             foreach($get_peserta_zonasi as $list_peserta_zonasi){
+                $percent = round(($x/$jumlah_peserta)*100);
+                $bar = str_repeat("=", $percent/2);
+
+                echo "\r[$bar] $x/$jumlah_peserta ($percent%)";
+
                 
                 $data_insert=[];
                 $is_plt=false;
@@ -85,7 +91,7 @@ use Illuminate\Support\Facades\DB;
                 $current_nilai=0;
                 // echo $list_peserta_zonasi['id_peserta_zonasi']."";
                 if($nilai_peserta->count() === 0){
-                    echo "\nNama Peserta = ".$list_peserta_zonasi["nama_pegawai"]." Dinilai oleh: ".$list_peserta_zonasi['nama_penilai']."\n";
+                    // echo "\nNama Peserta = ".$list_peserta_zonasi["nama_pegawai"]." Dinilai oleh: ".$list_peserta_zonasi['nama_penilai']."\n";
                     #2. Kalau belum ada pertanyaan, generate pertanyaan
                     $id_reference=NULL;
                     if(!is_null($list_peserta_zonasi['id_jabatan_plt'])){
@@ -114,11 +120,11 @@ use Illuminate\Support\Facades\DB;
 
                     try{
                         $nilai_peserta=0;
-                        echo "Nilai Tiap Pertanyaan: ";
-                        echo "\n\nPerhitungan:\n";
+                        // echo "Nilai Tiap Pertanyaan: ";
+                        // echo "\n\nPerhitungan:\n";
                         foreach($get_pertanyaan as $list_pertanyaan){
                             $nilai=$range[array_rand($range)];
-                            echo "Nilai: ".$nilai."\n";
+                            // echo "Nilai: ".$nilai."\n";
                             $data_insert[]=[
                                 "id_peserta_zonasi"=>$list_peserta_zonasi['id_peserta_zonasi'],
                                 "id_pertanyaan"=>$list_pertanyaan['id_pertanyaan_periode'],
@@ -129,11 +135,11 @@ use Illuminate\Support\Facades\DB;
                             ];
                             #3. Convert ke nilai Bobot Perentase masing - masing pertanyaan 
                             $nilai_bobot=$list_pertanyaan['bobot'] * $nilai / 100; 
-                            echo $list_pertanyaan['bobot']."x".$nilai."/100 = ".$nilai_bobot;
+                            // echo $list_pertanyaan['bobot']."x".$nilai."/100 = ".$nilai_bobot;
                             $nilai_peserta+=$nilai_bobot;
-                            echo "\n";
+                            // echo "\n";
                         }
-                        echo "\nNilai Peserta dari Penilai:".$nilai_peserta;
+                        // echo "\nNilai Peserta dari Penilai:".$nilai_peserta;
 
                         
                         #hitung orang yang ada di jabatan itu
@@ -142,7 +148,7 @@ use Illuminate\Support\Facades\DB;
                                             ->where("IdZonaSatker", $list_peserta_zonasi['id_zona_satker'])
                                             ->select("trans_observee.IdObservee", "tp.nama_pegawai")
                                             ->get();
-                        echo "\nid zonasi satker: ".$list_peserta_zonasi['id_zona_satker']."\n";
+                        // echo "\nid zonasi satker: ".$list_peserta_zonasi['id_zona_satker']."\n";
                         // echo "\nid kelompok jabatan penilai: ".$id_kelompok_jabatan_penilai;
 
                         $id_observee=[]; 
@@ -156,12 +162,12 @@ use Illuminate\Support\Facades\DB;
                                                         ->count();
 
                         // echo "\nId Penilaian: \n";
-                        echo " Dinilai oleh: ";
+                        // echo " Dinilai oleh: ";
                         for($x=0;$x<count($id_observee);$x++){
                             // echo "Id pegawai peserta : ".$list_peserta_zonasi['id_pegawai_peserta']." - id pegawai penilai: ".$id_observee[$x]."\n";
-                            echo $nama_penilai[$x].", ";
+                            // echo $nama_penilai[$x].", ";
                         }
-                        echo "\n";
+                        // echo "\n";
                         if($is_plt === true){
                             $jlh_penilaian+=1;
                         }
@@ -173,24 +179,24 @@ use Illuminate\Support\Facades\DB;
                             if(!is_null($get_penilaian)){
                                 $jlh_penilaian=1;
                             }
-                            echo "\nKetua Menilai ketua: \n";
+                            // echo "\nKetua Menilai ketua: \n";
                         }
-                        echo "\nJumlah Penilai: ".$jlh_penilaian."\n";
+                        // echo "\nJumlah Penilai: ".$jlh_penilaian."\n";
                             $bobot_penilaian=$bobot_penilaian_jabatan["bobot_{$id_jabatan_penilai}_{$id_jabatan_peserta}"];
                             // echo $id_jabatan_penilai." : ".$id_jabatan_peserta." = ".$bobot_penilaian."\n";
-                            echo "Bobot penilaian: ".$bobot_penilaian."\n";
+                            // echo "Bobot penilaian: ".$bobot_penilaian."\n";
                         $nilai_total=(($nilai_peserta * $bobot_penilaian) / 100) / $jlh_penilaian;
                         $nilai_total_round=round($nilai_total, 2);
                         $nilai_total_convert = $nilai_total_round * 20;
                         $nilai_total_convert_round=round($nilai_total_convert, 2);
-                        echo "Nilai setelah dikali bobot dan dibagi jlh penilai: ".$nilai_total_round;
+                        // echo "Nilai setelah dikali bobot dan dibagi jlh penilai: ".$nilai_total_round;
                         $get_current_nilai=Trans_observee::where("IdObservee", $id_pegawai_peserta)->first();
-                        echo "\n";
-                        echo "Nilai akhir sebelumnya: ".$get_current_nilai['total_nilai'];
+                        // echo "\n";
+                        // echo "Nilai akhir sebelumnya: ".$get_current_nilai['total_nilai'];
                         $current_total=$get_current_nilai['total_nilai'] +=$nilai_total_convert_round;
                         $current_total_round=round($current_total, 2);
-                        echo "\n";
-                        echo "Nilai akhir setelah ditambah nilai akhir sebelumnya: ".$current_total_round;
+                        // echo "\n";
+                        // echo "Nilai akhir setelah ditambah nilai akhir sebelumnya: ".$current_total_round;
 
                         try{
                             DB::beginTransaction();
@@ -214,10 +220,12 @@ use Illuminate\Support\Facades\DB;
                         echo "Error: ".$e->getMessage()." ".$e->getLine();
                         exit();
                     }
-                    #3. Simpan Nilai masing - masing
-                    echo "\n======================================\n";
                 }
+                usleep(50000);
+                $x++;
             }
+            echo "Finisjed. Thankyou.";
+            echo "\n======================================\n";
             
         }
 
