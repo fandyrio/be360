@@ -505,39 +505,31 @@ use PDO;
             $jumlah_halaman = 0;
             $sudah_menilai=0;
             $total=0;
-            $zonasi_aktif=true;
             $percentage=0;
             $ratio="0 / 0";
             $data=[];
-            $peserta_blm_nilai=0;
+            $send_to_badilum=false; // false artinya tidak dalam state untuk mengirim ke badilum
             $zonasi_satker=$this->penilaiaService->getZonasi($id_zonasi_satker);
             $signature="";
             $msg="";
+            $blm_kirim_badilum=true;
             if(!is_null($zonasi_satker)){
                 $id_satker=$zonasi_satker['IdSatker'];
                 $tgl_mulai_zonasi=$zonasi_satker['start_date'];
                 $tgl_selesai_zonasi=$zonasi_satker['end_date'];
                 $proses_id_zonasi=$zonasi_satker['proses_id'];
                 if((int)$id_satker === (int)$id_satker_ctlr){
-                    if(!$this->penilaiaService->validateZonasi($id_satker, $tgl_mulai_zonasi, $tgl_selesai_zonasi, $proses_id_zonasi)){
-                        $zonasi_aktif=false;
-                    }
-                    if($zonasi_aktif){
-                        $peserta_blm_nilai=Trans_peserta_zonasi::where('id_zona_satker', $id_zonasi_satker)
+                    $peserta_blm_nilai=Trans_peserta_zonasi::where('id_zona_satker', $id_zonasi_satker)
                                                     ->where('nilai', 0)
                                                     ->count();
-                        if($peserta_blm_nilai > 0){
-                            $zonasi_aktif=false;
-                        }
-                        $get_observee = Trans_observee::where("IdZonaSatker", $id_zonasi_satker)
-                                            ->where('send_to_badilum', 1)
-                                            ->exists();
-                        if($get_observee){
-                            $zonasi_aktif=false;
+                    if($this->penilaiaService->validateZonasi($id_satker, $tgl_mulai_zonasi, $tgl_selesai_zonasi, $proses_id_zonasi)){
+                        if($zonasi_satker['send_to_badilum'] === false){
+                            $send_to_badilum=true;
                         }
                     }else{
                         $msg="Zonasi telah selesai";
                     }
+                    
                     $total=Trans_peserta_zonasi::where('id_zona_satker', $id_zonasi_satker)->count();
                     $sudah_menilai=$total - $peserta_blm_nilai;
                     $percentage=$sudah_menilai / $total * 100;
@@ -550,6 +542,7 @@ use PDO;
                     $skip= $page * $limit - $limit;
                     if($refresh === true){
                         Cache::store('redis')->forget("peserta_zonasi_{$id_zonasi_satker}_{$skip}_{$limit}");
+                        Cache::store('redis')->forget("zonasi_satker_{$id_zonasi_satker}");
                     }
                     $get_data=$this->getListPesertaZonasiSatker($id_zonasi_satker, $skip, $limit);
                     $jumlah_data=count($get_data);
@@ -581,7 +574,7 @@ use PDO;
                 'jumlahHalaman'=>$jumlah_halaman,
                 'page'=>$page,
                 'data'=>$data,
-                'send_to_badilum'=>$zonasi_aktif,
+                'send_to_badilum'=>$send_to_badilum,
                 'sudah_menilai'=>$sudah_menilai,
                 'total_penilaian'=>$total,
                 'token_monitoring'=>$payload,
@@ -604,6 +597,7 @@ use PDO;
                         "))
                         ->where('tpz.id_zona_satker', $id_zonasi_satker)
                         ->orderBy('tp2.nama_pegawai', 'asc')
+                        ->orderBy("tpz.nilai", "asc")
                         ->skip($skip)->take($limit)
                         ->get();
             });
@@ -628,11 +622,17 @@ use PDO;
                                     $update_peserta=Trans_peserta_zonasi::where('id_zona_satker', $id_zonasi_satker)
                                                 ->update(['status'=> true]);
                                     if($update_peserta === (int)$jumlah_penilaian){
+                                        #ubah status send_to_badilum observee menjadi true
                                         $update_observee=Trans_observee::where("IdZonaSatker", $id_zonasi_satker)
                                                     ->update(['send_to_badilum' => true]);
+                                        #ubah status pengiriman nilai satker menjadi true
+                                        $get_zonasi_satker=Zonasi_satker::where("IdZonaSatker", $id_zonasi_satker)->first();
+                                        $get_zonasi_satker->kirim_penilain=true;
+                                        $get_zonasi_satker->update();
                                         DB::commit();
                                         $status=true;
                                         $msg="Berahasil mengirimkan penilaian ke Badilum";
+                                        Cache::store("redis")->forget("zonasi_satker_{$id_zonasi_satker}");
                                     }else{
                                          throw new \Exception("Data Penilaian tidak sesuai ".$update_peserta." : ".$jumlah_penilaian);
                                     }

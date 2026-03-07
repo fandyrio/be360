@@ -195,10 +195,11 @@ use Vinkla\Hashids\Facades\Hashids;
         }
 
         public function getZonasi($id_zonasi_satker){
+
             $zonasi_satker=Cache::store('redis')->remember("zonasi_satker_{$id_zonasi_satker}", 3600*24*5, function () use($id_zonasi_satker) {
                 return Zonasi_satker::join('tref_zonasi as tz', 'tz.IdZona', '=', 'trans_zonasi_satker.IdZona')
                                 ->join('tref_tahun_penilaian as ttp', 'ttp.IdTahunPenilaian', '=', 'tz.IdTahunPenilaian')
-                                ->select('ttp.IdTahunPenilaian as id_periode', 'tz.start_date', 'tz.end_date', 'trans_zonasi_satker.IdSatker', 'tz.proses_id')
+                                ->select('ttp.IdTahunPenilaian as id_periode', 'tz.start_date', 'tz.end_date', 'trans_zonasi_satker.IdSatker', 'tz.proses_id', 'trans_zonasi_satker.kirim_penilaian as send_to_badilum')
                                 ->where('trans_zonasi_satker.IdZonaSatker', $id_zonasi_satker)->first();
             });
             return $zonasi_satker;

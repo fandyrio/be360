@@ -124,6 +124,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                         'IdSatker'=>$list_satker['IdSatker'],
                                         'jumlah_personil'=>(int)$list_satker['jumlah_peserta']-=1,
                                         'total_panmud'=>(int)$list_satker['jumlah_panmud'],
+                                        'kirim_penilaian'=>false,
                                         'diinput_tgl'=>date('Y-m-d H:i:s'),
                                         'diinput_oleh'=>$request->user()->uname, 
                                     ];
@@ -1591,7 +1592,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                      return DB::table('trans_peserta_zonasi as tpz')
                                     ->join('trans_zonasi_satker as tzs', 'tzs.IdZonaSatker', '=', 'tpz.id_zona_satker')
                                     ->join('v_satker as vs', 'vs.IdSatker', '=', 'tzs.IdSatker')
-                                    ->select("NamaSatker", "id_zona_satker", DB::raw("COUNT(CASE WHEN tpz.nilai = 0 then 1 END) AS belum"), DB::raw("COUNT(CASE WHEN tpz.nilai > 0 then 1 END) AS sudah"), DB::raw("COUNT(id_zona_satker) AS total"))
+                                    ->select("NamaSatker", "id_zona_satker", DB::raw("COUNT(CASE WHEN tpz.nilai = 0 then 1 END) AS belum"), DB::raw("COUNT(CASE WHEN tpz.nilai > 0 then 1 END) AS sudah"), DB::raw("COUNT(id_zona_satker) AS total"), "tzs.kirim_penilaian")
                                     ->skip($skip)->take($limit)
                                     ->where("tzs.IdZona", $id_zona)
                                     ->groupBy("id_zona_satker")
@@ -1609,6 +1610,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                         $data[$x]['sudah_nilai']=$list_penilaian->sudah;
                         $data[$x]['total_penilaian']=$list_penilaian->total;
                         $data[$x]['percentage']=$list_penilaian->sudah / $list_penilaian->total * 100;
+                        $data[$x]['kirim_penilain']=(int)$list_penilaian['kirim_penilaian'] === 0 ? false : true;
                         $x++;
                     }
                 }else{
