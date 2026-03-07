@@ -126,7 +126,7 @@ use Illuminate\Support\Facades\DB;
                                 "created_at"=>date("Y-m-d H:i:s")
                             ];
                             #3. Convert ke nilai Bobot Perentase masing - masing pertanyaan 
-                            $nilai_bobot=round(($list_pertanyaan['bobot'] * $nilai / 100), 2); 
+                            $nilai_bobot=$list_pertanyaan['bobot'] * $nilai / 100; 
                             echo $list_pertanyaan['bobot']."x".$nilai."/100 = ".$nilai_bobot;
                             $nilai_peserta+=$nilai_bobot;
                             echo "\n";
