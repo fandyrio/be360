@@ -46,6 +46,8 @@ use Illuminate\Support\Facades\DB;
                                                     ->join("tref_jabatan_peserta as tjp", "tjp.id_kelompok_jabatan", '=', 'to1.id_kelompok_jabatan')
                                                     ->join("trans_observee as to2", "to2.IdObservee", "=", "trans_peserta_zonasi.id_pegawai_penilai")
                                                     ->join("tref_jabatan_peserta as tjp2", "tjp2.id_kelompok_jabatan", "=", "to2.id_kelompok_jabatan")
+                                                    ->join("tref_pegawai as tp", "tp.id_pegawai", "to1.IdPegawai")
+                                                    ->join("tref_pegawai as tp2", "tp2.id_pegawai", "to2.IdPegawai")
                                                     ->select("trans_peserta_zonasi.id_zona_satker",
                                                     "trans_peserta_zonasi.id_jabatan_plt", 
                                                     "trans_peserta_zonasi.id_pegawai_peserta", 
@@ -56,7 +58,7 @@ use Illuminate\Support\Facades\DB;
                                                     "tjp.id_kelompok_jabatan as id_kelompok_jabatan_peserta", 
                                                     "tjp2.id_jabatan_gabungan as id_jabatan_gabungan_penilai", 
                                                     "tjp2.id_kelompok_jabatan as id_kelompok_jabatan_penilai", 
-                                                    "tjp.id as id_jabatan_peserta", 
+                                                    "tjp.id as id_jabatan_peserta", "tp.nama_pegawai", "tp2.nama_pegawai as nama_penilai",
                                                     "tjp2.id as id_jabatan_penilai")
                                                 ->where('trans_peserta_zonasi.id_zonasi', $id_zonasi)->get();
             $jumlah_peserta=$get_peserta_zonasi->count();
@@ -66,9 +68,9 @@ use Illuminate\Support\Facades\DB;
             echo "Mengisi jawaban peserta ...";
             $range=[1,2,3,4,5];
 
-
             
             foreach($get_peserta_zonasi as $list_peserta_zonasi){
+                echo "\nNama Peserta = ".$list_peserta_zonasi["nama_pegawai"]." Dinilai oleh: ".$list_peserta_zonasi['nama_penilai']."\n";
                 $data_insert=[];
                 $is_plt=false;
                 $id_pegawai_penilai=$list_peserta_zonasi['id_pegawai_penilai'];
@@ -110,8 +112,10 @@ use Illuminate\Support\Facades\DB;
 
                     try{
                         $nilai_peserta=0;
+                        echo "Nilai Tiap Pertanyaan: ";
                         foreach($get_pertanyaan as $list_pertanyaan){
                             $nilai=$range[array_rand($range)];
+                            echo $nilai.", ";
                             $data_insert[]=[
                                 "id_peserta_zonasi"=>$list_peserta_zonasi['id_peserta_zonasi'],
                                 "id_pertanyaan"=>$list_pertanyaan['id_pertanyaan_periode'],
@@ -124,27 +128,32 @@ use Illuminate\Support\Facades\DB;
                             $nilai_bobot=round(($list_pertanyaan['bobot'] * $nilai / 100), 2); 
                             $nilai_peserta+=$nilai_bobot;
                         }
+                        echo "\nNilai Peserta dari Penilai:".$nilai_peserta;
 
                         
                         #hitung orang yang ada di jabatan itu
-                        $get_observee=Trans_observee::where("id_kelompok_jabatan", $id_kelompok_jabatan_penilai)
+                        $get_observee=Trans_observee::join("tref_pegawai as tp", "tp.id_pegawai", "trans_observee.IdPegawai")
+                                            ->where("id_kelompok_jabatan", $id_kelompok_jabatan_penilai)
                                             ->where("IdZonaSatker", $list_peserta_zonasi['id_zona_satker'])
+                                            ->select("trans_observee.IdObservee", "tp.nama_pegawai")
                                             ->get();
 
-                        echo "\nid kelompok jabatan penilai: ".$id_kelompok_jabatan_penilai;
+                        // echo "\nid kelompok jabatan penilai: ".$id_kelompok_jabatan_penilai;
 
                         $id_observee=[];                    
                         foreach($get_observee as $list_observee){
                             $id_observee[]=$list_observee['IdObservee'];
+                            $nama_penilai[] = $list_observee['nama_pegawai']; 
                         }
                         $jlh_penilaian=Trans_peserta_zonasi::whereIn("id_pegawai_penilai", $id_observee)
                                                         ->where("id_pegawai_peserta", $list_peserta_zonasi['id_pegawai_peserta'])
                                                         ->count();
 
-                        echo "\nId Penilaian: \n";
-
+                        // echo "\nId Penilaian: \n";
+                        echo " Dinilai oleh: ";
                         for($x=0;$x<count($id_observee);$x++){
-                            echo "Id pegawai peserta : ".$list_peserta_zonasi['id_pegawai_peserta']." - id pegawai penilai: ".$id_observee[$x]."\n";
+                            // echo "Id pegawai peserta : ".$list_peserta_zonasi['id_pegawai_peserta']." - id pegawai penilai: ".$id_observee[$x]."\n";
+                            echo $nama_penilai[$x].", ";
                         }
                         echo "\n";
                         if($is_plt === true){
@@ -162,11 +171,17 @@ use Illuminate\Support\Facades\DB;
                         }
                         echo "\nJumlah Penilai: ".$jlh_penilaian."\n";
                             $bobot_penilaian=$bobot_penilaian_jabatan["bobot_{$id_jabatan_penilai}_{$id_jabatan_peserta}"];
-                            echo $id_jabatan_penilai." : ".$id_jabatan_peserta." = ".$bobot_penilaian."\n";
+                            // echo $id_jabatan_penilai." : ".$id_jabatan_peserta." = ".$bobot_penilaian."\n";
                         
                         $nilai_total=(($nilai_peserta * $bobot_penilaian) / 100) / $jlh_penilaian;
+                        echo "Nilai setelah dikali bobot dan dibagi jlh penilai: ".$nilai_total;
                         $get_current_nilai=Trans_observee::where("IdObservee", $id_pegawai_peserta)->first();
+                        echo "\n";
+                        echo "Nilai akhir sebelumnya: ".$get_current_nilai['total_nilai'];
                         $current_total=$get_current_nilai['total_nilai'] +=(round($nilai_total, 2));
+                        echo "\n";
+                        echo "Nilai akhir setelah ditambah nilai akhir sebelumnya: ".$current_total." (".(round($current_total, 2) * 20).")";
+
                         try{
                             DB::beginTransaction();
                                 DB::table('trans_nilai_peserta_zonasi')->insert($data_insert);
