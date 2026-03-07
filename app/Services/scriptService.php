@@ -83,6 +83,7 @@ use Illuminate\Support\Facades\DB;
                         ->where('locked', true);
                 $nilai_peserta=clone $get_nilai->get();
                 $current_nilai=0;
+                // echo $list_peserta_zonasi['id_peserta_zonasi']."";
                 if($nilai_peserta->count() === 0 && $list_peserta_zonasi['nama_pegawai'] === "Fetty Yuniza"){
                     echo "\nNama Peserta = ".$list_peserta_zonasi["nama_pegawai"]." Dinilai oleh: ".$list_peserta_zonasi['nama_penilai']."\n";
                     #2. Kalau belum ada pertanyaan, generate pertanyaan
@@ -180,23 +181,22 @@ use Illuminate\Support\Facades\DB;
                             echo "Bobot penilaian: ".$bobot_penilaian."\n";
                         $nilai_total=(($nilai_peserta * $bobot_penilaian) / 100) / $jlh_penilaian;
                         $nilai_total_round=round($nilai_total, 2);
+                        $nilai_total_convert = $nilai_total_round * 20;
+                        $nilai_total_convert_round=round($nilai_total_convert, 2);
                         echo "Nilai setelah dikali bobot dan dibagi jlh penilai: ".$nilai_total_round;
                         $get_current_nilai=Trans_observee::where("IdObservee", $id_pegawai_peserta)->first();
                         echo "\n";
                         echo "Nilai akhir sebelumnya: ".$get_current_nilai['total_nilai'];
-                        $current_total=$get_current_nilai['total_nilai'] +=$nilai_total_round;
+                        $current_total=$get_current_nilai['total_nilai'] +=$nilai_total_convert_round;
                         $current_total_round=round($current_total, 2);
                         echo "\n";
-                        $convert=$current_total_round * 20;
-                        $grand_total_convert=round($convert, 2);
-                        echo "Nilai akhir setelah ditambah nilai akhir sebelumnya: ".$current_total_round." total convert: ".$grand_total_convert;
+                        echo "Nilai akhir setelah ditambah nilai akhir sebelumnya: ".$current_total_round;
 
                         try{
                             DB::beginTransaction();
                                 
                                 DB::table('trans_nilai_peserta_zonasi')->insert($data_insert);
-                                $total_nilai=$grand_total_convert;
-                                $get_current_nilai->total_nilai=round($total_nilai, 2);
+                                $get_current_nilai->total_nilai=$current_total_round;
                                 // $get_current_nilai->updated_at=date("Y-m-d H:i:s");
                                 $get_current_nilai->update();
 
