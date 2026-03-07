@@ -72,7 +72,7 @@ use Illuminate\Support\Facades\DB;
             $x=0;
             foreach($get_peserta_zonasi as $list_peserta_zonasi){
                 $percent = round(($x/$jumlah_peserta)*100);
-                $bar = str_repeat("=", $percent/2);
+                $bar = str_repeat("=", (int) round($percent/2));
 
                 echo "\r[$bar] $x/$jumlah_peserta ($percent%)";
 
