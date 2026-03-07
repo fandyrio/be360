@@ -1597,6 +1597,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                     ->where("tzs.IdZona", $id_zona)
                                     ->groupBy("id_zona_satker")
                                     ->groupBy("NamaSatker")
+                                    ->groupBy("tzs.kirim_penilaian")
                                     ->get();
                 });
                 $get_summary_penilaian->toArray();
