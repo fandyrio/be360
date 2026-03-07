@@ -523,7 +523,7 @@ use PDO;
                                                     ->where('nilai', 0)
                                                     ->count();
                     if($this->penilaiaService->validateZonasi($id_satker, $tgl_mulai_zonasi, $tgl_selesai_zonasi, $proses_id_zonasi)){
-                        if($zonasi_satker['send_to_badilum'] === false){
+                        if((int)$zonasi_satker['send_to_badilum'] === 0){
                             $send_to_badilum=true;
                         }
                     }else{
