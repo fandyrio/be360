@@ -668,7 +668,7 @@ use PDO;
                                     ->join('v_satker as vs', 'vs.IdSatker', '=', 'trans_zonasi_satker.IdSatker')
                                     ->select('trans_zonasi_satker.IdZonaSatker', 'vs.NamaSatker as nama_satker')
                                     ->where("tz.IdZona", $id_zonasi)
-                                    ->where("tz.IdTahunPenilain", $id_periode)
+                                    ->where("tz.IdTahunPenilaian", $id_periode)
                                     ->get();
             });
             foreach($get_data as $satker){
