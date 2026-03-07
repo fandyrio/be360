@@ -178,18 +178,23 @@ use Illuminate\Support\Facades\DB;
                             // echo $id_jabatan_penilai." : ".$id_jabatan_peserta." = ".$bobot_penilaian."\n";
                         
                         $nilai_total=(($nilai_peserta * $bobot_penilaian) / 100) / $jlh_penilaian;
-                        echo "Nilai setelah dikali bobot dan dibagi jlh penilai: ".$nilai_total;
+                        $nilai_total_round=round($nilai_total, 2);
+                        echo "Nilai setelah dikali bobot dan dibagi jlh penilai: ".$nilai_total_round;
                         $get_current_nilai=Trans_observee::where("IdObservee", $id_pegawai_peserta)->first();
                         echo "\n";
                         echo "Nilai akhir sebelumnya: ".$get_current_nilai['total_nilai'];
-                        $current_total=$get_current_nilai['total_nilai'] +=(round($nilai_total, 2));
+                        $current_total=$get_current_nilai['total_nilai'] +=$nilai_total_round;
+                        $current_total_round=round($current_total, 2);
                         echo "\n";
-                        echo "Nilai akhir setelah ditambah nilai akhir sebelumnya: ".$current_total." (".(round($current_total, 2) * 20).")";
+                        $convert=$current_total_round * 20;
+                        $grand_total_convert=round($convert, 2);
+                        echo "Nilai akhir setelah ditambah nilai akhir sebelumnya: ".$current_total_round." total convert: ".$grand_total_convert;
 
                         try{
                             DB::beginTransaction();
+                                
                                 DB::table('trans_nilai_peserta_zonasi')->insert($data_insert);
-                                $total_nilai=round($current_total, 2) * 20;
+                                $total_nilai=$grand_total_convert;
                                 $get_current_nilai->total_nilai=round($total_nilai, 2);
                                 // $get_current_nilai->updated_at=date("Y-m-d H:i:s");
                                 $get_current_nilai->update();
