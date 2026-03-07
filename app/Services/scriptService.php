@@ -70,7 +70,7 @@ use Illuminate\Support\Facades\DB;
 
             
             foreach($get_peserta_zonasi as $list_peserta_zonasi){
-                echo "\nNama Peserta = ".$list_peserta_zonasi["nama_pegawai"]." Dinilai oleh: ".$list_peserta_zonasi['nama_penilai']."\n";
+                
                 $data_insert=[];
                 $is_plt=false;
                 $id_pegawai_penilai=$list_peserta_zonasi['id_pegawai_penilai'];
@@ -84,6 +84,7 @@ use Illuminate\Support\Facades\DB;
                 $nilai_peserta=clone $get_nilai->get();
                 $current_nilai=0;
                 if($nilai_peserta->count() === 0 && $list_peserta_zonasi['nama_pegawai'] === "Fetty Yuniza"){
+                    echo "\nNama Peserta = ".$list_peserta_zonasi["nama_pegawai"]." Dinilai oleh: ".$list_peserta_zonasi['nama_penilai']."\n";
                     #2. Kalau belum ada pertanyaan, generate pertanyaan
                     $id_reference=NULL;
                     if(!is_null($list_peserta_zonasi['id_jabatan_plt'])){
@@ -215,10 +216,6 @@ use Illuminate\Support\Facades\DB;
                     }
                     #3. Simpan Nilai masing - masing
                     echo "\n======================================\n";
-                }else{
-                    echo "\n";
-                    echo $list_peserta_zonasi["nama_pegawai"];
-                    echo "\n";
                 }
             }
             
