@@ -338,6 +338,7 @@ class zonasiController extends Controller
 
     public function monitoringBadilum(Request $request, $id_zonasi_enc, $page, $refresh=null){
         $data=[];
+        $jumlah_halaman=0;
         $status=false;
         if($page < 1){
             $page = 1;
