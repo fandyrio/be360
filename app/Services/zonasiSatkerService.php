@@ -661,11 +661,14 @@ use PDO;
 
         public function getZonasiSatkerByPeriodeZonasi($id_periode, $id_zonasi){
             $data=[];$x=0;
-            $get_data=Cache::store('redis')->remember("zonasi_satker_{$id_periode}_{$id_zonasi}", 3600*24*365, function(){
+            Cache::store('redis')->forget("zonasi_satker_{$id_periode}_{$id_zonasi}");
+            $get_data=Cache::store('redis')->remember("zonasi_satker_{$id_periode}_{$id_zonasi}", 3600*24*365, function() use($id_zonasi, $id_periode){
                 return Zonasi_satker::join('tref_zonasi as tz', 'tz.IdZona', '=', 'trans_zonasi_satker.IdZona')
                                     ->join('tref_tahun_penilaian as tp', 'tp.IdTahunPenilaian', '=', 'tz.IdTahunPenilaian')
                                     ->join('v_satker as vs', 'vs.IdSatker', '=', 'trans_zonasi_satker.IdSatker')
                                     ->select('trans_zonasi_satker.IdZonaSatker', 'vs.NamaSatker as nama_satker')
+                                    ->where("tz.IdZona", $id_zonasi)
+                                    ->where("tz.IdTahunPenilain", $id_periode)
                                     ->get();
             });
             foreach($get_data as $satker){
