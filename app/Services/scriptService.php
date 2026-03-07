@@ -164,7 +164,7 @@ use Illuminate\Support\Facades\DB;
                             $bobot_penilaian=$bobot_penilaian_jabatan["bobot_{$id_jabatan_penilai}_{$id_jabatan_peserta}"];
                             echo $id_jabatan_penilai." : ".$id_jabatan_peserta." = ".$bobot_penilaian."\n";
                         
-                        $nilai_total=((($nilai_peserta * $bobot_penilaian) / 100) / $jlh_penilaian);
+                        $nilai_total=round(((($nilai_peserta * $bobot_penilaian) / 100) / $jlh_penilaian), 2);
                         $get_current_nilai=Trans_observee::where("IdObservee", $id_pegawai_peserta)->first();
                         $current_total=$get_current_nilai['total_nilai']+=$nilai_total;
                         try{
