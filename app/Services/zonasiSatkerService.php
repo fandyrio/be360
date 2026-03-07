@@ -603,7 +603,7 @@ use PDO;
                                 END AS nilai
                         "))
                         ->where('tpz.id_zona_satker', $id_zonasi_satker)
-                        ->orderBy('nilai', 'desc')
+                        ->orderBy('tp2.nama_pegawai', 'asc')
                         ->skip($skip)->take($limit)
                         ->get();
             });
