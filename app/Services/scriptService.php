@@ -113,9 +113,10 @@ use Illuminate\Support\Facades\DB;
                     try{
                         $nilai_peserta=0;
                         echo "Nilai Tiap Pertanyaan: ";
+                        echo "\n\nPerhitungan:\n";
                         foreach($get_pertanyaan as $list_pertanyaan){
                             $nilai=$range[array_rand($range)];
-                            echo $nilai.", ";
+                            echo "Nilai: ".$nilai."\n";
                             $data_insert[]=[
                                 "id_peserta_zonasi"=>$list_peserta_zonasi['id_peserta_zonasi'],
                                 "id_pertanyaan"=>$list_pertanyaan['id_pertanyaan_periode'],
@@ -126,8 +127,7 @@ use Illuminate\Support\Facades\DB;
                             ];
                             #3. Convert ke nilai Bobot Perentase masing - masing pertanyaan 
                             $nilai_bobot=round(($list_pertanyaan['bobot'] * $nilai / 100), 2); 
-                            echo "\n\nPerhitungan:\n";
-                            echo $list_pertanyaan['bobot']."x".$nilai."/100";
+                            echo $list_pertanyaan['bobot']."x".$nilai."/100 = ".$nilai_bobot;
                             $nilai_peserta+=$nilai_bobot;
                             echo "\n";
                         }
