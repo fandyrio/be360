@@ -126,7 +126,10 @@ use Illuminate\Support\Facades\DB;
                             ];
                             #3. Convert ke nilai Bobot Perentase masing - masing pertanyaan 
                             $nilai_bobot=round(($list_pertanyaan['bobot'] * $nilai / 100), 2); 
+                            echo "\n\nPerhitungan:\n";
+                            echo $list_pertanyaan['bobot']."x".$nilai."/100";
                             $nilai_peserta+=$nilai_bobot;
+                            echo "\n";
                         }
                         echo "\nNilai Peserta dari Penilai:".$nilai_peserta;
 
