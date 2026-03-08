@@ -63,6 +63,7 @@ class penilaianController extends Controller
         $status=false;
         $total=0;
         $data=null;
+        $endpoint_penilain=null;
         try{
             $request->validate([
                 'endpoint'=>['required'],
@@ -88,6 +89,7 @@ class penilaianController extends Controller
                     $total=$get_penilaian['total'];
                     $selesai=$get_penilaian['selesai'];
                     $data=$get_penilaian['data'];
+                    $endpoint_penilain=$get_penilaian['token_r'];
                 }else{
                     $msg="Data token tidak valid";
                 }
@@ -98,7 +100,7 @@ class penilaianController extends Controller
             $msg=$e->validator->errors()->first();
         }
 
-        return response()->json(['status'=>$status, 'msg'=>$msg, 'total'=>$total, 'selesai'=>$selesai, 'data'=>$data]);
+        return response()->json(['status'=>$status, 'msg'=>$msg, 'total'=>$total, 'selesai'=>$selesai, 'token_r'=>$endpoint_penilain, 'data'=>$data]);
     }
 
     public function listPertanyaanPenilaian(Request $request){
