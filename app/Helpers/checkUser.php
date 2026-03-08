@@ -4,6 +4,7 @@
     use App\Models\Satker;
     use App\Models\Tref_sys_config;
 use App\Models\Tref_zonasi;
+use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Vinkla\Hashids\Facades\Hashids;
@@ -242,13 +243,45 @@ use Vinkla\Hashids\Facades\Hashids;
                 $id_observee_enc=Crypt::encrypt($id_observee);
                 $gabung=(int)$id_zonasi_satker+(int)$jlh_penilai;
                 $gabung_enc=Hashids::encode($gabung);
-                $id_zonasi_satker=Hashids::encode($id_zonasi_satker);
+                $id_zonasi_satker_encode=Hashids::encode($id_zonasi_satker);
                 $panjang_=strlen($id_observee_enc);
                 $half_panjang=ceil($panjang_/2);
                 $split_str=str_split($id_observee_enc, $half_panjang);
-                $string_tengah=$str_key_open."".$gabung_enc."IdZs4t".$id_zonasi_satker."".$str_key_open;
+                $string_tengah=$str_key_open."".$gabung_enc."IdZs4t".$id_zonasi_satker_encode."".$str_key_open;
                 $key_report=$split_str[0]."".$string_tengah."".$split_str[1];
                 return $key_report;
+            }
+        }
+
+        if(!function_exists("decKeyReportIndividu")){
+            function decKeyReportIndividu($key){
+                $str_key_open="sImA1010nG";
+                $explode=explode($str_key_open, $key);
+                if(count($explode) === 3){
+                    $key_1=$explode[0];
+                    $key_2=$explode[1];
+                    $key_3=$explode[2];
+                    $explode_key2=explode("IdZs4t", $key_2);
+                    if(count($explode_key2) === 2){
+                        $gabungan=$explode_key2[0];
+                        $id_zonasi_satker_encode=$explode_key2[1];
+                        $id_zonasi_satker_enc=Hashids::decode($id_zonasi_satker_encode);
+                        $gabungan_decode=Hashids::decode($gabungan);
+                        if(!empty($id_zonasi_satker_enc) && !empty($gabungan_decode)){
+                            $id_zonasi_satker=$id_zonasi_satker_enc[0];
+                            $gabungan=$gabungan_decode[0];
+                            $jlh_penilai=(int)$gabungan - $id_zonasi_satker;
+                            $id_observee_gabung_enc=$key_1."".$key_3;
+                            try{
+                                $id_observee_dec=Crypt::decrypt($id_observee_gabung_enc);
+                                return ['id_observee'=>$id_observee_dec, 'id_zonasi_satker'=>$id_zonasi_satker, 'jlh_penilai'=>$jlh_penilai];
+                            }catch(DecryptException $e){
+                                return 0;
+                            }
+                        }
+                    }
+                }
+                return 0;
             }
         }
     }

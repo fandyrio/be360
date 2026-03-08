@@ -166,8 +166,9 @@ use Vinkla\Hashids\Facades\Hashids;
             return $generate_enc_key;
         }
 
-        public function reportPersonal(){
-
+        public function reportPersonal($key){
+            $validate_key=decKeyReportIndividu($key);
+            return $validate_key;
         }
 
         public function getJawabanTextByBundlePoint($bundle, $point){
