@@ -70,6 +70,7 @@ use Vinkla\Hashids\Facades\Hashids;
             $total=0;
             $selesai=0;
             $data=[];
+            $endpoint_report="invalid";
             $get_observee=Trans_observee::where('IdObservee', $id_observee)
                                     ->where('NIPBaru', $nip_penilai)
                                     ->where('IdZonaSatker', $id_zonasi_satker)
@@ -132,6 +133,7 @@ use Vinkla\Hashids\Facades\Hashids;
                         $params_before=$params;
                     }
                     $total=$x;
+                    $endpoint_report=$this->generateLinkReportPersonal($id_observee, $id_zonasi_satker);
                 }else{
                     $msg="Data Peserta tidak ditemukan";
                 }
@@ -143,9 +145,29 @@ use Vinkla\Hashids\Facades\Hashids;
                 'status'=>$status,
                 'msg'=>$msg,
                 'total'=>$total,
+                'token_r'=>$endpoint_report,
                 'selesai'=>$selesai,
                 'data'=>$data
             ];
+        }
+
+        public function generateLinkReportPersonal($id_observee, $id_zonasi_satker){
+            $generate_enc_key="invalid";
+            $check_observee=Trans_observee::where("IdObservee", $id_observee)
+                                ->where("IdZonaSatker", $id_zonasi_satker)
+                                ->first();
+            if(!is_null($check_observee)){
+                $jlh_penilai=Trans_peserta_zonasi::where("id_pegawai_peserta", $id_observee)
+                                        ->where("id_zona_satker", $id_zonasi_satker)
+                                        ->count();
+                $generate_enc_key=encKeyReportIndividu($id_observee, $id_zonasi_satker, $jlh_penilai);
+
+            }
+            return $generate_enc_key;
+        }
+
+        public function reportPersonal(){
+
         }
 
         public function getJawabanTextByBundlePoint($bundle, $point){

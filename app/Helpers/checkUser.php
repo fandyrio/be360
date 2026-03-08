@@ -4,6 +4,7 @@
     use App\Models\Satker;
     use App\Models\Tref_sys_config;
 use App\Models\Tref_zonasi;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Vinkla\Hashids\Facades\Hashids;
 
@@ -232,6 +233,22 @@ use Vinkla\Hashids\Facades\Hashids;
         if(!function_exists('dec')){
             function decodeInt($int){
                 return Hashids::decode($int);
+            }
+        }
+
+        if(!function_exists('encKeyReportIndividu')){
+            function encKeyReportIndividu($id_observee, $id_zonasi_satker, $jlh_penilai){
+                $str_key_open="sImA1010nG";
+                $id_observee_enc=Crypt::encrypt($id_observee);
+                $gabung=(int)$id_zonasi_satker+(int)$jlh_penilai;
+                $gabung_enc=Hashids::encode($gabung);
+                $id_zonasi_satker=Hashids::encode($id_zonasi_satker);
+                $panjang_=strlen($id_observee_enc);
+                $half_panjang=ceil($panjang_/2);
+                $split_str=str_split($id_observee_enc, $half_panjang);
+                $string_tengah=$str_key_open."".$gabung_enc."IdZs4t".$id_zonasi_satker."".$str_key_open;
+                $key_report=$split_str[0]."".$string_tengah."".$split_str[1];
+                return $key_report;
             }
         }
     }
