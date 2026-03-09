@@ -1539,11 +1539,12 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     if($status_kirim === true){
                         $sent+=1;
                     }
-                    if($sent === 1){
-                        break;
-                    }
+                    #test wa hanya 1 kali kirim
+                    // if($sent === 1){
+                    //     break;
+                    // }
                 }
-                $sent = $jumlah;
+                // $sent = $jumlah;
                 if($sent === $jumlah){
                     $status=true;
                     $msg="Berhasil mengirimkan Pesan Jabatan Kosong. ";

@@ -162,7 +162,7 @@ use PDO;
                     $send_confirm=true;
                 }
             }else{
-                $msg="Tidak ada data ditemukan";
+                $msg="Tidak ada Jabatan Kosong. Mohon menunggu Satuan Kerja lain untuk mengisi jabatan kosong";
             }
 
             return [
