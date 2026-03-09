@@ -58,7 +58,7 @@ class SendWhatsappJob implements ShouldQueue
         try{
             $send_wa=sendWa($this->msg_wa, $this->nip, $this->nama, $this->no_wa);
             //response status = 'success' <- kalau wa pn | kalau wa MA = ok
-            if($send_wa['status'] === "ok"){
+            if($send_wa['status'] === true){
                 $get_jobs=Log_msg::where('category', 'jobs_notif')
                             ->where('status', 'prepare')
                             ->where('data_id', $this->id_zonasi)

@@ -67,7 +67,11 @@ use Vinkla\Hashids\Facades\Hashids;
             $response = curl_exec($curl);
 
             curl_close($curl);
-            echo $response;
+            $response_dec=json_decode($response);
+            return [
+                'status'=>$response_dec->status,
+                'msg'=>$response_dec->message
+            ]
 
 
 

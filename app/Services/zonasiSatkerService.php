@@ -380,7 +380,7 @@ use PDO;
                                                     $status_job=$create_job['status'];
                                                     $msg_job=$create_job['msg'];
                                                     $status_log="error";
-                                                    if($status_job === "ok"){
+                                                    if($status_job === true){
                                                         $status_log="finished";
                                                         $msg_job="Berhasil mengirimkan Pesan Whatsapp ke Admin Badilum untuk mengirimkan Notifikasi";
                                                     }

@@ -1536,9 +1536,13 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     $nama_pegawai=$list_admin['nama_pegawai'];
                     $sendWa=sendWa($msg, $nip, $nama_pegawai, $no_hp);
                     $status_kirim=$sendWa['status'];
-                    if($status_kirim === "ok"){
+                    if($status_kirim === true){
                         $sent+=1;
                     }
+                    if($sent === 1){
+                        break;
+                    }
+                    $sent = $jumlah;
                 }
                 if($sent === $jumlah){
                     $status=true;
