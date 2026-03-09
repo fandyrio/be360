@@ -176,7 +176,7 @@ curl_setopt_array($curl, array(
     "token" : "bac73c0a-2865-4b05-9a5d-d788193f6175",
     "nip" : "199306242019031004",
     "message" : "Ini pesan uji coba",
-    "phoneNumber" : "081273861528",
+    "phoneNumber" : "085880037948",
     "name" : "Fandy"
 }',
   CURLOPT_HTTPHEADER => array(

@@ -151,15 +151,22 @@ use Vinkla\Hashids\Facades\Hashids;
             ];
         }
 
-        public function generateLinkReportPersonal($id_observee, $id_zonasi_satker){
-            $generate_enc_key="invalid";
-            $check_observee=Trans_observee::where("IdObservee", $id_observee)
+        public function getObserveeReport($id_observee, $id_zonasi_satker){
+            return $check_observee=Trans_observee::where("IdObservee", $id_observee)
                                 ->where("IdZonaSatker", $id_zonasi_satker)
                                 ->first();
+        }
+
+        public function getPenilaianPeserta($id_observee, $id_zonasi_satker){
+            return $jlh_penilai=Trans_peserta_zonasi::where("id_pegawai_peserta", $id_observee)
+                                        ->where("id_zona_satker", $id_zonasi_satker);
+        }
+
+        public function generateLinkReportPersonal($id_observee, $id_zonasi_satker){
+            $generate_enc_key="invalid";
+            $check_observee=$this->getObserveeReport($id_observee, $id_zonasi_satker);
             if(!is_null($check_observee)){
-                $jlh_penilai=Trans_peserta_zonasi::where("id_pegawai_peserta", $id_observee)
-                                        ->where("id_zona_satker", $id_zonasi_satker)
-                                        ->count();
+                $jlh_penilai=$this->getPenilaianPeserta($id_observee, $id_zonasi_satker)->count();
                 $generate_enc_key=encKeyReportIndividu($id_observee, $id_zonasi_satker, $jlh_penilai);
 
             }
@@ -167,7 +174,34 @@ use Vinkla\Hashids\Facades\Hashids;
         }
 
         public function reportPersonal($key){
+            $status=false;
+            $selesai_dinilai=true;
             $validate_key=decKeyReportIndividu($key);
+            if($validate_key > 0){
+                $check_observee=$this->getObserveeReport($validate_key['id_observee'], $validate_key['id_zonasi_satker']);
+                if(!is_null($check_observee)){
+                    $jlh_penilai=$this->getPenilaianPeserta($validate_key['id_observee'], $validate_key['id_zonasi_satker'])->count();
+                    if((int)$jlh_penilai === (int)$validate_key['jlh_penilai']){
+                        $penilaian=$this->getPenilaianPeserta($validate_key['id_observee'], $validate_key['id_zonasi_satker'])->get();
+                        $ada_blm_nilai=0;
+                        foreach($penilaian as $list_penilaian){
+                            if((int)$list_penilaian['nilai'] === 0){
+                                $ada_blm_nilai+=1;
+                            }
+                        }
+                        if($ada_blm_nilai > 0){
+                            $selesai_dinilai=false;
+                        }
+                        $msg="Ok";
+                    }else{
+                        $msg="Opps. Data anda tidak sesuai ya. Silahkan kembali";
+                    }
+                }else{
+                    $msg="Opps. Data anda tidak valid ya. Jangan diulangi";
+                }
+            }else{
+                $msg="Opps. Anda seharusnya tidak melakukan itu";
+            }
             return $validate_key;
         }
 
