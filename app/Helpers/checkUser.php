@@ -31,11 +31,11 @@ use Vinkla\Hashids\Facades\Hashids;
             $env=strip_tags($get_env['config_value_str']);
             if($env === "production"){
                 $data=[
-                    // 'token'=>config('services.WA_MA.token'),
-                    // 'nip'=>$nip,
-                    // 'message'=>$msg_wa,
-                    // 'phoneNumber'=>$reciver,
-                    // 'name'=>$nama
+                    'token'=>config('services.WA_MA.token'),
+                    'nip'=>$nip,
+                    'message'=>$msg_wa,
+                    'phoneNumber'=>$reciver,
+                    'name'=>$nama
                 ];
             }else if($env === "testing" || $env === "development"){
                 $data=[
@@ -71,8 +71,8 @@ use Vinkla\Hashids\Facades\Hashids;
             return [
                 'status'=>$response_dec->status,
                 'msg'=>$response_dec->message
-            ]
-
+            ];
+        }
 
 
         //     //wa ma
@@ -155,7 +155,6 @@ use Vinkla\Hashids\Facades\Hashids;
         //         'status' => $response->status,
         //         'msg' => $msg
         //     ];
-        }
     }
 
     if(!function_exists('getZonaWaktuSatker')){
