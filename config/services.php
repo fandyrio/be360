@@ -34,5 +34,7 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
-
+    'WA_MA' => [
+        'token'=>env('API_WA_MA'),
+    ],
 ];

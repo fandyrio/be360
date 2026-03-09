@@ -1518,7 +1518,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
             $get_data=Trans_jabatan_kosong::join('trans_zonasi_satker as tzs', 'tzs.IdZonaSatker', '=', 'trans_jabatan_kosong.id_zonasi_satker')
                             ->join('tref_users as tu', 'tu.IdSatker', '=', 'tzs.IdSatker')
                             ->join('tref_pegawai as tp', 'tp.id_pegawai', '=', 'tu.IdPegawai')
-                            ->select('tp.no_hp', 'tp.nama_pegawai')
+                            ->select('tp.no_hp', 'tp.nama_pegawai', 'tp.nip', 'tp.nama_pegawai')
                             ->where('trans_jabatan_kosong.id_zonasi', $id_zonasi)
                             ->groupBy('id_zonasi_satker')
                             ->groupBy('tp.no_hp')
@@ -1531,8 +1531,9 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     //wa MA
                     $msg=getWAMsg("jabatan_kosong", "");
                     $no_hp=$list_admin['no_hp'];
-                    $no_hp="081273861528";
-                    $sendWa=sendWa($msg, $no_hp);
+                    $nip=$list_admin['nip'];
+                    $nama_pegawai=$list_admin['nama_pegawai'];
+                    $sendWa=sendWa($msg, $nip, $nama_pegawai, $no_hp);
                     $status_kirim=$sendWa['status'];
                     if($status_kirim === "ok"){
                         $sent+=1;

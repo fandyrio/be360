@@ -26,30 +26,49 @@ use Vinkla\Hashids\Facades\Hashids;
     }
 
     if(!function_exists('sendWa')){
-        function sendWa($msg_wa, $reciver){
-
-            $var['api_id'] = '4132';
-            #flag1
-            $var['api_key'] = '2NfSdNV3tagyBrFcmA7kAXezOY6ICYeA';
-            // $var['phone'] = $reciver;
-            $var['phone'] = "081273861528";
-            $var['text'] = $msg_wa;
-            $ch = curl_init('https://wa3.otomat.web.id');
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $var);
-            $response = curl_exec($ch);
-            curl_close($ch);
-            $decode_response=json_decode($response);
-            $status=$decode_response->status;
-            $msg="Tidak bisa mengirimkan pesan Whatsapp ".$reciver;
-            if($status==="success"){
-                $status="ok";
-                $msg="Berhasil mengirimkan Pesan Whatsapp ke ".$reciver;
-            }else{
-                $status="not_ok";
+        function sendWa($msg_wa, $nip, $nama, $reciver){
+            $get_env=Tref_sys_config::where("config_name", "environment")->first();
+            $env=strip_tags($get_env['config_value_str']);
+            if($env === "production"){
+                $data=[
+                    'token'=>config('services.WA_MA.token'),
+                    'nip'=>$nip,
+                    'message'=>$msg_wa,
+                    'phoneNumber'=>$reciver,
+                    'name'=>$nama
+                ];
+            }else if($env === "testing" || $env === "development"){
+                $data=[
+                    'token'=>config('services.WA_MA.token'),
+                    'nip'=>"199306242019031004",
+                    'message'=>$msg_wa,
+                    'phoneNumber'=>"085880037948",
+                    'name'=>"Fandy Juniario Simorangkir"
+                ];
             }
-            // $data_return=array('status'=>$status, 'success'=>$succemsgss);
-            return ['status'=>$status, 'msg'=>$msg];
+            $data_post=json_encode($data);
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://bisdev.mahkamahagung.go.id:8081/api/v2/wa-notification',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => $data_post,
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: Bearer pBSpYVQFb3znpLfdaBdtkkJk-oPdObpt-RvGBNiF',
+                'Content-Type: application/json'
+            ),
+            ));
+
+            $response = curl_exec($curl);
+
+            curl_close($curl);
+            echo $response;
+
 
 
         //     //wa ma

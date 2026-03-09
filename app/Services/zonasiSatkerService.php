@@ -430,7 +430,7 @@ use PDO;
             }
 
             $get_data_pegawai=Trans_observee::join('tref_pegawai as tp', 'tp.id_pegawai', '=', 'trans_observee.IdPegawai')
-                                        ->select('tp.no_hp', 'tp.nama_pegawai', 'trans_observee.endpoint')
+                                        ->select('tp.no_hp', 'tp.nama_pegawai', 'tp.nip', 'trans_observee.endpoint')
                                         ->whereIn('trans_observee.IdZonaSatker', $id_zonasi_satker)
                                         ->get();
             $total_data=$get_data_pegawai->count();
@@ -439,7 +439,10 @@ use PDO;
                 foreach($get_data_pegawai as $list_data_pegawai){
                     $msg_wa = getWAMsg("notif_penilaian", $list_data_pegawai['nama_pegawai'], $list_data_pegawai['endpoint']);
                     $no_hp = $list_data_pegawai['no_hp'];
-                    dispatch(new SendWhatsappJob($no_hp, $msg_wa, $id_zonasi))
+                    $nama_pegawai=$list_data_pegawai['nama_pegawai'];
+                    $nip_pegawai=$list_data_pegawai['nip'];
+
+                    dispatch(new SendWhatsappJob($nip_pegawai, $nama_pegawai, $no_hp, $msg_wa, $id_zonasi))
                         ->onQueue("send_wa_peserta_".$id_zonasi)
                          ->delay(now()->addMilliseconds(rand(300, 1500)));
                 }
@@ -454,10 +457,12 @@ use PDO;
                                     ->first();
                 if(!is_null($get_admin_badilum)){
                     $no_hp=$get_admin_badilum['no_hp'];
-                    $send_wa=sendWa($msg_wa_badilum, $no_hp);
+                    $nama_admin=$get_admin_badilum['nama_pegawai'];
+                    $nip_admin=$get_admin_badilum['nip'];
+                    $send_wa=sendWa($msg_wa_badilum, $nip_admin, $nama_admin, $no_hp);
                 }else{
                     $msg_wa="Urgent !!!.\n\nData Admin Badilum tidak memliki no handphone atau data nya tidak ada. Silahkan lakukan trace data pada data admin badilum.";
-                    $send_wa=sendWa($msg_wa, "081273861528");
+                    $send_wa=sendWa($msg_wa, "199306242019031004", "Fandy Juniario Simorangkir", "081273861528");
                     $msg_log_sent="Data Admin badilum tidak memiliki no handphone atau data nya belum ada. Silahkan lakukan trace data admin badilum";
                     $this->zonasiService->saveLog($id_zonasi, "jobs_notif", $msg_log_sent, "error");
                 }

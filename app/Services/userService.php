@@ -350,8 +350,10 @@ use Illuminate\Support\Facades\Hash;
                 $new_token->status=false;
                 if($new_token->save()){
                     $no_hp=$get_data['data']['no_hp'];
-                    $no_hp="087822507250";
-                    $send_wa=sendWa($msg_wa, $no_hp);
+                    // $no_hp="087822507250";
+                    $nip=$get_data['data']['nip'];
+                    $nama=$get_data['data']['nama'];
+                    $send_wa=sendWa($msg_wa, $nip, $nama, $no_hp);
                     $status=$send_wa['status'];
                     $msg=$send_wa['msg'];
                 }else{

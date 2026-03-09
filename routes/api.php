@@ -161,33 +161,4 @@ Route::get('test', function(){
 
 Route::get("test-wa", function(){
 
-$curl = curl_init();
-
-curl_setopt_array($curl, array(
-  CURLOPT_URL => 'https://bisdev.mahkamahagung.go.id:8081/api/v2/wa-notification',
-  CURLOPT_RETURNTRANSFER => true,
-  CURLOPT_ENCODING => '',
-  CURLOPT_MAXREDIRS => 10,
-  CURLOPT_TIMEOUT => 0,
-  CURLOPT_FOLLOWLOCATION => true,
-  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-  CURLOPT_CUSTOMREQUEST => 'POST',
-  CURLOPT_POSTFIELDS =>'{
-    "token" : "bac73c0a-2865-4b05-9a5d-d788193f6175",
-    "nip" : "199306242019031004",
-    "message" : "Ini pesan uji coba",
-    "phoneNumber" : "085880037948",
-    "name" : "Fandy"
-}',
-  CURLOPT_HTTPHEADER => array(
-    'Authorization: Bearer pBSpYVQFb3znpLfdaBdtkkJk-oPdObpt-RvGBNiF',
-    'Content-Type: application/json'
-  ),
-));
-
-$response = curl_exec($curl);
-
-curl_close($curl);
-echo $response;
-
 });

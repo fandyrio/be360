@@ -16,6 +16,8 @@ use App\Services\zonasiService;
 class SendWhatsappJob implements ShouldQueue
 {
     use Queueable, Dispatchable, InteractsWithQueue, SerializesModels;
+    protected $nip;
+    protected $nama;
     protected $no_wa;
     protected $msg_wa;
     protected $id_zonasi;
@@ -24,10 +26,12 @@ class SendWhatsappJob implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(string $no_wa, string  $msg_wa, int $id_zonasi){
+    public function __construct(string $nip, string $nama, string $no_wa, string  $msg_wa, int $id_zonasi){
         $this->no_wa=$no_wa;
         $this->msg_wa=$msg_wa;
         $this->id_zonasi=$id_zonasi;
+        $this->nip=$nip;
+        $this->nama=$nama;
     }
 
     /**
@@ -42,7 +46,7 @@ class SendWhatsappJob implements ShouldQueue
         if(RateLimiter::tooManyAttempts($key, $maxPerMinute)){
            $retryAfter=RateLimiter::availableIn($key);
            
-           self::dispatch($this->no_wa, $this->msg_wa, $this->id_zonasi)
+           self::dispatch($this->nip, $this->nama, $this->no_wa, $this->msg_wa, $this->id_zonasi)
                 ->onQueue('send_wa_peserta_'.$this->id_zonasi)
                 ->delay(now()->addSeconds($retryAfter +1));
 
@@ -52,7 +56,7 @@ class SendWhatsappJob implements ShouldQueue
         RateLimiter::hit($key, 60);
         $zonasiService=resolve(\App\Services\zonasiService::class);
         try{
-            $send_wa=sendWa($this->msg_wa, $this->no_wa);
+            $send_wa=sendWa($this->msg_wa, $this->nip, $this->nama, $this->no_wa);
             //response status = 'success' <- kalau wa pn | kalau wa MA = ok
             if($send_wa['status'] === "ok"){
                 $get_jobs=Log_msg::where('category', 'jobs_notif')
