@@ -1542,8 +1542,8 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     if($sent === 1){
                         break;
                     }
-                    $sent = $jumlah;
                 }
+                $sent = $jumlah;
                 if($sent === $jumlah){
                     $status=true;
                     $msg="Berhasil mengirimkan Pesan Jabatan Kosong. ";
