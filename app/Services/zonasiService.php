@@ -1523,6 +1523,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                             ->groupBy('id_zonasi_satker')
                             ->groupBy('tp.no_hp')
                             ->groupBy('tp.nama_pegawai')
+                            ->groupBy("tp.nip")
                             ->get();
             $jumlah=$get_data->count();
             if($jumlah > 0){
