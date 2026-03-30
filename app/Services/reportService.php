@@ -303,7 +303,7 @@ use Vinkla\Hashids\Facades\Hashids;
                                                         ->where("trans_zonasi_satker.IdZonaSatker", $get_data_personal['IdZonaSatker'])
                                                         ->first();
                                 $id_periode=$get_periode->IdTahunPenilaian;
-                                $get_statistik=$this->getStatistikJabatanPenilai($get_data_personal['IdZoaSatker'], $id_observee, $id_periode);
+                                $get_statistik=$this->getStatistikJabatanPenilai($get_data_personal['IdZonaSatker'], $id_observee, $id_periode);
                                 if($get_statistik->count() > 0){
                                     $get_report_penilaian=$this->getDataNilai($id_observee, $id_periode);
                                     if($get_report_penilaian->count() > 0){
