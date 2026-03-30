@@ -275,4 +275,4 @@
         <?php endif; ?>
     </body>
 </html>
-<?php /**PATH /var/www/html/resources/views/welcome.blade.php ENDPATH**/ ?>
+<?php /**PATH /var/www/html/be_360/be360/resources/views/welcome.blade.php ENDPATH**/ ?>

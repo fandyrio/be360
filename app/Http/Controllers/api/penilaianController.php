@@ -441,5 +441,14 @@ class penilaianController extends Controller
         ];
     }
 
+    public function reportPenilaianPersonal($key){
+        $dec_key=decKeyReportIndividu($key);
+        if($dec_key !== 0){
+            
+        }else{
+            $msg="Data tidak valid";
+        }
+    }
+
     
 }

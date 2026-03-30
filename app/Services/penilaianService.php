@@ -168,41 +168,44 @@ use Vinkla\Hashids\Facades\Hashids;
             if(!is_null($check_observee)){
                 $jlh_penilai=$this->getPenilaianPeserta($id_observee, $id_zonasi_satker)->count();
                 $generate_enc_key=encKeyReportIndividu($id_observee, $id_zonasi_satker, $jlh_penilai);
-
             }
             return $generate_enc_key;
         }
 
         public function reportPersonal($key){
-            $status=false;
-            $selesai_dinilai=true;
-            $validate_key=decKeyReportIndividu($key);
-            if($validate_key > 0){
-                $check_observee=$this->getObserveeReport($validate_key['id_observee'], $validate_key['id_zonasi_satker']);
-                if(!is_null($check_observee)){
-                    $jlh_penilai=$this->getPenilaianPeserta($validate_key['id_observee'], $validate_key['id_zonasi_satker'])->count();
-                    if((int)$jlh_penilai === (int)$validate_key['jlh_penilai']){
-                        $penilaian=$this->getPenilaianPeserta($validate_key['id_observee'], $validate_key['id_zonasi_satker'])->get();
-                        $ada_blm_nilai=0;
-                        foreach($penilaian as $list_penilaian){
-                            if((int)$list_penilaian['nilai'] === 0){
-                                $ada_blm_nilai+=1;
-                            }
-                        }
-                        if($ada_blm_nilai > 0){
-                            $selesai_dinilai=false;
-                        }
-                        $msg="Ok";
-                    }else{
-                        $msg="Opps. Data anda tidak sesuai ya. Silahkan kembali";
-                    }
-                }else{
-                    $msg="Opps. Data anda tidak valid ya. Jangan diulangi";
-                }
-            }else{
-                $msg="Opps. Anda seharusnya tidak melakukan itu";
-            }
-            return $validate_key;
+            // $status=false;
+            // $selesai_dinilai=true;
+            // $report=null;
+            // $validate_key=decKeyReportIndividu($key);
+            // if($validate_key > 0){
+            //     $check_observee=$this->getObserveeReport($validate_key['id_observee'], $validate_key['id_zonasi_satker']);
+            //     if(!is_null($check_observee)){
+            //         $jlh_penilai=$this->getPenilaianPeserta($validate_key['id_observee'], $validate_key['id_zonasi_satker'])->count();
+            //         if((int)$jlh_penilai === (int)$validate_key['jlh_penilai']){
+            //             $penilaian=$this->getPenilaianPeserta($validate_key['id_observee'], $validate_key['id_zonasi_satker'])->get();
+            //             $ada_blm_nilai=0;
+            //             foreach($penilaian as $list_penilaian){
+            //                 if((int)$list_penilaian['nilai'] === 0){
+            //                     $ada_blm_nilai+=1;
+            //                 }
+            //             }
+            //             if($ada_blm_nilai > 0){
+            //                 $msg="Penilaian";
+            //             }else{
+            //                 $id_observee=$validate_key['id_observee'];
+            //                 $id_zonasi_satker=$validate_key['id_zonasi_satker'];
+                            
+            //             }
+            //         }else{
+            //             $msg="Opps. Data anda tidak sesuai ya. Silahkan kembali";
+            //         }
+            //     }else{
+            //         $msg="Opps. Data anda tidak valid ya. Jangan diulangi";
+            //     }
+            // }else{
+            //     $msg="Opps. Anda seharusnya tidak melakukan itu";
+            // }
+            // return ['status'=>$status, 'msg'=>$msg, 'report'=>$report];
         }
 
         public function getJawabanTextByBundlePoint($bundle, $point){

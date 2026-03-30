@@ -105,6 +105,85 @@ use Vinkla\Hashids\Facades\Hashids;
             ];
         }
 
+        public function getStatistikJabatanPenilai($id_zonasi_satker, $id_observee, $id_periode){
+            $sub=Trans_observee::join("tref_jabatan_peserta as tjp", "tjp.id_kelompok_jabatan", "trans_observee.id_kelompok_jabatan")
+                                ->where("trans_observee.IdZonaSatker", $id_zonasi_satker)
+                                ->select("tjp.jabatan", DB::raw("COUNT(trans_observee.id_kelompok_jabatan) as total_orang"))
+                            ->groupBy("tjp.jabatan");
+            // var_dump($sub->get());
+            $get_data_jlh_penilai=Trans_peserta_zonasi::join("trans_observee as to", "to.IdObservee", "trans_peserta_zonasi.id_pegawai_penilai")
+                                ->join("trans_observee as to2", "to2.IdObservee", "trans_peserta_zonasi.id_pegawai_peserta")
+                                ->join("trans_zonasi_satker as tzs", "tzs.IdZonaSatker", "to.IdZonaSatker")
+                                ->join("tref_zonasi as tz", "tz.IdZona", "tzs.IdZona")
+                                ->join("tref_tahun_penilaian as ttp", "ttp.IdTahunPenilaian", "tz.IdTahunPenilaian")
+                                ->join("tref_jabatan_peserta as tjp", function($join){
+                                    $join->on("tjp.id_kelompok_jabatan", "=", DB::raw("
+                                        CASE when trans_peserta_zonasi.id_jabatan_plt is null then to.id_kelompok_jabatan
+                                        else (SELECT id_kelompok_jabatan from tref_jabatan_peserta where id = trans_peserta_zonasi.id_jabatan_plt)
+                                        END
+                                    "));
+                                })
+                                ->join("tref_jabatan_peserta as tjp2", "tjp2.id_kelompok_jabatan", "to2.id_kelompok_jabatan")
+                                ->join("tref_mapping_jabatan as tmj", function($join){
+                                    $join->on("tmj.id_jabatan_penilai", "=", DB::raw("
+                                                CASE when tjp.id_jabatan_gabungan is null then tjp.id
+                                                else tjp.id_jabatan_gabungan
+                                                END
+                                    "))
+                                        ->on("tmj.id_jabatan_peserta", "=", DB::raw("
+                                                CASE WHEN tjp2.id_jabatan_gabungan is null then tjp2.id
+                                                else tjp2.id_jabatan_gabungan
+                                                END
+                                        "))
+                                        ->where("tmj.active", true);
+                                })
+                                ->join("trans_mapping_jabatan_periode as tmjp", function($join){
+                                    $join->on("tmjp.id_mapping_jabatan", "=", "tmj.id")
+                                    ->on("tmjp.id_periode", "=", "ttp.IdTahunPenilaian");
+                                })
+                                ->joinSub($sub, "jumlah_orang", function($join){
+                                    $join->on("jumlah_orang.jabatan", "tjp.jabatan");
+                                })
+                                ->join("tref_jabatan_peserta as tjp_penilai", "tjp_penilai.id", "tmj.id_jabatan_penilai")
+                                ->where("trans_peserta_zonasi.id_pegawai_peserta", $id_observee)
+                                ->where("ttp.IdTahunPenilaian", $id_periode)
+                                ->selectRaw("tjp_penilai.jabatan, COUNT(to.id_kelompok_jabatan) as jumlah_jabatan_penilai, jumlah_orang.total_orang, tmjp.threshold")
+                                ->groupBy("tjp_penilai.jabatan")
+                                ->groupBy("jumlah_orang.total_orang")
+                                ->groupBy("tmjp.threshold")
+                                ->get();
+            return $get_data_jlh_penilai;
+        }
+
+        public function getDataNilai($id_observee, $id_periode){
+            $get_report_penilaian=Trans_nilai_peserta_zonasi::from("trans_nilai_peserta_zonasi as tn")
+                                            ->join("trans_peserta_zonasi as tpz", "tpz.id", "tn.id_peserta_zonasi")
+                                            ->join("trans_pertanyaan_periode as tpp", "tpp.id", "tn.id_pertanyaan")
+                                            ->join("variable_pertanyaan as vp", "vp.id", "tpp.id_variable")
+                                            ->join("trans_observee as to", "to.IdObservee", "tpz.id_pegawai_penilai")
+                                            ->join("tref_pegawai as tp", "tp.id_pegawai", "to.IdPegawai")
+                                            ->select("tp.nama_pegawai", "to.NamaJabatan as jabatan", "to.bagian", "vp.variable", "tn.nilai")
+                                            ->where("tpz.id_pegawai_peserta", $id_observee)
+                                            ->where("tpp.id_periode", $id_periode)
+                                            ->get();
+            return $get_report_penilaian;
+        }
+
+        public function getNilaiRata2($id_observee, $id_periode){
+            $get_rata_rata=Trans_nilai_peserta_zonasi::from("trans_nilai_peserta_zonasi as tn")
+                                            ->join("trans_peserta_zonasi as tpz", "tpz.id", "tn.id_peserta_zonasi")
+                                            ->join("trans_pertanyaan_periode as tpp", "tpp.id", "tn.id_pertanyaan")
+                                            ->join("variable_pertanyaan as vp", "vp.id", "tpp.id_variable")
+                                            ->selectRaw("vp.variable, 
+                                                AVG(tn.nilai) as rata_rata
+                                            ")
+                                            ->where("tpz.id_pegawai_peserta", $id_observee)
+                                            ->where("tpp.id_periode", $id_periode)
+                                            ->groupBy("vp.variable")
+                                            ->get();
+            return $get_rata_rata;
+        }
+
         public function reportIndividualBadilum($id_periode, $id_observee, $id_pegawai){
             #1. Ambil data personal
             $data_personal = null;
@@ -121,77 +200,11 @@ use Vinkla\Hashids\Facades\Hashids;
             // var_dump($get_data_personal['IdZonaSatker']);
             if(!is_null($get_data_personal)){
                 #2. Statistik Jumlah Jabatan Penilaian
-                $sub=Trans_observee::join("tref_jabatan_peserta as tjp", "tjp.id_kelompok_jabatan", "trans_observee.id_kelompok_jabatan")
-                                ->where("trans_observee.IdZonaSatker", $get_data_personal['IdZonaSatker'])
-                                ->select("tjp.jabatan", DB::raw("COUNT(trans_observee.id_kelompok_jabatan) as total_orang"))
-                                ->groupBy("tjp.jabatan");
-                // var_dump($sub->get());
-                $get_data_jlh_penilai=Trans_peserta_zonasi::join("trans_observee as to", "to.IdObservee", "trans_peserta_zonasi.id_pegawai_penilai")
-                                    ->join("trans_observee as to2", "to2.IdObservee", "trans_peserta_zonasi.id_pegawai_peserta")
-                                    ->join("trans_zonasi_satker as tzs", "tzs.IdZonaSatker", "to.IdZonaSatker")
-                                    ->join("tref_zonasi as tz", "tz.IdZona", "tzs.IdZona")
-                                    ->join("tref_tahun_penilaian as ttp", "ttp.IdTahunPenilaian", "tz.IdTahunPenilaian")
-                                    ->join("tref_jabatan_peserta as tjp", function($join){
-                                        $join->on("tjp.id_kelompok_jabatan", "=", DB::raw("
-                                            CASE when trans_peserta_zonasi.id_jabatan_plt is null then to.id_kelompok_jabatan
-                                            else (SELECT id_kelompok_jabatan from tref_jabatan_peserta where id = trans_peserta_zonasi.id_jabatan_plt)
-                                            END
-                                        "));
-                                    })
-                                    ->join("tref_jabatan_peserta as tjp2", "tjp2.id_kelompok_jabatan", "to2.id_kelompok_jabatan")
-                                    ->join("tref_mapping_jabatan as tmj", function($join){
-                                        $join->on("tmj.id_jabatan_penilai", "=", DB::raw("
-                                                    CASE when tjp.id_jabatan_gabungan is null then tjp.id
-                                                    else tjp.id_jabatan_gabungan
-                                                    END
-                                        "))
-                                            ->on("tmj.id_jabatan_peserta", "=", DB::raw("
-                                                    CASE WHEN tjp2.id_jabatan_gabungan is null then tjp2.id
-                                                    else tjp2.id_jabatan_gabungan
-                                                    END
-                                            "))
-                                            ->where("tmj.active", true);
-                                    })
-                                    ->join("trans_mapping_jabatan_periode as tmjp", function($join){
-                                        $join->on("tmjp.id_mapping_jabatan", "=", "tmj.id")
-                                        ->on("tmjp.id_periode", "=", "ttp.IdTahunPenilaian");
-                                    })
-                                    ->joinSub($sub, "jumlah_orang", function($join){
-                                        $join->on("jumlah_orang.jabatan", "tjp.jabatan");
-                                    })
-                                    ->join("tref_jabatan_peserta as tjp_penilai", "tjp_penilai.id", "tmj.id_jabatan_penilai")
-                                    ->where("trans_peserta_zonasi.id_pegawai_peserta", $id_observee)
-                                    ->where("ttp.IdTahunPenilaian", $id_periode)
-                                    ->selectRaw("tjp_penilai.jabatan, COUNT(to.id_kelompok_jabatan) as jumlah_jabatan_penilai, jumlah_orang.total_orang, tmjp.threshold")
-                                    ->groupBy("tjp_penilai.jabatan")
-                                    ->groupBy("jumlah_orang.total_orang")
-                                    ->groupBy("tmjp.threshold")
-                                    ->get();
-                if($get_data_jlh_penilai->count() > 0){
-                    $get_report_penilaian=Trans_nilai_peserta_zonasi::from("trans_nilai_peserta_zonasi as tn")
-                                            ->join("trans_peserta_zonasi as tpz", "tpz.id", "tn.id_peserta_zonasi")
-                                            ->join("trans_pertanyaan_periode as tpp", "tpp.id", "tn.id_pertanyaan")
-                                            ->join("variable_pertanyaan as vp", "vp.id", "tpp.id_variable")
-                                            ->join("trans_observee as to", "to.IdObservee", "tpz.id_pegawai_penilai")
-                                            ->join("tref_pegawai as tp", "tp.id_pegawai", "to.IdPegawai")
-                                            ->select("tp.nama_pegawai", "to.NamaJabatan as jabatan", "to.bagian", "vp.variable", "tn.nilai")
-                                            ->where("tpz.id_pegawai_peserta", $id_observee)
-                                            ->where("tpp.id_periode", $id_periode)
-                                            ->get();
+                $get_statistik=$this->getStatistikJabatanPenilai($get_data_personal['IdZoaSatker'], $id_observee, $id_periode);
+                if($get_statistik->count() > 0){
+                    $get_report_penilaian=$this->getDataNilai($id_observee, $id_periode);
                     if($get_report_penilaian->count() > 0){
-                        $get_rata_rata=Trans_nilai_peserta_zonasi::from("trans_nilai_peserta_zonasi as tn")
-                                            ->join("trans_peserta_zonasi as tpz", "tpz.id", "tn.id_peserta_zonasi")
-                                            ->join("trans_pertanyaan_periode as tpp", "tpp.id", "tn.id_pertanyaan")
-                                            ->join("variable_pertanyaan as vp", "vp.id", "tpp.id_variable")
-                                            ->selectRaw("vp.variable, 
-                                                AVG(tn.nilai) as rata_rata
-                                            ")
-                                            ->where("tpz.id_pegawai_peserta", $id_observee)
-                                            ->where("tpp.id_periode", $id_periode)
-                                            ->groupBy("vp.variable")
-                                            ->get();
-                        
-                        
+                        $get_rata_rata=$this->getNilaiRata2($id_observee, $id_periode);
                         if($get_rata_rata->count() > 0){
                             $data_personal['nama']=$get_data_personal["nama_pegawai"];
                             $data_personal['foto']=$get_data_personal['foto_pegawai'];
@@ -200,7 +213,7 @@ use Vinkla\Hashids\Facades\Hashids;
                             $data_personal['bagian']=$get_data_personal['bagian'];
                             $data_personal['nilai_akhir']=$get_data_personal['nilai_akhir'];
 
-                            foreach($get_data_jlh_penilai as $list_jlh_penilai){
+                            foreach($get_statistik as $list_jlh_penilai){
                                 $data_jlh_penilai[]=[
                                     "jabatan"=>$list_jlh_penilai['jabatan'],
                                     "jumlah_jabatan_penilai"=>$list_jlh_penilai['jumlah_jabatan_penilai'],
@@ -253,6 +266,98 @@ use Vinkla\Hashids\Facades\Hashids;
 
             return ['status'=>$status, 'msg'=>$msg, 'data_personal'=>$data_personal, "data_penilai"=>$data_jlh_penilai, 'data_report_penilaian'=>$data_report, 'data_avg'=>$data_avg];
 
+        }
+
+        public function reportIndividualPersonal($key){
+            $status=false;
+            $selesai_dinilai=true;
+            $report=null;
+            $data_personal = null;
+            $data_jlh_penilai=[];
+            $data_report=null;
+            $data_avg=null;
+            $validate_key=decKeyReportIndividu($key);
+            if($validate_key > 0){
+                $check_observee=$this->penilaianService->getObserveeReport($validate_key['id_observee'], $validate_key['id_zonasi_satker']);
+                if(!is_null($check_observee)){
+                    $jlh_penilai=$this->penilaianService->getPenilaianPeserta($validate_key['id_observee'], $validate_key['id_zonasi_satker'])->count();
+                    if((int)$jlh_penilai === (int)$validate_key['jlh_penilai']){
+                        $penilaian=$this->penilaianService->getPenilaianPeserta($validate_key['id_observee'], $validate_key['id_zonasi_satker'])->get();
+                        $ada_blm_nilai=0;
+                        foreach($penilaian as $list_penilaian){
+                            if((int)$list_penilaian['nilai'] === 0){
+                                $ada_blm_nilai+=1;
+                            }
+                        }
+                        if($ada_blm_nilai > 0){
+                            $msg="Penilaian";
+                        }else{
+                            $id_observee=$validate_key['id_observee'];
+                            $id_zonasi_satker=$validate_key['id_zonasi_satker'];
+                            $get_data_personal=Trans_observee::where("IdObservee", $id_observee)
+                                                ->where("IdZonaSatker", $id_zonasi_satker)    
+                                                ->first();
+                            if(!is_null($get_data_personal)){
+                                $get_periode=Zonasi_satker::join("tref_zonasi as tz", "tz.IdZona", "trans_zonasi_satker.IdZona")
+                                                        ->select("tz.IdTahunPenilaian")
+                                                        ->where("trans_zonasi_satker", $get_data_personal['IdZonaSatker'])
+                                                        ->first();
+                                $id_periode=$get_periode->IdTahunPenilaian;
+                                $get_statistik=$this->getStatistikJabatanPenilai($get_data_personal['IdZoaSatker'], $id_observee, $id_periode);
+                                if($get_statistik->count() > 0){
+                                    $get_report_penilaian=$this->getDataNilai($id_observee, $id_periode);
+                                    if($get_report_penilaian->count() > 0){
+                                        $get_rata_rata=$this->getNilaiRata2($id_observee, $id_periode);
+                                        if($get_rata_rata->count() > 0){
+                                            $data_personal['nama']=$get_data_personal["nama_pegawai"];
+                                            $data_personal['foto']=$get_data_personal['foto_pegawai'];
+                                            $data_personal['nip']=$get_data_personal['nip'];
+                                            $data_personal['jabatan']=$get_data_personal['jabatan'];
+                                            $data_personal['bagian']=$get_data_personal['bagian'];
+                                            $data_personal['nilai_akhir']=$get_data_personal['nilai_akhir'];
+
+                                            foreach($get_statistik as $list_jlh_penilai){
+                                                $data_jlh_penilai[]=[
+                                                    "jabatan"=>$list_jlh_penilai['jabatan'],
+                                                    "jumlah_jabatan_penilai"=>$list_jlh_penilai['jumlah_jabatan_penilai'],
+                                                    "total_orang"=>(int)$list_jlh_penilai['jumlah_jabatan_penilai'] > (int)$list_jlh_penilai['total_orang'] ? $list_jlh_penilai['total_orang']." + ".((int)$list_jlh_penilai['jumlah_jabatan_penilai'] - (int)$list_jlh_penilai['total_orang'])." Jabatan PLT" : $list_jlh_penilai['total_orang'],
+
+                                                    "keterangan"=>(int)$list_jlh_penilai['jumlah_jabatan_penilai'] > (int)$list_jlh_penilai['total_orang'] ?  $list_jlh_penilai['threshold']."% dari ".(int)$list_jlh_penilai['jumlah_jabatan_penilai'] : $list_jlh_penilai['threshold']."% dari ".$list_jlh_penilai['total_orang']
+                                                ];
+                                            }
+
+
+                                            foreach($get_rata_rata as $list_rata_rata){
+                                                $data_avg[]=[
+                                                    "variable"=>$list_rata_rata['variable'],
+                                                    "avg"=>$list_rata_rata['rata_rata']
+                                                ];
+                                            }
+                                            $status=true;
+                                            $msg="Data already reserved";
+                                        }else{
+                                            $msg="Nilai Rata - rata tidak ditemukan";
+                                        }
+                                    }else{
+                                        $msg="Data Laporan Penilaian tidak ditemukan";
+                                    }
+                                }else{
+                                    $msg="Data Jumlah Peserta Tidak ditemukan";
+                                }
+                            }else{
+                                $msg="Data Tidak ditemukan";
+                            }
+                        }
+                    }else{
+                        $msg="Opps. Data anda tidak sesuai ya. Silahkan kembali";
+                    }
+                }else{
+                    $msg="Opps. Data anda tidak valid ya. Jangan diulangi";
+                }
+            }else{
+                $msg="Opps. Anda seharusnya tidak melakukan itu";
+            }
+            return ['status'=>$status, 'msg'=>$msg, 'data_personal'=>$data_personal, 'data_penilai'=>$data_jlh_penilai, 'data_avg'=>$data_avg];
         }
     }
 
