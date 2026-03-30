@@ -1254,6 +1254,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     $x=0;
                     $pegawai_sikep=[];
                     $is_plt="true";
+                    $get_satker_banding=Satker::where("IdSatker", $id_satker_banding)->first();
                     foreach($get_kpt as $list_kpt){
                         $data[$x]['id_pegawai']=$list_kpt->IdPegawai;
                         $data[$x]['nama_pegawai']=$list_kpt->NamaLengkap;
@@ -1267,7 +1268,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                         $data_observee[$x]['id_kelompok_jabatan']=$list_kpt->IdKelompokJabatan;
                         $data_observee[$x]['IdNamaJabatan']=$list_kpt->IdNamaJabatan;
                         $data_observee[$x]['NamaJabatan']=$list_kpt->NamaJabatan;
-                        $data_observee[$x]['bagian']=$list_kpt->nama_satker_banding;
+                        $data_observee[$x]['bagian']=$get_satker_banding->NamaSatker;
                         $data_observee[$x]['IdZonaSatker']=$id_zonasi_satker;
                         $data_observee[$x]['endpoint']=Hashids::encode($list_kpt->IdPegawai)."-".Hashids::encode($list_kpt->IdNamaJabatan)."-".Hashids::encode($id_zonasi_satker);
                         $data_observee[$x]['diinput_tgl']=date('Y-m-d H:i:s');
@@ -1307,6 +1308,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                         $trans_observee->id_kelompok_jabatan=$data_observee[0]['id_kelompok_jabatan'];
                         $trans_observee->IdNamaJabatan=$data_observee[0]['IdNamaJabatan'];
                         $trans_observee->NamaJabatan=$data_observee[0]['NamaJabatan'];
+                        $trans_observee->bagian=$data_observee['bagian'];
                         $trans_observee->IdZonaSatker=$data_observee[0]['IdZonaSatker'];
                         $trans_observee->diinput_tgl=date('Y-m-d H:i:s');
                         $trans_observee->endpoint=$data_observee[0]['endpoint'];
@@ -1320,6 +1322,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     $kpt['id_pegawai_kpt']=$observee_id;
                     $kpt['is_plt']=$is_plt;
                 }else{
+                    //ga masuk ke observee
                     $kpt['id_pegawai_kpt']=null;
                     $kpt['is_plt']="true";
                 }
