@@ -1267,7 +1267,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                         $data_observee[$x]['id_kelompok_jabatan']=$list_kpt->IdKelompokJabatan;
                         $data_observee[$x]['IdNamaJabatan']=$list_kpt->IdNamaJabatan;
                         $data_observee[$x]['NamaJabatan']=$list_kpt->NamaJabatan;
-                        $data_observee[$x]['bagian']=$list_kpt->bagian;
+                        $data_observee[$x]['bagian']=$list_kpt->nama_satker_banding;
                         $data_observee[$x]['IdZonaSatker']=$id_zonasi_satker;
                         $data_observee[$x]['endpoint']=Hashids::encode($list_kpt->IdPegawai)."-".Hashids::encode($list_kpt->IdNamaJabatan)."-".Hashids::encode($id_zonasi_satker);
                         $data_observee[$x]['diinput_tgl']=date('Y-m-d H:i:s');
