@@ -158,4 +158,16 @@ class reportController extends Controller
 
         return response()->json(['status'=>$status, 'msg'=>$msg, 'data_personal'=>$data_personal, 'data_penilai'=>$data_penilai, 'data_report_penilaian'=>$data_report_penilaian, 'data_avg'=>$data_avg]);
     }
+
+    public function reportIndividualPersonal($key){
+        $get_report_personal=$this->reportService->reportIndividualPersonal($key);
+        return response()->json([
+            'status'=>$get_report_personal['status'], 
+            'msg'=>$get_report_personal['msg'],
+            'data_personal'=>$get_report_personal['data_personal'],
+            'data_penilai'=>$get_report_personal['data_penilai'],
+            'data_avg'=>$get_report_personal['data_avg']
+        ]);
+    }
+
 }
