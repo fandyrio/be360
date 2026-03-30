@@ -1242,8 +1242,10 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                 ->first();
             $id_satker_banding=$get_zonasi['IdSatkerBanding'];
             $id_zona=$get_zonasi['IdZona'];
-            $get_zonasi_banding=Zonasi_satker::where('IdZona', $id_zona)
+            $get_zonasi_banding=Zonasi_satker::join("v_satker as vs", "vs.IdSatker", "zonasi_satker.IdSatker")
+                                    ->where('IdZona', $id_zona)
                                     ->where('IdSatker', $id_satker_banding)
+                                    ->select("zonasi_satker.*", "v_satker.NamaSatker as nama_satker_banding")
                                     ->first();
             if(is_null($get_zonasi_banding)){
                 $get_kpt=DB::select("CALL SPGetKPT('$id_satker_banding')");
@@ -1265,6 +1267,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                         $data_observee[$x]['id_kelompok_jabatan']=$list_kpt->IdKelompokJabatan;
                         $data_observee[$x]['IdNamaJabatan']=$list_kpt->IdNamaJabatan;
                         $data_observee[$x]['NamaJabatan']=$list_kpt->NamaJabatan;
+                        $data_observee[$x]['bagian']=$list_kpt->bagian;
                         $data_observee[$x]['IdZonaSatker']=$id_zonasi_satker;
                         $data_observee[$x]['endpoint']=Hashids::encode($list_kpt->IdPegawai)."-".Hashids::encode($list_kpt->IdNamaJabatan)."-".Hashids::encode($id_zonasi_satker);
                         $data_observee[$x]['diinput_tgl']=date('Y-m-d H:i:s');

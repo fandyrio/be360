@@ -152,7 +152,8 @@ Route::middleware(['checkSign'])->group(function(){
     Route::post('lock-jawaban', 'api\penilaianController@lockJawaban')->middleware('throttleSurvey');
 });
 
-
+//buat middleware yang cocok nantinya
+Route::get("report-penilaian-personal/{key}", "reportController@reportIndividualPersonal")->name("report-penilaian-personal");
 Route::get('list-observee/{id_zonasi}', 'api\zonasiController@observer');
 Route::get('encdec/{method}/{string}', 'api\zonasiController@enc');
 Route::get('test', function(){
