@@ -300,7 +300,7 @@ use Vinkla\Hashids\Facades\Hashids;
                             if(!is_null($get_data_personal)){
                                 $get_periode=Zonasi_satker::join("tref_zonasi as tz", "tz.IdZona", "trans_zonasi_satker.IdZona")
                                                         ->select("tz.IdTahunPenilaian")
-                                                        ->where("trans_zonasi_satker", $get_data_personal['IdZonaSatker'])
+                                                        ->where("trans_zonasi_satker.IdZonaSatker", $get_data_personal['IdZonaSatker'])
                                                         ->first();
                                 $id_periode=$get_periode->IdTahunPenilaian;
                                 $get_statistik=$this->getStatistikJabatanPenilai($get_data_personal['IdZoaSatker'], $id_observee, $id_periode);
