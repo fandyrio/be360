@@ -1244,7 +1244,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
             $id_zona=$get_zonasi['IdZona'];
             $get_zonasi_banding=Zonasi_satker::join("v_satker as vs", "vs.IdSatker", "trans_zonasi_satker.IdSatker")
                                     ->where('IdZona', $id_zona)
-                                    ->where('IdSatker', $id_satker_banding)
+                                    ->where('trans_zonasi_satker.IdSatker', $id_satker_banding)
                                     ->select("trans_zonasi_satker.*", "vs.NamaSatker as nama_satker_banding")
                                     ->first();
             if(is_null($get_zonasi_banding)){
