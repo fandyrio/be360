@@ -1308,7 +1308,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                         $trans_observee->id_kelompok_jabatan=$data_observee[0]['id_kelompok_jabatan'];
                         $trans_observee->IdNamaJabatan=$data_observee[0]['IdNamaJabatan'];
                         $trans_observee->NamaJabatan=$data_observee[0]['NamaJabatan'];
-                        $trans_observee->bagian=$data_observee['bagian'];
+                        $trans_observee->bagian=$data_observee[0]['bagian'];
                         $trans_observee->IdZonaSatker=$data_observee[0]['IdZonaSatker'];
                         $trans_observee->diinput_tgl=date('Y-m-d H:i:s');
                         $trans_observee->endpoint=$data_observee[0]['endpoint'];
