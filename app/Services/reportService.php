@@ -294,8 +294,9 @@ use Vinkla\Hashids\Facades\Hashids;
                         }else{
                             $id_observee=$validate_key['id_observee'];
                             $id_zonasi_satker=$validate_key['id_zonasi_satker'];
-                            $get_data_personal=Trans_observee::where("IdObservee", $id_observee)
-                                                ->where("IdZonaSatker", $id_zonasi_satker)    
+                            $get_data_personal=Trans_observee::join("tref_pegawai as tp", "tp.id_pegawai", "trans_observee.IdPegawai")
+                                                ->select("trans_observee.NIPBaru as nip", "trans_observee.NamaJabatan as jabatan", "trans_observee.bagian as bagian",  "trans_observee.total_nilai as nilai_akhir", "tp.nama_pegawai", "tp.foto_pegawai", "trans_observee.IdZonaSatker")
+                                                ->where("trans_observee.IdObservee", $id_observee)
                                                 ->first();
                             if(!is_null($get_data_personal)){
                                 $get_periode=Zonasi_satker::join("tref_zonasi as tz", "tz.IdZona", "trans_zonasi_satker.IdZona")
