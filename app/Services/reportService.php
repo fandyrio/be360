@@ -200,7 +200,7 @@ use Vinkla\Hashids\Facades\Hashids;
             // var_dump($get_data_personal['IdZonaSatker']);
             if(!is_null($get_data_personal)){
                 #2. Statistik Jumlah Jabatan Penilaian
-                $get_statistik=$this->getStatistikJabatanPenilai($get_data_personal['IdZoaSatker'], $id_observee, $id_periode);
+                $get_statistik=$this->getStatistikJabatanPenilai($get_data_personal['IdZonaSatker'], $id_observee, $id_periode);
                 if($get_statistik->count() > 0){
                     $get_report_penilaian=$this->getDataNilai($id_observee, $id_periode);
                     if($get_report_penilaian->count() > 0){
