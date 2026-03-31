@@ -29,23 +29,32 @@ use Vinkla\Hashids\Facades\Hashids;
         function sendWa($msg_wa, $nip, $nama, $reciver){
             $get_env=Tref_sys_config::where("config_name", "environment")->first();
             $env=strip_tags($get_env['config_value_str']);
-            if($env === "production"){
-                $data=[
-                    'token'=>config('services.WA_MA.token'),
-                    'nip'=>$nip,
-                    'message'=>$msg_wa,
-                    'phoneNumber'=>$reciver,
-                    'name'=>$nama
-                ];
-            }else if($env === "testing" || $env === "development"){
-                $data=[
-                    'token'=>config('services.WA_MA.token'),
-                    'nip'=>"199306242019031004",
-                    'message'=>$msg_wa,
-                    'phoneNumber'=>"085880037948",
-                    'name'=>"Fandy Juniario Simorangkir"
-                ];
-            }
+            // if($env === "production"){
+            //     $data=[
+            //         'token'=>config('services.WA_MA.token'),
+            //         'nip'=>$nip,
+            //         'message'=>$msg_wa,
+            //         'phoneNumber'=>$reciver,
+            //         'name'=>$nama
+            //     ];
+            // }else if($env === "testing" || $env === "development"){
+            //     $data=[
+            //         'token'=>config('services.WA_MA.token'),
+            //         'nip'=>"199306242019031004",
+            //         'message'=>$msg_wa,
+            //         'phoneNumber'=>"085880037948",
+            //         'name'=>"Fandy Juniario Simorangkir"
+            //     ];
+            // }
+
+            $data=[
+                'token'=>config('services.WA_MA.token'),
+                'nip'=>$nip,
+                'message'=>$msg_wa,
+                'phoneNumber'=>$reciver,
+                'name'=>$nama
+            ];
+
             $data_post=json_encode($data);
             $curl = curl_init();
             curl_setopt_array($curl, array(
