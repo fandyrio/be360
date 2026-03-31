@@ -289,8 +289,9 @@ use Vinkla\Hashids\Facades\Hashids;
                                 $ada_blm_nilai+=1;
                             }
                         }
+                        $ada_blm_nilai = 1;
                         if($ada_blm_nilai > 0){
-                            $msg="Penilaian";
+                            $msg="Penilaian terhadap anda belum selesai dilakukan. Mohon menunggu";
                         }else{
                             $id_observee=$validate_key['id_observee'];
                             $id_zonasi_satker=$validate_key['id_zonasi_satker'];
