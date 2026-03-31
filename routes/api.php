@@ -153,7 +153,7 @@ Route::middleware(['checkSign'])->group(function(){
 });
 
 //buat middleware yang cocok nantinya
-Route::get("report-penilaian-personal/{key}", "reportController@reportIndividualPersonal")->name("report-penilaian-personal");
+Route::get('report-penilaian-personal/{key}', 'api\reportController@reportIndividualPersonal')->name('report-penilaian-personal');
 Route::get('list-observee/{id_zonasi}', 'api\zonasiController@observer');
 Route::get('encdec/{method}/{string}', 'api\zonasiController@enc');
 Route::get('test', function(){
