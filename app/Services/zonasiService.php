@@ -300,7 +300,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     $data_insert_observee[] = $data_observee[$x];
                 }
 
-                DB::table('tref_pegawai')->insert($data_insert);
+                DB::table('tref_pegawai')->insert($data_insert);     
                 DB::table('trans_observee')->insert($data_insert_observee);
             }else{
                 return false;
@@ -1624,7 +1624,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                         $data[$x]['sudah_nilai']=$list_penilaian->sudah;
                         $data[$x]['total_penilaian']=$list_penilaian->total;
                         $data[$x]['percentage']=$list_penilaian->sudah / $list_penilaian->total * 100;
-                        $data[$x]['kirim_penilain']=(int)$list_penilaian->kirim_penilaian === 0 ? false : true;
+                        $data[$x]['kirim_penilaian']=(int)$list_penilaian->kirim_penilaian === 0 ? false : true;
                         $x++;
                     }
                 }else{
