@@ -289,7 +289,7 @@ use Vinkla\Hashids\Facades\Hashids;
                                 $ada_blm_nilai+=1;
                             }
                         }
-                        $ada_blm_nilai = 1;
+                        //$ada_blm_nilai = 1;
                         if($ada_blm_nilai > 0){
                             $msg="Penilaian terhadap anda belum selesai dilakukan. Mohon menunggu";
                         }else{
