@@ -2,6 +2,8 @@
     namespace App\Services;
 
 use App\Models\Tahun_penilaian;
+use App\Models\Trans_jabatan_kosong;
+use App\Models\Zonasi_satker;
 use Illuminate\Support\Facades\Cache;
 
     class dashboardService{
@@ -38,6 +40,31 @@ use Illuminate\Support\Facades\Cache;
                                             ->get();
             });
             return $get_rata_rata;
+        }
+
+        public function getDataDashboardSatker($satker_id){
+            $ada_jabatan_kosong=false;
+            $blm_kirim_penilaian=false;
+            $get_jabatan_kosong=Trans_jabatan_kosong::join("trans_zonasi_satker as tzs", "tzs.IdZonaSatker", "trans_jabatan_kosong.id_zonasi_satker")
+                                    ->where("tzs.IdSatker", $satker_id)
+                                    ->where("trans_jabatan_kosong.status", false)
+                                    ->exists();
+            if($get_jabatan_kosong){
+                $ada_jabatan_kosong=true;
+            }
+
+            $get_penilaian=Zonasi_satker::where("IdSatker", $satker_id)->get();
+            
+            $jlh_penilaian=$get_penilaian->count();
+            
+            if($jlh_penilaian > 0){
+                foreach($get_penilaian as $list_penilaian_satker){
+                    if($list_penilaian_satker['kirim_penilaian'] === 0){
+                        $blm_kirim_penilaian=true;
+                    }
+                }
+            }
+            return ['blm_kirim_penilaian'=>$blm_kirim_penilaian, 'ada_jabatan_kosong'=>$ada_jabatan_kosong, 'jlh_penilaian'=>$jlh_penilaian];
         }
     }
 
