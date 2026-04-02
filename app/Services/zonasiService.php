@@ -967,7 +967,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
             
             $get_periode=Tref_zonasi::where('IdZona', $id_zonasi)->first();
             $id_periode=$get_periode['IdTahunPenilaian'];
-            var_dump($data_peserta[0]["pegawai"]);
+            // var_dump($data_peserta[0]["pegawai"]);
             for($s=0;$s<=$jumlah_satker;$s++){
                 // echo "<b>".$satker[$s]."</b><br />";
                 $jlh_jabatan_peserta=count($variable_jabatan_peserta_arr[$s]);
@@ -988,6 +988,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     if(isset($data_peserta[$s][$variable_jabatan_peserta])){
                         $jlh_pegawai_perjabatan=count($data_peserta[$s][$variable_jabatan_peserta]);
                     }
+                    echo $variable_jabatan_peserta." : ".$jlh_pegawai_perjabatan."<br />";
                     // $jlh_pegawai_perjabatan=count($$variable_jabatan_peserta);
                     //naikkan ke atas di luar looping
                     // $get_periode=Tref_zonasi::where('IdZona', $id_zonasi)->first();
@@ -1196,7 +1197,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                 foreach($get_jabatan_peserta as $list_jabatan_peserta){
                                     $variable=str_replace(' ','_', strtolower($list_jabatan_peserta['jabatan']));
                                     if(( isset($data_peserta[$s][$variable]) && count($data_peserta[$s][$variable])  === 1) || !isset($data_peserta[$s][$variable])){
-                                        echo $variable." set ke 0";
+                                        // echo $variable." set ke 0";
                                         ${"pointer_{$variable}"}=0;
                                     }
                                 }
