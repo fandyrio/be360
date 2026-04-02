@@ -1950,7 +1950,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                         ->select('tref_mapping_jabatan.*', 'tjp.jabatan as jabatan_penilai', 'tjp.ada_plt')
                                         ->get();
                     $id_kelompok_jabatan_peserta_before=null;
-                    var_dump($jlh_pegawai_perjabatan." - ".$variable_jabatan_peserta);
+                    // var_dump($jlh_pegawai_perjabatan." - ".$variable_jabatan_peserta);
                     //looping berdasarkan jumlah peserta (yang dinilai)
                     for($a=0;$a<$jlh_pegawai_perjabatan;$a++){
                         // if($variable_jabatan_peserta === "pegawai"){
