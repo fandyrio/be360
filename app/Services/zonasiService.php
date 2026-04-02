@@ -1076,7 +1076,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                                 }
                                             }
                                         }
-                                        
+                                        echo $data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]."<br />";
                                         if($data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['is_plt'] === 
                                         "true" && (int)$data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['id_pegawai'] === 0){
                                             $id_pegawai_penilai=null; 
