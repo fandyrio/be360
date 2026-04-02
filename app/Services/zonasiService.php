@@ -967,7 +967,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
             
             $get_periode=Tref_zonasi::where('IdZona', $id_zonasi)->first();
             $id_periode=$get_periode['IdTahunPenilaian'];
-            var_dump($variable_jabatan_peserta_arr[0]);
+            var_dump($data_peserta[$s]["pegawai"]);
             for($s=0;$s<=$jumlah_satker;$s++){
                 // echo "<b>".$satker[$s]."</b><br />";
                 $jlh_jabatan_peserta=count($variable_jabatan_peserta_arr[$s]);
