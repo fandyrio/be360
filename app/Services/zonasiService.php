@@ -724,9 +724,9 @@ use Symfony\Component\CssSelector\Node\HashNode;
                             ${"counter_{$variable}"}=0;
                         }else{
                             // echo "sudah ada ".$variable;
-                            ${"pointer_{$variable}"}+=1;
+                            // ${"pointer_{$variable}"}+=1;
                             // ${"index_{$variable}"}+=1;
-                            ${"counter_{$variable}"}+=1;
+                            // ${"counter_{$variable}"}+=1;
                         }
                     }else{
                         $variable=str_replace(' ','_', strtolower($list_jabatan_peserta['jabatan']));
