@@ -768,8 +768,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                         }
                         // echo $variable." ".${"index_{$variable}"}."<br />";
                     }
-                    
-                    print_r($data_peserta[0]['pegawai']);
+
                     // echo $index_satker;
                     if(count($variable_jabatan_peserta_arr) > 0 && isset($variable_jabatan_peserta_arr[$index_satker])){
                         $flip=array_flip($variable_jabatan_peserta_arr[$index_satker]);
@@ -784,6 +783,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                         $nama_jabatan_arr[$index_satker][]=$jabatan_peserta_;
                     }
                 }
+                print_r($data_peserta[0]['pegawai']);
                 
 
                 //check apakah ketua dan wakil tidak ada
