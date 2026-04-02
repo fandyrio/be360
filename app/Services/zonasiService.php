@@ -723,6 +723,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                             ${"index_{$variable}"}=0;
                             ${"counter_{$variable}"}=0;
                         }else{
+                            echo "sudah ada ".$variable;
                             ${"pointer_{$variable}"}+=1;
                             ${"index_{$variable}"}+=1;
                             ${"counter_{$variable}"}+=1;
