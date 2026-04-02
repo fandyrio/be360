@@ -236,8 +236,8 @@ use Symfony\Component\CssSelector\Node\HashNode;
         public function updatePesertaSIKEP($id_zonasi, $id_satker_selected = null){
             $data=[];
             $data_observee=[];
-            $id_kelompok_kepaniteraan=[9, 16, 30, 31, 32, 15, 27];
-            //$id_kelompok_kepaniteraan=[];
+            // $id_kelompok_kepaniteraan=[9, 16, 30, 31, 32, 15, 27];
+            $id_kelompok_kepaniteraan=[];
             $get_jabatan_peserta=Tref_jabatan_peserta::where('active', true)->get();
             foreach($get_jabatan_peserta as $list_jabatan_peserta){
                 $id_kelompok_kepaniteraan[]=$list_jabatan_peserta['id_kelompok_jabatan'];
@@ -1052,13 +1052,13 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                 // echo  $variable_penilai." ".$jlh_penilai.", ";
                                 if($jlh_penilai > 0){
                                     //looping batas penilaian berdasarkan threshold
-                                    for($c=0;$c<${"batas_{$variable_penilai}"};$c++){
+                                    for($c=0;$c<${"batas_{$variable_penilai}"}-1;$c++){
                                         //check kalau pointer penilai lebih besar dari jumlah penilai
                                         if(${"pointer_{$variable_penilai}"} > $jlh_penilai -1){
                                             ${"pointer_{$variable_penilai}"}=0;
                                         }
                                         //check peserta penilai jangan sampai menilai dirinya sendiri
-                                        if(isset($data_peserta[$s][$variable_jabatan_peserta][$a]['id_pegawai']) && isset($data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['id_pegawai']) && $data_peserta[$s][$variable_jabatan_peserta][$a]['id_pegawai'] === $data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['id_pegawai']){
+                                        if($data_peserta[$s][$variable_jabatan_peserta][$a]['id_pegawai'] === $data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['id_pegawai']){
                                             // echo "penilai dan dinilai sama: ".$$variable_jabatan_peserta[$a]['nama']." : ".$$variable_penilai[${"pointer_{$variable_penilai}"}]['nama'];
                                             if(${"pointer_{$variable_penilai}"} > $jlh_penilai -1){
                                                 // echo "set ".$variable_penilai." ke 0, ";
@@ -1070,7 +1070,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                             }
                                         }
                                         
-                                        if(isset($data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['id_pegawai']) && $data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['is_plt'] === 
+                                        if($data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['is_plt'] === 
                                         "true" && (int)$data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['id_pegawai'] === 0){
                                             $id_pegawai_penilai=null; 
                                             $mapping_jabatan_kosong=$mapping['id_jabatan_penilai']."-".$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker']."-".$data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['index_jabatan_plt'];
