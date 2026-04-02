@@ -1194,6 +1194,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                 foreach($get_jabatan_peserta as $list_jabatan_peserta){
                                     $variable=str_replace(' ','_', strtolower($list_jabatan_peserta['jabatan']));
                                     if(( isset($data_peserta[$s][$variable]) && count($data_peserta[$s][$variable])  === 1) || !isset($data_peserta[$s][$variable])){
+                                        echo $variable." set ke 0";
                                         ${"pointer_{$variable}"}=0;
                                     }
                                 }
