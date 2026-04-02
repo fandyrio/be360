@@ -962,7 +962,8 @@ use Symfony\Component\CssSelector\Node\HashNode;
             
             $get_periode=Tref_zonasi::where('IdZona', $id_zonasi)->first();
             $id_periode=$get_periode['IdTahunPenilaian'];
-
+            print_r($data_peserta[0]['pegawai']);
+                    
             for($s=0;$s<=$jumlah_satker;$s++){
                 // echo "<b>".$satker[$s]."</b><br />";
                 $jlh_jabatan_peserta=count($variable_jabatan_peserta_arr[$s]);
@@ -997,7 +998,6 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                         ->select('tref_mapping_jabatan.*', 'tjp.jabatan as jabatan_penilai', 'tjp.ada_plt')
                                         ->get();
                     $id_kelompok_jabatan_peserta_before=null;
-
                     //looping berdasarkan jumlah peserta (yang dinilai). Jumlah peserta dalam jabatan yang dinilai. Misalnya, PP: 5 orang
                     for($a=0;$a<$jlh_pegawai_perjabatan;$a++){
                         // echo $pointer_wakil_ketua_pengadilan;
@@ -1021,7 +1021,6 @@ use Symfony\Component\CssSelector\Node\HashNode;
 
                             $jlh_mapping=$get_mapping->count();
                             //Looping mapping jabatan dan threshold]
-                            print_r($data_peserta[0]['pegawai']);
                             foreach($get_mapping as $mapping){
                                 $variable_penilai=str_replace(' ','_', strtolower($mapping['jabatan_penilai']));
                                 ${"counter_{$variable_penilai}"}+=1;
