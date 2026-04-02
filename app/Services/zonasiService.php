@@ -1053,7 +1053,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                         ${"batas_{$variable_penilai}"}=0;
                                     }
                                 }
-                                // echo  $variable_penilai." ".$jlh_penilai.", ";
+                                echo $variable_penilai." ".$jlh_penilai."<br />";
                                 if($jlh_penilai > 0){
                                     //looping batas penilaian berdasarkan threshold
                                     for($c=0;$c<${"batas_{$variable_penilai}"};$c++){
@@ -1076,7 +1076,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                                 }
                                             }
                                         }
-                                        var_dump($data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]);echo "<br />";
+                                        // var_dump($data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]);echo "<br />";
                                         if($data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['is_plt'] === 
                                         "true" && (int)$data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['id_pegawai'] === 0){
                                             $id_pegawai_penilai=null; 
