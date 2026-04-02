@@ -785,7 +785,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     }
                     echo $variable."<br />";
                 }
-                print_r($data_peserta[0]['pegawai']);
+                print_r($data_peserta[0]['hakim']);
                 
 
                 //check apakah ketua dan wakil tidak ada
@@ -988,7 +988,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     if(isset($data_peserta[$s][$variable_jabatan_peserta])){
                         $jlh_pegawai_perjabatan=count($data_peserta[$s][$variable_jabatan_peserta]);
                     }
-                    echo $variable_jabatan_peserta." : ".$jlh_pegawai_perjabatan."<br />";
+                    // echo $variable_jabatan_peserta." : ".$jlh_pegawai_perjabatan."<br />";
                     // $jlh_pegawai_perjabatan=count($$variable_jabatan_peserta);
                     //naikkan ke atas di luar looping
                     // $get_periode=Tref_zonasi::where('IdZona', $id_zonasi)->first();
