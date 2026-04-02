@@ -785,7 +785,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     }
                     echo $variable."<br />";
                 }
-                print_r($data_peserta[0]['hakim']);
+                // print_r($data_peserta[0]['hakim']);
                 
 
                 //check apakah ketua dan wakil tidak ada
@@ -1079,6 +1079,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                             }
                                         }
                                         // var_dump($data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]);echo "<br />";
+                                        echo $variable_penilai."<br />";
                                         if($data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['is_plt'] === 
                                         "true" && (int)$data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['id_pegawai'] === 0){
                                             $id_pegawai_penilai=null; 
