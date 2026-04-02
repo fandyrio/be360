@@ -1275,7 +1275,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                         $data_observee[$x]['diinput_oleh']="system";
                         $pegawai_sikep[]=$list_kpt->IdPegawai;
                         
-                        if($list_kpt->IdKelompokJabatan === 15){
+                        if((int)$list_kpt->IdKelompokJabatan === 15){
                             $is_plt="false";
                             break;
                         }
@@ -1288,8 +1288,6 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     }
 
                     $jlh_pegawai_sikep=count($pegawai_sikep);
-                    var_dump($jlh_pegawai_sikep);
-                    exit();
                     $lookup=array_flip($pegawai_existed);
                     $data_insert=[];
                     for($x=0;$x<$jlh_pegawai_sikep;$x++){
