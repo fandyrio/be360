@@ -1288,6 +1288,8 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     }
 
                     $jlh_pegawai_sikep=count($pegawai_sikep);
+                    var_dump($jlh_pegawai_sikep);
+                    exit();
                     $lookup=array_flip($pegawai_existed);
                     $data_insert=[];
                     for($x=0;$x<$jlh_pegawai_sikep;$x++){
