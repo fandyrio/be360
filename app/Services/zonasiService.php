@@ -783,7 +783,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                         $id_jabatan_peserta_arr[$index_satker][]=$id_jabatan_peserta_;
                         $nama_jabatan_arr[$index_satker][]=$jabatan_peserta_;
                     }
-                    echo $variable."<br />";
+                    // echo $variable."<br />";
                 }
                 // print_r($data_peserta[0]['hakim']);
                 
@@ -1080,7 +1080,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                             }
                                         }
                                         // var_dump($data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]);echo "<br />";
-                                        echo $a." : ".${"pointer_{$variable_penilai}"}."   ".$variable_penilai."<br />   ";
+                                        //echo $a." : ".${"pointer_{$variable_penilai}"}."   ".$variable_penilai."<br />   ";
                                         if($data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['is_plt'] === 
                                         "true" && (int)$data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['id_pegawai'] === 0){
                                             $id_pegawai_penilai=null; 
@@ -1963,7 +1963,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     //looping berdasarkan jumlah peserta (yang dinilai)
                     for($a=0;$a<$jlh_pegawai_perjabatan;$a++){
                         // if($variable_jabatan_peserta === "pegawai"){
-                            echo $variable_jabatan_peserta." : ".$jlh_pegawai_perjabatan."<br />";
+                            // echo $variable_jabatan_peserta." : ".$jlh_pegawai_perjabatan."<br />";
                         // }
                         // echo $pointer_wakil_ketua_pengadilan;
                         // echo "<b>".$variable_jabatan_peserta[$a]['nama']." : "."</b>";
