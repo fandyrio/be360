@@ -1046,6 +1046,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                     if($variable_penilai === $variable_jabatan_peserta){
                                         $new_jlh_penilai=$jlh_penilai - 1;
                                         ${"batas_{$variable_penilai}"}=ceil($mapping['threshold']*$new_jlh_penilai / 100);
+                                        $jlh_penilai=$new_jlh_penilai;
                                     }
                                 }else if($jlh_penilai === 2){
                                     ${"batas_{$variable_penilai}"}=1;
