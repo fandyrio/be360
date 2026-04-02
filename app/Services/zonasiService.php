@@ -763,10 +763,13 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                 $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['is_plt']="false";
                                 $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['jlh_menilai']=0;
                                 ${"index_{$variable}"}+=1;
+                            }else{
+                                echo "include false ".$variable;
                             }
                             // shuffle($$variable);
                         }
                     }
+                    print_r($data_peserta[0]['pegawai']);
                     // echo $index_satker;
                     if(count($variable_jabatan_peserta_arr) > 0 && isset($variable_jabatan_peserta_arr[$index_satker])){
                         $flip=array_flip($variable_jabatan_peserta_arr[$index_satker]);
@@ -962,7 +965,6 @@ use Symfony\Component\CssSelector\Node\HashNode;
             
             $get_periode=Tref_zonasi::where('IdZona', $id_zonasi)->first();
             $id_periode=$get_periode['IdTahunPenilaian'];
-            print_r($data_peserta[0]['pegawai']);
                     
             for($s=0;$s<=$jumlah_satker;$s++){
                 // echo "<b>".$satker[$s]."</b><br />";
