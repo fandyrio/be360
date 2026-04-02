@@ -967,7 +967,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
             
             $get_periode=Tref_zonasi::where('IdZona', $id_zonasi)->first();
             $id_periode=$get_periode['IdTahunPenilaian'];
-                    
+            var_dump($variable_jabatan_peserta_arr[0]);
             for($s=0;$s<=$jumlah_satker;$s++){
                 // echo "<b>".$satker[$s]."</b><br />";
                 $jlh_jabatan_peserta=count($variable_jabatan_peserta_arr[$s]);
@@ -1003,6 +1003,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                         ->get();
                     $id_kelompok_jabatan_peserta_before=null;
                     //looping berdasarkan jumlah peserta (yang dinilai). Jumlah peserta dalam jabatan yang dinilai. Misalnya, PP: 5 orang
+                    
                     for($a=0;$a<$jlh_pegawai_perjabatan;$a++){
                         // echo $pointer_wakil_ketua_pengadilan;
                         // echo "<b>".$variable_jabatan_peserta[$a]['nama']." : "."</b>";
@@ -1053,7 +1054,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                         ${"batas_{$variable_penilai}"}=0;
                                     }
                                 }
-                                echo $variable_penilai." ".$jlh_penilai."<br />";
+                                // echo $variable_penilai." ".$jlh_penilai."<br />";
                                 if($jlh_penilai > 0){
                                     //looping batas penilaian berdasarkan threshold
                                     for($c=0;$c<${"batas_{$variable_penilai}"};$c++){
@@ -1146,6 +1147,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                             // echo "<br />";
                             // echo $variable_jabatan_peserta." - ";
                             $id_kelompok_jabatan_peserta_before=$data_peserta[$s][$variable_jabatan_peserta][$a]['id_kelompok_jabatan'];
+                            
                             if($a < $jlh_pegawai_perjabatan-1 && $jlh_mapping > 0){
                                 //jika jabatan yang sebelumnya sama dengan jabatan selanjutnya
                                 if((int)$id_kelompok_jabatan_peserta_before === (int)$data_peserta[$s][$variable_jabatan_peserta][$a+1]['id_kelompok_jabatan']){
