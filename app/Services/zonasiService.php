@@ -1021,7 +1021,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
 
                             $jlh_mapping=$get_mapping->count();
                             //Looping mapping jabatan dan threshold]
-                            var_dump($data_peserta[0]['pegawai'][16]);
+                            print_r($data_peserta[0]['pegawai']);
                             foreach($get_mapping as $mapping){
                                 $variable_penilai=str_replace(' ','_', strtolower($mapping['jabatan_penilai']));
                                 ${"counter_{$variable_penilai}"}+=1;
