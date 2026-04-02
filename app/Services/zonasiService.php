@@ -769,7 +769,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                             // shuffle($$variable);
                         }
                     }
-                    print_r($data_peserta[0]['pegawai']);
+                    // print_r($data_peserta[0]['pegawai']);
                     // echo $index_satker;
                     if(count($variable_jabatan_peserta_arr) > 0 && isset($variable_jabatan_peserta_arr[$index_satker])){
                         $flip=array_flip($variable_jabatan_peserta_arr[$index_satker]);
