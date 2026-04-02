@@ -766,8 +766,9 @@ use Symfony\Component\CssSelector\Node\HashNode;
                             }
                             // shuffle($$variable);
                         }
+                        echo $variable." ".${"index_{$variable}"}."<br />";
                     }
-                    echo $variable."<br />";
+                    
                     // print_r($data_peserta[0]['pegawai']);
                     // echo $index_satker;
                     if(count($variable_jabatan_peserta_arr) > 0 && isset($variable_jabatan_peserta_arr[$index_satker])){
