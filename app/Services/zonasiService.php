@@ -1058,8 +1058,8 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                             ${"pointer_{$variable_penilai}"}=0;
                                         }
                                         //check peserta penilai jangan sampai menilai dirinya sendiri
-                                        var_dump($data_peserta[$s][$variable_jabatan_peserta][$a]['id_pegawai']);
-                                        var_dump($variable_penilai);
+                                        // var_dump($data_peserta[$s][$variable_jabatan_peserta][$a]['id_pegawai']);
+                                        echo $variable_penilai." ".$jlh_penilai."<br />";
                                         
                                         if($data_peserta[$s][$variable_jabatan_peserta][$a]['id_pegawai'] === $data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['id_pegawai']){
                                             // echo "penilai dan dinilai sama: ".$$variable_jabatan_peserta[$a]['nama']." : ".$$variable_penilai[${"pointer_{$variable_penilai}"}]['nama'];
