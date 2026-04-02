@@ -1020,12 +1020,13 @@ use Symfony\Component\CssSelector\Node\HashNode;
                             }
 
                             $jlh_mapping=$get_mapping->count();
-                            //Looping mapping jabatan dan threshold
+                            //Looping mapping jabatan dan threshold]
+                            var_dump($data_peserta);
                             foreach($get_mapping as $mapping){
                                 $variable_penilai=str_replace(' ','_', strtolower($mapping['jabatan_penilai']));
                                 ${"counter_{$variable_penilai}"}+=1;
                                 if(isset($data_peserta[$s][$variable_penilai])){
-                                    $jlh_penilai=count($data_peserta[$s][$variable_penilai])-1; 
+                                    $jlh_penilai=count($data_peserta[$s][$variable_penilai]); 
                                 }else{
                                     $jlh_penilai=0;
                                     if(($variable_penilai === "ketua_pengadilan" || $variable_penilai === "wakil_ketua_pengadilan") && in_array($id_satker[$s], $satker_pimpinan_kosong)){
