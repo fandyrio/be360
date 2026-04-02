@@ -1025,7 +1025,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                 $variable_penilai=str_replace(' ','_', strtolower($mapping['jabatan_penilai']));
                                 ${"counter_{$variable_penilai}"}+=1;
                                 if(isset($data_peserta[$s][$variable_penilai])){
-                                    $jlh_penilai=count($data_peserta[$s][$variable_penilai]); 
+                                    $jlh_penilai=count($data_peserta[$s][$variable_penilai])-1; 
                                 }else{
                                     $jlh_penilai=0;
                                     if(($variable_penilai === "ketua_pengadilan" || $variable_penilai === "wakil_ketua_pengadilan") && in_array($id_satker[$s], $satker_pimpinan_kosong)){
