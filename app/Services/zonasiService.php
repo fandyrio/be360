@@ -782,6 +782,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                         $id_jabatan_peserta_arr[$index_satker][]=$id_jabatan_peserta_;
                         $nama_jabatan_arr[$index_satker][]=$jabatan_peserta_;
                     }
+                    echo $variable."<br />";
                 }
                 print_r($data_peserta[0]['pegawai']);
                 
