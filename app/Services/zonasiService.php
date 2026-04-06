@@ -2192,7 +2192,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
         }
         
         public function regenerateEndPoint($id_observee){
-            $get_observee=Trans_observee::where("id", $id_observee)->first();
+            $get_observee=Trans_observee::where("IdObservee", $id_observee)->first();
 
             if(!is_null($get_observee)){
                 $id_pegawai=$get_observee['IdPegawai'];
