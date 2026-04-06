@@ -48,11 +48,11 @@ use Vinkla\Hashids\Facades\Hashids;
             }else{
                 // a.IdJabatan = 290 or a.IdJabatan = 35 OR a.IdJabatan = 304
                 $id_jabatan_kpt=[290, 35, 304];
-                $get_observee=Trans_observee::where("IdPegawai", $id_pegawai)
+                $get_observee_kpt=Trans_observee::where("IdPegawai", $id_pegawai)
                                 ->whereIn("IdNamaJabatan", $id_jabatan_kpt)
                                 ->first();
-                if(!is_null($get_observee)){
-                    $peserta_dinilai=$this->getPesertaDinilai($get_observee['IdObservee'], $get_observee['NipBaru'], $id_zonasi_satker);
+                if(!is_null($get_observee_kpt)){
+                    $peserta_dinilai=$this->getPesertaDinilai($get_observee_kpt['IdObservee'], $get_observee_kpt['NipBaru'], $id_zonasi_satker);
                     if($peserta_dinilai['status'] === true){
                         $status=$peserta_dinilai['status'];
                         $signature=$peserta_dinilai['signature'];
