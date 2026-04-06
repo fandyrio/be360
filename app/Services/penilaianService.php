@@ -51,6 +51,7 @@ use Vinkla\Hashids\Facades\Hashids;
                 $get_observee_kpt=Trans_observee::where("IdPegawai", $id_pegawai)
                                 ->whereIn("IdNamaJabatan", $id_jabatan_kpt)
                                 ->first();
+                var_dump($get_observee_kpt);
                 if(!is_null($get_observee_kpt)){
                     $peserta_dinilai=$this->getPesertaDinilai($get_observee_kpt['IdObservee'], $get_observee_kpt['NipBaru'], $id_zonasi_satker);
                     if($peserta_dinilai['status'] === true){
