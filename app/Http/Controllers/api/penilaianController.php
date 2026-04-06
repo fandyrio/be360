@@ -79,25 +79,18 @@ class penilaianController extends Controller
                 $explode_token=explode("atAMObE", $request->token_penilaian);
                 $jlh_explode=count($explode_token);
                 if($jlh_explode === 2){
-                    $explode_zonasi_satker=explode("yLn0tPk", $explode_token[1]);
-                    $jlh_explode_zonasi=count($explode_zonasi_satker);
-                    if($jlh_explode_zonasi === 2){
-                        $nip_penilai=Hashids::decode($explode_token[0]);
-                        $id_zonasi_satker=Hashids::decode($explode_zonasi_satker[0]);
-                        $is_kpt=Hashids::decode($explode_zonasi_satker[1]);
-                        if(empty($id_observee_decode) || empty($nip_penilai) || empty($id_zonasi_satker) || empty($is_kpt)){
-                            return response()->json(['status'=>false, "msg"=>"Data tidak ditemukan. Kesalahan ini telah direkam. Mohon menghubungi Administrator[x]"]);
-                        }
-                        $get_penilaian=$this->penilaianService->getDataPenilaian($id_observee_decode[0], $nip_penilai[0], $id_zonasi_satker[0], $is_kpt[0]);
-                        $status=$get_penilaian['status'];
-                        $msg=$get_penilaian['msg'];
-                        $total=$get_penilaian['total'];
-                        $selesai=$get_penilaian['selesai'];
-                        $data=$get_penilaian['data'];
-                        $endpoint_penilain=$get_penilaian['token_r'];
-                    }else{
-                        $msg="Data token tidak valid[x]";
+                    $nip_penilai=Hashids::decode($explode_token[0]);
+                    $id_zonasi_satker=Hashids::decode($explode_token[1]);
+                    if(empty($id_observee_decode) || empty($nip_penilai) || empty($id_zonasi_satker)){
+                        return response()->json(['status'=>false, "msg"=>"Data tidak ditemukan. Kesalahan ini telah direkam. Mohon menghubungi Administrator"]);
                     }
+                    $get_penilaian=$this->penilaianService->getDataPenilaian($id_observee_decode[0], $nip_penilai[0], $id_zonasi_satker[0]);
+                    $status=$get_penilaian['status'];
+                    $msg=$get_penilaian['msg'];
+                    $total=$get_penilaian['total'];
+                    $selesai=$get_penilaian['selesai'];
+                    $data=$get_penilaian['data'];
+                    $endpoint_penilain=$get_penilaian['token_r'];
                 }else{
                     $msg="Data token tidak valid";
                 }
