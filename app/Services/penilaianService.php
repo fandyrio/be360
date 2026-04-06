@@ -25,12 +25,13 @@ use Vinkla\Hashids\Facades\Hashids;
             $status=false;
             $msg="";
             $token_penilaian="";
+            $isKPTOnly="N";
             $get_observee=Trans_observee::where('IdPegawai', $id_pegawai)
                                         ->where('IdNamaJabatan', $id_nama_jabatan)
                                         ->where('IdZonaSatker', $id_zonasi_satker)
                                         ->first();
             if(!is_null($get_observee)){
-                $peserta_dinilai=$this->getPesertaDinilai($get_observee['IdObservee'], $get_observee['NIPBaru'], $id_zonasi_satker);
+                $peserta_dinilai=$this->getPesertaDinilai($get_observee['IdObservee'], $get_observee['NIPBaru'], $id_zonasi_satker, 0);
                 // $peserta_dinilai=Trans_peserta_zonasi::where('id_pegawai_penilai', $get_observee['IdObservee'])->exists();
                 if($peserta_dinilai['status'] === true){
                     $status=$peserta_dinilai['status'];
@@ -52,7 +53,7 @@ use Vinkla\Hashids\Facades\Hashids;
                                 ->whereIn("IdNamaJabatan", $id_jabatan_kpt)
                                 ->first();
                 if(!is_null($get_observee_kpt)){
-                    $peserta_dinilai=$this->getPesertaDinilai($get_observee_kpt['IdObservee'], $get_observee_kpt['NIPBaru'], $id_zonasi_satker);
+                    $peserta_dinilai=$this->getPesertaDinilai($get_observee_kpt['IdObservee'], $get_observee_kpt['NIPBaru'], $id_zonasi_satker, 1);
                     if($peserta_dinilai['status'] === true){
                         $status=$peserta_dinilai['status'];
                         $signature=$peserta_dinilai['signature'];
@@ -75,7 +76,7 @@ use Vinkla\Hashids\Facades\Hashids;
             ];
         }
 
-        public function getPesertaDinilai($id_observee, $nip, $id_zonasi_satker){
+        public function getPesertaDinilai($id_observee, $nip, $id_zonasi_satker, $kpt_only){
             $status=false;
             $signature=null;
             $endpoint=null;
@@ -83,7 +84,7 @@ use Vinkla\Hashids\Facades\Hashids;
             $msg=null;
             $peserta_dinilai=Trans_peserta_zonasi::where('id_pegawai_penilai', $id_observee)->exists();
             if($peserta_dinilai){
-                $data_penilain=$this->generateDataPenilaianPhaseOne($id_observee, $nip, $id_zonasi_satker);
+                $data_penilain=$this->generateDataPenilaianPhaseOne($id_observee, $nip, $id_zonasi_satker, $kpt_only);
                 $signature=$data_penilain['signature'];
                 $endpoint=$data_penilain['endpoint'];
                 $token_penilaian=$data_penilain['payload'];
@@ -94,8 +95,8 @@ use Vinkla\Hashids\Facades\Hashids;
             return ['status'=>$status, 'msg'=>$msg, 'signature'=>$signature, 'token_penilaian'=>$token_penilaian, 'endpoint'=>$endpoint];
         }
 
-        public function generateDataPenilaianPhaseOne($id_observee, $nip_penilai, $id_zonasi_satker){
-            $payload_data=Hashids::encode($nip_penilai)."atAMObE".Hashids::encode($id_zonasi_satker);
+        public function generateDataPenilaianPhaseOne($id_observee, $nip_penilai, $id_zonasi_satker, $kpt_only){
+            $payload_data=Hashids::encode($nip_penilai)."atAMObE".Hashids::encode($id_zonasi_satker)."yLn0tPk".Hashids::encode($kpt_only);
             $signature=generateSignature($payload_data);
             $endpoint=Crypt::encrypt(Hashids::encode($id_observee));
             
@@ -106,16 +107,25 @@ use Vinkla\Hashids\Facades\Hashids;
             ];
         }
 
-        public function getDataPenilaian($id_observee, $nip_penilai, $id_zonasi_satker){
+        public function getDataPenilaian($id_observee, $nip_penilai, $id_zonasi_satker, $is_kpt){
             $status=false;
             $total=0;
             $selesai=0;
             $data=[];
+            $get_observee=null;
             $endpoint_report="invalid";
-            $get_observee=Trans_observee::where('IdObservee', $id_observee)
+            if((int)$is_kpt === 0){
+                $get_observee=Trans_observee::where('IdObservee', $id_observee)
                                     ->where('NIPBaru', $nip_penilai)
                                     ->where('IdZonaSatker', $id_zonasi_satker)
                                     ->first();
+            }elseif((int)$is_kpt === 1){
+                $id_jabatan_kpt=[290, 35, 304];
+                $get_observee=Trans_observee::where('IdObservee', $id_observee)
+                                    ->where('NIPBaru', $nip_penilai)
+                                    ->whereIn('IdNamaJabatan', $id_jabatan_kpt)
+                                    ->first();
+            }
             $data['penilai']=null;
             $data['peserta']=null;
             if(!is_null($get_observee)){
