@@ -26,6 +26,7 @@ use Vinkla\Hashids\Facades\Hashids;
             $msg="";
             $token_penilaian="";
             $isKPTOnly="N";
+            var_dump($id_zonasi_satker);
             $get_observee=Trans_observee::where('IdPegawai', $id_pegawai)
                                         ->where('IdNamaJabatan', $id_nama_jabatan)
                                         ->where('IdZonaSatker', $id_zonasi_satker)
@@ -182,7 +183,7 @@ use Vinkla\Hashids\Facades\Hashids;
                             $x++;
                         }
                         $params_before=$params;
-                }
+                    }
                     $total=$x;
                     $endpoint_report=$this->generateLinkReportPersonal($id_observee, $id_zonasi_satker);
                 }else{
