@@ -81,7 +81,7 @@ class penilaianController extends Controller
                     $nip_penilai=Hashids::decode($explode_token[0]);
                     $id_zonasi_satker=Hashids::decode($explode_token[1]);
                     if(empty($id_observee_decode) || empty($nip_penilai) || empty($id_zonasi_satker)){
-                        return response()->json(['status'=>false, "msg"=>"Data tidak ditemukan. Kesalahan ini telah direkam. Mohon menghubungi Administrator"]);
+                        return response()->json(['status'=>false, "msg"=>"Data tidak ditemukan. Kesalahan ini telah direkam. Mohon menghubungi Administrator[x] ".$id_observee_decode[0]." ".$nip_penilai[0]." ".$id_zonasi_satker[0]]);
                     }
                     $get_penilaian=$this->penilaianService->getDataPenilaian($id_observee_decode[0], $nip_penilai[0], $id_zonasi_satker[0]);
                     $status=$get_penilaian['status'];
