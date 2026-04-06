@@ -2198,7 +2198,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                 $id_pegawai=$get_observee['IdPegawai'];
                 $id_nama_jabatan=(int)$get_observee['IdNamaJabatan'] + (int)$get_observee['IdPegawai'];
                 $id_zonasi_satker=(int)$get_observee['IdZonaSatker'] + (int)$get_observee['IdPegawai'];
-                $endpoint=Hashids::encode($id_pegawai)."-".Hashids::encode($id_nama_jabatan)."-".$id_zonasi_satker;
+                $endpoint=Hashids::encode($id_pegawai)."-".Hashids::encode($id_nama_jabatan)."-".Hashids::encode($id_zonasi_satker);
                 $get_observee->endpoint=$endpoint;
                 if($get_observee->update()){
                     echo "updated";
