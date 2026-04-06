@@ -163,3 +163,4 @@ Route::get('test', function(){
 Route::get("test-wa", function(){
 
 });
+Route::get("repair-link-kpt/{id_observee}", "api\zonasiController@regenerateEndPoint");

@@ -377,4 +377,6 @@ class zonasiController extends Controller
     public function generatePesertaTest($id_zonasi_satker)  {
         return $this->zonasiService->generatePesertaTest($id_zonasi_satker);
     }
+
+    
 }

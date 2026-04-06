@@ -2190,6 +2190,21 @@ use Symfony\Component\CssSelector\Node\HashNode;
             // $data_return=array('status'=>$status, 'success'=>$succemsgss);
             var_dump($response);
         }
+        
+        public function regenerateEndPoint($id_observee){
+            $get_observee=Trans_observee::where("id", $id_observee)->first();
+
+            if(!is_null($get_observee)){
+                $id_pegawai=$get_observee['IdPegawai'];
+                $id_nama_jabatan=(int)$get_observee['IdNamaJabatan'] + (int)$get_observee['IdPegawai'];
+                $id_zonasi_satker=(int)$get_observee['IdZonaSatker'] + (int)$get_observee['IdPegawai'];
+                $endpoint=Hashids::encode($id_pegawai)."-".Hashids::encode($id_nama_jabatan)."-".$id_zonasi_satker;
+                $get_observee->endpoint=$endpoint;
+                if($get_observee->update()){
+                    echo "updated";
+                }
+            }
+        }
     }
 
 ?>
