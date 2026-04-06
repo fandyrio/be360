@@ -29,7 +29,7 @@ class ThrottleIsiSurvey
                 function(){
                     return true;
                 },
-                120
+                60
         );
         
         if(!$exceuted){

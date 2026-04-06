@@ -30,18 +30,40 @@ use Vinkla\Hashids\Facades\Hashids;
                                         ->where('IdZonaSatker', $id_zonasi_satker)
                                         ->first();
             if(!is_null($get_observee)){
-                $peserta_dinilai=Trans_peserta_zonasi::where('id_pegawai_penilai', $get_observee['IdObservee'])->exists();
-                if($peserta_dinilai){
-                    $data_penilain=$this->generateDataPenilaianPhaseOne($get_observee['IdObservee'], $get_observee['NIPBaru'], $id_zonasi_satker);
-                    $signature=$data_penilain['signature'];
-                    $endpoint=$data_penilain['endpoint'];
-                    $token_penilaian=$data_penilain['payload'];
-                    $status=true;
+                $peserta_dinilai=$this->getPesertaDinilai($get_observee['IdObservee'], $get_observee['NipBaru'], $id_zonasi_satker);
+                // $peserta_dinilai=Trans_peserta_zonasi::where('id_pegawai_penilai', $get_observee['IdObservee'])->exists();
+                if($peserta_dinilai['status'] === true){
+                    $status=$peserta_dinilai['status'];
+                    $signature=$peserta_dinilai['signature'];
+                    $endpoint=$peserta_dinilai['endpoint'];
+                    $token_penilaian=$peserta_dinilai['token_penilaian'];
+                    // $data_penilain=$this->generateDataPenilaianPhaseOne($get_observee['IdObservee'], $get_observee['NIPBaru'], $id_zonasi_satker);
+                    // $signature=$data_penilain['signature'];
+                    // $endpoint=$data_penilain['endpoint'];
+                    // $token_penilaian=$data_penilain['payload'];
+                    // $status=true;
                 }else{
                     $msg="Tidak ada peserta yang dinilai";
                 }
             }else{
-                $msg="Data tidak ditemukan. Kesalahan ini telah direkam. Silahkan hubungi Administrator";
+                // a.IdJabatan = 290 or a.IdJabatan = 35 OR a.IdJabatan = 304
+                $id_jabatan_kpt=[290, 35, 304];
+                $get_observee=Trans_observee::where("IdPegawai", $id_pegawai)
+                                ->whereIn("IdNamaJabatan", $id_jabatan_kpt)
+                                ->first();
+                if(!is_null($get_observee)){
+                    $peserta_dinilai=$this->getPesertaDinilai($get_observee['IdObservee'], $get_observee['NipBaru'], $id_zonasi_satker);
+                    if($peserta_dinilai['status'] === true){
+                        $status=$peserta_dinilai['status'];
+                        $signature=$peserta_dinilai['signature'];
+                        $endpoint=$peserta_dinilai['endpoint'];
+                        $token_penilaian=$peserta_dinilai['token_penilaian'];
+                    }else{
+                        $msg="Tidak ada peserta yang dinilai";
+                    }
+                }else{
+                    $msg="Data tidak ditemukan. Kesalahan ini telah direkam. Silahkan hubungi Administrator";
+                }
             }
 
             return [
@@ -51,6 +73,25 @@ use Vinkla\Hashids\Facades\Hashids;
                 'endpoint'=>$endpoint,
                 'token_penilaian'=>$token_penilaian
             ];
+        }
+
+        public function getPesertaDinilai($id_observee, $nip, $id_zonasi_satker){
+            $status=false;
+            $signature=null;
+            $endpoint=null;
+            $token_penilaian=null;
+            $msg=null;
+            $peserta_dinilai=Trans_peserta_zonasi::where('id_pegawai_penilai', $id_observee)->exists();
+            if($peserta_dinilai){
+                $data_penilain=$this->generateDataPenilaianPhaseOne($id_observee, $nip, $id_zonasi_satker);
+                $signature=$data_penilain['signature'];
+                $endpoint=$data_penilain['endpoint'];
+                $token_penilaian=$data_penilain['payload'];
+                $status=true;
+            }else{
+                $msg="Tidak ada peserta yang dinilai";
+            }
+            return ['status'=>$status, 'msg'=>$msg, 'signature'=>$signature, 'token_penilaian'=>$token_penilaian, 'endpoint'=>$endpoint];
         }
 
         public function generateDataPenilaianPhaseOne($id_observee, $nip_penilai, $id_zonasi_satker){
@@ -131,7 +172,7 @@ use Vinkla\Hashids\Facades\Hashids;
                             $x++;
                         }
                         $params_before=$params;
-                    }
+                }
                     $total=$x;
                     $endpoint_report=$this->generateLinkReportPersonal($id_observee, $id_zonasi_satker);
                 }else{
