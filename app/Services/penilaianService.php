@@ -30,7 +30,7 @@ use Vinkla\Hashids\Facades\Hashids;
                                         ->where('IdZonaSatker', $id_zonasi_satker)
                                         ->first();
             if(!is_null($get_observee)){
-                $peserta_dinilai=$this->getPesertaDinilai($get_observee['IdObservee'], $get_observee['NipBaru'], $id_zonasi_satker);
+                $peserta_dinilai=$this->getPesertaDinilai($get_observee['IdObservee'], $get_observee['NIPBaru'], $id_zonasi_satker);
                 // $peserta_dinilai=Trans_peserta_zonasi::where('id_pegawai_penilai', $get_observee['IdObservee'])->exists();
                 if($peserta_dinilai['status'] === true){
                     $status=$peserta_dinilai['status'];
@@ -52,7 +52,7 @@ use Vinkla\Hashids\Facades\Hashids;
                                 ->whereIn("IdNamaJabatan", $id_jabatan_kpt)
                                 ->first();
                 if(!is_null($get_observee_kpt)){
-                    $peserta_dinilai=$this->getPesertaDinilai($get_observee_kpt['IdObservee'], $get_observee_kpt['NipBaru'], $id_zonasi_satker);
+                    $peserta_dinilai=$this->getPesertaDinilai($get_observee_kpt['IdObservee'], $get_observee_kpt['NIPBaru'], $id_zonasi_satker);
                     if($peserta_dinilai['status'] === true){
                         $status=$peserta_dinilai['status'];
                         $signature=$peserta_dinilai['signature'];
