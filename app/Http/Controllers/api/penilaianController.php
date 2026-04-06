@@ -45,7 +45,7 @@ class penilaianController extends Controller
                     $signature=$validateParams['signature'];
                     $endpoint=$validateParams['endpoint'];
                     $token_penilaian=$validateParams['token_penilaian'];
-                    $msg=$validateParams['debug_nip'];
+                    $msg=$validateParams['msg'];
                 }catch(\Exception $e){
                     $msg=$e->getMessage();
                 }
@@ -80,9 +80,6 @@ class penilaianController extends Controller
                 if($jlh_explode === 2){
                     $nip_penilai=Hashids::decode($explode_token[0]);
                     $id_zonasi_satker=Hashids::decode($explode_token[1]);
-                    var_dump($id_observee_decode);
-                    var_dump($nip_penilai);
-                    var_dump(($id_zonasi_satker));
                     if(empty($id_observee_decode) || empty($nip_penilai) || empty($id_zonasi_satker)){
                         return response()->json(['status'=>false, "msg"=>"Data tidak ditemukan. Kesalahan ini telah direkam. Mohon menghubungi Administrator[x]"]);
                     }

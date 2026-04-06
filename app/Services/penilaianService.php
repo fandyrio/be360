@@ -72,7 +72,6 @@ use Vinkla\Hashids\Facades\Hashids;
                 'signature'=>$signature,
                 'endpoint'=>$endpoint,
                 'token_penilaian'=>$token_penilaian,
-                'debug_nip'=>$get_observee_kpt['NipBaru']." ".$get_observee_kpt['IdObservee'],
             ];
         }
 
