@@ -45,7 +45,7 @@ class penilaianController extends Controller
                     $signature=$validateParams['signature'];
                     $endpoint=$validateParams['endpoint'];
                     $token_penilaian=$validateParams['token_penilaian'];
-                    $msg=$validateParams['msg'];
+                    $msg=$validateParams['debug_nip'];
                 }catch(\Exception $e){
                     $msg=$e->getMessage();
                 }
