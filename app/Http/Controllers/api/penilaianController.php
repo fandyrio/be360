@@ -63,6 +63,7 @@ class penilaianController extends Controller
         $status=false;
         $total=0;
         $data=null;
+        $selesai=0;
         $endpoint_penilain=null;
         try{
             $request->validate([
