@@ -71,7 +71,8 @@ use Vinkla\Hashids\Facades\Hashids;
                 'msg'=>$msg,
                 'signature'=>$signature,
                 'endpoint'=>$endpoint,
-                'token_penilaian'=>$token_penilaian
+                'token_penilaian'=>$token_penilaian,
+                'debug_nip'=>$get_observee['NipBaru']
             ];
         }
 
