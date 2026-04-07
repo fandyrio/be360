@@ -556,8 +556,9 @@ use PDO;
                         $x=0;
                         foreach($get_data as $list_data){
                             $data[$x]['nama_penilai'] = $list_data->nama_pegawai_penilai;
-                            $data[$x]['nama_peserta'] = $list_data->nama_pegawai_peserta;
-                            $data[$x]['status_nilai'] = $list_data->nilai;
+                            $data[$x]['jumlah_selesai'] = $list_data->jumlah_selesai;
+                            $data[$x]['jumlah_dinilai'] = $list_data->jumlah_dinilai;
+                            $data[$x]['percentage']=(int)$list_data->jumlah_dinilai / (int)$list_data->jumlah_selesai * 100;
                             $x++;
                         }
                         $payload=Hashids::encode($id_zonasi_satker)."-".Hashids::encode($id_satker_ctlr)."-".Hashids::encode($total);
@@ -588,22 +589,33 @@ use PDO;
             ];
         }   
         public function getListPesertaZonasiSatker($id_zonasi_satker, $skip, $limit){
-            $get_data=Cache::store('redis')->remember("peserta_zonasi_{$id_zonasi_satker}_{$skip}_{$limit}", 3600*24*3, function() use($id_zonasi_satker, $skip, $limit){
+            $get_data_selesai=DB::table("trans_peserta_zonasi as tpz")
+                            ->select("tpz.id_pegawai_peserta", DB::raw('COUNT(id_pegawai_penilai) as jumlah_selesai'))
+                            ->where('tpz.id_zona_satker', $id_zonasi_satker)
+                            ->where('tpz.nilai', '>', 0)
+                            ->groupBy('tpz.id_pegawai_peserta');
+
+            $get_data_dinilai=DB::table("trans_peserta_zonasi as tpz")
+                            ->select("tpz.id_pegawai_peserta", DB::raw('COUNT(id_pegawai_penilai) as jumlah_dinilai'))
+                            ->where("tpz.id_zona_satker", $id_zonasi_satker)
+                            ->groupBy('tpz.id_pegawai_peserta');
+                            
+            Cache::store('redis')->forget("peserta_zonasi_{$id_zonasi_satker}_{$skip}_{$limit}");
+            $get_data=Cache::store('redis')->remember("peserta_zonasi_{$id_zonasi_satker}_{$skip}_{$limit}", 3600*24*3, function() use($get_data_selesai, $get_data_dinilai){
                 return DB::table("trans_peserta_zonasi as tpz")
-                        ->join('trans_observee as toe1', 'toe1.IdObservee', '=', 'tpz.id_pegawai_penilai')
+                        ->join('trans_observee as toe1', 'toe1.IdObservee', '=', 'tpz.id_pegawai_peserta')
                         ->join('tref_pegawai as tp1', 'tp1.id_pegawai', '=', 'toe1.IdPegawai')
-                        ->join('trans_observee as toe2', 'toe2.IdObservee', '=', 'tpz.id_pegawai_peserta')
-                        ->join('tref_pegawai as tp2', 'tp2.id_pegawai', '=', 'toe2.IdPegawai')
-                        ->select("tp1.nama_pegawai as nama_pegawai_penilai", 'tp2.nama_pegawai as nama_pegawai_peserta', DB::raw("
-                            CASE
-                                WHEN tpz.nilai = 0 then 'Belum dinilai'
-                                ELSE 'Sudah dinilai'
-                                END AS nilai
-                        "))
-                        ->where('tpz.id_zona_satker', $id_zonasi_satker)
-                        ->orderBy('tp2.nama_pegawai', 'asc')
-                        ->orderBy("tpz.nilai", "asc")
-                        ->skip($skip)->take($limit)
+                        ->leftJoinSub($get_data_selesai, 'tpz2', function($join){
+                            $join->on("tpz2.id_pegawai_peserta", "=", "tpz.id_pegawai_peserta");
+                        })
+                        ->joinSub($get_data_dinilai, 'tpz3', function($join){
+                            $join->on('tpz3.id_pegawai_peserta', '=', 'tpz.id_pegawai_peserta');
+                        })
+                        ->select("tp1.nama_pegawai as nama_pegawai_penilai", 
+                            DB::raw('COALESCE(tpz2.jumlah_selesai, 0) as jumlah_selesai'),
+                            'tpz3.jumlah_dinilai'
+                        )
+                        ->groupBy("tpz.id_pegawai_peserta", "tp1.nama_pegawai", "tpz3.jumlah_dinilai", "tpz2.jumlah_selesai")
                         ->get();
             });
 
