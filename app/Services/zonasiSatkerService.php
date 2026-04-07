@@ -535,7 +535,9 @@ use PDO;
                         $msg="Zonasi telah selesai";
                     }
                     
-                    $total=Trans_peserta_zonasi::where('id_zona_satker', $id_zonasi_satker)->count();
+                    $total=Trans_peserta_zonasi::where('id_zona_satker', $id_zonasi_satker)
+                                ->groupBy('id_pegawai_peserta')        
+                                ->count();
                     $sudah_menilai=$total - $peserta_blm_nilai;
                     $percentage=$sudah_menilai / $total * 100;
                     // $ratio = $sudah_menilai." / ".$total;
