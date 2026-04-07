@@ -535,14 +535,16 @@ use PDO;
                         $msg="Zonasi telah selesai";
                     }
                     
-                    $total=Trans_peserta_zonasi::where('id_zona_satker', $id_zonasi_satker)
-                                ->groupBy('id_pegawai_peserta')        
+                    $total_penilai=Trans_peserta_zonasi::where('id_zona_satker', $id_zonasi_satker)
+                                ->groupBy('id_pegawai_penilai')        
                                 ->count();
+
+                    $total=Trans_peserta_zonasi::where('id_zona_satker', $id_zonasi_satker)->count();
                     $sudah_menilai=$total - $peserta_blm_nilai;
                     $percentage=$sudah_menilai / $total * 100;
                     // $ratio = $sudah_menilai." / ".$total;
                     
-                    $jumlah_halaman=ceil($total / $limit);
+                    $jumlah_halaman=ceil($total_penilai / $limit);
                     if($page > $jumlah_halaman){
                         $page = 1;
                     }
