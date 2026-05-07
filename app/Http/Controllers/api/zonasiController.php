@@ -15,6 +15,7 @@ use App\Models\Trans_jabatan_kosong;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
@@ -106,6 +107,7 @@ class zonasiController extends Controller
         $data=[];
         $msg="";
         $view=null;
+        
         try{
             $dec_id=Hashids::decode($id);
             if(empty($dec_id)){
@@ -122,6 +124,37 @@ class zonasiController extends Controller
         }
         
         return response()->json(['status'=>$status, 'msg'=>$msg, 'data'=>$data, 'signature'=>$signature, 'view'=>$view]);
+    }
+
+    public function deleteZonasi($id){
+        $status = false;
+        try{
+            $dec_id = explode("enc_id", $id);
+            $jlh_hasil = count($dec_id);
+            if($jlh_hasil === 2){
+                $dec_id_str = Crypt::decrypt($dec_id[0]);
+                $dec_id_int = Hashids::decode($dec_id[1]);
+                if(empty($dec_id_int)){
+                    throw new \Exception("Data tidak valid[1]");
+                }
+                if((int)$dec_id_str !== (int)$dec_id_int[0]){
+                    throw new \Exception("Data tidak valid[2]");
+                }
+
+                $delete_zonasi = $this->zonasiService->deleteZonasi($dec_id_str);
+                $status = $delete_zonasi['status'];
+                $msg = $delete_zonasi['msg'];
+
+            }else{
+                throw new \Exception("Data tidak ditemukan");
+            }
+        }catch(\Exception $e){
+            $msg = $e->getMessage();
+        }catch(DecryptException $e){
+            $msg = "Data tidak valid";
+        }
+
+        return response()->json(['status'=>$status, 'msg'=>$msg]);
     }
 
     public function getSatkerZonasi($id_zonasi_enc){
@@ -377,6 +410,8 @@ class zonasiController extends Controller
     public function generatePesertaTest($id_zonasi_satker)  {
         return $this->zonasiService->generatePesertaTest($id_zonasi_satker);
     }
+
+    
 
     public function testWaDev(){
         

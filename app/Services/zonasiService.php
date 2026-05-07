@@ -20,6 +20,7 @@ use App\Models\Trans_peserta_zonasi;
 use App\Models\V_total_peserta_satker;
 use Illuminate\Contracts\Queue\Job;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\CssSelector\Node\HashNode;
@@ -43,6 +44,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                 $x=0;
                 foreach($get_data as $list_data){
                     $data[$x]['enc_id']=Hashids::encode($list_data['IdZona']);
+                    $data[$x]['enc_id_del'] = Crypt::encrypt($list_data['IdZona'])."enc_id".Hashids::encode($list_data['IdZona']);
                     $data[$x]['nama_zona']=$list_data['nama_zona'];
                     $data[$x]['periode']=$list_data['keterangan'];
                     $data[$x]['start_date']=$list_data['start_date'];
@@ -2205,6 +2207,56 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     echo "updated";
                 }
             }
+        }
+
+        public function deleteZonasi($id_zona){
+            $status = false;
+            $get_data = Tref_zonasi::where("IdZona", $id_zona)->first();
+            if(!is_null($get_data)){
+                $proses_id = $get_data['proses_id'];
+                if((int)$proses_id <= 2){
+                    //delete zonasi
+                    $get_data=Zonasi_satker::where('IdZona', $id_zona)->get();
+                    $id_zona_satker = [];
+                    foreach($get_data as $list_zona_satker){
+                        $id_zona_satker[]=$list_zona_satker['IdZonaSatker'];
+                    }
+
+                    //ambil data pegawai berdasarkan observee
+                    $get_observee = Trans_observee::whereIn('IdZonaSatker', $id_zona_satker)->get();
+                    $id_pegawai_delete=[];
+                    foreach($get_observee as $list_pegawai){
+                        $id_pegawai_delete = $list_pegawai['id_pegawai'];
+                    }
+
+                    $jlh_zona_satker = count($id_zona_satker);
+                    if($jlh_zona_satker > 0){
+                        try{
+                            DB::beginTransaction();
+                                Trans_observee::whereIn('IdZonaSatker', $id_zona_satker)->delete();
+                                Zonasi_satker::whereIn('IdZonaSatker', $id_zona_satker)->delete();
+                                Trans_peserta_zonasi::whereIn('id_zona_satker', $id_zona_satker)->delete();
+                                Tref_pegawai::where('id_pegawai', $id_pegawai_delete)->delete();
+                                Log_msg::where('data_id', $id_zona)->update(['activity' => 'past']);
+                                Tref_zonasi::where('IdZona', $id_zona)->delete();
+                            DB::commit();
+                            $status = true;
+                            $msg = "Berhasil menghapus zonasi";
+                        }catch(\Exception $e){
+                            DB::rollBack();
+                            $msg = "Tidak dapat menghapus ".$e->getMessage();
+                        }
+                    }else{
+                        $msg = "Tidak ada data yang dapat dihapus";
+                    }
+                }else{
+                    $msg = "Sudah tidak bisa di hapus lagi. Tahapan menghapus hanya bisa dilakukan sebelum generate peserta";
+                }
+            }else{
+                $msg = "Data zonasi tidak ditemukan";
+            }
+
+            return ['status'=>$status, 'msg'=>$msg];
         }
     }
 

@@ -2,6 +2,8 @@
     use Illuminate\Support\Facades\Route;
     use Illuminate\Support\Facades\Artisan;
     use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Crypt;
+use Vinkla\Hashids\Facades\Hashids;
 
 Route::get('generate-admin', 'api\loginController@generateAccount');
 Route::post('login', 'api\loginController@login');
@@ -53,12 +55,13 @@ Route::middleware(['jwt.auth', 'isAdminSatker'])->group(function(){
     // Route::get('get-kpt/{id_zonmasi}', 'api\zonasiController@getKPT');
 
 });
-
+Route::get('delete-zonasi/{id}', 'api\zonasiController@deleteZonasi');
 Route::middleware(['jwt.auth', 'isAdminBadilum'])->group(function(){
     //zonasi
     Route::get('dashboard-badilum', 'api\dashboardController@dashboardAdminBadilum');
     Route::get('list-zonasi/{page?}', 'api\zonasiController@getListZonasi');
     Route::post('save-zonasi', 'api\zonasiController@saveZonasi');
+    
     Route::post('save-satker-zonasi', 'api\zonasiController@addSatkerToZonasi');
     Route::get('detil-zonasi/{id}', 'api\zonasiController@getZonasiById');
     Route::get('list-satker-zonasi/{id}', 'api\zonasiController@getSatkerZonasi');
@@ -162,3 +165,8 @@ Route::get('test', function(){
 
 Route::get("test-wa", "api\zonasiController@testWaDev")->name('test-wa');
 Route::get("repair-link-kpt/{id_observee}", "api\zonasiController@regenerateEndPoint");
+Route::get('hash/{str}', function($str){
+    echo Hashids::encode($str);
+    echo "<br />";
+    echo Crypt::encrypt($str);
+});
