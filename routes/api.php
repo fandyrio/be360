@@ -160,7 +160,5 @@ Route::get('test', function(){
     return dd(Cache::getPrefix());
 });
 
-Route::get("test-wa", function(){
-
-});
+Route::get("test-wa", "api\zonasiController@testWaDev")->name('test-wa');
 Route::get("repair-link-kpt/{id_observee}", "api\zonasiController@regenerateEndPoint");

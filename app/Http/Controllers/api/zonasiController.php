@@ -378,5 +378,53 @@ class zonasiController extends Controller
         return $this->zonasiService->generatePesertaTest($id_zonasi_satker);
     }
 
+    public function testWaDev(){
+        
+        $data=[
+            'token'=>config('services.WA_MA.token'),
+            'nip'=>"199306242019031004",
+            'message'=>"Hai Fandy. Ini testing Mata360",
+            'phoneNumber'=>"085880037948",
+            'name'=>"Fandy Juniario Simorangkir",
+            'serviceMode'=>config('service.WA_MA.serviceMode')
+        ];
+    
+
+        // $data=[
+        //     'token'=>config('services.WA_MA.token'),
+        //     'nip'=>$nip,
+        //     'message'=>$msg_wa,
+        //     'phoneNumber'=>$reciver,
+        //     'name'=>$nama
+        // ];
+
+        $data_post=json_encode($data);
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => 'https://bisdev.mahkamahagung.go.id:8081/api/v2/wa-notification',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => $data_post,
+        CURLOPT_HTTPHEADER => array(
+            'Authorization: Bearer pBSpYVQFb3znpLfdaBdtkkJk-oPdObpt-RvGBNiF',
+            'Content-Type: application/json'
+        ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        $response_dec=json_decode($response);
+        return [
+            'status'=>$response_dec->status,
+            'msg'=>$response_dec->message
+        ];
+    }
+
     
 }

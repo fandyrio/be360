@@ -31,7 +31,7 @@ class loginController extends Controller
                 if($check_pwd){
                     $user=Tref_users::where('IdUser', $get_data['IdUser'])->first();
                     $token=JWTAuth::fromUser($user);
-                    $refreshToken=JWTAuth::claims(['type'=>'refresh'])->fromUser($user);
+                    $refreshToken=JWTAuth::customClaims(['type'=>'refresh', 'exp'=>now()->addDays(7)->timestamp])->fromUser($user);
 
                     return response()->json(['message'=>'Login Berhasil', 'token'=>$token, 'status'=>200])->withCookie((cookie('rft', $refreshToken, 60*24*7, '/', null, true, true, false, 'Lax')));
                 }else{
@@ -48,6 +48,9 @@ class loginController extends Controller
 
     public function refreshToken(Request $request){
         $refresh_token=$request->cookie('rft');
+        if(!$refresh_token){
+            return response()->json(['message'=>'Refresh token tidak ditemukan'], 401);
+        }
         try{
             $payload=JWTAuth::setToken($refresh_token)->getPayload();
             if($payload->get('type') !==  "refresh"){

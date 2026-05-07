@@ -35,15 +35,17 @@ use Vinkla\Hashids\Facades\Hashids;
                     'nip'=>$nip,
                     'message'=>$msg_wa,
                     'phoneNumber'=>$reciver,
-                    'name'=>$nama
+                    'name'=>$nama,
+                    'serviceMode'=>config('service.WA_MA.serviceMode')
                 ];
             }else if($env === "testing" || $env === "development"){
                 $data=[
                     'token'=>config('services.WA_MA.token'),
                     'nip'=>"197905282002121001",
                     'message'=>$msg_wa,
-                    'phoneNumber'=>"081361355590",
-                    'name'=>"Edi Daulatta Sembiring"
+                    'phoneNumber'=>"085880037948",
+                    'name'=>"Fandy Juniario Simorangkir",
+                    'serviceMode'=>config('service.WA_MA.serviceMode')
                 ];
             }
 

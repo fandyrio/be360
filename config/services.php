@@ -36,5 +36,6 @@ return [
     ],
     'WA_MA' => [
         'token'=>env('API_WA_MA'),
+        'serviceMode'=>env('WA_MA_SERVICE_MODE')
     ],
 ];
