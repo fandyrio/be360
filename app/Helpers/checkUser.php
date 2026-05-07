@@ -36,7 +36,7 @@ use Vinkla\Hashids\Facades\Hashids;
                     'message'=>$msg_wa,
                     'phoneNumber'=>$reciver,
                     'name'=>$nama,
-                    'serviceMode'=>config('service.WA_MA.serviceMode')
+                    'serviceMode'=>config('services.WA_MA.serviceMode')
                 ];
             }else if($env === "testing" || $env === "development"){
                 $data=[
@@ -45,7 +45,7 @@ use Vinkla\Hashids\Facades\Hashids;
                     'message'=>$msg_wa,
                     'phoneNumber'=>"085880037948",
                     'name'=>"Fandy Juniario Simorangkir",
-                    'serviceMode'=>config('service.WA_MA.serviceMode')
+                    'serviceMode'=>config('services.WA_MA.serviceMode')
                 ];
             }
 
