@@ -422,7 +422,8 @@ class zonasiController extends Controller
         $response_dec=json_decode($response);
         return [
             'status'=>$response_dec->status,
-            'msg'=>$response_dec->message
+            'msg'=>$response_dec->message,
+            'debug'=>config('service.WA_MA.serviceMode')
         ];
     }
 
