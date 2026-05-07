@@ -386,7 +386,7 @@ class zonasiController extends Controller
             'message'=>"Hai Fandy. Ini testing Mata360",
             'phoneNumber'=>"085880037948",
             'name'=>"Fandy Juniario Simorangkir",
-            'serviceMode'=>config('service.WA_MA.serviceMode')
+            'serviceMode'=>config('services.WA_MA.serviceMode')
         ];
     
 
@@ -423,7 +423,7 @@ class zonasiController extends Controller
         return [
             'status'=>$response_dec->status,
             'msg'=>$response_dec->message,
-            'debug'=>config('service.WA_MA.serviceMode')
+            'debug'=>config('services.WA_MA.serviceMode')
         ];
     }
 
