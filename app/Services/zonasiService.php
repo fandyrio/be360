@@ -1260,6 +1260,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                     ->where('trans_zonasi_satker.IdSatker', $id_satker_banding)
                                     ->select("trans_zonasi_satker.*", "vs.NamaSatker as nama_satker_banding")
                                     ->first();
+            //PT tidak ikut
             if(is_null($get_zonasi_banding)){
                 $get_kpt=DB::select("CALL SPGetKPT('$id_satker_banding')");
                 $jumlah=count($get_kpt);

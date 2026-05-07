@@ -49,7 +49,7 @@ class loginController extends Controller
     public function refreshToken(Request $request){
         $refresh_token=$request->cookie('rft');
         try{
-            $payload=JWTAuth::setToken($refresh_token)->getPayLoad();
+            $payload=JWTAuth::setToken($refresh_token)->getPayload();
             if($payload->get('type') !==  "refresh"){
                 return response()->json(['message'=>'Access denied'], 400);
             }
