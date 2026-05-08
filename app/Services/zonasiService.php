@@ -859,6 +859,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     // $variable_jabatan_peserta_arr[$index_satker][]="juru_sita";
                     $id_jabatan_peserta_arr[$index_satker][]=1;
                     $nama_jabatan_arr[$index_satker][]="Juru Sita";
+                    
                 }
                 
                  //check total panmud = data peserta panmud
@@ -2214,7 +2215,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
             $get_data = Tref_zonasi::where("IdZona", $id_zona)->first();
             if(!is_null($get_data)){
                 $proses_id = $get_data['proses_id'];
-                if((int)$proses_id <= 2){
+                if((int)$proses_id <= 3){
                     //delete zonasi
                     $get_data=Zonasi_satker::where('IdZona', $id_zona)->get();
                     $id_zona_satker = [];
@@ -2233,6 +2234,9 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     if($jlh_zona_satker > 0){
                         try{
                             DB::beginTransaction();
+                                if($proses_id <= 3){
+                                    Trans_peserta_zonasi::where('id_zonasi', $id_zona)->delete();
+                                }
                                 Trans_observee::whereIn('IdZonaSatker', $id_zona_satker)->delete();
                                 Zonasi_satker::whereIn('IdZonaSatker', $id_zona_satker)->delete();
                                 Trans_peserta_zonasi::whereIn('id_zona_satker', $id_zona_satker)->delete();
