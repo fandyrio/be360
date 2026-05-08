@@ -1137,8 +1137,8 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                                 'id_observee'=>null
                                             ];
                                             $id_jabatan_kosong[]=$mapping['id_jabatan_penilai']."-".$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker'];
-                                        }
-                                        $data[]=[
+
+                                            $data[]=[
                                                 'id_zonasi'=>$id_zonasi,
                                                 'id_zona_satker'=>$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker'],
                                                 'id_pegawai_peserta'=>$data_peserta[$s][$variable_jabatan_peserta][$a]['id_pegawai_observee'],
@@ -1146,6 +1146,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                                 'id_jabatan_plt'=>$mapping['id_jabatan_penilai'],
                                                 'index_plt'=>0
                                             ];
+                                        }
                                     }
                                     // echo "Tidak ada ".$variable_penilai.", ";
                                 }
@@ -1170,7 +1171,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                                 //+2 itu supaya yang next menilai adalah orang yang next index dari yang dinilai
                                                 ${"pointer_{$variable}"}=$a+2;
                                             }else{
-                                                Log::warning("Masuk sini ".$variable." ga sama dengan ".$variable_jabatan_peserta);
+                                                // Log::warning("Masuk sini ".$variable." ga sama dengan ".$variable_jabatan_peserta);
                                                 if(${"pointer_{$variable}"} > 0){
                                                     if($a - (int)${"batas_$variable"} < 0){
                                                         // ${"pointer_{$variable}"}=$a+1;
