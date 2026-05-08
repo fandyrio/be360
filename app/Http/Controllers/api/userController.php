@@ -247,7 +247,7 @@ class userController extends Controller
             if(empty($token_user)){
                 return response()->json(['status'=>false, 'msg'=>"Invalid Token User"]);
             }
-            
+
             $role = $request->user()->IdRole;
             if((int)$role === 1){
                 $id_satker = $request->satker_id;
@@ -275,13 +275,21 @@ class userController extends Controller
                 'token'=>['required', 'digits:6'],
                 'token_user'=>['required'],
                 'category'=>['required'],
-                'payload'=>['required']
+                'payload'=>['required'],
+                'satker_id'=>['nullable']
             ]);
             $id_user=Hashids::decode($request->token_user);
             if(empty($id_user)){
                 return response()->json(['status'=>false, 'msg'=>'Invalid token user']);
             }
-            $id_satker=$request->user()->IdSatker;
+
+            $role = $request->user()->IdRole;
+            if((int)$role === 1){
+                $id_satker = $request->satker_id;
+            }else{
+                $id_satker=$request->user()->IdSatker;
+            }
+            // $id_satker=$request->user()->IdSatker;
             $category=$request->category;
             $token=$request->token;
             $confirm=$this->userService->confirmToken($id_satker, $category, $token, $id_user[0]);
@@ -304,9 +312,16 @@ class userController extends Controller
                 'token_user'=>['required'],
                 'payload'=>['required'],
                 'password'=>['required'],
-                'repassword'=>['required']
+                'repassword'=>['required'],
+                'satker_id'=>['nullable']
             ]);
-            $id_satker=$request->user()->IdSatker;
+            // $id_satker=$request->user()->IdSatker;
+            $role = $request->user()->IdRole;
+            if((int)$role === 1){
+                $id_satker = $request->satker_id;
+            }else{
+                $id_satker=$request->user()->IdSatker;
+            }
             try{
                 $id_user=Hashids::decode($request->token_user);
                 if(empty($id_user)){
