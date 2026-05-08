@@ -211,9 +211,15 @@ class userController extends Controller
         $data=[];
         try{
             $request->validate([
-                'nip'=>['required', 'string', 'size:18']
+                'nip'=>['required', 'string', 'size:18'],
+                'satker_id'=>['required']
             ]);
-            $id_satker=$request->user()->IdSatker;
+            $role = $request->user()->IdRole();
+            if((int)$role === 1){
+                $id_satker = $request->satker_id;
+            }else{
+                $id_satker=$request->user()->IdSatker;
+            }
             $get_pegawai=$this->userService->getAdminSatkerByNIP($request->nip, $id_satker);
             $status=$get_pegawai['status'];
             $msg=$get_pegawai['msg'];
