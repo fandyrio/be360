@@ -212,7 +212,7 @@ class userController extends Controller
         try{
             $request->validate([
                 'nip'=>['required', 'string', 'size:18'],
-                'satker_id'=>['required']
+                'satker_id'=>['nullable']
             ]);
             $role = $request->user()->IdRole();
             if((int)$role === 1){
