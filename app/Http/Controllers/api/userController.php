@@ -95,6 +95,7 @@ class userController extends Controller
     public function getUserById(Request $request, $user_id){
         $status=false;
         $data=[];
+        $signature=null;
         try{
             $request->merge(['id'=>$user_id]);
             $validate=$request->validate([
@@ -110,6 +111,7 @@ class userController extends Controller
                 $status=$get_data['status'];
                 $msg=$get_data['msg'];
                 $data=$get_data['data'];
+                $signature=$get_data['signature'];
             }catch(\Exception $e){
                 $msg=$e->getMessage();
             }
@@ -117,7 +119,7 @@ class userController extends Controller
             $msg=$e->validator->errors()->first();
         }
 
-        return response()->json(['status'=>$status, 'message'=>$msg, 'data'=>$data]);
+        return response()->json(['status'=>$status, 'message'=>$msg, 'data'=>$data, 'signature'=>$signature]);
     }
 
     public function updateDataUser(Request $request): JsonResponse{

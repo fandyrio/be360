@@ -174,6 +174,7 @@ use Illuminate\Support\Facades\Hash;
             $data=[];
             $msg="";
             $access=true;
+            $signature = null;
             $get_data=Tref_users::join('tref_roles', 'tref_roles.IdRole', '=', 'tref_users.IdRole')
                             ->leftJoin('v_satker', 'v_satker.IdSatker', '=', 'tref_users.IdSatker')
                             ->select('tref_users.IdUser', 'tref_users.uname', 'tref_users.NamaLengkap', 'tref_users.NIPBaru', 'tref_users.IdPegawai', 'tref_users.IdSatker', 'tref_roles.rolename', 'v_satker.NamaSatker', 'tref_users.IdRole', 'tref_users.is_active')
@@ -188,6 +189,9 @@ use Illuminate\Support\Facades\Hash;
                 }
 
                 if($access === true){
+                    $payload=json_encode(['payload'=>Hashids::encode($get_data['IdUser'])]);
+                    $secret=config('app.hmac_secret');
+                    $signature=hash_hmac('sha256', $payload, $secret);
                     $status=true;
                     $data['user_enc']=Hashids::encode($get_data['IdUser']);
                     $data['username']=$get_data['uname'];
@@ -207,7 +211,8 @@ use Illuminate\Support\Facades\Hash;
             return [
                 'status'=>$status,
                 'msg'=>$msg,
-                'data'=>$data
+                'data'=>$data,
+                'signature'=>$signature
             ];
         }
 
