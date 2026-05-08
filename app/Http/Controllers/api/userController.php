@@ -214,7 +214,7 @@ class userController extends Controller
                 'nip'=>['required', 'string', 'size:18'],
                 'satker_id'=>['nullable']
             ]);
-            $role = $request->user()->IdRole();
+            $role = $request->user()->IdRole;
             if((int)$role === 1){
                 $id_satker = $request->satker_id;
             }else{

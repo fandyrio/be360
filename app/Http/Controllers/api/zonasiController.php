@@ -465,6 +465,7 @@ class zonasiController extends Controller
 
     public function testWaBadilum(){
         $get_admin_badilum=Tref_users::join('tref_pegawai as tp', 'tp.id_pegawai', '=', 'tref_users.IdPegawai')
+                                    ->where("tref_users.uname", "097450")
                                     ->select("tp.no_hp", "tp.nama_pegawai", "tp.nip")
                                     ->first();
         $data=[

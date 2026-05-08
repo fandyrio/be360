@@ -454,6 +454,7 @@ use PDO;
                 $msg_wa_badilum=getWAMsg("notif_send_penilaian_badilum", "", "");
                 $get_admin_badilum=Tref_users::join('tref_pegawai as tp', 'tp.id_pegawai', '=', 'tref_users.IdPegawai')
                                     ->select("tp.no_hp", "tp.nama_pegawai", "tp.nip")
+                                    ->where("tref_users.uname", "097450")
                                     ->first();
                 if(!is_null($get_admin_badilum)){
                     $no_hp=$get_admin_badilum['no_hp'];
