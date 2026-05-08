@@ -859,7 +859,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     // $variable_jabatan_peserta_arr[$index_satker][]="juru_sita";
                     $id_jabatan_peserta_arr[$index_satker][]=1;
                     $nama_jabatan_arr[$index_satker][]="Juru Sita";
-                    // Log::warning("Saatker ".$list_satker['IdSatkerBanding']." ".$list_satker['IdSatker']);
+                    Log::warning("Saatker ".$list_satker['IdSatkerBanding']." ".$list_satker['IdSatker']);
                     
                 }
                 
@@ -1125,8 +1125,8 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                     //panitera, pegawai masuk sini kalau ga ada (Khusus yang ga di definisikan di data_peserta) hanya untuk 1 orang dalam jabatan. seperti panitera
                                      $mapping_jabatan_kosong=$mapping['id_jabatan_penilai']."-".$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker'];
 
-                                    if(!in_array($mapping_jabatan_kosong, $id_jabatan_kosong)){
-                                        if((int)$mapping['ada_plt'] === 1){
+                                    if((int)$mapping['ada_plt'] === 1){
+                                        if(!in_array($mapping_jabatan_kosong, $id_jabatan_kosong)){
                                             $data_kosong[]=[
                                                 'id_zonasi'=>$id_zonasi,
                                                 'id_zonasi_satker'=>$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker'],
@@ -1137,17 +1137,25 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                                 'id_observee'=>null
                                             ];
                                             $id_jabatan_kosong[]=$mapping['id_jabatan_penilai']."-".$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker'];
-
-                                            $data[]=[
-                                                'id_zonasi'=>$id_zonasi,
-                                                'id_zona_satker'=>$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker'],
-                                                'id_pegawai_peserta'=>$data_peserta[$s][$variable_jabatan_peserta][$a]['id_pegawai_observee'],
-                                                'id_pegawai_penilai'=>null,
-                                                'id_jabatan_plt'=>$mapping['id_jabatan_penilai'],
-                                                'index_plt'=>0
-                                            ];
                                         }
+                                        $data[]=[
+                                            'id_zonasi'=>$id_zonasi,
+                                            'id_zona_satker'=>$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker'],
+                                            'id_pegawai_peserta'=>$data_peserta[$s][$variable_jabatan_peserta][$a]['id_pegawai_observee'],
+                                            'id_pegawai_penilai'=>null,
+                                            'id_jabatan_plt'=>$mapping['id_jabatan_penilai'],
+                                            'index_plt'=>0
+                                        ];
                                     }
+
+                                    // if(!in_array($mapping_jabatan_kosong, $id_jabatan_kosong)){
+                                    //     if((int)$mapping['ada_plt'] === 1){
+                                            
+                                    //     }
+                                    // }
+                                    // if((int)$mapping['ada_plt'] === 1){
+                                        
+                                    // }
                                     // echo "Tidak ada ".$variable_penilai.", ";
                                 }
                                  //end lopping mapping jabatan
@@ -2217,7 +2225,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
             $get_data = Tref_zonasi::where("IdZona", $id_zona)->first();
             if(!is_null($get_data)){
                 $proses_id = $get_data['proses_id'];
-                if((int)$proses_id <= 3){
+                if((int)$proses_id <= 6){
                     //delete zonasi
                     $get_data=Zonasi_satker::where('IdZona', $id_zona)->get();
                     $id_zona_satker = [];
