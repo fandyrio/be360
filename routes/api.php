@@ -32,15 +32,15 @@ Route::middleware(['jwt.auth', 'superadminbadilum'])->group(function () {
     Route::post('update-user', 'api\userController@updateDataUser');
     Route::get('list-all-satker', 'api\zonasiController@getAllSatkerAll');
     Route::post('generate-user', 'api\userController@generateUserAdminSatker');
+    Route::post('get-pegawai-sikep', 'api\userController@getDataPegawaiByNIP');
+    Route::post('send-wa-token-admin', 'api\userController@sendTokenWaNewAdmin')->middleware('checkSign');
+    Route::post('confirm-token', 'api\userController@confirmToken')->middleware('checkSign');
+    Route::post('save-admin-satker', 'api\userController@saveAdminSatker')->middleware('checkSign');
 });
 
 Route::middleware(['jwt.auth', 'isAdminSatker'])->group(function(){
     Route::get('dashboard-satker', 'api\dashboardController@dashboardAdminSatker');
     Route::get('profile', 'api\userController@getDetilUserSatker');
-    Route::post('get-pegawai-sikep', 'api\userController@getDataPegawaiByNIP');
-    Route::post('send-wa-token-admin', 'api\userController@sendTokenWaNewAdmin')->middleware('checkSign');
-    Route::post('confirm-token', 'api\userController@confirmToken')->middleware('checkSign');
-    Route::post('save-admin-satker', 'api\userController@saveAdminSatker')->middleware('checkSign');
     Route::get('list-jabatan-kosong-satker/{id_zonasi_satker}', 'api\zonasiSatkerController@getJabatanKosongSatker');
     Route::get('detil-jabatan-kosong-satker/{token_jabatan_kosong}', 'api\zonasiSatkerController@detilJabatanKosongSatker');
     Route::post('get-pegawai-local', 'api\zonasiSatkerController@getPegawaiLocalByNIP');
@@ -55,13 +55,12 @@ Route::middleware(['jwt.auth', 'isAdminSatker'])->group(function(){
     // Route::get('get-kpt/{id_zonmasi}', 'api\zonasiController@getKPT');
 
 });
-Route::get('delete-zonasi/{id}', 'api\zonasiController@deleteZonasi');
 Route::middleware(['jwt.auth', 'isAdminBadilum'])->group(function(){
     //zonasi
     Route::get('dashboard-badilum', 'api\dashboardController@dashboardAdminBadilum');
     Route::get('list-zonasi/{page?}', 'api\zonasiController@getListZonasi');
     Route::post('save-zonasi', 'api\zonasiController@saveZonasi');
-    
+Route::get('delete-zonasi/{id}', 'api\zonasiController@deleteZonasi');
     Route::post('save-satker-zonasi', 'api\zonasiController@addSatkerToZonasi');
     Route::get('detil-zonasi/{id}', 'api\zonasiController@getZonasiById');
     Route::get('list-satker-zonasi/{id}', 'api\zonasiController@getSatkerZonasi');
