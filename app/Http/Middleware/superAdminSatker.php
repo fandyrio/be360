@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class SuperAdminBadilumMiddleware
+class superAdminSatker
 {
     /**
      * Handle an incoming request.
@@ -15,9 +15,9 @@ class SuperAdminBadilumMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $user=$request->user()->IdRole;
-        if(!$user || ((int)$user !== 2 && (int)$user !== 1)){
-            return response()->json(['message' => 'Access Denied '], 403);
+        $user = $request->user()->IdRole;
+        if(!$user || ((int)$user !== 1 && (int)$user !== 3 && (int)$user !== 4)){
+            return response()->json(['message'=>'Access Denied'], 403);
         }
         return $next($request);
     }

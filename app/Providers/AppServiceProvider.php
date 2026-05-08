@@ -30,6 +30,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app['router']->aliasMiddleware('superadminbadilum', \App\Http\Middleware\SuperAdminBadilumMiddleware::class);
         $this->app['router']->aliasMiddleware('isAdminBadilum', \App\Http\Middleware\AdminBadilumMiddleware::class);
         $this->app['router']->aliasMiddleware('isAdminSatker', \App\Http\Middleware\AdminSatkerMiddleware::class);
+        $this->app['router']->aliasMiddleware('isSuperAdminSatker', \App\Http\Middleware\superAdminSatker::class);
         $this->app['router']->aliasMiddleware('checkSign', \App\Http\Middleware\CheckSignature::class);
         $this->app['router']->aliasMiddleware('throttleSurvey', \App\Http\Middleware\ThrottleIsiSurvey::class);
         Route::middleware([

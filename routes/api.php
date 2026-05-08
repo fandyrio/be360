@@ -32,6 +32,9 @@ Route::middleware(['jwt.auth', 'superadminbadilum'])->group(function () {
     Route::post('update-user', 'api\userController@updateDataUser');
     Route::get('list-all-satker', 'api\zonasiController@getAllSatkerAll');
     Route::post('generate-user', 'api\userController@generateUserAdminSatker');
+});
+
+Route::middleware(['jwt.auth', 'isSuperAdminSatker'])->group(function(){
     Route::post('get-pegawai-sikep', 'api\userController@getDataPegawaiByNIP');
     Route::post('send-wa-token-admin', 'api\userController@sendTokenWaNewAdmin')->middleware('checkSign');
     Route::post('confirm-token', 'api\userController@confirmToken')->middleware('checkSign');
