@@ -12,6 +12,7 @@ use Illuminate\Validation\ValidationException;
 use Vinkla\Hashids\Facades\Hashids;
 use App\Models\Satker;
 use App\Models\Trans_jabatan_kosong;
+use App\Models\Tref_users;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Cache;
@@ -421,6 +422,57 @@ class zonasiController extends Controller
             'message'=>"Hai Fandy. Ini testing Mata360",
             'phoneNumber'=>"085880037948",
             'name'=>"Fandy Juniario Simorangkir",
+            'serviceMode'=>config('services.WA_MA.serviceMode')
+        ];
+    
+
+        // $data=[
+        //     'token'=>config('services.WA_MA.token'),
+        //     'nip'=>$nip,
+        //     'message'=>$msg_wa,
+        //     'phoneNumber'=>$reciver,
+        //     'name'=>$nama
+        // ];
+
+        $data_post=json_encode($data);
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => 'https://bisdev.mahkamahagung.go.id:8081/api/v2/wa-notification',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => $data_post,
+        CURLOPT_HTTPHEADER => array(
+            'Authorization: Bearer pBSpYVQFb3znpLfdaBdtkkJk-oPdObpt-RvGBNiF',
+            'Content-Type: application/json'
+        ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        $response_dec=json_decode($response);
+        return [
+            'status'=>$response_dec->status,
+            'msg'=>$response_dec->message,
+            'debug'=>config('services.WA_MA.serviceMode')
+        ];
+    }
+
+    public function testWaBadilum(){
+        $get_admin_badilum=Tref_users::join('tref_pegawai as tp', 'tp.id_pegawai', '=', 'tref_users.IdPegawai')
+                                    ->select("tp.no_hp", "tp.nama_pegawai", "tp.nip")
+                                    ->first();
+        $data=[
+            'token'=>config('services.WA_MA.token'),
+            'nip'=>$get_admin_badilum['nip'],
+            'message'=>"Yth. Bapak / Ibu ".$get_admin_badilum['nama_pegawai'].".\nAnda adalah Admin aplikasi Mata360 Badilum",
+            'phoneNumber'=>$get_admin_badilum['no_hp'],
+            'name'=>$get_admin_badilum['nama_pegawai'],
             'serviceMode'=>config('services.WA_MA.serviceMode')
         ];
     
