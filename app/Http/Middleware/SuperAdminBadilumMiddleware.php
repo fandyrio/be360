@@ -17,7 +17,7 @@ class SuperAdminBadilumMiddleware
     {
         $user=$request->user()->IdRole;
         if(!$user || ((int)$user !== 2 && (int)$user !== 1)){
-            return response()->json(['message' => 'Access Denied'], 403);
+            return response()->json(['message' => 'Access Denied '.$user], 403);
         }
         return $next($request);
     }
