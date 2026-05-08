@@ -240,13 +240,21 @@ class userController extends Controller
             $request->validate([
                 'nip'=>['required', 'size:18'],
                 'token_user'=>['required'],
-                'payload'=>['required']
+                'payload'=>['required'],
+                'satker_id'=>['nullable']
             ]);
             $token_user=Hashids::decode($request->token_user);
             if(empty($token_user)){
                 return response()->json(['status'=>false, 'msg'=>"Invalid Token User"]);
             }
-            $id_satker=$request->user()->IdSatker;
+            
+            $role = $request->user()->IdRole;
+            if((int)$role === 1){
+                $id_satker = $request->satker_id;
+            }else{
+                $id_satker=$request->user()->IdSatker;
+            }
+            // $id_satker=$request->user()->IdSatker;
             $category="new_admin";
             $nip=$request->nip;
             $send_token=$this->userService->sendWaToken($id_satker, $category, $nip, $token_user[0]);
