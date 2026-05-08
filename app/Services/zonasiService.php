@@ -859,6 +859,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     // $variable_jabatan_peserta_arr[$index_satker][]="juru_sita";
                     $id_jabatan_peserta_arr[$index_satker][]=1;
                     $nama_jabatan_arr[$index_satker][]="Juru Sita";
+                    Log::warning("Saatker ".$list_satker['IdSatkerBanding']." ".$list_satker['IdSatker']);
                     
                 }
                 
