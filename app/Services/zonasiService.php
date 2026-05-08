@@ -2236,6 +2236,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                             DB::beginTransaction();
                                 if($proses_id <= 3){
                                     Trans_peserta_zonasi::where('id_zonasi', $id_zona)->delete();
+                                    Trans_jabatan_kosong::where("id_zonasi", $id_zona)->delete();
                                 }
                                 Trans_observee::whereIn('IdZonaSatker', $id_zona_satker)->delete();
                                 Zonasi_satker::whereIn('IdZonaSatker', $id_zona_satker)->delete();
