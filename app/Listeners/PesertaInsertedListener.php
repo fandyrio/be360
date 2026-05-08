@@ -55,7 +55,7 @@ class PesertaInsertedListener
                     $get_kosong=Trans_jabatan_kosong::where('id_zonasi', $id_zonasi)->count();
                     $proses_id=4;
                     if($get_kosong > 0){
-                        // $send_wa=$this->zonasiService->sendNotifJabatanKosong($id_zonasi);
+                        $send_wa=$this->zonasiService->sendNotifJabatanKosong($id_zonasi);
                         $proses_id=3;
                     }
                    $this->zonasiService->updateProsesZonasi($id_zonasi, $proses_id);

@@ -2225,7 +2225,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
             $get_data = Tref_zonasi::where("IdZona", $id_zona)->first();
             if(!is_null($get_data)){
                 $proses_id = $get_data['proses_id'];
-                if((int)$proses_id <= 6){
+                if((int)$proses_id <= 3){
                     //delete zonasi
                     $get_data=Zonasi_satker::where('IdZona', $id_zona)->get();
                     $id_zona_satker = [];
@@ -2265,7 +2265,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                         $msg = "Tidak ada data yang dapat dihapus";
                     }
                 }else{
-                    $msg = "Sudah tidak bisa di hapus lagi. Tahapan menghapus hanya bisa dilakukan sebelum generate peserta";
+                    $msg = "Sudah tidak bisa di hapus lagi. Tahapan menghapus hanya bisa dilakukan sebelum melengkapi jabatan peserta";
                 }
             }else{
                 $msg = "Data zonasi tidak ditemukan";
