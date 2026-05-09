@@ -35,7 +35,7 @@ class loginController extends Controller
 
                     return response()->json(['message'=>'Login Berhasil', 'token'=>$token, 'status'=>200])->withCookie((cookie('rft', $refreshToken, 60*24*7, '/', null, true, true, false, 'None')));
                 }else{
-                    $msg="Username and Password doesn't matched 1";
+                    $msg="Username and Password doesn't matched";
                 }
             }else{
                 $msg="Username and Password doesn't matched";
@@ -76,7 +76,7 @@ class loginController extends Controller
                 'status' => 200,
                 'message' => 'Logged Out'
             ])->withCookie(
-                cookie('rft', null, -1, '/', null, false, true, false, 'Lax')
+                cookie('rft', null, -1, '/', null, false, true, false, 'None')
             );
         }catch (\Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
             return response()->json(['message' => 'Invalid token'], 401);
