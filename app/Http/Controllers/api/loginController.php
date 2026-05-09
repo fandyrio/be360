@@ -33,7 +33,7 @@ class loginController extends Controller
                     $token=JWTAuth::fromUser($user);
                     $refreshToken=JWTAuth::customClaims(['type'=>'refresh', 'exp'=>now()->addDays(7)->timestamp])->fromUser($user);
 
-                    return response()->json(['message'=>'Login Berhasil', 'token'=>$token, 'status'=>200])->withCookie((cookie('rft', $refreshToken, 60*24*7, '/', null, true, true, false, 'Lax')));
+                    return response()->json(['message'=>'Login Berhasil', 'token'=>$token, 'status'=>200])->withCookie((cookie('rft', $refreshToken, 60*24*7, '/', null, true, true, false, 'None')));
                 }else{
                     $msg="Username and Password doesn't matched 1";
                 }
@@ -61,7 +61,7 @@ class loginController extends Controller
 
             return response()->json(['token'=>$newToken], 200);
         }catch(\Exception $e){
-            return response()->json(['message'=>'Invalid or Expired Token '.$e->getMessage()], 401)->withCookie(cookie('rft', null, -1, '/', null, true, true,  false, 'Lax'));
+            return response()->json(['message'=>'Invalid or Expired Token '.$e->getMessage()], 401)->withCookie(cookie('rft', null, -1, '/', null, true, true,  false, 'None'));
             
         }
 
