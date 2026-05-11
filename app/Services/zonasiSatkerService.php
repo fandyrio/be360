@@ -563,7 +563,7 @@ use PDO;
                             $data[$x]['nama_penilai'] = $list_data->nama_pegawai_penilai;
                             $data[$x]['jumlah_selesai'] = $list_data->jumlah_selesai;
                             $data[$x]['jumlah_dinilai'] = $list_data->jumlah_dinilai;
-                            $data[$x]['percentage']=(int)$list_data->jumlah_dinilai / (int)$list_data->jumlah_selesai * 100;
+                            $data[$x]['percentage']=(int)$list_data->jumlah_selesai / (int)$list_data->jumlah_dinilai  * 100;
                             $x++;
                         }
                         $payload=Hashids::encode($id_zonasi_satker)."-".Hashids::encode($id_satker_ctlr)."-".Hashids::encode($total);
