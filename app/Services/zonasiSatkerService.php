@@ -463,7 +463,7 @@ use PDO;
                     $send_wa=sendWa($msg_wa_badilum, $nip_admin, $nama_admin, $no_hp);
                 }else{
                     $msg_wa="Urgent !!!.\n\nData Admin Badilum tidak memliki no handphone atau data nya tidak ada. Silahkan lakukan trace data pada data admin badilum.";
-                    $send_wa=sendWa($msg_wa, "199306242019031004", "Fandy Juniario Simorangkir", "081273861528");
+                    $send_wa=sendWa($msg_wa, "199306242019031004", "Fandy Juniario Simorangkir", "085880037948");
                     $msg_log_sent="Data Admin badilum tidak memiliki no handphone atau data nya belum ada. Silahkan lakukan trace data admin badilum";
                     $this->zonasiService->saveLog($id_zonasi, "jobs_notif", $msg_log_sent, "error");
                 }

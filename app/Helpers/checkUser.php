@@ -235,7 +235,7 @@ use Vinkla\Hashids\Facades\Hashids;
                     DB::commit();
                 }catch(\Exception $e){
                     DB::rollBack();
-                    $msg=$e->getMessage();
+                    $msg=$e->getMessage()."-".$e->getFile()."-".$e->getLine();
                     $zonasiService=resolve(\App\Services\zonasiService::class);
                     $zonasiService->saveLog($list_zonasi['IdZona'], "send_notif", $msg, $status_log);
                 }
