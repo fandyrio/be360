@@ -606,7 +606,7 @@ use PDO;
                             ->groupBy('tpz.id_pegawai_peserta');
                             
             Cache::store('redis')->forget("peserta_zonasi_{$id_zonasi_satker}_{$skip}_{$limit}");
-            $get_data=Cache::store('redis')->remember("peserta_zonasi_{$id_zonasi_satker}_{$skip}_{$limit}", 3600*24*3, function() use($get_data_selesai, $get_data_dinilai){
+            $get_data=Cache::store('redis')->remember("peserta_zonasi_{$id_zonasi_satker}_{$skip}_{$limit}", 3600*24*3, function() use($get_data_selesai, $get_data_dinilai, $skip, $limit){
                 return DB::table("trans_peserta_zonasi as tpz")
                         ->join('trans_observee as toe1', 'toe1.IdObservee', '=', 'tpz.id_pegawai_peserta')
                         ->join('tref_pegawai as tp1', 'tp1.id_pegawai', '=', 'toe1.IdPegawai')
@@ -620,6 +620,8 @@ use PDO;
                             DB::raw('COALESCE(tpz2.jumlah_selesai, 0) as jumlah_selesai'),
                             'tpz3.jumlah_dinilai'
                         )
+                        ->skip($skip)
+                        ->take($limit)
                         ->groupBy("tpz.id_pegawai_peserta", "tp1.nama_pegawai", "tpz3.jumlah_dinilai", "tpz2.jumlah_selesai")
                         ->get();
             });
