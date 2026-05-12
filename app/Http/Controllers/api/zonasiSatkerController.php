@@ -298,7 +298,7 @@ class zonasiSatkerController extends Controller
             if(isset($request->user()->IdSatker)){
                 $id_satker=$request->user()->IdSatker;
             }
-            if($page < 0){
+            if($page <= 0){
                 $page = 1;
             }
             $limit=50;

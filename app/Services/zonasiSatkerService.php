@@ -537,7 +537,7 @@ use PDO;
                     }
                     
                     $total_penilai=Trans_peserta_zonasi::where('id_zona_satker', $id_zonasi_satker)
-                                ->groupBy('id_pegawai_penilai')        
+                                ->distinct('id_pegawai_penilai')        
                                 ->count();
 
                     $total=Trans_peserta_zonasi::where('id_zona_satker', $id_zonasi_satker)->count();
