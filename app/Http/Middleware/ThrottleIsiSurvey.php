@@ -25,7 +25,7 @@ class ThrottleIsiSurvey
 
         $exceuted=RateLimiter::attempt(
                 $key,
-                45,
+                35,
                 function(){
                     return true;
                 },

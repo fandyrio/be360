@@ -43,7 +43,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
          Route::middlewareGroup('api', [
-            'throttle:500,1',
+            'throttle:150,1',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             // \App\Http\Middleware\JwtMiddleware::class, // optional
         ]);
