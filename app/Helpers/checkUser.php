@@ -41,10 +41,10 @@ use Vinkla\Hashids\Facades\Hashids;
             }else if($env === "testing" || $env === "development"){
                 $data=[
                     'token'=>config('services.WA_MA.token'),
-                    'nip'=>"199702182020121006",
+                    'nip'=>"199306242019031004",
                     'message'=>$msg_wa,
-                    'phoneNumber'=>"087822507250",
-                    'name'=>"Agief Muftahid",
+                    'phoneNumber'=>"085880037948",
+                    'name'=>"Fandy Juniario Simorangkir",
                     'serviceMode'=>config('services.WA_MA.serviceMode')
                 ];
             }
