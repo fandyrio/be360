@@ -1118,7 +1118,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                         ];
                                         // echo $data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['nama'].", "; 
                                         $data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['jlh_menilai']+=1;
-                                        ${"pointer_{$variable_penilai}"}++;
+                                        // ${"pointer_{$variable_penilai}"}++;
                                     }
                                     //end looping batas penilaian berdasarkan threshold
                                 }else{
@@ -1177,7 +1177,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                             
                                             if($variable ===  $variable_jabatan_peserta){
                                                 //+2 itu supaya yang next menilai adalah orang yang next index dari yang dinilai
-                                                ${"pointer_{$variable}"}=$a+2;
+                                                // ${"pointer_{$variable}"}=$a+2;
                                             }else{
                                                 // Log::warning("Masuk sini ".$variable." ga sama dengan ".$variable_jabatan_peserta);
                                                 if(${"pointer_{$variable}"} > 0){
