@@ -1050,7 +1050,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                     if($variable_penilai === $variable_jabatan_peserta){
                                         $new_jlh_penilai=$jlh_penilai - 1;
                                         ${"batas_{$variable_penilai}"}=ceil($mapping['threshold']*$new_jlh_penilai / 100);
-                                        $jlh_penilai=$new_jlh_penilai;
+                                        // $jlh_penilai=$new_jlh_penilai;
                                     }
                                 }else if($jlh_penilai === 2){
                                     ${"batas_{$variable_penilai}"}=1;
@@ -1074,7 +1074,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                         
                                         if((int)$data_peserta[$s][$variable_jabatan_peserta][$a]['id_pegawai'] === (int)$data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['id_pegawai']){
                                             // echo "penilai dan dinilai sama: ".$$variable_jabatan_peserta[$a]['nama']." : ".$$variable_penilai[${"pointer_{$variable_penilai}"}]['nama'];
-                                            if(${"pointer_{$variable_penilai}"} > $jlh_penilai -1){
+                                            if(${"pointer_{$variable_penilai}"} >= $jlh_penilai -1){
                                                 // echo "set ".$variable_penilai." ke 0, ";
                                                 ${"pointer_{$variable_penilai}"}=0;
                                             }else{
@@ -1187,7 +1187,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                                         // ${"pointer_{$variable}"} = 0;
                                                     }else{
                                                         // echo "kurang ".${"batas_$variable"};
-                                                        ${"pointer_{$variable}"}=$a - ${"batas_$variable"}; 
+                                                        // ${"pointer_{$variable}"}=$a - ${"batas_$variable"}; 
                                                     }
                                                 }
                                             }
