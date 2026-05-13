@@ -1163,8 +1163,10 @@ use Symfony\Component\CssSelector\Node\HashNode;
                             // echo "<br />";
                             // echo $variable_jabatan_peserta." - ";
                             $id_kelompok_jabatan_peserta_before=$data_peserta[$s][$variable_jabatan_peserta][$a]['id_kelompok_jabatan'];
+
                             
-                            if($a < $jlh_pegawai_perjabatan-1 && $jlh_mapping > 0){
+                            
+                            if($jlh_mapping > 0){
                                 //jika jabatan yang sebelumnya sama dengan jabatan selanjutnya
                                 if((int)$id_kelompok_jabatan_peserta_before === (int)$data_peserta[$s][$variable_jabatan_peserta][$a+1]['id_kelompok_jabatan']){
                                     //sebenarnya if ini ga perlu sih. karena dalam 1 arr varaiable_peserta_jabatan harus nya id_jabatannya sama semua
@@ -1208,7 +1210,9 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                         }
                                     }
                                 }
-                            }else{
+                            }
+
+                            if($a === ($jlh_pegawai_perjabatan-1)){
                                 foreach($get_jabatan_peserta as $list_jabatan_peserta){
                                     $variable=str_replace(' ','_', strtolower($list_jabatan_peserta['jabatan']));
                                     if(( isset($data_peserta[$s][$variable]) && count($data_peserta[$s][$variable])  === 1) || !isset($data_peserta[$s][$variable])){
@@ -2225,7 +2229,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
             $get_data = Tref_zonasi::where("IdZona", $id_zona)->first();
             if(!is_null($get_data)){
                 $proses_id = $get_data['proses_id'];
-                if((int)$proses_id <= 3){
+                if((int)$proses_id <= 5){
                     //delete zonasi
                     $get_data=Zonasi_satker::where('IdZona', $id_zona)->get();
                     $id_zona_satker = [];
