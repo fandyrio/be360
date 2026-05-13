@@ -59,6 +59,38 @@ class penilaianController extends Controller
         return response()->json(['status'=>$status, 'msg'=>$msg, 'endpoint'=>$endpoint, 'signature'=>$signature, 'token_penilaian'=>$token_penilaian]);
     }
 
+    public function validateParamsGet($data_token){
+        $status=false;
+        $signature="";
+        $endpoint="";
+        $token_penilaian="";
+        $explode_token=explode("-", $data_token);
+        $jlh_token=count($explode_token);
+        if($jlh_token === 3){
+            try{
+                $id_pegawai=Hashids::decode($explode_token[0]);
+                $id_nama_jabatan=Hashids::decode($explode_token[1]);
+                $id_zonasi_satker=Hashids::decode($explode_token[2]);
+                $real_id_nama_jabatan=(int)$id_nama_jabatan[0] - (int)$id_pegawai[0];
+                $real_id_zonasi_satker=(int)$id_zonasi_satker[0] - (int)$id_pegawai[0];
+                if(empty($id_pegawai) || empty($id_nama_jabatan) || empty($id_zonasi_satker)){
+                    throw new \Exception("Invalid token. Kesalahan ini telah direkam. Mohon menghubungi Administrator");
+                }
+            $validateParams=$this->penilaianService->validateParamsPenilaian($id_pegawai[0], $real_id_nama_jabatan, $real_id_zonasi_satker);
+                $status=$validateParams['status'];
+                $signature=$validateParams['signature'];
+                $endpoint=$validateParams['endpoint'];
+                $token_penilaian=$validateParams['token_penilaian'];
+                $msg=$validateParams['msg'];
+            }catch(\Exception $e){
+                $msg=$e->getMessage();
+            }
+        }else{
+            $msg="Data token tidak valid";
+        }
+        return response()->json(['status'=>$status, 'msg'=>$msg, 'endpoint'=>$endpoint, 'signature'=>$signature, 'token_penilaian'=>$token_penilaian]);
+    }
+
     public function penilaian(Request $request){
         $status=false;
         $total=0;

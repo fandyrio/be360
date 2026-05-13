@@ -641,7 +641,7 @@ use Vinkla\Hashids\Facades\Hashids;
                                             $debug=$id_nilai." - ".$parent_zonasi." ".$id_pertanyaan_periode."[".$affected_nilai.":".$jumlah_peserta_zonasi;
                                             // [1:2 : 7813 - 36840 133]
                                             // Tidak dapat menyimpan jawaban anda code [0:1 : 7854 - 36872 138]
-                                            throw new \Exception("Tidak dapat menyimpan jawaban anda code");
+                                            throw new \Exception("Tidak dapat menyimpan jawaban anda code [".$affected_nilai.":".$jumlah_peserta_zonasi."]");
                                         }
                                     }catch(\Exception $e){
                                         DB::rollBack();
