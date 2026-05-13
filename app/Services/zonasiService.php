@@ -1072,7 +1072,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                         // var_dump($data_peserta[$s][$variable_jabatan_peserta][$a]['id_pegawai']);
                                         // echo $variable_penilai." ".$jlh_penilai."<br />";
                                         
-                                        if($data_peserta[$s][$variable_jabatan_peserta][$a]['id_pegawai'] === $data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['id_pegawai']){
+                                        if((int)$data_peserta[$s][$variable_jabatan_peserta][$a]['id_pegawai'] === (int)$data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['id_pegawai']){
                                             // echo "penilai dan dinilai sama: ".$$variable_jabatan_peserta[$a]['nama']." : ".$$variable_penilai[${"pointer_{$variable_penilai}"}]['nama'];
                                             if(${"pointer_{$variable_penilai}"} > $jlh_penilai -1){
                                                 // echo "set ".$variable_penilai." ke 0, ";
@@ -1118,7 +1118,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                         ];
                                         // echo $data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['nama'].", "; 
                                         $data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['jlh_menilai']+=1;
-                                        // ${"pointer_{$variable_penilai}"}++;
+                                        ${"pointer_{$variable_penilai}"}++;
                                     }
                                     //end looping batas penilaian berdasarkan threshold
                                 }else{
