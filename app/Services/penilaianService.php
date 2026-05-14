@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Crypt;
     use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Vinkla\Hashids\Facades\Hashids; 
 
     class penilaianService{
@@ -42,6 +43,7 @@ use Vinkla\Hashids\Facades\Hashids;
                 }
             }else{
                 $msg="Data tidak ditemukan. Kesalahan ini telah direkam. Silahkan hubungi Administrator code: ".$id_pegawai.":".$id_nama_jabatan.":".$id_zonasi_satker;
+                Log::warning("Link ini ga valid: ".$get_observee);
             }
 
             return [
