@@ -872,6 +872,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                 //kalaau panitera pengganti tidak ada
                 if(!isset($data_peserta[$index_satker]['panitera_pengganti'])){
                     //check jumlah Panmud
+                    $data_pp=[];
                     if($jlh_panmud > 0){
                         //kalau panmud ada, maka  panmud akan menilai sebagai PP
                         for($pm=0;$pm<$jlh_panmud;$pm++){
