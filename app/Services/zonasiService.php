@@ -740,7 +740,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                         ${"counter_{$variable}"}=0;
                     }
 
-                    if(!is_null($id_satker_before) && (int)$id_satker_before !== $list_satker['IdSatker']){
+                    if(!is_null($id_satker_before) && (int)$id_satker_before !== (int)$list_satker['IdSatker']){
                         ${"pointer_{$variable}"}=0;
                         $$variable=null;
                         ${"index_{$variable}"}=0;
@@ -750,11 +750,11 @@ use Symfony\Component\CssSelector\Node\HashNode;
 
                     // $data_peserta[$index_satker]['jabatan_peserta'][$index_jabatan]=$variable;
                     foreach($getPeserta as $list_peserta){
-                        if((int)$list_peserta['id_kelompok_jabatan'] === (int)$list_jabatan_peserta['id_kelompok_jabatan'] && $list_satker['IdZonaSatker'] === $list_peserta['IdZonaSatker']){
+                        if((int)$list_peserta['id_kelompok_jabatan'] === (int)$list_jabatan_peserta['id_kelompok_jabatan'] && (int)$list_satker['IdZonaSatker'] === (int)$list_peserta['IdZonaSatker']){
                             $include="true";
                             if($variable === "juru_sita" && (int)$list_satker['IdSatkerBanding'] === (int)$list_satker['IdSatker']){
                                 $include="false";
-                            }
+                            }   
                             if($include === "true"){
                                 //set new variable bila 
                                 $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['nama']=$list_peserta['nama_pegawai'];
