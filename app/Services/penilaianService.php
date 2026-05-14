@@ -41,7 +41,7 @@ use Vinkla\Hashids\Facades\Hashids;
                     $msg="Tidak ada peserta yang dinilai";
                 }
             }else{
-                $msg="Data tidak ditemukan. Kesalahan ini telah direkam. Silahkan hubungi Administrator";
+                $msg="Data tidak ditemukan. Kesalahan ini telah direkam. Silahkan hubungi Administrator code: ".$id_pegawai.":".$id_nama_jabatan.":".$id_zonasi_satker;
             }
 
             return [
