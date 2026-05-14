@@ -756,8 +756,8 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                 $include="false";
                             }   
                             if($include === "true"){
-                                if($list_peserta['nama_pegawai'] === "Emma Herminawaty Simanjuntak"){
-                                    Log::warning("Emma Herminawaty Simanjuntak Masuk");
+                                if($list_peserta['nama_pegawai'] === "Mifta Namira"){
+                                    Log::warning("Mifta Namira Masuk");
                                 }
                                 //set new variable bila 
                                 $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['nama']=$list_peserta['nama_pegawai'];
