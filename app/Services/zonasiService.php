@@ -687,7 +687,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                                         ->where('tzs.IdZona', $id_zonasi);
                                                 })
                                         ->join('tref_pegawai', 'tref_pegawai.id_pegawai', '=', 'trans_observee.IdPegawai')
-                                        ->select('trans_observee.*', 'tref_pegawai.nama_pegawai', 'tref_pegawai.nip', 'tref_pegawai.status_pegawai', 'tzs.IdZonaSatker')
+                                        ->select('trans_observee.*', 'tref_pegawai.nama_pegawai', 'tref_pegawai.nip', 'tref_pegawai.status_pegawai')
                                         ->orderBy('trans_observee.IdZonaSatker', 'desc')
                                         ->where('trans_observee.entry_job', false)
                                         ->get();
