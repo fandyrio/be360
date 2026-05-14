@@ -750,6 +750,9 @@ use Symfony\Component\CssSelector\Node\HashNode;
 
                     // $data_peserta[$index_satker]['jabatan_peserta'][$index_jabatan]=$variable;
                     foreach($getPeserta as $list_peserta){
+                        if($list_peserta['nama_pegawai'] === "Mifta Namira"){
+                            Log::info("Pegawai Mifta ada di query");
+                        }
                         if((int)$list_peserta['id_kelompok_jabatan'] === (int)$list_jabatan_peserta['id_kelompok_jabatan'] && $list_satker['IdZonaSatker'] === $list_peserta['IdZonaSatker']){
                             $include="true";
                             if($variable === "juru_sita" && (int)$list_satker['IdSatkerBanding'] === (int)$list_satker['IdSatker']){
@@ -859,7 +862,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     // $variable_jabatan_peserta_arr[$index_satker][]="juru_sita";
                     $id_jabatan_peserta_arr[$index_satker][]=1;
                     $nama_jabatan_arr[$index_satker][]="Juru Sita";
-                    Log::warning("Saatker ".$list_satker['IdSatkerBanding']." ".$list_satker['IdSatker']);
+                    // Log::warning("Saatker ".$list_satker['IdSatkerBanding']." ".$list_satker['IdSatker']);
                     
                 }
                 
@@ -964,7 +967,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                 $index_satker++;
                 $id_satker_before=$list_satker['IdSatker'];
             }
-            Log::info("Data Peserta: ", $data_peserta);
+            Log::info("Data Peserta: ", $getPeserta);
             // var_dump($variable_jabatan_peserta_arr);exit();
             // ketua_pengadilan
             $data=[];
