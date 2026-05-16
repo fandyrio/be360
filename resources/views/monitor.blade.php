@@ -6,8 +6,8 @@
         <h5><center>Monitor</center></h5>
         <select class="zonasi">
             <option value=""></option>
-            @for($x=0;$x<$data;$x++)
-                <option value="{{ $data[$x]['enc_id'] }}">{{ $data[$x]['nama_zona'] }}</option>
+            @for($x=0;$x<$jumlah;$x++)
+                <option value="{{ $data[$x]['enc_id'] }}">{{ $zonasi[$x]['nama_zona'] }}</option>
             @endfor
         </select>
     </body>
