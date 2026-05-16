@@ -720,36 +720,30 @@ use Symfony\Component\CssSelector\Node\HashNode;
                         $variable=str_replace(' ', '_', strtolower($get_parent['jabatan']));
                         $jabatan_peserta_=$get_parent['jabatan'];
                         $id_jabatan_peserta_=$get_parent['id'];
-                        if(!isset(${"pointer_{$variable}"})){
+                        if(!isset(${"index_{$variable}"})){
                             $status_pointer = "set ke nol jabatan gabungan";
-                            ${"pointer_{$variable}"}=0;
-                            $$variable=null;
+                            // ${"pointer_{$variable}"}=0;
+                            // $$variable=null;
                             ${"index_{$variable}"}=0;
-                            ${"counter_{$variable}"}=0;
-                        }else{
-                            $status_pointer = "tetap jabatan gabungan";
-                            // echo "sudah ada ".$variable;
-                            // ${"pointer_{$variable}"}+=1;
-                            // ${"index_{$variable}"}+=1;
-                            // ${"counter_{$variable}"}+=1;
+                            // ${"counter_{$variable}"}=0;
                         }
                     }else{
                         $status_pointer = "set ke nol";
                         $variable=str_replace(' ','_', strtolower($list_jabatan_peserta['jabatan']));
                         $id_jabatan_peserta_=$list_jabatan_peserta['id'];
                         $jabatan_peserta_=$list_jabatan_peserta['jabatan'];
-                        ${"pointer_{$variable}"}=0;
-                        $$variable=null;
+                        // ${"pointer_{$variable}"}=0;
+                        // $$variable=null;
                         ${"index_{$variable}"}=0;
-                        ${"counter_{$variable}"}=0;
+                        // ${"counter_{$variable}"}=0;
                     }
 
                     if(!is_null($id_satker_before) && (int)$id_satker_before !== (int)$list_satker['IdSatker']){
                         $status_pointer = "set ke 0 karena ".$id_satker_before." !== ".$list_satker['IdSatker'];
-                        ${"pointer_{$variable}"}=0;
-                        $$variable=null;
+                        // ${"pointer_{$variable}"}=0;
+                        // $$variable=null;
                         ${"index_{$variable}"}=0;
-                        ${"counter_{$variable}"}=0;
+                        // ${"counter_{$variable}"}=0;
                     }
                     //sampai sini harus disederhanakan nanti ya..
 
@@ -799,6 +793,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                         $nama_jabatan_arr[$index_satker][]=$jabatan_peserta_;
                     }
                     // echo $variable."<br />";
+                    $id_satker_before = $list_satker['IdSatker'];
                 }
                 // print_r($data_peserta[0]['hakim']);
                 
@@ -1048,7 +1043,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                             //Looping mapping jabatan dan threshold]
                             foreach($get_mapping as $mapping){
                                 $variable_penilai=str_replace(' ','_', strtolower($mapping['jabatan_penilai']));
-                                ${"counter_{$variable_penilai}"}+=1;
+                                // ${"counter_{$variable_penilai}"}+=1;
                                 if(isset($data_peserta[$s][$variable_penilai])){
                                     $jlh_penilai=count($data_peserta[$s][$variable_penilai]); 
                                 }else{
