@@ -69,8 +69,8 @@ use Vinkla\Hashids\Facades\Hashids;
                     //check jabatan peserta apakah gabungan
                     $id_kelompok_jabatan = [];
                     $get_jabatan_peserta = Tref_jabatan_peserta::where('id', $id_jabatan_peserta)->first();
-                    if(!is_null($get_jabatan_peserta->id_jabatan_gabungan)){
-                        $id_jabatan_gabungan = $get_jabatan_peserta->id_jabatan_gabungan;
+                    if((int)$get_jabatan_peserta->id_kelompok_jabatan === 0){
+                        $id_jabatan_gabungan = $id_jabatan_peserta;
                         $get_jabatan_gabungan = Tref_jabatan_peserta::where('id_jabatan_gabungan', $id_jabatan_gabungan)->get();
                         foreach($get_jabatan_gabungan as $list_jabatan_gabungan){
                             $id_kelompok_jabatan[]=$list_jabatan_gabungan['id_kelompok_jabatan'];
