@@ -69,7 +69,7 @@ use Vinkla\Hashids\Facades\Hashids;
                     //check jabatan peserta apakah gabungan
                     $id_kelompok_jabatan = [];
                     $get_jabatan_peserta = Tref_jabatan_peserta::where('id', $id_jabatan_peserta)->first();
-                    if(!is_null($get_jabatan_peserta->id_kelompok_jabatan)){
+                    if(!is_null($get_jabatan_peserta->id_jabatan_gabungan)){
                         $id_jabatan_gabungan = $get_jabatan_peserta->id_jabatan_gabungan;
                         $get_jabatan_gabungan = Tref_jabatan_peserta::where('id_jabatan_gabungan', $id_jabatan_gabungan)->get();
                         foreach($get_jabatan_gabungan as $list_jabatan_gabungan){
@@ -100,7 +100,7 @@ use Vinkla\Hashids\Facades\Hashids;
                                 'id_zona_satker'=>$list_data_insert['IdZonaSatker'],
                                 'id_pegawai_peserta'=>$list_data_insert['IdObservee'],
                                 'id_pegawai_penilai'=>$id_observee,
-                                'id_jabatan_plt'=>false,
+                                'id_jabatan_plt'=>null,
                                 'index_plt'=>0,
                                 'created_at'=>date("Y-m-d H:i:s")
                             ];
