@@ -173,4 +173,3 @@ Route::get('hash/{str}', function($str){
     echo "<br />";
     echo Crypt::encrypt($str);
 });
-Route::get('monitor', 'api\monitoringController@index');
