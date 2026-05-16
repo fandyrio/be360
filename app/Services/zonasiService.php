@@ -769,7 +769,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                             }
                             // shuffle($$variable);
                         }else{
-                            echo $list_peserta['nama_pegawai']." : ".$list_peserta['id_kelompok_jabatan']." : ".$list_jabatan_peserta['id_kelompok_jabatan']." dan ".$list_satker['IdZonaSatker'].":".$list_peserta['IdZonaSatker'];
+                            Log::info($list_peserta['nama_pegawai']." : ".$list_peserta['id_kelompok_jabatan']." : ".$list_jabatan_peserta['id_kelompok_jabatan']." dan ".$list_satker['IdZonaSatker'].":".$list_peserta['IdZonaSatker']);
                         }
                         // echo $variable." ".${"index_{$variable}"}."<br />";
                     }
