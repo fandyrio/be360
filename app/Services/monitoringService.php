@@ -91,8 +91,11 @@ use Vinkla\Hashids\Facades\Hashids;
                                 ->groupBy('c.nama_pegawai', 'trans_observee.IdObservee', 'e.NamaSatker', 'trans_observee.endpoint', 'trans_observee.NamaJabatan', 'trans_observee.id_kelompok_jabatan', 'trans_observee.IdZonaSatker')
                                 ->get();
 
-                    
-                    $batas = $threshold * $get_data_observee->count() / 100;
+                    if($get_data_observee->count() === 1){
+                        $batas = 1;
+                    }else{
+                        $batas = $threshold * $get_data_observee->count() / 100;
+                    }
                     $x=1;
                     foreach($get_data_observee as $list_data_insert){
                         if((int)$list_data_insert['IdObservee'] !== (int)$id_observee && $x <= $batas){
