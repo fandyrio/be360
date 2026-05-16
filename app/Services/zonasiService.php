@@ -754,6 +754,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     //sampai sini harus disederhanakan nanti ya..
 
                     // $data_peserta[$index_satker]['jabatan_peserta'][$index_jabatan]=$variable;
+                    Log::info("---------------------------------------------------------------------------");
                     foreach($getPeserta as $list_peserta){
                         if((int)$list_peserta['id_kelompok_jabatan'] === (int)$list_jabatan_peserta['id_kelompok_jabatan'] && (int)$list_satker['IdZonaSatker'] === (int)$list_peserta['IdZonaSatker']){
                             $include="true";
@@ -781,7 +782,8 @@ use Symfony\Component\CssSelector\Node\HashNode;
                         }
                         // echo $variable." ".${"index_{$variable}"}."<br />";
                     }
-                    
+
+                    Log::info("---------------------------------------------------------------------------");
 
                     // echo $index_satker;
                     if(count($variable_jabatan_peserta_arr) > 0 && isset($variable_jabatan_peserta_arr[$index_satker])){
