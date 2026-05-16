@@ -721,14 +721,12 @@ use Symfony\Component\CssSelector\Node\HashNode;
                         $jabatan_peserta_=$get_parent['jabatan'];
                         $id_jabatan_peserta_=$get_parent['id'];
                         if(!isset(${"index_{$variable}"})){
-                            $status_pointer = "set ke nol jabatan gabungan";
                             // ${"pointer_{$variable}"}=0;
                             // $$variable=null;
                             ${"index_{$variable}"}=0;
                             // ${"counter_{$variable}"}=0;
                         }
                     }else{
-                        $status_pointer = "set ke nol";
                         $variable=str_replace(' ','_', strtolower($list_jabatan_peserta['jabatan']));
                         $id_jabatan_peserta_=$list_jabatan_peserta['id'];
                         $jabatan_peserta_=$list_jabatan_peserta['jabatan'];
@@ -739,7 +737,6 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     }
 
                     if(!is_null($id_satker_before) && (int)$id_satker_before !== (int)$list_satker['IdSatker']){
-                        $status_pointer = "set ke 0 karena ".$id_satker_before." !== ".$list_satker['IdSatker'];
                         // ${"pointer_{$variable}"}=0;
                         // $$variable=null;
                         ${"index_{$variable}"}=0;
@@ -748,7 +745,6 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     //sampai sini harus disederhanakan nanti ya..
 
                     // $data_peserta[$index_satker]['jabatan_peserta'][$index_jabatan]=$variable;
-                    Log::info("---------------------------------------------------------------------------");
                     foreach($getPeserta as $list_peserta){
                         if((int)$list_peserta['id_kelompok_jabatan'] === (int)$list_jabatan_peserta['id_kelompok_jabatan'] && (int)$list_satker['IdZonaSatker'] === (int)$list_peserta['IdZonaSatker']){
                             $include="true";
@@ -756,7 +752,6 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                 $include="false";
                             }   
                             if($include === "true"){
-                                Log::info($list_peserta['nama_pegawai']." : ".$list_peserta['id_kelompok_jabatan']." : ".$list_jabatan_peserta['id_kelompok_jabatan']." dan ".$list_satker['IdZonaSatker'].":".$list_peserta['IdZonaSatker']." masuk ke data peserta dengan index satker: ".$index_satker." dan variable: ".$variable." dan index_variable: ".${"index_{$variable}"}." Status Pointer: ".$status_pointer);
                                 //set new variable bila 
                                 $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['nama']=$list_peserta['nama_pegawai'];
                                 $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['id_pegawai']=$list_peserta['IdPegawai'];
@@ -767,17 +762,11 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                 $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['is_plt']="false";
                                 $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['jlh_menilai']=0;
                                 ${"index_{$variable}"}+=1;
-                            }else{
-                                Log::info("Ga Include : ". $list_peserta['nama_pegawai']." : ".$list_peserta['id_kelompok_jabatan']." : ".$list_jabatan_peserta['id_kelompok_jabatan']." dan ".$list_satker['IdZonaSatker'].":".$list_peserta['IdZonaSatker']);
                             }
                             // shuffle($$variable);
-                        }else{
-                            Log::info($list_peserta['nama_pegawai']." : ".$list_peserta['id_kelompok_jabatan']." : ".$list_jabatan_peserta['id_kelompok_jabatan']." dan ".$list_satker['IdZonaSatker'].":".$list_peserta['IdZonaSatker']);
                         }
                         // echo $variable." ".${"index_{$variable}"}."<br />";
                     }
-
-                    Log::info("---------------------------------------------------------------------------");
 
                     // echo $index_satker;
                     if(count($variable_jabatan_peserta_arr) > 0 && isset($variable_jabatan_peserta_arr[$index_satker])){

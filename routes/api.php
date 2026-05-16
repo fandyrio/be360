@@ -32,6 +32,7 @@ Route::middleware(['jwt.auth', 'superadminbadilum'])->group(function () {
     Route::post('update-user', 'api\userController@updateDataUser');
     Route::get('list-all-satker', 'api\zonasiController@getAllSatkerAll');
     Route::post('generate-user', 'api\userController@generateUserAdminSatker');
+    Route::get('monitor', 'api\monitoringController@index');
 });
 
 Route::middleware(['jwt.auth', 'isSuperAdminSatker'])->group(function(){
