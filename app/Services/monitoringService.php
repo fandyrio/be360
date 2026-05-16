@@ -62,6 +62,7 @@ use Vinkla\Hashids\Facades\Hashids;
                 
                 $get_mapping = Tref_mapping_jabatan::where('id_jabatan_penilai', $id_jabatan)->get();
                 $data = [];
+                $data_insert = [];
                 foreach($get_mapping as $list_mapping){
                     $id_jabatan_peserta = $list_mapping['id_jabatan_peserta'];
                     $threshold = $list_mapping['threshold'];
@@ -92,7 +93,7 @@ use Vinkla\Hashids\Facades\Hashids;
 
                     
                     $batas = $threshold * $get_data_observee->count() / 100;
-                    $data_insert = [];
+                    
                     foreach($get_data_observee as $list_data_insert){
                         if((int)$list_data_insert['IdObservee'] !== (int)$list_mapping['IdObservee']){
                             $data_insert[]=[
