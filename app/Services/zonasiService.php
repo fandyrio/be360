@@ -719,7 +719,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                         $variable=str_replace(' ', '_', strtolower($get_parent['jabatan']));
                         $jabatan_peserta_=$get_parent['jabatan'];
                         $id_jabatan_peserta_=$get_parent['id'];
-                        if(!isset(${"pointer_$variable"})){
+                        if(!isset(${"pointer_{$variable}"})){
                             ${"pointer_{$variable}"}=0;
                             $$variable=null;
                             ${"index_{$variable}"}=0;
