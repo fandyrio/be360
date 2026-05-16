@@ -756,7 +756,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                 $include="false";
                             }   
                             if($include === "true"){
-                                Log::info($list_peserta['nama_pegawai']." : ".$list_peserta['id_kelompok_jabatan']." : ".$list_jabatan_peserta['id_kelompok_jabatan']." dan ".$list_satker['IdZonaSatker'].":".$list_peserta['IdZonaSatker']." masuk ke data peserta dengan index satker: ".$index_satker." dan variable: ".$variable);
+                                Log::info($list_peserta['nama_pegawai']." : ".$list_peserta['id_kelompok_jabatan']." : ".$list_jabatan_peserta['id_kelompok_jabatan']." dan ".$list_satker['IdZonaSatker'].":".$list_peserta['IdZonaSatker']." masuk ke data peserta dengan index satker: ".$index_satker." dan variable: ".$variable." dan index_variable: ".${"index_{$variable}"});
                                 //set new variable bila 
                                 $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['nama']=$list_peserta['nama_pegawai'];
                                 $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['id_pegawai']=$list_peserta['IdPegawai'];
