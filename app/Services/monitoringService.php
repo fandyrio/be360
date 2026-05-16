@@ -93,9 +93,9 @@ use Vinkla\Hashids\Facades\Hashids;
 
                     
                     $batas = $threshold * $get_data_observee->count() / 100;
-                    
+                    $x=1;
                     foreach($get_data_observee as $list_data_insert){
-                        if((int)$list_data_insert['IdObservee'] !== (int)$list_mapping['IdObservee']){
+                        if((int)$list_data_insert['IdObservee'] !== (int)$id_observee && $x <= $batas){
                             $data_insert[]=[
                                 'id_zonasi'=>$get_observee->IdZona,
                                 'id_zona_satker'=>$list_data_insert['IdZonaSatker'],
@@ -106,6 +106,7 @@ use Vinkla\Hashids\Facades\Hashids;
                                 'created_at'=>date("Y-m-d H:i:s")
                             ];
                         }
+                        $x++;
                     }
                     
                 }
