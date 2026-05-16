@@ -756,9 +756,6 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                 $include="false";
                             }   
                             if($include === "true"){
-                                if($list_peserta['nama_pegawai'] === "Mifta Namira"){
-                                    Log::warning("Mifta Namira Masuk");
-                                }
                                 //set new variable bila 
                                 $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['nama']=$list_peserta['nama_pegawai'];
                                 $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['id_pegawai']=$list_peserta['IdPegawai'];
@@ -771,9 +768,12 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                 ${"index_{$variable}"}+=1;
                             }
                             // shuffle($$variable);
+                        }else{
+                            echo $list_peserta['nama_pegawai']." : ".$list_peserta['id_kelompok_jabatan']." : ".$list_jabatan_peserta['id_kelompok_jabatan']." dan ".$list_satker['IdZonaSatker'].":".$list_peserta['IdZonaSatker'];
                         }
                         // echo $variable." ".${"index_{$variable}"}."<br />";
                     }
+                    
 
                     // echo $index_satker;
                     if(count($variable_jabatan_peserta_arr) > 0 && isset($variable_jabatan_peserta_arr[$index_satker])){
