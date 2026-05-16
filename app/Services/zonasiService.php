@@ -756,6 +756,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                 $include="false";
                             }   
                             if($include === "true"){
+                                Log::info($list_peserta['nama_pegawai']." : ".$list_peserta['id_kelompok_jabatan']." : ".$list_jabatan_peserta['id_kelompok_jabatan']." dan ".$list_satker['IdZonaSatker'].":".$list_peserta['IdZonaSatker']);
                                 //set new variable bila 
                                 $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['nama']=$list_peserta['nama_pegawai'];
                                 $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['id_pegawai']=$list_peserta['IdPegawai'];
@@ -766,6 +767,8 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                 $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['is_plt']="false";
                                 $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['jlh_menilai']=0;
                                 ${"index_{$variable}"}+=1;
+                            }else{
+                                Log::info("Ga Include : ". $list_peserta['nama_pegawai']." : ".$list_peserta['id_kelompok_jabatan']." : ".$list_jabatan_peserta['id_kelompok_jabatan']." dan ".$list_satker['IdZonaSatker'].":".$list_peserta['IdZonaSatker']);
                             }
                             // shuffle($$variable);
                         }else{
