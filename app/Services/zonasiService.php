@@ -700,6 +700,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
             $is_pt=[];
             $id_zonasi_satker=[];
             $id_satker_before=null;
+            $status_pointer = null;
             foreach($get_satker_zonasi as $list_satker){
                 $satker[]=$list_satker['NamaSatker'];
                 $id_satker[]=$list_satker['IdSatker'];
@@ -720,17 +721,20 @@ use Symfony\Component\CssSelector\Node\HashNode;
                         $jabatan_peserta_=$get_parent['jabatan'];
                         $id_jabatan_peserta_=$get_parent['id'];
                         if(!isset(${"pointer_{$variable}"})){
+                            $status_pointer = "set ke nol jabatan gabungan";
                             ${"pointer_{$variable}"}=0;
                             $$variable=null;
                             ${"index_{$variable}"}=0;
                             ${"counter_{$variable}"}=0;
                         }else{
+                            $status_pointer = "tetap jabatan gabungan";
                             // echo "sudah ada ".$variable;
                             // ${"pointer_{$variable}"}+=1;
                             // ${"index_{$variable}"}+=1;
                             // ${"counter_{$variable}"}+=1;
                         }
                     }else{
+                        $status_pointer = "set ke nol";
                         $variable=str_replace(' ','_', strtolower($list_jabatan_peserta['jabatan']));
                         $id_jabatan_peserta_=$list_jabatan_peserta['id'];
                         $jabatan_peserta_=$list_jabatan_peserta['jabatan'];
@@ -741,6 +745,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     }
 
                     if(!is_null($id_satker_before) && (int)$id_satker_before !== (int)$list_satker['IdSatker']){
+                        $status_pointer = "set ke 0 karena ".$id_satker_before." !== ".$list_satker['IdSatker'];
                         ${"pointer_{$variable}"}=0;
                         $$variable=null;
                         ${"index_{$variable}"}=0;
@@ -756,7 +761,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                 $include="false";
                             }   
                             if($include === "true"){
-                                Log::info($list_peserta['nama_pegawai']." : ".$list_peserta['id_kelompok_jabatan']." : ".$list_jabatan_peserta['id_kelompok_jabatan']." dan ".$list_satker['IdZonaSatker'].":".$list_peserta['IdZonaSatker']." masuk ke data peserta dengan index satker: ".$index_satker." dan variable: ".$variable." dan index_variable: ".${"index_{$variable}"});
+                                Log::info($list_peserta['nama_pegawai']." : ".$list_peserta['id_kelompok_jabatan']." : ".$list_jabatan_peserta['id_kelompok_jabatan']." dan ".$list_satker['IdZonaSatker'].":".$list_peserta['IdZonaSatker']." masuk ke data peserta dengan index satker: ".$index_satker." dan variable: ".$variable." dan index_variable: ".${"index_{$variable}"}." Status Pointer: ".$status_pointer);
                                 //set new variable bila 
                                 $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['nama']=$list_peserta['nama_pegawai'];
                                 $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['id_pegawai']=$list_peserta['IdPegawai'];
