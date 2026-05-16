@@ -7,7 +7,7 @@
         <select class="zonasi">
             <option value=""></option>
             @for($x=0;$x<$jumlah;$x++)
-                <option value="{{ $data[$x]['enc_id'] }}">{{ $zonasi[$x]['nama_zona'] }}</option>
+                <option value="{{ $zonasi[$x]['enc_id'] }}">{{ $zonasi[$x]['nama_zona'] }}</option>
             @endfor
         </select>
     </body>
