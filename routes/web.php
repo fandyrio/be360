@@ -13,4 +13,5 @@ Route::get('hello', function () {
     return response()->json(['msg' => 'Hello from API!']);
 });
 Route::get('monitor', 'monitoringController@index');
-Route::post("list-double", "monitoringController@listDouble");
+Route::post("list-not-found", "monitoringController@listNotFound");
+Route::post("fix-404", 'monitoringController@fixNotFound');

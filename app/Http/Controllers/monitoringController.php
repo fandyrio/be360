@@ -27,9 +27,17 @@ class monitoringController extends Controller
         return view("monitor", ['zonasi'=>$zonasi['data'], 'jumlah'=>count($zonasi['data'])]);
     }
 
-    public function listDouble(Request $request){
+    public function listNotFound(Request $request){
         $zonasi_id = Hashids::decode($request->zonasi);
-        $get_list_double = $this->monitoringService->getDoubleInsertPeserta($zonasi_id);
-        return view("monitoring/list_double", ['data'=>$get_list_double['data'], 'jumlah'=>$get_list_double['jumlah']]);
+        $get_list_double = $this->monitoringService->getLinkNotFound($zonasi_id);
+        return view("monitoring/list_not_found", ['data'=>$get_list_double['data'], 'jumlah'=>$get_list_double['jumlah']]);
+    }
+
+    public function fixNotFound(Request $request){
+        $id_observee = Hashids::decode($request->target);
+        $fix = $this->monitoringService->fix404($id_observee[0]);
+        $status = $fix['status'];
+        $msg = $fix['msg'];
+        return response()->json(['status'=>$status, 'msg'=>$msg]);
     }
 }

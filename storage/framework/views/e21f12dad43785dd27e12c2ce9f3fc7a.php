@@ -1,15 +1,15 @@
 <html>
     <head>
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
     </head>
     <body>
         <h3><center>Monitor</center></h3>
         <div style="width:100%;float:left">
             <select class="zonasi">
                 <option value=""></option>
-                @for($x=0;$x<$jumlah;$x++)
-                    <option value="{{ $zonasi[$x]['enc_id'] }}">{{ $zonasi[$x]['nama_zona'] }}</option>
-                @endfor
+                <?php for($x=0;$x<$jumlah;$x++): ?>
+                    <option value="<?php echo e($zonasi[$x]['enc_id']); ?>"><?php echo e($zonasi[$x]['nama_zona']); ?></option>
+                <?php endfor; ?>
             </select>
             <hr />
         </div>
@@ -41,4 +41,4 @@
             $(".content-double").html(data);
         })
     })
-</script>
+</script><?php /**PATH /var/www/html/be_360/be360/resources/views/monitor.blade.php ENDPATH**/ ?>
