@@ -188,7 +188,7 @@ use Vinkla\Hashids\Facades\Hashids;
                         $get_jabatan = Tref_jabatan_peserta::where('id_kelompok_jabatan', $id_kelompok_jabatan_penilai[0])->first();
                         $get_plt = Trans_peserta_zonasi::join('trans_zonasi_satker as b', 'b.IdZonaSatker', 'trans_peserta_zonasi.id_zona_satker')
                                                     ->select("trans_peserta_zonasi.*")
-                                                    ->whereIn('trans_peserta_zonasi.id_jabatan_plt', $get_jabatan->id)
+                                                    ->where('trans_peserta_zonasi.id_jabatan_plt', $get_jabatan->id)
                                                     ->where('trans_peserta_zonasi.id_zonasi', $get_observee['IdZona'])
                                                     ->where('b.IdSatker', $id_satker)
                                                     ->first();
