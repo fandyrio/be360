@@ -29,7 +29,7 @@ use Vinkla\Hashids\Facades\Hashids;
                                 ->select("trans_observee.IdObservee", 'c.nama_pegawai', 'e.NamaSatker', 'trans_observee.endpoint', 'trans_observee.NamaJabatan', 'trans_observee.id_kelompok_jabatan', DB::raw('COUNT(b.id_pegawai_penilai) as jumlah'))
                                 ->where('d.IdZona', $id_zonasi)
                                 ->groupBy('c.nama_pegawai', 'trans_observee.IdObservee', 'e.NamaSatker', 'trans_observee.endpoint', 'trans_observee.NamaJabatan', 'trans_observee.id_kelompok_jabatan')
-                                ->havingRaw('COUNT(b.id_pegawi_penilai) <= 2')
+                                ->havingRaw('COUNT(b.id_pegawai_penilai) <= 2')
                                 ->get();
             foreach($get_data as $data_double){
                 $data[]=[
