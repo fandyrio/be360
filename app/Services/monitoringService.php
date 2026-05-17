@@ -28,7 +28,10 @@ use Vinkla\Hashids\Facades\Hashids;
                                 ->join('v_satker as e', 'e.IdSatker', 'd.IdSatker')
                                 ->select("trans_observee.IdObservee", 'c.nama_pegawai', 'e.NamaSatker', 'trans_observee.endpoint', 'trans_observee.NamaJabatan', 'trans_observee.id_kelompok_jabatan', )
                                 ->where('d.IdZona', $id_zonasi)
-                                ->where('b.id_pegawai_penilai', '<=', 2)
+                                ->where(function($w){
+                                    $w->where('b.id_pegawai_penilai', '<=', 2)
+                                        ->orWhereNull('b.id_pegawai_penilai');
+                                })
                                 ->groupBy('c.nama_pegawai', 'trans_observee.IdObservee', 'e.NamaSatker', 'trans_observee.endpoint', 'trans_observee.NamaJabatan', 'trans_observee.id_kelompok_jabatan')
                                 ->get();
             foreach($get_data as $data_double){
