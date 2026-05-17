@@ -28,7 +28,7 @@ use Vinkla\Hashids\Facades\Hashids;
                                 ->join('v_satker as e', 'e.IdSatker', 'd.IdSatker')
                                 ->select("trans_observee.IdObservee", 'c.nama_pegawai', 'e.NamaSatker', 'trans_observee.endpoint', 'trans_observee.NamaJabatan', 'trans_observee.id_kelompok_jabatan', )
                                 ->where('d.IdZona', $id_zonasi)
-                                ->whereNull('b.id_pegawai_penilai')
+                                ->where('b.id_pegawai_penilai', '<=', 2)
                                 ->groupBy('c.nama_pegawai', 'trans_observee.IdObservee', 'e.NamaSatker', 'trans_observee.endpoint', 'trans_observee.NamaJabatan', 'trans_observee.id_kelompok_jabatan')
                                 ->get();
             foreach($get_data as $data_double){
@@ -48,8 +48,21 @@ use Vinkla\Hashids\Facades\Hashids;
         public function fix404($id_observee){
             $status = false;
             $data_insert = [];
-            $get_data = Trans_peserta_zonasi::where('id_pegawai_penilai', $id_observee)->exists();
-            if(!$get_data){
+            $get_data_penilai = Trans_peserta_zonasi::where('id_pegawai_penilai', $id_observee)->get();
+            $jumlah_penilaian = $get_data_penilai->count();
+            $existed_peserta = [];
+            foreach($get_data_penilai as $list_penilai_existed){
+                $existed_peserta[]=$list_penilai_existed['id_pegawai_peserta'];
+            }
+
+            $get_data_peserta = Trans_peserta_zonasi::where('id_pegawai_peserta', $id_observee)->get();
+            $jumlah_kepesertaan = $get_data_peserta->count();
+            $existed_penilai = [];
+            foreach($get_data_peserta as $list_peserta_existed){
+                $existed_penilai[]=$list_peserta_existed['id_pegawai_penilai'];
+            }
+
+            if($jumlah_penilaian <= 2){
                 $get_observee = Trans_observee::join('trans_zonasi_satker as b', 'b.IdZonaSatker', 'trans_observee.IdZonaSatker')
                                     ->select("trans_observee.*", "b.IdZona", "b.IdSatker")
                                     ->where('IdObservee', $id_observee)->first();
@@ -84,21 +97,23 @@ use Vinkla\Hashids\Facades\Hashids;
                                 ->join('tref_pegawai as c', 'c.id_pegawai', 'trans_observee.IdPegawai')
                                 ->join('trans_zonasi_satker as d',  'd.IdZonaSatker', 'trans_observee.IdZonaSatker')
                                 ->join('v_satker as e', 'e.IdSatker', 'd.IdSatker')
-                                ->select("trans_observee.IdObservee", 'c.nama_pegawai', 'e.NamaSatker', 'trans_observee.endpoint', 'trans_observee.NamaJabatan', 'trans_observee.id_kelompok_jabatan', 'trans_observee.IdZonaSatker')
+                                ->select("trans_observee.IdObservee", 'c.nama_pegawai', 'e.NamaSatker', 'trans_observee.endpoint', 'trans_observee.NamaJabatan', 'trans_observee.id_kelompok_jabatan', 'trans_observee.IdZonaSatker', 'b.id_pegawai_penilai')
                                 ->where('d.IdZona', $get_observee['IdZona'])
                                 ->whereIn('id_kelompok_jabatan', $id_kelompok_jabatan)
                                 ->where("d.IdSatker", $id_satker)
                                 ->groupBy('c.nama_pegawai', 'trans_observee.IdObservee', 'e.NamaSatker', 'trans_observee.endpoint', 'trans_observee.NamaJabatan', 'trans_observee.id_kelompok_jabatan', 'trans_observee.IdZonaSatker')
                                 ->get();
+                    
+                    
 
                     if($get_data_observee->count() === 1){
                         $batas = 1;
                     }else{
-                        $batas = $threshold * $get_data_observee->count() / 100;
+                        $batas = ceil($threshold * $get_data_observee->count() / 100);
                     }
                     $x=1;
                     foreach($get_data_observee as $list_data_insert){
-                        if((int)$list_data_insert['IdObservee'] !== (int)$id_observee && $x <= $batas){
+                        if((int)$list_data_insert['IdObservee'] !== (int)$id_observee && $x <= $batas && !in_array((int)$list_data_insert['IdObservee'], $existed_peserta) ){
                             $data_insert[]=[
                                 'id_zonasi'=>$get_observee->IdZona,
                                 'id_zona_satker'=>$list_data_insert['IdZonaSatker'],
@@ -148,11 +163,11 @@ use Vinkla\Hashids\Facades\Hashids;
                     if($get_data_observee_penilai->count() === 1){
                         $batas = 1;
                     }else{
-                        $batas = $threshold_penilai * $get_data_observee_penilai->count() / 100;
+                        $batas = ceil($threshold_penilai * $get_data_observee_penilai->count() / 100);
                     }
                     $x=1;
                     foreach($get_data_observee_penilai as $list_data_insert_penilai){
-                        if((int)$list_data_insert_penilai['IdObservee'] !== (int)$id_observee && $x <= $batas){
+                        if((int)$list_data_insert_penilai['IdObservee'] !== (int)$id_observee && $x <= $batas && !in_array($list_data_insert_penilai['IdObservee'], $existed_penilai)){
                             $data_insert[]=[
                                 'id_zonasi'=>$get_observee->IdZona,
                                 'id_zona_satker'=>$list_data_insert_penilai['IdZonaSatker'],
