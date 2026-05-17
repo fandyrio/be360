@@ -159,27 +159,49 @@ use Vinkla\Hashids\Facades\Hashids;
                                 ->where("d.IdSatker", $id_satker)
                                 ->groupBy('c.nama_pegawai', 'trans_observee.IdObservee', 'e.NamaSatker', 'trans_observee.endpoint', 'trans_observee.NamaJabatan', 'trans_observee.id_kelompok_jabatan', 'trans_observee.IdZonaSatker')
                                 ->get();
-
-                    if($get_data_observee_penilai->count() === 1){
-                        $batas = 1;
+                    $jumlah_penilai = $get_data_observee_penilai->count();
+                    if($jumlah_penilai > 0){
+                        if($get_data_observee_penilai->count() === 1){
+                            $batas = 1;
+                        }else{
+                            $batas = ceil($threshold_penilai * $get_data_observee_penilai->count() / 100);
+                        }
+                        $x=1;
+                        foreach($get_data_observee_penilai as $list_data_insert_penilai){
+                            if((int)$list_data_insert_penilai['IdObservee'] !== (int)$id_observee && $x <= $batas && !in_array($list_data_insert_penilai['IdObservee'], $existed_penilai)){
+                                $data_insert[]=[
+                                    'id_zonasi'=>$get_observee->IdZona,
+                                    'id_zona_satker'=>$list_data_insert_penilai['IdZonaSatker'],
+                                    'id_pegawai_peserta'=>$id_observee,
+                                    'id_pegawai_penilai'=>$list_data_insert_penilai['IdObservee'],
+                                    'id_jabatan_plt'=>null,
+                                    'index_plt'=>0,
+                                    'created_at'=>date("Y-m-d H:i:s")
+                                ];
+                            }
+                            $x++;
+                        }
                     }else{
-                        $batas = ceil($threshold_penilai * $get_data_observee_penilai->count() / 100);
-                    }
-                    $x=1;
-                    foreach($get_data_observee_penilai as $list_data_insert_penilai){
-                        if((int)$list_data_insert_penilai['IdObservee'] !== (int)$id_observee && $x <= $batas && !in_array($list_data_insert_penilai['IdObservee'], $existed_penilai)){
+                        $batas = 0;
+                        $get_plt = Trans_peserta_zonasi::join('trans_zonasi_satker as b', 'b.IdZonaSatker', 'trans_peserta_zonasi.id_zona_satker')
+                                                    ->select("trans_peserta_zonasi")
+                                                    ->whereIn('trans_peserta_zonasi.id_jabatan_plt', $id_kelompok_jabatan_penilai)
+                                                    ->where('trans_peserta_zonasi.id_zonasi', $get_observee['IdZona'])
+                                                    ->where('b.IdZona', $get_observee['IdZona'])
+                                                    ->first();
+                        if(!is_null($get_plt)){
                             $data_insert[]=[
                                 'id_zonasi'=>$get_observee->IdZona,
-                                'id_zona_satker'=>$list_data_insert_penilai['IdZonaSatker'],
+                                'id_zona_satker'=>$get_plt['id_zona_satker'],
                                 'id_pegawai_peserta'=>$id_observee,
-                                'id_pegawai_penilai'=>$list_data_insert_penilai['IdObservee'],
+                                'id_pegawai_penilai'=>$get_plt['id_pegawai_penilai'],
                                 'id_jabatan_plt'=>null,
                                 'index_plt'=>0,
                                 'created_at'=>date("Y-m-d H:i:s")
                             ];
                         }
-                        $x++;
                     }
+                   
                 }
 
                 DB::table("trans_peserta_zonasi")->insert($data_insert);
