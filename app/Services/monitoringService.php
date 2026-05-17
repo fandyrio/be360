@@ -182,12 +182,11 @@ use Vinkla\Hashids\Facades\Hashids;
                             $x++;
                         }
                     }else{
-                        $batas = 0;
                         $get_plt = Trans_peserta_zonasi::join('trans_zonasi_satker as b', 'b.IdZonaSatker', 'trans_peserta_zonasi.id_zona_satker')
                                                     ->select("trans_peserta_zonasi.*")
                                                     ->whereIn('trans_peserta_zonasi.id_jabatan_plt', $id_kelompok_jabatan_penilai)
                                                     ->where('trans_peserta_zonasi.id_zonasi', $get_observee['IdZona'])
-                                                    ->where('b.IdZona', $get_observee['IdZona'])
+                                                    ->where('b.IdSatker', $id_satker)
                                                     ->first();
                         if(!is_null($get_plt)){
                             $data_insert[]=[
@@ -195,7 +194,7 @@ use Vinkla\Hashids\Facades\Hashids;
                                 'id_zona_satker'=>$get_plt['id_zona_satker'],
                                 'id_pegawai_peserta'=>$id_observee,
                                 'id_pegawai_penilai'=>$get_plt['id_pegawai_penilai'],
-                                'id_jabatan_plt'=>null,
+                                'id_jabatan_plt'=>$id_kelompok_jabatan_penilai[0],
                                 'index_plt'=>0,
                                 'created_at'=>date("Y-m-d H:i:s")
                             ];
