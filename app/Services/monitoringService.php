@@ -65,7 +65,7 @@ use Vinkla\Hashids\Facades\Hashids;
                                         ->select("b.id", "b.id_pegawai_penilai", "c.nama_pegawai", DB::raw('COUNT(id_pegawai_peserta)'), 'trans_observee.NamaJabatan', 'e.NamaSatker', 'trans_observee.endpoint')
                                         ->where('b.id_zonasi', $id_zonasi)
                                         ->whereNull('b.id_jabatan_plt')
-                                        ->groupBy('b.id', 'b.id_pegawai_penilai', 'c.nama_pegawai', 'trans_observee.NamaJabatan', 'e.NamaSatker', 'trans_observee.endpoint')
+                                        ->groupBy('b.id_pegawai_penilai', 'b.id_pegawai_pesertas', 'c.nama_pegawai', 'trans_observee.NamaJabatan', 'e.NamaSatker', 'trans_observee.endpoint')
                                         ->havingRaw('COUNT(id_pegawai_peserta) > 1')
                                         ->get();
             foreach($get_data as $list_double){
