@@ -192,7 +192,7 @@ use Vinkla\Hashids\Facades\Hashids;
                                                     ->where('trans_peserta_zonasi.id_zonasi', $get_observee['IdZona'])
                                                     ->where('b.IdSatker', $id_satker)
                                                     ->first();
-                        Log::warning("isi", $get_plt->toArray());
+                        Log::warning("isi: ".$get_observee['IdZona']." : ".$id_satker, $id_kelompok_jabatan_penilai);
                         if(!is_null($get_plt)){
                             $data_insert[]=[
                                 'id_zonasi'=>$get_observee->IdZona,
