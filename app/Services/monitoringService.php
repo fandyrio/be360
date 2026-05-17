@@ -100,7 +100,7 @@ use Vinkla\Hashids\Facades\Hashids;
                                 ->join('tref_pegawai as c', 'c.id_pegawai', 'trans_observee.IdPegawai')
                                 ->join('trans_zonasi_satker as d',  'd.IdZonaSatker', 'trans_observee.IdZonaSatker')
                                 ->join('v_satker as e', 'e.IdSatker', 'd.IdSatker')
-                                ->select("trans_observee.IdObservee", 'c.nama_pegawai', 'e.NamaSatker', 'trans_observee.endpoint', 'trans_observee.NamaJabatan', 'trans_observee.id_kelompok_jabatan', 'trans_observee.IdZonaSatker', 'b.id_pegawai_penilai')
+                                ->select("trans_observee.IdObservee", 'c.nama_pegawai', 'e.NamaSatker', 'trans_observee.endpoint', 'trans_observee.NamaJabatan', 'trans_observee.id_kelompok_jabatan', 'trans_observee.IdZonaSatker')
                                 ->where('d.IdZona', $get_observee['IdZona'])
                                 ->whereIn('id_kelompok_jabatan', $id_kelompok_jabatan)
                                 ->where("d.IdSatker", $id_satker)
