@@ -153,8 +153,7 @@ use Vinkla\Hashids\Facades\Hashids;
                         $id_kelompok_jabatan_penilai[]=$get_jabatan_penilai->id_kelompok_jabatan;
                     }
 
-                    $get_data_observee_penilai = Trans_observee::leftJoin('trans_peserta_zonasi as b', 'b.id_pegawai_penilai', 'trans_observee.IdObservee')
-                                ->join('tref_pegawai as c', 'c.id_pegawai', 'trans_observee.IdPegawai')
+                    $get_data_observee_penilai = Trans_observee::join('tref_pegawai as c', 'c.id_pegawai', 'trans_observee.IdPegawai')
                                 ->join('trans_zonasi_satker as d',  'd.IdZonaSatker', 'trans_observee.IdZonaSatker')
                                 ->join('v_satker as e', 'e.IdSatker', 'd.IdSatker')
                                 ->select("trans_observee.IdObservee", 'c.nama_pegawai', 'e.NamaSatker', 'trans_observee.endpoint', 'trans_observee.NamaJabatan', 'trans_observee.id_kelompok_jabatan', 'trans_observee.IdZonaSatker')
@@ -186,20 +185,21 @@ use Vinkla\Hashids\Facades\Hashids;
                             $x++;
                         }
                     }else{
+                        $get_jabatan = Tref_jabatan_peserta::where('id_kelompok_jabatan', $id_kelompok_jabatan_penilai[0])->first();
                         $get_plt = Trans_peserta_zonasi::join('trans_zonasi_satker as b', 'b.IdZonaSatker', 'trans_peserta_zonasi.id_zona_satker')
                                                     ->select("trans_peserta_zonasi.*")
-                                                    ->whereIn('trans_peserta_zonasi.id_jabatan_plt', $id_kelompok_jabatan_penilai)
+                                                    ->whereIn('trans_peserta_zonasi.id_jabatan_plt', $get_jabatan->id)
                                                     ->where('trans_peserta_zonasi.id_zonasi', $get_observee['IdZona'])
                                                     ->where('b.IdSatker', $id_satker)
                                                     ->first();
-                        Log::warning("isi: ".$get_observee['IdZona']." : ".$id_satker, $id_kelompok_jabatan_penilai);
+                        // Log::warning("isi: ".$get_observee['IdZona']." : ".$id_satker, $id_kelompok_jabatan_penilai);
                         if(!is_null($get_plt)){
                             $data_insert[]=[
                                 'id_zonasi'=>$get_observee->IdZona,
                                 'id_zona_satker'=>$get_plt['id_zona_satker'],
                                 'id_pegawai_peserta'=>$id_observee,
                                 'id_pegawai_penilai'=>$get_plt['id_pegawai_penilai'],
-                                'id_jabatan_plt'=>$id_kelompok_jabatan_penilai[0],
+                                'id_jabatan_plt'=>$get_jabatan->id,
                                 'index_plt'=>0,
                                 'created_at'=>date("Y-m-d H:i:s")
                             ];
