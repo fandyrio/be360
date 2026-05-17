@@ -1071,6 +1071,9 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                         // var_dump($data_peserta[$s][$variable_jabatan_peserta][$a]['id_pegawai']);
                                         // echo $variable_penilai." ".$jlh_penilai."<br />";
                                         Log::warning("satker ke: ".$s.", jabatan: ".$variable_penilai.", pointer: ".$variable_penilai);
+                                        if($s === 1 && $variable_penilai === "pegawai"){
+                                            Log::warning("data_peserta", $data_peserta[$s]);
+                                        }
                                         if((int)$data_peserta[$s][$variable_jabatan_peserta][$a]['id_pegawai'] === 
                                         (int)$data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['id_pegawai']){
                                             // echo "penilai dan dinilai sama: ".$$variable_jabatan_peserta[$a]['nama']." : ".$$variable_penilai[${"pointer_{$variable_penilai}"}]['nama'];
