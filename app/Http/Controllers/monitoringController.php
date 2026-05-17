@@ -29,13 +29,13 @@ class monitoringController extends Controller
 
     public function listNotFound(Request $request){
         $zonasi_id = Hashids::decode($request->zonasi);
-        $get_not_found = $this->monitoringService->getLinkNotFound($zonasi_id);
+        $get_not_found = $this->monitoringService->getLinkNotFound($zonasi_id[0]);
         return view("monitoring/list_not_found", ['data'=>$get_not_found['data'], 'jumlah'=>$get_not_found['jumlah'], 'title'=> 'Link 404', 'class_fix'=>'fix']);
     }
 
     public function listDouble(Request $request){
         $zonasi_id = Hashids::decode($request->zonasi);
-        $get_list_double = $this->monitoringService->getDoubleInsert($zonasi_id);
+        $get_list_double = $this->monitoringService->getDoubleInsert($zonasi_id[0]);
         return view("monitoring/list_not_found", ['data'=>$get_list_double['data'], 'jumlah'=>$get_list_double['jumlah'], 'title'=> 'Double Insert', 'class_fix'=>'fix_double']);
     }
 
