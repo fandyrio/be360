@@ -113,6 +113,60 @@ use Vinkla\Hashids\Facades\Hashids;
                     }
                     
                 }
+
+                //untuk menilai ybs
+                $get_mapping_penilai = Tref_mapping_jabatan::where('id_jabatan_peserta', $id_jabatan)->get();
+
+                foreach($get_mapping_penilai as $list_penilai){
+                    $id_jabatan_penilai = $list_penilai['id_jabatan_penilai'];
+                    $threshold_penilai = $list_penilai['threshold'];
+                    
+                    //check jabatan penilai apakah gabungan
+                    $id_kelompok_jabatan_penilai = [];
+                    $get_jabatan_penilai = Tref_jabatan_peserta::where('id', $id_jabatan_penilai)->first();
+                    if((int)$get_jabatan_penilai->id_kelompok_jabatan === 0){
+                        $id_jabatan_gabungan = $id_jabatan_penilai;
+                        $get_jabatan_gabungan = Tref_jabatan_peserta::where('id_jabatan_gabungan', $id_jabatan_gabungan)->get();
+                        foreach($get_jabatan_gabungan as $list_jabatan_gabungan){
+                            $id_kelompok_jabatan_penilai[]=$list_jabatan_gabungan['id_kelompok_jabatan'];
+                        }
+                    }else{
+                        $id_kelompok_jabatan_penilai[]=$get_jabatan_penilai->id_kelompok_jabatan;
+                    }
+
+                    $get_data_observee_penilai = Trans_observee::leftJoin('trans_peserta_zonasi as b', 'b.id_pegawai_penilai', 'trans_observee.IdObservee')
+                                ->join('tref_pegawai as c', 'c.id_pegawai', 'trans_observee.IdPegawai')
+                                ->join('trans_zonasi_satker as d',  'd.IdZonaSatker', 'trans_observee.IdZonaSatker')
+                                ->join('v_satker as e', 'e.IdSatker', 'd.IdSatker')
+                                ->select("trans_observee.IdObservee", 'c.nama_pegawai', 'e.NamaSatker', 'trans_observee.endpoint', 'trans_observee.NamaJabatan', 'trans_observee.id_kelompok_jabatan', 'trans_observee.IdZonaSatker')
+                                ->where('d.IdZona', $get_observee['IdZona'])
+                                ->whereIn('id_kelompok_jabatan', $id_kelompok_jabatan_penilai)
+                                ->where("d.IdSatker", $id_satker)
+                                ->groupBy('c.nama_pegawai', 'trans_observee.IdObservee', 'e.NamaSatker', 'trans_observee.endpoint', 'trans_observee.NamaJabatan', 'trans_observee.id_kelompok_jabatan', 'trans_observee.IdZonaSatker')
+                                ->get();
+
+                    if($get_data_observee_penilai->count() === 1){
+                        $batas = 1;
+                    }else{
+                        $batas = $threshold_penilai * $get_data_observee_penilai->count() / 100;
+                    }
+                    $x=1;
+                    foreach($get_data_observee_penilai as $list_data_insert_penilai){
+                        if((int)$list_data_insert_penilai['IdObservee'] !== (int)$id_observee && $x <= $batas){
+                            $data_insert[]=[
+                                'id_zonasi'=>$get_observee->IdZona,
+                                'id_zona_satker'=>$list_data_insert_penilai['IdZonaSatker'],
+                                'id_pegawai_peserta'=>$id_observee,
+                                'id_pegawai_penilai'=>$list_data_insert_penilai['IdObservee'],
+                                'id_jabatan_plt'=>null,
+                                'index_plt'=>0,
+                                'created_at'=>date("Y-m-d H:i:s")
+                            ];
+                        }
+                        $x++;
+                    }
+                }
+
                 DB::table("trans_peserta_zonasi")->insert($data_insert);
                 $status=true;
                 $msg = "Berhasil generate data";
