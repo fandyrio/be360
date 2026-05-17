@@ -6,6 +6,7 @@ use App\Models\Trans_peserta_zonasi;
 use App\Models\Tref_jabatan_peserta;
 use App\Models\Tref_mapping_jabatan;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Vinkla\Hashids\Facades\Hashids;
 
     class monitoringService{
@@ -73,7 +74,9 @@ use Vinkla\Hashids\Facades\Hashids;
                     $id_jabatan = $get_jabatan['id_jabatan_gabungan'];
                 }
                 
-                $get_mapping = Tref_mapping_jabatan::where('id_jabatan_penilai', $id_jabatan)->get();
+                $get_mapping = Tref_mapping_jabatan::where('id_jabatan_penilai', $id_jabatan)
+                                                    ->where('active', true)
+                                                    ->get();
                 $data = [];
                 $data_insert = [];
                 foreach($get_mapping as $list_mapping){
@@ -130,7 +133,8 @@ use Vinkla\Hashids\Facades\Hashids;
                 }
 
                 //untuk menilai ybs
-                $get_mapping_penilai = Tref_mapping_jabatan::where('id_jabatan_peserta', $id_jabatan)->get();
+                $get_mapping_penilai = Tref_mapping_jabatan::where('id_jabatan_peserta', $id_jabatan)
+                                                        ->where('active', true)->get();
 
                 foreach($get_mapping_penilai as $list_penilai){
                     $id_jabatan_penilai = $list_penilai['id_jabatan_penilai'];
@@ -188,6 +192,7 @@ use Vinkla\Hashids\Facades\Hashids;
                                                     ->where('trans_peserta_zonasi.id_zonasi', $get_observee['IdZona'])
                                                     ->where('b.IdSatker', $id_satker)
                                                     ->first();
+                        Log::warning("isi", $get_plt->toArray());
                         if(!is_null($get_plt)){
                             $data_insert[]=[
                                 'id_zonasi'=>$get_observee->IdZona,
