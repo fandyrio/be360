@@ -62,15 +62,24 @@ use Vinkla\Hashids\Facades\Hashids;
                                         ->join("tref_pegawai as c", "c.id_pegawai", "trans_observee.IdPegawai")
                                         ->join("trans_zonasi_satker as d", "d.IdZonaSatker", "trans_observee.IdZonaSatker")
                                         ->join("v_satker as e", "e.IdSatker", "d.IdSatker")
-                                        ->select("b.id", "b.id_pegawai_penilai", "c.nama_pegawai", DB::raw('COUNT(id_pegawai_peserta)'), 'trans_observee.NamaJabatan', 'e.NamaSatker', 'trans_observee.endpoint')
+                                        ->select("b.id_pegawai_penilai", "c.nama_pegawai", DB::raw('COUNT(id_pegawai_peserta)'), DB::raw('GROUP_CONCAT(b.id) as ids'), 'trans_observee.NamaJabatan', 'e.NamaSatker', 'trans_observee.endpoint')
                                         ->where('b.id_zonasi', $id_zonasi)
                                         ->whereNull('b.id_jabatan_plt')
                                         ->groupBy('b.id_pegawai_penilai', 'b.id_pegawai_peserta', 'c.nama_pegawai', 'trans_observee.NamaJabatan', 'e.NamaSatker', 'trans_observee.endpoint')
                                         ->havingRaw('COUNT(id_pegawai_peserta) > 1')
                                         ->get();
             foreach($get_data as $list_double){
+                $explode = explode(",", $list_double['ids']);
+                $jumlah = count($explode);
+                $target = "";
+                for($x = 0;$x<$jumlah;$x++){
+                    $target.= Hashids::encode($explode[$x]);
+                    if($x<$jumlah-1){
+                        $target.="-";
+                    }
+                }
                 $data[]=[
-                    'target'=>Hashids::encode($list_double['id']),
+                    'target'=>$target,
                     'nama_pegawai'=>$list_double['nama_pegawai'],
                     'jumlah_insert'=>$list_double['jumlah'],
                     'jabatan'=>$list_double['NamaJabatan'],
