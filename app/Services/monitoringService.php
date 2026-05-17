@@ -1,10 +1,13 @@
 <?php
     namespace App\Services;
 
+use App\Models\Trans_nilai_peserta_zonasi;
 use App\Models\Trans_observee;
 use App\Models\Trans_peserta_zonasi;
 use App\Models\Tref_jabatan_peserta;
 use App\Models\Tref_mapping_jabatan;
+use Exception;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Vinkla\Hashids\Facades\Hashids;
@@ -260,6 +263,44 @@ use Vinkla\Hashids\Facades\Hashids;
             }else{
                 $msg = "Tidak ada masalah";
             }
+            return ['status'=>$status, 'msg'=>$msg];
+        }
+
+        public function fixDouble($id_peserta_zonasi){
+            $status = false;
+            $get_data = Trans_peserta_zonasi::whereIn("id", $id_peserta_zonasi)->get();
+            if($get_data->count() > 1){
+                $penilai_before = null;
+                $peserta_before = null;
+                $cocok = 1;
+                foreach($get_data as $list_double){
+                    if(!is_null($penilai_before) && (int)$list_double['id_pegawai_penilai'] === (int)$penilai_before && !is_null($peserta_before) && (int)$list_double['id_pegawai_peserta'] === (int)$peserta_before){
+                        $cocok+=1;
+                    }
+
+                    $penilai_before = $list_double['id_pegawai_penilai'];
+                    $peserta_before = $list_double['id_pegawai_peserta'];
+                }
+
+                if($cocok === $get_data->count()){
+                    try{
+                        DB::beginTransaction();
+                            for($x=1;$x<$cocok;$x++){
+                                Trans_peserta_zonasi::where("id", $id_peserta_zonasi[$x])->delete();
+                                Trans_nilai_peserta_zonasi::where("id_peserta_zonasi", $id_peserta_zonasi[$x])->delete();
+                            }
+                        DB::commit();
+                        $status = true;
+                        $msg = "Berhasil menghapus data ganda";
+                    }catch(\Exception $e){
+                        DB::rollBack();
+                        $msg = "Error: ".$e->getMessage();
+                    }
+                }
+            }else{
+                $msg = "Data ini tidak double";
+            }
+
             return ['status'=>$status, 'msg'=>$msg];
         }
     }

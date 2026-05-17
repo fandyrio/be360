@@ -16,3 +16,4 @@ Route::get('monitor', 'monitoringController@index');
 Route::post("list-not-found", "monitoringController@listNotFound");
 Route::post("list-double", "monitoringController@listDouble");
 Route::post("fix-404", 'monitoringController@fixNotFound');
+Route::post("fix-double", "monitoringController@fixDouble");

@@ -46,4 +46,17 @@ class monitoringController extends Controller
         $msg = $fix['msg'];
         return response()->json(['status'=>$status, 'msg'=>$msg]);
     }
+
+    public function fixDouble(Request $request){
+        $id_peserta_zonasi = $request->target;
+        $explode = explode("-", $id_peserta_zonasi);
+        $id_peserta_zonasi_arr = [];
+        for($x=0;$x<count($explode);$x++){
+            $id_peserta_zonasi_arr[]=Hashids::decode($explode[$x]);
+        }
+        $fix = $this->monitoringService->fixDouble($id_peserta_zonasi_arr);
+        $status = $fix['status'];
+        $msg = $fix['msg'];
+        return response()->json(['status'=>$status, 'msg'=>$msg]);
+    }
 }

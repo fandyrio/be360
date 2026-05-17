@@ -1,5 +1,5 @@
 <h4><?php echo e($title); ?></h4>
-<div class="progress_msg" style="color:red;"></div>
+<div class="progress_msg_<?php echo e($class_fix); ?>" style="color:red;"></div>
 <?php if($jumlah === 0): ?>
     <i>Clear</i>
 <?php else: ?>
@@ -35,7 +35,7 @@
         var target=$(this).data('target');
         $.ajax({
             beforeSend:function(){
-                $(".progress_msg").html("Loading ...");
+                $(".progress_msg_fix").html("Loading ...");
             },
             url:'fix-404',
             data:{'target':target},
@@ -44,6 +44,29 @@
             success:function(data){
                 $(".progress_msg").html(data.msg);
                 $(".fix[data-target='"+target+"']").remove();
+            },error:function(data){
+                alert("Error data");
+                console.log(data);
+            }
+        })
+    });
+
+    $(document).on("click", ".fix_double", function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        var target=$(this).data('target');
+        $.ajax({
+            beforeSend:function(){
+                $(".progress_msg_fix_double").html("Loading ...");
+            },
+            url:'fix-double',
+            data:{'target':target},
+            type:'POST',
+            dataType:'JSON',
+            success:function(data){
+                $(".progress_msg_fix_double").html(data.msg);
+                $(".fix_double[data-target='"+target+"']").remove();
             },error:function(data){
                 alert("Error data");
                 console.log(data);
