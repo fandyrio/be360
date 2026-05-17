@@ -184,7 +184,7 @@ use Vinkla\Hashids\Facades\Hashids;
                     }else{
                         $batas = 0;
                         $get_plt = Trans_peserta_zonasi::join('trans_zonasi_satker as b', 'b.IdZonaSatker', 'trans_peserta_zonasi.id_zona_satker')
-                                                    ->select("trans_peserta_zonasi")
+                                                    ->select("trans_peserta_zonasi.*")
                                                     ->whereIn('trans_peserta_zonasi.id_jabatan_plt', $id_kelompok_jabatan_penilai)
                                                     ->where('trans_peserta_zonasi.id_zonasi', $get_observee['IdZona'])
                                                     ->where('b.IdZona', $get_observee['IdZona'])
