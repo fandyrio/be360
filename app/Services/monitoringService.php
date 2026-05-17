@@ -32,18 +32,55 @@ use Vinkla\Hashids\Facades\Hashids;
                                 ->groupBy('c.nama_pegawai', 'trans_observee.IdObservee', 'e.NamaSatker', 'trans_observee.endpoint', 'trans_observee.NamaJabatan', 'trans_observee.id_kelompok_jabatan')
                                 ->havingRaw('COUNT(b.id_pegawai_penilai) <= 2')
                                 ->get();
-            foreach($get_data as $data_double){
+            foreach($get_data as $data_not_found){
                 $data[]=[
-                    'id_observee' => Hashids::encode($data_double['IdObservee']),
-                    'nama_pegawai'=> $data_double['nama_pegawai'],
-                    'total'=>$data_double['total'],
-                    'nama_satker'=>$data_double['NamaSatker'],
-                    'endpoint'=>$data_double['endpoint'],
-                    'jabatan'=>$data_double['NamaJabatan'],
-                    'id_kelompok_jabatan'=>$data_double['id_kelompok_jabatan']
+                    'target' => Hashids::encode($data_not_found['IdObservee']),
+                    'nama_pegawai'=> $data_not_found['nama_pegawai'],
+                    'total'=>$data_not_found['total'],
+                    'nama_satker'=>$data_not_found['NamaSatker'],
+                    'endpoint'=>$data_not_found['endpoint'],
+                    'jabatan'=>$data_not_found['NamaJabatan'],
+                    'id_kelompok_jabatan'=>$data_not_found['id_kelompok_jabatan']
                 ];
             }
             return ['data'=>$data, 'jumlah'=>count($data)];
+        }
+
+        public function getDoubleInsert($id_zonasi){
+            // select
+            // b.id, b.id_pegawai_penilai, c.nama_pegawai, count(id_pegawai_peserta), a.NamaJabatan, e.NamaSatker, a.endpoint
+            // from trans_observee a
+            // JOIN trans_peserta_zonasi b on b.id_pegawai_penilai = a.IdObservee
+            // JOIN tref_pegawai c on c.id_pegawai = a.IdPegawai
+            // JOIN trans_zonasi_satker d on d.IdZonaSatker = a.IdZonaSatker
+            // JOIN v_satker e on e.IdSatker = d.IdSatker
+            // where b.id_zonasi = 399 and b.id_jabatan_plt is null
+            // group by id_pegawai_peserta, id_pegawai_penilai
+            // Having count(id_pegawai_peserta) > 1
+            $data = [];
+            $get_data = Trans_observee::join("trans_peserta_zonasi as b", "b.id_pegawai_penilai", "trans_observee.IdObservee")
+                                        ->join("tref_pegawai as c", "c.id_pegawai", "trans_observee.IdPegawai")
+                                        ->join("trans_zonasi_satker as d", "d.IdZonaSatker", "trans_observee.IdZonaSatker")
+                                        ->join("v_satker as e", "e.IdSatker", "d.IdSatker")
+                                        ->select("b.id", "b.id_pegawai_penilai", "c.nama_pegawai", DB::raw('COUNT(id_pegawai_peserta)'), 'trans_observee.NamaJabatan', 'e.NamaSatker', 'trans_observee.endpoint')
+                                        ->where('b.id_zonasi', $id_zonasi)
+                                        ->whereNull('b.id_jabatan_plt')
+                                        ->groupBy('b.id', 'b.id_pegawai_penilai', 'c.nama_pegawai', 'trans_observee.NamaJabatan', 'e.NamaSatker', 'trans_observee.endpoint')
+                                        ->havingRaw('COUNT(id_pegawai_peserta) > 1')
+                                        ->get();
+            foreach($get_data as $list_double){
+                $data[]=[
+                    'target'=>Hashids::encode($list_double['id']),
+                    'nama_pegawai'=>$list_double['nama_pegawai'],
+                    'jumlah_insert'=>$list_double['jumlah'],
+                    'jabatan'=>$list_double['NamaJabatan'],
+                    'nama_satker'=>$list_double['NamaSatker'],
+                    'endpoint'=>$list_double['endpoint']
+                ];
+            }
+
+            return ['data'=>$data, 'jumlah'=>count($data)];
+            
         }
 
         public function fix404($id_observee){

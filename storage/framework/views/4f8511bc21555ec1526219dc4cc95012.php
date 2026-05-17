@@ -1,4 +1,4 @@
-<h4>Link 404</h4>
+<h4><?php echo e($title); ?></h4>
 <div class="progress_msg" style="color:red;"></div>
 <?php if($jumlah === 0): ?>
     <i>Clear</i>
@@ -21,7 +21,7 @@
                     <td><?php echo e($data[$x]['jabatan']); ?></td>
                     <td><?php echo e($data[$x]['nama_satker']); ?></td>
                     <td><?php echo e($data[$x]['endpoint']); ?></td>
-                    <td><button class='fix' data-target="<?php echo e($data[$x]['id_observee']); ?>">Fix</td>
+                    <td><button class='<?php echo e($class_fix); ?>' data-target="<?php echo e($data[$x]['target']); ?>">Fix</td>
                 </tr>
             <?php endfor; ?>
         </tbody>

@@ -1,4 +1,4 @@
-<h4>Link 404</h4>
+<h4>{{ $title }}</h4>
 <div class="progress_msg" style="color:red;"></div>
 @if($jumlah === 0)
     <i>Clear</i>
@@ -21,7 +21,7 @@
                     <td>{{ $data[$x]['jabatan'] }}</td>
                     <td>{{ $data[$x]['nama_satker'] }}</td>
                     <td>{{ $data[$x]['endpoint'] }}</td>
-                    <td><button class='fix' data-target="{{ $data[$x]['id_observee'] }}">Fix</td>
+                    <td><button class='{{ $class_fix }}' data-target="{{ $data[$x]['target'] }}">Fix</td>
                 </tr>
             @endfor
         </tbody>

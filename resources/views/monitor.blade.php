@@ -36,8 +36,14 @@
         e.stopPropagation();
         e.stopImmediatePropagation();
         var zonasi = $(".zonasi").val();
+        $(".list-404").html("Loading ...");
         $(".content-double").html("Loading ...");
+        
         $.post("list-not-found", {zonasi:zonasi}, function(data){
+            $(".list-404").html(data);
+        })
+
+        $.post("list-double", {zonasi:zonasi}, function(data){
             $(".content-double").html(data);
         })
     })
