@@ -533,7 +533,7 @@ use Vinkla\Hashids\Facades\Hashids;
                                         }
 
                                     }
-                                    
+                                    $msg = $jlh_pertanyaan_variable;         
                                 }
                                 $id_peserta_zonasi_before=$list_pertanyaan['id_peserta_zonasi'];
                                 // $id_variable_before=$list_pertanyaan['id_variable'];
@@ -542,7 +542,7 @@ use Vinkla\Hashids\Facades\Hashids;
                             $id_nilai_peserta_str.=Hashids::encode($list_pertanyaan['id_nilai_pertanyaan']);
                             $id_nilai_peserta_str.=Hashids::encode($id_periode+1);
                         }
-                        $msg = $jumlah_variable;
+                        // 
                         $jumlah_nilai=count($edit_nilai);
                         for($i_locked_nilai=0;$i_locked_nilai<$jumlah_nilai;$i_locked_nilai++){
                             if((int)$edit_nilai[$i_locked_nilai] === 0){
