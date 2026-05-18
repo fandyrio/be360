@@ -501,7 +501,7 @@ use Vinkla\Hashids\Facades\Hashids;
                         $edit_nilai=[];
                         foreach($get_existed_nilai as $list_pertanyaan){
                             //untuk set 1 orang saja
-                            if(is_null($list_pertanyaan['id_reference']) && (is_null($id_peserta_zonasi_before) || (int)$list_pertanyaan['id_peserta_zonasi'] === (int)$id_peserta_zonasi_before)){
+                            if((is_null($list_pertanyaan['id_reference']) && (is_null($id_peserta_zonasi_before) || (int)$list_pertanyaan['id_peserta_zonasi'] === (int)$id_peserta_zonasi_before)) || (!is_null($list_pertanyaan['id_reference']) && (int)$list_pertanyaan['id_reference'] === (int)$list_pertanyaan['id_peserta_zonasi']) ){
                                 if((int)$list_pertanyaan['locked'] === 1){
                                     $edit_nilai[$a]=0;
                                 }
@@ -532,7 +532,7 @@ use Vinkla\Hashids\Facades\Hashids;
                                             unset($data_pertanyaan_statis[$i_variable]['daftar_pertanyaan'][$i_pertanyaan]["nilai_{$list_pertanyaan['id_pertanyaan']}"]);
                                         }
                                     }
-                                    $msg = $jumlah_variable;
+                                    // $msg = $jumlah_variable;
                                     
                                 }
                                 $id_peserta_zonasi_before=$list_pertanyaan['id_peserta_zonasi'];
