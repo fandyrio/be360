@@ -310,7 +310,7 @@ class penilaianController extends Controller
         try{
             $hasil=preg_split("/-|$pemisahString_1|$pemisahString_2|$pemisahString_3/", $id_jawaban);
             if(count($hasil) !== 5){
-                throw new \Exception("Invalid token peserta:1");
+                throw new \Exception("Invalid token peserta:1 ".count($hasil));
             }
             $id_jawaban=Hashids::decode($hasil[0]);
             $point_jawaban=Hashids::decode($hasil[1]);
