@@ -531,8 +531,8 @@ use Vinkla\Hashids\Facades\Hashids;
                                             
                                             unset($data_pertanyaan_statis[$i_variable]['daftar_pertanyaan'][$i_pertanyaan]["nilai_{$list_pertanyaan['id_pertanyaan']}"]);
                                         }
-                                        $msg = $jumlah_variable;
                                     }
+                                    $msg = $jumlah_variable;
                                     
                                 }
                                 $id_peserta_zonasi_before=$list_pertanyaan['id_peserta_zonasi'];
