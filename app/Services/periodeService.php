@@ -669,7 +669,8 @@ use PDO;
                                 foreach($get_data_mapping as $list_mapping){
                                     $data_mapping[]=[
                                         'id_periode'=>$id_periode,
-                                        'id_mapping_jabatan'=>$list_mapping['id']
+                                        'id_mapping_jabatan'=>$list_mapping['id'],
+                                        'threshold'=>$list_mapping['threshold']
                                     ];
                                 }
                                 DB::table('trans_mapping_jabatan_periode')->insert($data_mapping);

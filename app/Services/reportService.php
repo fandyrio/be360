@@ -147,10 +147,11 @@ use Vinkla\Hashids\Facades\Hashids;
                                 ->join("tref_jabatan_peserta as tjp_penilai", "tjp_penilai.id", "tmj.id_jabatan_penilai")
                                 ->where("trans_peserta_zonasi.id_pegawai_peserta", $id_observee)
                                 ->where("ttp.IdTahunPenilaian", $id_periode)
-                                ->selectRaw("tjp_penilai.jabatan, COUNT(to.id_kelompok_jabatan) as jumlah_jabatan_penilai, jumlah_orang.total_orang, tmjp.threshold")
+                                ->selectRaw("tjp_penilai.jabatan, to.id_kelompok_jabatan, COUNT(to.id_kelompok_jabatan) as jumlah_jabatan_penilai, jumlah_orang.total_orang, tmjp.threshold")
                                 ->groupBy("tjp_penilai.jabatan")
                                 ->groupBy("jumlah_orang.total_orang")
                                 ->groupBy("tmjp.threshold")
+                                ->groupBy("to.id_kelompok_jabatan")
                                 ->get();
             return $get_data_jlh_penilai;
         }

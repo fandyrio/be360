@@ -699,7 +699,7 @@ use Vinkla\Hashids\Facades\Hashids;
             return  $current_nilai_peserta;
         }
 
-        private function bobotJabatanPeriode($id_periode){
+        public function bobotJabatanPeriode($id_periode){
             $get_data=Cache::store("redis")->remember("bobot_periode_{$id_periode}", 3600*24*365, function () use($id_periode){
                 return Trans_bobot_penilaian_periode::join('tref_bobot_penilaian as tbp', 'tbp.id', '=', 'trans_bobot_penilaian_periode.id_bobot_penilaian')
                                             ->select('tbp.id_jabatan_peserta', 'tbp.id_jabatan_penilai', 'trans_bobot_penilaian_periode.bobot')
@@ -723,6 +723,9 @@ use Vinkla\Hashids\Facades\Hashids;
         }
 
         private function countJabatanPenilaiSatker($id_zonasi_satker, $id_kelompok_jabatan_penilai, $id_observee_peserta){
+            //---------------------------------------------------------------------------------------------------------------
+            //fungsi ini sudah tidak digunakan
+            //---------------------------------------------------------------------------------------------------------------
             //get observee yang jabatannya menilai peserta
             $get_observee=Trans_observee::where('IdZonaSatker', $id_zonasi_satker)
                                             ->where('id_kelompok_jabatan', $id_kelompok_jabatan_penilai)
@@ -731,16 +734,47 @@ use Vinkla\Hashids\Facades\Hashids;
             foreach($get_observee as $list_observee){
                 $id_observee[]=$list_observee['IdObservee'];
             }
-            //gimana dengan yang plt, belum kehitung disini.
+            //gimana dengan yang plt, belum kehitung disini. ->done
+            //yang id jabatan gabungan belum di handle
 
             $jumlah_penilai=Trans_peserta_zonasi::where('id_pegawai_peserta', $id_observee_peserta)
                                                 ->whereIn('id_pegawai_penilai', $id_observee)
                                                 ->where("id_zona_satker", $id_zonasi_satker)
+                                                // ->whereNull('id_jabatan_plt')
                                                 ->count();
             return $jumlah_penilai;     
         }
 
-        private function generateNilaiObservee($id_zonasi_satker, $id_peserta_zonasi_arr, $id_periode, $current_nilai_peserta){
+        public function countJabatanPenilaiSatkerNew($id_zonasi_satker, $id_kelompok_jabatan_penilai, $id_observee_peserta, $id_jabatan_penilai, $is_jabatan_gabungan){
+
+            if($is_jabatan_gabungan){
+                $get_data = Tref_jabatan_peserta::where('id_jabatan_gabungan', $id_jabatan_penilai)->get();
+                $id_kelompok_jabatan_penilai_arr = [];
+                foreach($get_data as $list_jabatan){
+                    $id_kelompok_jabatan_penilai_arr[]=$list_jabatan['id_kelompok_jabatan'];
+                }
+            }else{
+                $id_kelompok_jabatan_penilai_arr[]=$id_kelompok_jabatan_penilai;
+            }
+
+            $jumlah_penilai=Trans_peserta_zonasi::join('trans_observee as to', 'to.IdObservee', 'trans_peserta_zonasi.id_pegawai_penilai')
+                                        ->where(function($w) use($id_kelompok_jabatan_penilai_arr, $id_observee_peserta, $id_zonasi_satker){
+                                            $w->whereIn('to.id_kelompok_jabatan', $id_kelompok_jabatan_penilai_arr)
+                                                ->where('trans_peserta_zonasi.id_pegawai_peserta', $id_observee_peserta)
+                                                ->where('trans_peserta_zonasi.id_zona_satker', $id_zonasi_satker)
+                                                ->whereNull('id_jabatan_plt');
+                                        })
+                                        ->orWhere(function($w2) use($id_jabatan_penilai, $id_observee_peserta, $id_zonasi_satker){
+                                            $w2->where('trans_peserta_zonasi.id_jabatan_plt', $id_jabatan_penilai)
+                                                ->where('trans_peserta_zonasi.id_pegawai_peserta', $id_observee_peserta)
+                                                ->where('trans_peserta_zonasi.id_zona_satker', $id_zonasi_satker);
+                                        })
+                                        ->count();
+            return $jumlah_penilai;
+                                            
+        }
+
+        public function generateNilaiObservee($id_zonasi_satker, $id_peserta_zonasi_arr, $id_periode, $current_nilai_peserta){
             $jabatan_peserta=Trans_peserta_zonasi::join('trans_observee as to', 'to.IdObservee', '=', 'trans_peserta_zonasi.id_pegawai_peserta')
                                             ->join('tref_jabatan_peserta as tjp', 'tjp.id_kelompok_jabatan', '=', 'to.id_kelompok_jabatan')
                                             ->join('trans_observee as to2', 'to2.IdObservee', '=', 'trans_peserta_zonasi.id_pegawai_penilai')
@@ -752,6 +786,7 @@ use Vinkla\Hashids\Facades\Hashids;
             $nilai_akhir=0;
             foreach($jabatan_peserta as $list_jabatan){
                 $is_plt=false;
+                $is_jabatan_gabungan = false;
                 $id_jabatan_peserta=$list_jabatan['id_jabatan_peserta'];
                 if(is_null($list_jabatan['id_jabatan_plt'])){
                     $id_jabatan_penilai=$list_jabatan['id_jabatan_penilai'];
@@ -769,13 +804,14 @@ use Vinkla\Hashids\Facades\Hashids;
 
                 if(!is_null($list_jabatan['id_jabatan_gabungan_penilai']) && $is_plt === false){
                     $id_jabatan_penilai=$list_jabatan['id_jabatan_gabungan_penilai'];
+                    $is_jabatan_gabungan = true;
                 }
 
                 $bobot_penilaian=$bobot["bobot_{$id_jabatan_peserta}_{$id_jabatan_penilai}"];
-                $jumlah_penilai=$this->countJabatanPenilaiSatker($id_zonasi_satker, $id_kelompok_jabatan_penilai, $list_jabatan['id_pegawai_peserta']);
-                if($is_plt === true){
-                    $jumlah_penilai += 1;
-                }
+                $jumlah_penilai=$this->countJabatanPenilaiSatkerNew($id_zonasi_satker, $id_kelompok_jabatan_penilai, $list_jabatan['id_pegawai_peserta'], $id_jabatan_penilai, $is_jabatan_gabungan);
+                // if($is_plt === true){
+                //     $jumlah_penilai += 1;
+                // }
                 if($jumlah_penilai === 0 && $id_jabatan_penilai === 1 && $id_jabatan_peserta === 1){
                     $get_penilaian=Trans_peserta_zonasi::where("id_pegawai_penilai", $list_jabatan['id_pegawai_penilai'])
                                                 ->where("id_pegawai_peserta", $list_jabatan['id_pegawai_peserta'])

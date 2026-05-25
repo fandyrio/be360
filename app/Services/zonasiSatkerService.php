@@ -655,7 +655,7 @@ use PDO;
                                         $get_zonasi_satker->update();
                                         DB::commit();
                                         $status=true;
-                                        $msg="Berahasil mengirimkan penilaian ke Badilum";
+                                        $msg="Berhasil mengirimkan penilaian ke Badilum";
                                         Cache::store("redis")->forget("zonasi_satker_{$id_zonasi_satker}");
                                     }else{
                                          throw new \Exception("Data Penilaian tidak sesuai ".$update_peserta." : ".$jumlah_penilaian);
