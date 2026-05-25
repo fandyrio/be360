@@ -154,7 +154,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                 }catch(\Exception $e){
                     DB::rollback();
                     $msg.="Terjadi kesalahan sistem saat menyimpan zonasi ".$e->getFile()." : ".$e->getMessage()." : ".$e->getLine()." : ";
-                    Log::error("Job InsertDataPesertaZonasi gagal: ", ['trace'=>$e->getTrace()]);
+                    // Log::error("Job InsertDataPesertaZonasi gagal: ", ['trace'=>$e->getTrace()]);
                 }
             }else{
                 $msg="Tahun penilaian tidak ditemukan atau Periode sudah Mulai";
@@ -742,6 +742,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                         // $$variable=null;
                         ${"index_{$variable}"}=0;
                         // ${"counter_{$variable}"}=0;
+                        Log::info($id_satker_before." tidak sama dengan ".$list_satker['IdSatker']);
                     }
                     //sampai sini harus disederhanakan nanti ya..
 
