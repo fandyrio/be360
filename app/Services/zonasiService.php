@@ -753,7 +753,13 @@ use Symfony\Component\CssSelector\Node\HashNode;
                             if($variable === "juru_sita" && (int)$list_satker['IdSatkerBanding'] === (int)$list_satker['IdSatker']){
                                 $include="false";
                             }   
+                            if($data_peserta[$index_satker][$variable][${"index_{$variable}"}]['nama'] === "Nyimas Zihni Badzlina"){
+                                Log::info($data_peserta[$index_satker][$variable][${"index_{$variable}"}]['nama']);
+                            }
                             if($include === "true"){
+                                if($data_peserta[$index_satker][$variable][${"index_{$variable}"}]['nama'] === "Nyimas Zihni Badzlina"){
+                                    Log::info("Include");
+                                }
                                 //set new variable bila 
                                 $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['nama']=$list_peserta['nama_pegawai'];
                                 $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['id_pegawai']=$list_peserta['IdPegawai'];
@@ -764,6 +770,10 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                 $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['is_plt']="false";
                                 $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['jlh_menilai']=0;
                                 ${"index_{$variable}"}+=1;
+                            }else{
+                                if($data_peserta[$index_satker][$variable][${"index_{$variable}"}]['nama'] === "Nyimas Zihni Badzlina"){
+                                    Log::info("Ga Include");
+                                }
                             }
                             // shuffle($$variable);
                         }
