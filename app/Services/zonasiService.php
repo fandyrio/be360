@@ -692,6 +692,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                         ->orderBy('trans_observee.IdZonaSatker', 'desc')
                                         ->where('trans_observee.entry_job', false)
                                         ->get();
+            Log::warning("data_peserta", $getPeserta->toArray());
             // $jabatan_teknis=[9, 16, 30, 31, 32, 15, 27];
             $get_jabatan_peserta=Tref_jabatan_peserta::where('active', true)->get();
             $index_satker=0;
@@ -753,13 +754,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                             if($variable === "juru_sita" && (int)$list_satker['IdSatkerBanding'] === (int)$list_satker['IdSatker']){
                                 $include="false";
                             }   
-                            if($list_peserta['nama_pegawai'] === "Nyimas Zihni Badzlina"){
-                                Log::info($data_peserta[$index_satker][$variable][${"index_{$variable}"}]['nama']);
-                            }
                             if($include === "true"){
-                                if($list_peserta['nama_pegawai'] === "Nyimas Zihni Badzlina"){
-                                    Log::info("Include");
-                                }
                                 //set new variable bila 
                                 $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['nama']=$list_peserta['nama_pegawai'];
                                 $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['id_pegawai']=$list_peserta['IdPegawai'];
@@ -770,10 +765,6 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                 $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['is_plt']="false";
                                 $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['jlh_menilai']=0;
                                 ${"index_{$variable}"}+=1;
-                            }else{
-                                if($list_peserta['nama_pegawai'] === "Nyimas Zihni Badzlina"){
-                                    Log::info("Ga Include");
-                                }
                             }
                             // shuffle($$variable);
                         }
@@ -1082,10 +1073,10 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                         //check peserta penilai jangan sampai menilai dirinya sendiri
                                         // var_dump($data_peserta[$s][$variable_jabatan_peserta][$a]['id_pegawai']);
                                         // echo $variable_penilai." ".$jlh_penilai."<br />";
-                                        Log::warning("satker ke: ".$s.", jabatan: ".$variable_penilai.", pointer: ".$variable_penilai);
+                                        // Log::warning("satker ke: ".$s.", jabatan: ".$variable_penilai.", pointer: ".$variable_penilai);
                                         if($s === 1 && $variable_penilai === "pegawai"){
-                                            Log::warning("data_peserta", $data_peserta[0]);
-                                            Log::warning("data_peserta", $data_peserta[$s]);
+                                            // Log::warning("data_peserta", $data_peserta[0]);
+                                            // Log::warning("data_peserta", $data_peserta[$s]);
                                         }
                                         if((int)$data_peserta[$s][$variable_jabatan_peserta][$a]['id_pegawai'] === 
                                         (int)$data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['id_pegawai']){
