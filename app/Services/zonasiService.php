@@ -742,7 +742,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                         // $$variable=null;
                         ${"index_{$variable}"}=0;
                         // ${"counter_{$variable}"}=0;
-                        Log::info($id_satker_before." tidak sama dengan ".$list_satker['IdSatker']);
+                        Log::info($id_satker_before." tidak sama dengan ".$list_satker['IdSatker']." index variable: ". $variable." = ".${"index_{$variable}"});
                     }
                     //sampai sini harus disederhanakan nanti ya..
 
