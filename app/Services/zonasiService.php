@@ -762,7 +762,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                 Log::warning("Nama: ".$list_peserta['nama_pegawai']." Masuk");
                             }
 
-                            if($list_peserta['nama_pegawai'] !== "Nyimas Zihni Badzlina" && $variable === "pegawai" && ${"index_{$variable}"} === 0){
+                            if($list_peserta['nama_pegawai'] !== "Nyimas Zihni Badzlina" && $variable === "pegawai" && ${"index_{$variable}"} === 0 && $index_satker === 0){
                                 Log::warning("Nama: ".$list_peserta['nama_pegawai']." menimpa index 0");
                             }
 
