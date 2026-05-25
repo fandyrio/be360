@@ -714,6 +714,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                 }
                 $data_peserta[$index_satker]['nama_satker']=$list_satker['NamaSatker'];
                 $data_peserta[$index_satker]['id_zonasi_satker']=$list_satker['IdZonaSatker'];
+                $reset_gabungan = true;
                 foreach($get_jabatan_peserta as $list_jabatan_peserta){
                     //check apakah masuk jabatan gabungan
                     //perlu di sederhanakan
@@ -722,7 +723,8 @@ use Symfony\Component\CssSelector\Node\HashNode;
                         $variable=str_replace(' ', '_', strtolower($get_parent['jabatan']));
                         $jabatan_peserta_=$get_parent['jabatan'];
                         $id_jabatan_peserta_=$get_parent['id'];
-                        if(!isset(${"index_{$variable}"}) || ((int)$id_satker_before !== (int)$list_satker['IdSatker'] && !is_null($id_satker_before))){
+                        if($reset_gabungan === true){
+                            $reset_gabungan = false;
                             // ${"pointer_{$variable}"}=0;
                             // $$variable=null;
                             ${"index_{$variable}"}=0;
@@ -804,7 +806,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                         $nama_jabatan_arr[$index_satker][]=$jabatan_peserta_;
                     }
                     // echo $variable."<br />";
-                    $id_satker_before = $list_satker['IdSatker'];
+                    // $id_satker_before = $list_satker['IdSatker'];
                 }
                 // print_r($data_peserta[0]['hakim']);
                 
