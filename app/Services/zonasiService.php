@@ -808,7 +808,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                         $nama_jabatan_arr[$index_satker][]=$jabatan_peserta_;
                     }
                     // echo $variable."<br />";
-                    // $id_satker_before = $list_satker['IdSatker'];
+                    $id_satker_before = $list_satker['IdSatker'];
                 }
                 // print_r($data_peserta[0]['hakim']);
                 
