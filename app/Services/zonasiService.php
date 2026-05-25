@@ -694,7 +694,9 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                         ->get();
             // Log::warning("data_peserta", $getPeserta->toArray());
             // $jabatan_teknis=[9, 16, 30, 31, 32, 15, 27];
-            $get_jabatan_peserta=Tref_jabatan_peserta::where('active', true)->get();
+            $get_jabatan_peserta=Tref_jabatan_peserta::where('active', true)
+                                    ->where('id_kelompok_jabatan', '>', 0)
+                                    ->get();
             $index_satker=0;
             $satker=[];
             $id_satker=[];
