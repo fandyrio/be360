@@ -728,6 +728,8 @@ use Symfony\Component\CssSelector\Node\HashNode;
                             ${"index_{$variable}"}=0;
                             Log::warning($list_jabatan_peserta['jabatan']." convert : "."index: ".$variable." tidak ada atau".$id_satker_before." ga sama dengan ".$list_satker['IdSatker']);
                             // ${"counter_{$variable}"}=0;
+                        }else{
+                            Log::warning($list_jabatan_peserta['jabatan']." convert : "."index: ".$variable." ada atau".$id_satker_before." sama dengan ".$list_satker['IdSatker']);
                         }
                     }else{
                         $variable=str_replace(' ','_', strtolower($list_jabatan_peserta['jabatan']));
