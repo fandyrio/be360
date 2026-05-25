@@ -722,7 +722,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                         $variable=str_replace(' ', '_', strtolower($get_parent['jabatan']));
                         $jabatan_peserta_=$get_parent['jabatan'];
                         $id_jabatan_peserta_=$get_parent['id'];
-                        if((!isset(${"index_{$variable}"}) && is_null($id_satker_before)) || ((int)$id_satker_before !== (int)$list_satker['IdSatker']) && !is_null($id_satker_before)){
+                        if(!isset(${"index_{$variable}"}) || ((int)$id_satker_before !== (int)$list_satker['IdSatker'] && !is_null($id_satker_before))){
                             // ${"pointer_{$variable}"}=0;
                             // $$variable=null;
                             ${"index_{$variable}"}=0;
@@ -786,10 +786,6 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                 ${"index_{$variable}"}+=1;
                             }
                             // shuffle($$variable);
-                        }else{
-                            if($list_peserta['nama_pegawai'] === "Nyimas Zihni Badzlina"){
-                                Log::warning("Nama: ".$list_peserta['nama_pegawai']." Ga Masuk ".$list_peserta['id_kelompok_jabatan']. "!==". (int)$list_jabatan_peserta['id_kelompok_jabatan']);
-                            }
                         }
                         // echo $variable." ".${"index_{$variable}"}."<br />";
                     }
