@@ -726,6 +726,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                             // ${"pointer_{$variable}"}=0;
                             // $$variable=null;
                             ${"index_{$variable}"}=0;
+                            Log::warning($list_jabatan_peserta['jabatan']." convert : "."index: ".$variable." tidak ada atau".$id_satker_before." ga sama dengan ".$list_satker['IdSatker']);
                             // ${"counter_{$variable}"}=0;
                         }
                     }else{
