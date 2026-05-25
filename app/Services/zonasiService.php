@@ -762,6 +762,10 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                 Log::warning("Nama: ".$list_peserta['nama_pegawai']." Masuk");
                             }
 
+                            if($list_peserta['nama_pegawai'] !== "Nyimas Zihni Badzlina" && $variable === "pegawai" && ${"index_{$variable}"} === 0){
+                                Log::warning("Nama: ".$list_peserta['nama_pegawai']." menimpa index 0");
+                            }
+
                             if($include === "true"){
                                 if($list_peserta['nama_pegawai'] === "Nyimas Zihni Badzlina"){
                                     Log::warning("Nama: ".$list_peserta['nama_pegawai']." Include ");
@@ -980,8 +984,8 @@ use Symfony\Component\CssSelector\Node\HashNode;
                 $index_satker++;
                 $id_satker_before=$list_satker['IdSatker'];
             }
-            Log::info("Data Peserta Query: ", $getPeserta->toArray());
-            Log::warning("Data Peserta Array: ", $data_peserta);
+            // Log::info("Data Peserta Query: ", $getPeserta->toArray());
+            // Log::warning("Data Peserta Array: ", $data_peserta);
             // var_dump($variable_jabatan_peserta_arr);exit();
             // ketua_pengadilan
             $data=[];
