@@ -764,7 +764,8 @@ use Symfony\Component\CssSelector\Node\HashNode;
 
                             if($include === "true"){
                                 if($list_peserta['nama_pegawai'] === "Nyimas Zihni Badzlina"){
-                                    Log::warning("Nama: ".$list_peserta['nama_pegawai']." Ga Include ");
+                                    Log::warning("Nama: ".$list_peserta['nama_pegawai']." Include ");
+                                    Log::warning("Index satker: ".$index_satker." variable: ".$variable." index ke: ".${"index_{$variable}"});
                                 }
                                 //set new variable bila 
                                 $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['nama']=$list_peserta['nama_pegawai'];
@@ -979,7 +980,8 @@ use Symfony\Component\CssSelector\Node\HashNode;
                 $index_satker++;
                 $id_satker_before=$list_satker['IdSatker'];
             }
-            // Log::info("Data Peserta: ", $getPeserta->toArray());
+            Log::info("Data Peserta Query: ", $getPeserta->toArray());
+            Log::warning("Data Peserta Array: ", $data_peserta);
             // var_dump($variable_jabatan_peserta_arr);exit();
             // ketua_pengadilan
             $data=[];
