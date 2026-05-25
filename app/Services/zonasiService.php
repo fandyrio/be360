@@ -740,6 +740,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                         // ${"pointer_{$variable}"}=0;
                         // $$variable=null;
                         ${"index_{$variable}"}=0;
+                        Log::warning("INdex ".$variable." : ".${"index_{$variable}"});
                         // ${"counter_{$variable}"}=0;
                     }
 
