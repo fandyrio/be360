@@ -703,10 +703,10 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                     ->get();
             $jabatan_gabungan_pack=[];
             foreach($get_jabatan_digabung as $list_jabatan_gabungan){
-                if(!is_null($list_jabatan_gabungan['id_jabatan_gabungan'])){
-                    $jabatan_gabungan_pack[]['id']=$list_jabatan_gabungan['id'];
-                    $jabatan_gabungan_pack[]['jabatan']=$list_jabatan_gabungan['jabatan'];
-                }
+                $jabatan_gabungan_pack[]=[
+                                            'id'=>$list_jabatan_gabungan['id'], 
+                                            'jabatan'=>$list_jabatan_gabungan['jabatan']
+                                        ];
             }
                 
             $index_satker=0;
