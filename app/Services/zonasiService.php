@@ -697,6 +697,18 @@ use Symfony\Component\CssSelector\Node\HashNode;
             $get_jabatan_peserta=Tref_jabatan_peserta::where('active', true)
                                     ->where('id_kelompok_jabatan', '>', 0)
                                     ->get();
+            
+            $get_jabatan_digabung = Tref_jabatan_peserta::where('active', true)
+                                    ->where('id_kelompok_jabatan', 0)
+                                    ->get();
+            $jabatan_gabungan_pack=[];
+            foreach($get_jabatan_digabung as $list_jabatan_gabungan){
+                if(!is_null($list_jabatan_gabungan['id_jabatan_gabungan'])){
+                    $jabatan_gabungan_pack[]['id']=$list_jabatan_gabungan['id'];
+                    $jabatan_gabungan_pack[]['jabatan']=$list_jabatan_gabungan['jabatan'];
+                }
+            }
+                
             $index_satker=0;
             $satker=[];
             $id_satker=[];
@@ -721,10 +733,18 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     //check apakah masuk jabatan gabungan
                     //perlu di sederhanakan
                     if(!is_null($list_jabatan_peserta['id_jabatan_gabungan'])){
-                        $get_parent=Tref_jabatan_peserta::where('id', $list_jabatan_peserta['id_jabatan_gabungan'])->first();
-                        $variable=str_replace(' ', '_', strtolower($get_parent['jabatan']));
-                        $jabatan_peserta_=$get_parent['jabatan'];
-                        $id_jabatan_peserta_=$get_parent['id'];
+                        // $get_parent=Tref_jabatan_peserta::where('id', $list_jabatan_peserta['id_jabatan_gabungan'])->first();
+                        // $variable=str_replace(' ', '_', strtolower($get_parent['jabatan']));
+                        // $jabatan_peserta_=$get_parent['jabatan'];
+                        // $id_jabatan_peserta_=$get_parent['id'];
+                        $jlh_gabungan_pack = count($jabatan_gabungan_pack);
+                        for($a=0;$a<$jlh_gabungan_pack;$a++){
+                            if((int)$jabatan_gabungan_pack[$a]['id'] === (int)$list_jabatan_gabungan['id_jabatan_gabungan']){
+                                $variable=str_replace(' ', '_', strtolower($jabatan_gabungan_pack[$a]['jabatan']));
+                                $jabatan_peserta_=$jabatan_gabungan_pack[$a]['jabatan'];
+                                $id_jabatan_peserta_=$jabatan_gabungan_pack[$a]['id'];
+                            }
+                        }
                         if($reset_gabungan === true){
                             $reset_gabungan = false;
                             // ${"pointer_{$variable}"}=0;
@@ -1005,7 +1025,15 @@ use Symfony\Component\CssSelector\Node\HashNode;
 
                 //setiap ganti satker, set pointer ke 0
                 foreach($get_jabatan_peserta as $list_jabatan_peserta){
-                    $variable=str_replace(' ','_', strtolower($list_jabatan_peserta['jabatan']));
+                    if(!is_null($list_jabatan_peserta['id_jabatan_gabungan'])){
+                        for($a=0;$a<$jlh_gabungan_pack;$a++){
+                            if((int)$jabatan_gabungan_pack[$a]['id'] === (int)$list_jabatan_gabungan['id_jabatan_gabungan']){
+                                $variable=str_replace(' ', '_', strtolower($jabatan_gabungan_pack[$a]['jabatan']));
+                            }
+                        }
+                    }else{
+                        $variable=str_replace(' ','_', strtolower($list_jabatan_peserta['jabatan']));
+                    }
                     ${"pointer_{$variable}"}=0;
                 }
                 
