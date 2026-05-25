@@ -692,7 +692,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                         ->orderBy('trans_observee.IdZonaSatker', 'desc')
                                         ->where('trans_observee.entry_job', false)
                                         ->get();
-            Log::warning("data_peserta", $getPeserta->toArray());
+            // Log::warning("data_peserta", $getPeserta->toArray());
             // $jabatan_teknis=[9, 16, 30, 31, 32, 15, 27];
             $get_jabatan_peserta=Tref_jabatan_peserta::where('active', true)->get();
             $index_satker=0;
@@ -749,12 +749,23 @@ use Symfony\Component\CssSelector\Node\HashNode;
 
                     // $data_peserta[$index_satker]['jabatan_peserta'][$index_jabatan]=$variable;
                     foreach($getPeserta as $list_peserta){
+                        if($list_peserta['nama_pegawai'] === "Nyimas Zihni Badzlina"){
+                            Log::warning("Nama: ".$list_peserta['nama_pegawai']." ada");
+                        }
                         if((int)$list_peserta['id_kelompok_jabatan'] === (int)$list_jabatan_peserta['id_kelompok_jabatan'] && (int)$list_satker['IdZonaSatker'] === (int)$list_peserta['IdZonaSatker']){
                             $include="true";
                             if($variable === "juru_sita" && (int)$list_satker['IdSatkerBanding'] === (int)$list_satker['IdSatker']){
                                 $include="false";
-                            }   
+                            }
+
+                            if($list_peserta['nama_pegawai'] === "Nyimas Zihni Badzlina"){
+                                Log::warning("Nama: ".$list_peserta['nama_pegawai']." Masuk");
+                            }
+
                             if($include === "true"){
+                                if($list_peserta['nama_pegawai'] === "Nyimas Zihni Badzlina"){
+                                    Log::warning("Nama: ".$list_peserta['nama_pegawai']." Ga Include ");
+                                }
                                 //set new variable bila 
                                 $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['nama']=$list_peserta['nama_pegawai'];
                                 $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['id_pegawai']=$list_peserta['IdPegawai'];
@@ -767,6 +778,10 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                 ${"index_{$variable}"}+=1;
                             }
                             // shuffle($$variable);
+                        }else{
+                            if($list_peserta['nama_pegawai'] === "Nyimas Zihni Badzlina"){
+                                Log::warning("Nama: ".$list_peserta['nama_pegawai']." Ga Masuk ".$list_peserta['id_kelompok_jabatan']. "!==". (int)$list_jabatan_peserta['id_kelompok_jabatan']);
+                            }
                         }
                         // echo $variable." ".${"index_{$variable}"}."<br />";
                     }
