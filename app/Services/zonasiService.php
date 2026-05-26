@@ -1035,7 +1035,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                 foreach($get_jabatan_peserta as $list_jabatan_peserta){
                     if(!is_null($list_jabatan_peserta['id_jabatan_gabungan'])){
                         for($a=0;$a<$jlh_gabungan_pack;$a++){
-                            if((int)$jabatan_gabungan_pack[$a]['id'] === (int)$list_jabatan_gabungan['id_jabatan_gabungan']){
+                            if((int)$jabatan_gabungan_pack[$a]['id'] === (int)$list_jabatan_peserta['id_jabatan_gabungan']){
                                 $variable=str_replace(' ', '_', strtolower($jabatan_gabungan_pack[$a]['jabatan']));
                             }
                         }
