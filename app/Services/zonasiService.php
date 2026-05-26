@@ -732,7 +732,9 @@ use Symfony\Component\CssSelector\Node\HashNode;
                 foreach($get_jabatan_peserta as $list_jabatan_peserta){
                     //check apakah masuk jabatan gabungan
                     //perlu di sederhanakan
+                    Log::warning("Jabatan: ".$list_jabatan_peserta['jabatan']);
                     if(!is_null($list_jabatan_peserta['id_jabatan_gabungan'])){
+                        Log::warning("adalah jabatan gabungan");
                         // $get_parent=Tref_jabatan_peserta::where('id', $list_jabatan_peserta['id_jabatan_gabungan'])->first();
                         // $variable=str_replace(' ', '_', strtolower($get_parent['jabatan']));
                         // $jabatan_peserta_=$get_parent['jabatan'];
@@ -750,11 +752,10 @@ use Symfony\Component\CssSelector\Node\HashNode;
                             // ${"pointer_{$variable}"}=0;
                             // $$variable=null;
                             ${"index_{$variable}"}=0;
-                            Log::warning($list_jabatan_peserta['jabatan']." convert : "."index: ".$variable." tidak ada atau".$id_satker_before." ga sama dengan ".$list_satker['IdSatker']);
+                            // Log::warning($list_jabatan_peserta['jabatan']." convert : "."index: ".$variable." tidak ada atau".$id_satker_before." ga sama dengan ".$list_satker['IdSatker']);
                             // ${"counter_{$variable}"}=0;
-                        }else{
-                            Log::warning($list_jabatan_peserta['jabatan']." convert : "."index: ".$variable." ada (".${"index_{$variable}"}.") atau".$id_satker_before." sama dengan ".$list_satker['IdSatker']);
                         }
+                        Log::warning("Jadi ".$variable);
                     }else{
                         $variable=str_replace(' ','_', strtolower($list_jabatan_peserta['jabatan']));
                         $id_jabatan_peserta_=$list_jabatan_peserta['id'];
@@ -762,10 +763,10 @@ use Symfony\Component\CssSelector\Node\HashNode;
                         // ${"pointer_{$variable}"}=0;
                         // $$variable=null;
                         ${"index_{$variable}"}=0;
-                        Log::warning("INdex ".$variable." : ".${"index_{$variable}"});
+                        // Log::warning("INdex ".$variable." : ".${"index_{$variable}"});
                         // ${"counter_{$variable}"}=0;
+                        Log::warning("Bukan Jabatan Gabungan. Jadi ".$variable);
                     }
-                    Log::warning("Jabatan: ".$list_jabatan_peserta['jabatan']." jadi ".$variable);
 
                     // if(!is_null($id_satker_before) && (int)$id_satker_before !== (int)$list_satker['IdSatker']){
                         // ${"pointer_{$variable}"}=0;
