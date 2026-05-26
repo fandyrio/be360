@@ -708,6 +708,8 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                             'jabatan'=>$list_jabatan_gabungan['jabatan']
                                         ];
             }
+
+            Log::warning("Jabatan gabungan pack", $jabatan_gabungan_pack);
                 
             $index_satker=0;
             $satker=[];
