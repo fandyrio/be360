@@ -742,6 +742,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                         $jlh_gabungan_pack = count($jabatan_gabungan_pack);
                         for($a=0;$a<$jlh_gabungan_pack;$a++){
                             if((int)$jabatan_gabungan_pack[$a]['id'] === (int)$list_jabatan_gabungan['id_jabatan_gabungan']){
+                                Log::warning("Cocok di id jabatan gabungan dengan id ".$jabatan_gabungan_pack[$a]['id']);
                                 $variable=str_replace(' ', '_', strtolower($jabatan_gabungan_pack[$a]['jabatan']));
                                 $jabatan_peserta_=$jabatan_gabungan_pack[$a]['jabatan'];
                                 $id_jabatan_peserta_=$jabatan_gabungan_pack[$a]['id'];
