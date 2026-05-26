@@ -1106,7 +1106,6 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                         $variable_penilai=$new_var;
                                         $jlh_penilai=1;
                                     }
-                                    Log::warning("Jumlah penilai ".$variable_jabatan_peserta." untuk jabatan ".$variable_penilai." adalah ".$jlh_penilai);
                                 }
                                 if($jlh_penilai > 2){
                                     ${"batas_{$variable_penilai}"}=ceil($mapping['threshold']*$jlh_penilai / 100);
@@ -1121,6 +1120,8 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                 }else if($jlh_penilai === 1){
                                     ${"batas_{$variable_penilai}"}=1;
                                     if($variable_penilai === $variable_jabatan_peserta){
+                                        //disini kpt tidak dinilai oleh kpt
+                                        Log::warning("jabatan penilai: ".$variable_penilai." = ".$variable_jabatan_peserta);
                                         ${"batas_{$variable_penilai}"}=0;
                                     }
                                 }
@@ -1136,10 +1137,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                         // var_dump($data_peserta[$s][$variable_jabatan_peserta][$a]['id_pegawai']);
                                         // echo $variable_penilai." ".$jlh_penilai."<br />";
                                         // Log::warning("satker ke: ".$s.", jabatan: ".$variable_penilai.", pointer: ".$variable_penilai);
-                                        if($s === 1 && $variable_penilai === "pegawai"){
-                                            // Log::warning("data_peserta", $data_peserta[0]);
-                                            // Log::warning("data_peserta", $data_peserta[$s]);
-                                        }
+                                      
                                         if((int)$data_peserta[$s][$variable_jabatan_peserta][$a]['id_pegawai'] === 
                                         (int)$data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['id_pegawai']){
                                             // echo "penilai dan dinilai sama: ".$$variable_jabatan_peserta[$a]['nama']." : ".$$variable_penilai[${"pointer_{$variable_penilai}"}]['nama'];
