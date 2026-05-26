@@ -1106,6 +1106,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                         $variable_penilai=$new_var;
                                         $jlh_penilai=1;
                                     }
+                                    Log::warning("Jumlah penilai ".$variable_jabatan_peserta." untuk jabatan ".$variable_penilai." adalah ".$jlh_penilai);
                                 }
                                 if($jlh_penilai > 2){
                                     ${"batas_{$variable_penilai}"}=ceil($mapping['threshold']*$jlh_penilai / 100);
