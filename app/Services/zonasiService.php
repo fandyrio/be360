@@ -1080,7 +1080,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                             
                             //KPN dinilai KPT
                             if($variable_jabatan_peserta === "ketua_pengadilan" && $data_peserta[$s][$variable_jabatan_peserta][$a]['is_plt'] === "false" && $is_pt[$s] === "false"){
-                                $get_kpt=$this->getKPT($id_periode);
+                                $get_kpt=$this->getKPT($id_zonasi_satker[$s]);
                                 $data[]=[
                                         'id_zonasi'=>$id_zonasi,
                                         'id_zona_satker'=>$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker'],
@@ -1093,7 +1093,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                             }
                             //KPT Dinilai DIRJEN
                             if($variable_jabatan_peserta === "ketua_pengadilan" && $data_peserta[$s][$variable_jabatan_peserta][$a]['is_plt'] === "false" && $is_pt[$s] === "true"){
-                                $get_dirjen=$this->getDirJen($id_periode);
+                                $get_dirjen=$this->getDirJen($id_zonasi_satker[$s]);
                                 $get_jabatan_dirjen = Tref_jabatan_peserta::where('id_kelompok_jabatan', 33)->first();
                                 
                                 $data[]=[
@@ -1463,83 +1463,90 @@ use Symfony\Component\CssSelector\Node\HashNode;
             return $kpt;
         }
 
-        public function getDirJen($id_periode){
-            //id_zonasi_satker dirjen adalah id_periode
+        public function getDirJen($id_zonasi_satker){
             
-            $get_dirjen=DB::select("CALL SPGetPesertaDirjen360()");
-            $jumlah=count($get_dirjen);
-            if((int)$jumlah === 1){
-                $x=0;
-                $pegawai_sikep=[];
-                $is_plt="true";
-                foreach($get_dirjen as $dirjen){
-                    $data[$x]['id_pegawai']=$dirjen->IdPegawai;
-                    $data[$x]['nama_pegawai']=$dirjen->NamaLengkap;
-                    $data[$x]['nip']=$dirjen->NIPBaru;
-                    $data[$x]['status_pegawai']=$dirjen->StatusPegawai;
-                    $data[$x]['no_hp']=$dirjen->NomorHandphone;
-                    $data[$x]['foto_pegawai']=$dirjen->FotoPegawai;
-                    
-                    $data_observee[$x]['IdPegawai']=$dirjen->IdPegawai;
-                    $data_observee[$x]['NIPBaru']=$dirjen->NIPBaru;
-                    $data_observee[$x]['id_kelompok_jabatan']=$dirjen->IdKelompokJabatan;
-                    $data_observee[$x]['IdNamaJabatan']=$dirjen->IdNamaJabatan;
-                    $data_observee[$x]['NamaJabatan']=$dirjen->NamaJabatan." ".$dirjen->NamaUnitKerja;
-                    $data_observee[$x]['bagian']=$dirjen->NamaUnitKerja;
-                    $data_observee[$x]['IdZonaSatker']=$id_periode;
-                    $id_nama_jabatan_new=(int)$dirjen->IdNamaJabatan + (int)$dirjen->IdPegawai;
-                    $id_zona_satker_new = (int)$id_periode + (int)$dirjen->IdPegawai;
-                    $data_observee[$x]['endpoint']=Hashids::encode($dirjen->IdPegawai)."-".Hashids::encode($id_nama_jabatan_new)."-".Hashids::encode($id_zona_satker_new);
-                    $data_observee[$x]['diinput_tgl']=date('Y-m-d H:i:s');
-                    $data_observee[$x]['diinput_oleh']="system";
-                    $pegawai_sikep[]=$dirjen->IdPegawai;
-                    
-                }
-                
-                $get_pegawai=Tref_pegawai::all();
-                $pegawai_existed=[];
-                foreach($get_pegawai as $list_pegawai){
-                    $pegawai_existed[]=$list_pegawai['id_pegawai'];
-                }
-
-                $jlh_pegawai_sikep=count($pegawai_sikep);
-                $lookup=array_flip($pegawai_existed);
-                $data_insert=[];
-                for($x=0;$x<1;$x++){
-                    if(!isset($lookup[$pegawai_sikep[$x]])){
-                        $data_insert[]=$data[$x];
+            $is_banding=Zonasi_satker::where('IdZonaSatker', $id_zonasi_satker)
+                                    ->whereColumn("IdSatkerBanding", "IdSatker")
+                                    ->exists();
+            
+            if($is_banding){
+                $get_dirjen=DB::select("CALL SPGetPesertaDirjen360()");
+                $jumlah=count($get_dirjen);
+                if((int)$jumlah === 1){
+                    $x=0;
+                    $pegawai_sikep=[];
+                    $is_plt="true";
+                    foreach($get_dirjen as $dirjen){
+                        $data[$x]['id_pegawai']=$dirjen->IdPegawai;
+                        $data[$x]['nama_pegawai']=$dirjen->NamaLengkap;
+                        $data[$x]['nip']=$dirjen->NIPBaru;
+                        $data[$x]['status_pegawai']=$dirjen->StatusPegawai;
+                        $data[$x]['no_hp']=$dirjen->NomorHandphone;
+                        $data[$x]['foto_pegawai']=$dirjen->FotoPegawai;
+                        
+                        $data_observee[$x]['IdPegawai']=$dirjen->IdPegawai;
+                        $data_observee[$x]['NIPBaru']=$dirjen->NIPBaru;
+                        $data_observee[$x]['id_kelompok_jabatan']=$dirjen->IdKelompokJabatan;
+                        $data_observee[$x]['IdNamaJabatan']=$dirjen->IdNamaJabatan;
+                        $data_observee[$x]['NamaJabatan']=$dirjen->NamaJabatan." ".$dirjen->NamaUnitKerja;
+                        $data_observee[$x]['bagian']=$dirjen->NamaUnitKerja;
+                        $data_observee[$x]['IdZonaSatker']=$id_zonasi_satker;
+                        $id_nama_jabatan_new=(int)$dirjen->IdNamaJabatan + (int)$dirjen->IdPegawai;
+                        $id_zona_satker_new = (int)$id_zonasi_satker + (int)$dirjen->IdPegawai;
+                        $data_observee[$x]['endpoint']=Hashids::encode($dirjen->IdPegawai)."-".Hashids::encode($id_nama_jabatan_new)."-".Hashids::encode($id_zona_satker_new);
+                        $data_observee[$x]['diinput_tgl']=date('Y-m-d H:i:s');
+                        $data_observee[$x]['diinput_oleh']="system";
+                        $pegawai_sikep[]=$dirjen->IdPegawai;
+                        
                     }
-                }
+                    
+                    $get_pegawai=Tref_pegawai::all();
+                    $pegawai_existed=[];
+                    foreach($get_pegawai as $list_pegawai){
+                        $pegawai_existed[]=$list_pegawai['id_pegawai'];
+                    }
 
-                DB::table('tref_pegawai')->insert($data_insert);
-                
-                $get_observee=Trans_observee::where('IdZonaSatker', $data_observee[0]['IdZonaSatker'])
-                                    ->where('IdPegawai', $data_observee[0]['IdPegawai'])
-                                    ->first();
-                if(is_null($get_observee)){
-                    $trans_observee=new Trans_observee;
-                    $trans_observee->IdPegawai=$data_observee[0]['IdPegawai'];
-                    $trans_observee->NIPBaru=$data_observee[0]['NIPBaru'];
-                    $trans_observee->id_kelompok_jabatan=$data_observee[0]['id_kelompok_jabatan'];
-                    $trans_observee->IdNamaJabatan=$data_observee[0]['IdNamaJabatan'];
-                    $trans_observee->NamaJabatan=$data_observee[0]['NamaJabatan'];
-                    $trans_observee->bagian=$data_observee[0]['bagian'];
-                    $trans_observee->IdZonaSatker=$data_observee[0]['IdZonaSatker'];
-                    $trans_observee->diinput_tgl=date('Y-m-d H:i:s');
-                    $trans_observee->endpoint=$data_observee[0]['endpoint'];
-                    $trans_observee->diinput_oleh="system";
-                    $trans_observee->save();
-                    $observee_id=$trans_observee->IdObservee;
+                    $jlh_pegawai_sikep=count($pegawai_sikep);
+                    $lookup=array_flip($pegawai_existed);
+                    $data_insert=[];
+                    for($x=0;$x<1;$x++){
+                        if(!isset($lookup[$pegawai_sikep[$x]])){
+                            $data_insert[]=$data[$x];
+                        }
+                    }
 
+                    DB::table('tref_pegawai')->insert($data_insert);
+                    
+                    $get_observee=Trans_observee::where('IdPegawai', $data_observee[0]['IdPegawai'])
+                                        ->first();
+                    if(is_null($get_observee)){
+                        $trans_observee=new Trans_observee;
+                        $trans_observee->IdPegawai=$data_observee[0]['IdPegawai'];
+                        $trans_observee->NIPBaru=$data_observee[0]['NIPBaru'];
+                        $trans_observee->id_kelompok_jabatan=$data_observee[0]['id_kelompok_jabatan'];
+                        $trans_observee->IdNamaJabatan=$data_observee[0]['IdNamaJabatan'];
+                        $trans_observee->NamaJabatan=$data_observee[0]['NamaJabatan'];
+                        $trans_observee->bagian=$data_observee[0]['bagian'];
+                        $trans_observee->IdZonaSatker=$data_observee[0]['IdZonaSatker'];
+                        $trans_observee->diinput_tgl=date('Y-m-d H:i:s');
+                        $trans_observee->endpoint=$data_observee[0]['endpoint'];
+                        $trans_observee->diinput_oleh="system";
+                        $trans_observee->save();
+                        $observee_id=$trans_observee->IdObservee;
+
+                    }else{
+                        $observee_id=$get_observee['IdObservee'];
+                    }
+                    $dirjen['id_pegawai_dirjen']=$observee_id;
+                    $dirjen['is_plt']=$is_plt;
                 }else{
-                    $observee_id=$get_observee['IdObservee'];
+                    //ga masuk ke observee dan Badilum jadi ada fasilitasi untuk mengisi data jabatan kosong
+                    $dirjen['id_pegawai_dirjen']=null;
+                    $dirjen['is_plt']="true";
                 }
-                $dirjen['id_pegawai_dirjen']=$observee_id;
-                $dirjen['is_plt']=$is_plt;
             }else{
-                //ga masuk ke observee dan Badilum jadi ada fasilitasi untuk mengisi data jabatan kosong
                 $dirjen['id_pegawai_dirjen']=null;
-                $dirjen['is_plt']="true";
+                $dirjen['is_plt']=null;
             }
             
             return $dirjen;
