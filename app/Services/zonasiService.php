@@ -1535,7 +1535,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                         $observee_id=$trans_observee->IdObservee;
 
                     }else{
-                        $observee_id=$get_observee['IdObservee'];
+                        $observee_id=$get_observee->IdObservee;
                     }
                     $dirjen['id_pegawai_dirjen']=$observee_id;
                     $dirjen['is_plt']=$is_plt;
