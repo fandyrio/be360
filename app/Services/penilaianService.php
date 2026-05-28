@@ -345,7 +345,7 @@ use Vinkla\Hashids\Facades\Hashids;
                 $proses_id_zonasi=$zonasi_satker['proses_id'];
                 if(!$this->validateZonasi($id_satker, $tgl_mulai_zonasi, $tgl_selesai_zonasi, $proses_id_zonasi)){
                 //    $can_edit=Hashids::encode(0);
-                    $can_edit=$proses_id_zonasi;
+                    $can_edit=$id_zonasi_satker;
                 }
                 
 
@@ -567,6 +567,7 @@ use Vinkla\Hashids\Facades\Hashids;
             return [
                 'status'=>$status,
                 'msg'=>$msg,
+                // 'can_edit'=>Hashids::decode($can_edit)[0] === 0 ? false : true,
                 'can_edit'=>$can_edit,
                 'token_penilaian'=>$token_penilaian_periode,
                 'params'=>$id_nilai_peserta_str,
