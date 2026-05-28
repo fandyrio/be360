@@ -344,7 +344,7 @@ use Vinkla\Hashids\Facades\Hashids;
                 $tgl_selesai_zonasi=$zonasi_satker['end_date'];
                 $proses_id_zonasi=$zonasi_satker['proses_id'];
                 if(!$this->validateZonasi($id_satker, $tgl_mulai_zonasi, $tgl_selesai_zonasi, $proses_id_zonasi)){
-                   $can_edit=Hashids::encode(1);
+                   $can_edit=Hashids::encode(0);
                 }
                 
 
