@@ -567,7 +567,7 @@ use Vinkla\Hashids\Facades\Hashids;
             return [
                 'status'=>$status,
                 'msg'=>$msg,
-                'can_edit'=>Hashids::decode($can_edit)[0] === 0 ? false : true,
+                'can_edit'=>$can_edit,
                 'token_penilaian'=>$token_penilaian_periode,
                 'params'=>$id_nilai_peserta_str,
                 'signature'=>$signature_periode,
