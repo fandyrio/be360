@@ -1537,19 +1537,19 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     }else{
                         $observee_id=$get_observee->IdObservee;
                     }
-                    $dirjen['id_pegawai_dirjen']=$observee_id;
-                    $dirjen['is_plt']=$is_plt;
+                    $dirjen_badilum['id_pegawai_dirjen']=$observee_id;
+                    $dirjen_badilum['is_plt']=$is_plt;
                 }else{
                     //ga masuk ke observee dan Badilum jadi ada fasilitasi untuk mengisi data jabatan kosong
-                    $dirjen['id_pegawai_dirjen']=null;
-                    $dirjen['is_plt']="true";
+                    $dirjen_badilum['id_pegawai_dirjen']=null;
+                    $dirjen_badilum['is_plt']="true";
                 }
             }else{
-                $dirjen['id_pegawai_dirjen']=null;
-                $dirjen['is_plt']=null;
+                $dirjen_badilum['id_pegawai_dirjen']=null;
+                $dirjen_badilum['is_plt']=null;
             }
             
-            return $dirjen;
+            return $dirjen_badilum;
         }
         
         public function saveLog($data_id, $category, $msg, $status){
