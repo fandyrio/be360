@@ -283,7 +283,6 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     $x++;
                 }
                 
-
                 $get_pegawai=Tref_pegawai::get();
                 $pegawai_existed=[];
                 foreach($get_pegawai as $list_pegawai){
@@ -994,7 +993,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     
                     $jumlah_panmud_not_exists=count($panmud_not_exists);
                     if($jumlah_panmud_not_exists !== $selisih){
-                        Log::warning("Panmud ", $data_peserta[$index_satker]['panitera_muda']);
+                        // Log::warning("Panmud ", $data_peserta[$index_satker]['panitera_muda']);
                         return ['status'=>false, 'msg'=>"Jumlah Panmud tidak sesuai. Satker: ".$list_satker['NamaSatker'].". Jumlah Panmud yang tidak ada: ".$jumlah_panmud_not_exists.". Selisih Panmud :".$list_satker['jumlah_panmud']."-". (int)$jlh_panmud." = ".$selisih." index satker: ".$index_satker];
                     }
 
@@ -1078,9 +1077,10 @@ use Symfony\Component\CssSelector\Node\HashNode;
                         // echo $variable_jabatan_peserta;
                         if($data_peserta[$s][$variable_jabatan_peserta][$a]['is_plt'] === "false"){
                             // echo "<b>".$data_peserta[$s][$variable_jabatan_peserta][$a]['nama']." : </b>";
-
+                            
+                            //KPN dinilai KPT
                             if($variable_jabatan_peserta === "ketua_pengadilan" && $data_peserta[$s][$variable_jabatan_peserta][$a]['is_plt'] === "false" && $is_pt[$s] === "false"){
-                                $get_kpt=$this->getKPT($id_zonasi_satker[$s]);
+                                $get_kpt=$this->getKPT($id_periode);
                                 $data[]=[
                                         'id_zonasi'=>$id_zonasi,
                                         'id_zona_satker'=>$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker'],
@@ -1088,6 +1088,21 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                         'id_pegawai_penilai'=>$get_kpt['id_pegawai_kpt'],
                                         // 'id_jabatan_plt'=>$get_kpt['is_plt'] === "true" ?  1 : null
                                         'id_jabatan_plt'=>$get_kpt['is_plt'] === "true" ?  1 : null,
+                                        'index_plt'=>0
+                                    ];
+                            }
+                            //KPT Dinilai DIRJEN
+                            if($variable_jabatan_peserta === "ketua_pengadilan" && $data_peserta[$s][$variable_jabatan_peserta][$a]['is_plt'] === "false" && $is_pt[$s] === "true"){
+                                $get_dirjen=$this->getDirJen($id_periode);
+                                $get_jabatan_dirjen = Tref_jabatan_peserta::where('id_kelompok_jabatan', 33)->first();
+                                
+                                $data[]=[
+                                        'id_zonasi'=>$id_zonasi,
+                                        'id_zona_satker'=>$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker'],
+                                        'id_pegawai_peserta'=>$data_peserta[$s][$variable_jabatan_peserta][$a]['id_pegawai_observee'],
+                                        'id_pegawai_penilai'=>$get_dirjen['id_pegawai_dirjen'],
+                                        // 'id_jabatan_plt'=>$get_kpt['is_plt'] === "true" ?  1 : null
+                                        'id_jabatan_plt'=>$get_dirjen['is_plt'] === "true" ?  $get_jabatan_dirjen->id : null,
                                         'index_plt'=>0
                                     ];
                             }
@@ -1120,8 +1135,8 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                 }else if($jlh_penilai === 1){
                                     ${"batas_{$variable_penilai}"}=1;
                                     if($variable_penilai === $variable_jabatan_peserta){
-                                        //disini kpt tidak dinilai oleh kpt
-                                        Log::warning("jabatan penilai: ".$variable_penilai." = ".$variable_jabatan_peserta);
+                                        //disini kpt tidak dinilai oleh kpt begitu juga kpn
+                                        // Log::warning("jabatan penilai: ".$variable_penilai." = ".$variable_jabatan_peserta);
                                         ${"batas_{$variable_penilai}"}=0;
                                     }
                                 }
@@ -1446,6 +1461,88 @@ use Symfony\Component\CssSelector\Node\HashNode;
                 }
             }
             return $kpt;
+        }
+
+        public function getDirJen($id_periode){
+            //id_zonasi_satker dirjen adalah id_periode
+            
+            $get_dirjen=DB::select("CALL SPGetPesertaDirjen360()");
+            $jumlah=count($get_dirjen);
+            if((int)$jumlah === 1){
+                $x=0;
+                $pegawai_sikep=[];
+                $is_plt="true";
+                foreach($get_dirjen as $dirjen){
+                    $data[$x]['id_pegawai']=$dirjen->IdPegawai;
+                    $data[$x]['nama_pegawai']=$dirjen->NamaLengkap;
+                    $data[$x]['nip']=$dirjen->NIPBaru;
+                    $data[$x]['status_pegawai']=$dirjen->StatusPegawai;
+                    $data[$x]['no_hp']=$dirjen->NomorHandphone;
+                    $data[$x]['foto_pegawai']=$dirjen->FotoPegawai;
+                    
+                    $data_observee[$x]['IdPegawai']=$dirjen->IdPegawai;
+                    $data_observee[$x]['NIPBaru']=$dirjen->NIPBaru;
+                    $data_observee[$x]['id_kelompok_jabatan']=$dirjen->IdKelompokJabatan;
+                    $data_observee[$x]['IdNamaJabatan']=$dirjen->IdNamaJabatan;
+                    $data_observee[$x]['NamaJabatan']=$dirjen->NamaJabatan." ".$dirjen->NamaUnitKerja;
+                    $data_observee[$x]['bagian']=$dirjen->NamaUnitKerja;
+                    $data_observee[$x]['IdZonaSatker']=$id_periode;
+                    $id_nama_jabatan_new=(int)$dirjen->IdNamaJabatan + (int)$dirjen->IdPegawai;
+                    $id_zona_satker_new = (int)$id_periode + (int)$dirjen->IdPegawai;
+                    $data_observee[$x]['endpoint']=Hashids::encode($dirjen->IdPegawai)."-".Hashids::encode($id_nama_jabatan_new)."-".Hashids::encode($id_zona_satker_new);
+                    $data_observee[$x]['diinput_tgl']=date('Y-m-d H:i:s');
+                    $data_observee[$x]['diinput_oleh']="system";
+                    $pegawai_sikep[]=$dirjen->IdPegawai;
+                    
+                }
+                
+                $get_pegawai=Tref_pegawai::all();
+                $pegawai_existed=[];
+                foreach($get_pegawai as $list_pegawai){
+                    $pegawai_existed[]=$list_pegawai['id_pegawai'];
+                }
+
+                $jlh_pegawai_sikep=count($pegawai_sikep);
+                $lookup=array_flip($pegawai_existed);
+                $data_insert=[];
+                for($x=0;$x<1;$x++){
+                    if(!isset($lookup[$pegawai_sikep[$x]])){
+                        $data_insert[]=$data[$x];
+                    }
+                }
+
+                DB::table('tref_pegawai')->insert($data_insert);
+                
+                $get_observee=Trans_observee::where('IdZonaSatker', $data_observee[0]['IdZonaSatker'])
+                                    ->where('IdPegawai', $data_observee[0]['IdPegawai'])
+                                    ->first();
+                if(is_null($get_observee)){
+                    $trans_observee=new Trans_observee;
+                    $trans_observee->IdPegawai=$data_observee[0]['IdPegawai'];
+                    $trans_observee->NIPBaru=$data_observee[0]['NIPBaru'];
+                    $trans_observee->id_kelompok_jabatan=$data_observee[0]['id_kelompok_jabatan'];
+                    $trans_observee->IdNamaJabatan=$data_observee[0]['IdNamaJabatan'];
+                    $trans_observee->NamaJabatan=$data_observee[0]['NamaJabatan'];
+                    $trans_observee->bagian=$data_observee[0]['bagian'];
+                    $trans_observee->IdZonaSatker=$data_observee[0]['IdZonaSatker'];
+                    $trans_observee->diinput_tgl=date('Y-m-d H:i:s');
+                    $trans_observee->endpoint=$data_observee[0]['endpoint'];
+                    $trans_observee->diinput_oleh="system";
+                    $trans_observee->save();
+                    $observee_id=$trans_observee->IdObservee;
+
+                }else{
+                    $observee_id=$get_observee['IdObservee'];
+                }
+                $dirjen['id_pegawai_dirjen']=$observee_id;
+                $dirjen['is_plt']=$is_plt;
+            }else{
+                //ga masuk ke observee dan Badilum jadi ada fasilitasi untuk mengisi data jabatan kosong
+                $dirjen['id_pegawai_dirjen']=null;
+                $dirjen['is_plt']="true";
+            }
+            
+            return $dirjen;
         }
         
         public function saveLog($data_id, $category, $msg, $status){
