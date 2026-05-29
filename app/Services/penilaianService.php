@@ -110,6 +110,8 @@ use Vinkla\Hashids\Facades\Hashids;
                     $x=0;
                     $msg="Data Found";
                     $params_before=null;
+                    $get_observee->accessed_link = true;
+                    $get_observee->update();
                     foreach($get_peserta as $list_peserta){
                         if($x === 0){
                             $data['penilai']['nama']=$list_peserta['nama_penilai'];
