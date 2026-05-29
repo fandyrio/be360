@@ -176,8 +176,9 @@ class penilaianController extends Controller
                             return response()->json(['status'=>false, 'msg'=>"Invalid token Penilaian"], 500);
                         }
 
-                        //rules
+                        //rules untuk kpt menilai kpn, atau dirjen menilai kpt. Lintas zonasi satker
                         $get_jabatan=$this->penilaianService->getJabatanPesertaPenilai($id_observee_penilai, $id_observee_peserta);
+
                         if((int)$id_zonasi_satker_token[0] === (int)$id_zonasi_satker_params || $get_jabatan === true){
                             if((int)$id_zonasi_satker_token[0] === (int)$id_zonasi_satker_params){
                                 $id_zonasi_satker_=$id_zonasi_satker_token[0];

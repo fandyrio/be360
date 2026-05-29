@@ -302,7 +302,7 @@ use Vinkla\Hashids\Facades\Hashids;
                 $peserta=$get_observee[$id_observee_peserta];
                 $id_jabatan_penilai=$penilai->id_kelompok_jabatan;
                 $id_jabatan_peserta=$peserta->id_kelompok_jabatan;
-                if(((int)$id_jabatan_penilai === 15 || (int)$id_jabatan_penilai === 27) && (int)$id_jabatan_peserta === 15){
+                if(((int)$id_jabatan_penilai === 15 || (int)$id_jabatan_penilai === 27 || (int)$id_jabatan_penilai === 33) && (int)$id_jabatan_peserta === 15){
                     $status=true;
                 }
             }
