@@ -779,6 +779,9 @@ use Vinkla\Hashids\Facades\Hashids;
         // }
 
         public function generateNilaiObservee($id_zonasi_satker, $id_peserta_zonasi_arr, $id_periode, $current_nilai_peserta){
+            $nilai_akhir=0;
+            $id_observee_peserta = null;
+            $status = false;
             $jabatan_peserta=Trans_peserta_zonasi::join('trans_observee as to', 'to.IdObservee', '=', 'trans_peserta_zonasi.id_pegawai_peserta')
                                             ->join('tref_jabatan_peserta as tjp', 'tjp.id_kelompok_jabatan', '=', 'to.id_kelompok_jabatan')
                                             ->join('trans_observee as to2', 'to2.IdObservee', '=', 'trans_peserta_zonasi.id_pegawai_penilai')
@@ -787,8 +790,6 @@ use Vinkla\Hashids\Facades\Hashids;
                                 ->whereIn('trans_peserta_zonasi.id', $id_peserta_zonasi_arr)
                                 ->get();
             $bobot=$this->bobotJabatanPeriode($id_periode);
-            $nilai_akhir=0;
-            $id_observee_peserta = null;
             foreach($jabatan_peserta as $list_jabatan){
                 $is_plt=false;
                 $is_jabatan_gabungan = false;
@@ -828,10 +829,12 @@ use Vinkla\Hashids\Facades\Hashids;
                     }
                     $nilai_akhir+=(($current_nilai_peserta*$bobot_penilaian) / 100 ) / $jumlah_penilai;
                     $id_observee_peserta=$list_jabatan['id_pegawai_peserta'];
+                    $status = true;
                 }
             }
 
             return [
+                'status'=>$status,
                 'nilai_akhir'=>$nilai_akhir,
                 'id_observee_peserta'=>$id_observee_peserta
             ];
