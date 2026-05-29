@@ -162,7 +162,7 @@ use Illuminate\Support\Facades\DB;
                             //     $id_kelompok_jabatan_penilai_arr[]=$list_jabatan['id_kelompok_jabatan'];
                             // }
                         }else{
-                            $id_kelompok_jabatan_penilai_arr[]=$id_kelompok_jabatan_penilai;
+                            $id_kelompok_jabatan_penilai_arr=[$id_kelompok_jabatan_penilai];
                         }
                         $id_observee=Trans_observee::join("tref_pegawai as tp", "tp.id_pegawai", "trans_observee.IdPegawai")
                                             ->whereIn("id_kelompok_jabatan", $id_kelompok_jabatan_penilai_arr)
@@ -238,7 +238,7 @@ use Illuminate\Support\Facades\DB;
                                 echo $msg;
                             }
                         }else{
-                            echo "Jumlah penilaian: 0 untuk ".$list_peserta_zonasi['nama_pegawai'];
+                            echo "Jumlah penilaian: 0 untuk ".$list_peserta_zonasi['nama_pegawai']." dinilai: ".$id_jabatan_penilai."\n";
                         }
                         // echo "\nJumlah Penilai: ".$jlh_penilaian."\n";
                     }catch(\Exception $e){
