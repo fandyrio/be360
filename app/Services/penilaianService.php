@@ -774,6 +774,10 @@ use Vinkla\Hashids\Facades\Hashids;
                                             
         }
 
+        // public function getJabatanDirjen(){
+        //     $getData=Tref_jabatan_peserta::where
+        // }
+
         public function generateNilaiObservee($id_zonasi_satker, $id_peserta_zonasi_arr, $id_periode, $current_nilai_peserta){
             $jabatan_peserta=Trans_peserta_zonasi::join('trans_observee as to', 'to.IdObservee', '=', 'trans_peserta_zonasi.id_pegawai_peserta')
                                             ->join('tref_jabatan_peserta as tjp', 'tjp.id_kelompok_jabatan', '=', 'to.id_kelompok_jabatan')
@@ -807,21 +811,23 @@ use Vinkla\Hashids\Facades\Hashids;
                     $is_jabatan_gabungan = true;
                 }
 
-                $bobot_penilaian=$bobot["bobot_{$id_jabatan_peserta}_{$id_jabatan_penilai}"];
-                $jumlah_penilai=$this->countJabatanPenilaiSatkerNew($id_zonasi_satker, $id_kelompok_jabatan_penilai, $list_jabatan['id_pegawai_peserta'], $id_jabatan_penilai, $is_jabatan_gabungan);
-                // if($is_plt === true){
-                //     $jumlah_penilai += 1;
-                // }
-                if($jumlah_penilai === 0 && $id_jabatan_penilai === 1 && $id_jabatan_peserta === 1){
-                    $get_penilaian=Trans_peserta_zonasi::where("id_pegawai_penilai", $list_jabatan['id_pegawai_penilai'])
-                                                ->where("id_pegawai_peserta", $list_jabatan['id_pegawai_peserta'])
-                                                ->first();
-                    if(!is_null($get_penilaian)){
-                        $jumlah_penilai=1;
+                if(isset($bobot["bobot_{$id_jabatan_peserta}_{$id_jabatan_penilai}"])){
+                    $bobot_penilaian=$bobot["bobot_{$id_jabatan_peserta}_{$id_jabatan_penilai}"];
+                    $jumlah_penilai=$this->countJabatanPenilaiSatkerNew($id_zonasi_satker, $id_kelompok_jabatan_penilai, $list_jabatan['id_pegawai_peserta'], $id_jabatan_penilai, $is_jabatan_gabungan);
+                    // if($is_plt === true){
+                    //     $jumlah_penilai += 1;
+                    // }
+                    if($jumlah_penilai === 0 && $id_jabatan_penilai === 1 && $id_jabatan_peserta === 1){
+                        $get_penilaian=Trans_peserta_zonasi::where("id_pegawai_penilai", $list_jabatan['id_pegawai_penilai'])
+                                                    ->where("id_pegawai_peserta", $list_jabatan['id_pegawai_peserta'])
+                                                    ->first();
+                        if(!is_null($get_penilaian)){
+                            $jumlah_penilai=1;
+                        }
                     }
+                    $nilai_akhir+=(($current_nilai_peserta*$bobot_penilaian) / 100 ) / $jumlah_penilai;
+                    $id_observee_peserta=$list_jabatan['id_pegawai_peserta'];
                 }
-                $nilai_akhir+=(($current_nilai_peserta*$bobot_penilaian) / 100 ) / $jumlah_penilai;
-                $id_observee_peserta=$list_jabatan['id_pegawai_peserta'];
             }
 
             return [
@@ -864,21 +870,25 @@ use Vinkla\Hashids\Facades\Hashids;
                                         $update_nilai_peserta=(clone $peserta_db)->update(['nilai'=>$current_nilai_peserta]);
                                         if($update_nilai_peserta === count($id_pz)){
                                             $nilai_observee=$this->generateNilaiObservee($id_zonasi_satker, $id_pz, $id_periode, $current_nilai_peserta);
-                                            //update nilai keseluruhan
-                                            $get_observee=Trans_observee::where('IdObservee', $nilai_observee['id_observee_peserta'])
-                                                                        ->lockForUpdate()    
-                                                                        ->first();
-                                            
-                                            $total_nilai_terakhir=$get_observee['total_nilai'];
-                                            $total_nilai_terakhir+=($nilai_observee['nilai_akhir']*20);
-                                            $get_observee->total_nilai=round($total_nilai_terakhir, 2);
-                                            $affected_observee = $get_observee->update();
-                                            if($affected_observee === true){
-                                                DB::commit();
-                                                $status=true;
-                                                $msg="Jawaban berhasil disimpan ";
+                                            if($nilai_observee['status'] === true){
+                                                //update nilai keseluruhan
+                                                $get_observee=Trans_observee::where('IdObservee', $nilai_observee['id_observee_peserta'])
+                                                                            ->lockForUpdate()    
+                                                                            ->first();
+                                                
+                                                $total_nilai_terakhir=$get_observee['total_nilai'];
+                                                $total_nilai_terakhir+=($nilai_observee['nilai_akhir']*20);
+                                                $get_observee->total_nilai=round($total_nilai_terakhir, 2);
+                                                $affected_observee = $get_observee->update();
+                                                if($affected_observee === true){
+                                                    DB::commit();
+                                                    $status=true;
+                                                    $msg="Jawaban berhasil disimpan ";
+                                                }else{
+                                                    throw new \Exception("Total nilai tidak berubah ".$affected_observee);
+                                                }
                                             }else{
-                                                throw new \Exception("Total nilai tidak berubah ".$affected_observee);
+                                                throw new \Exception("Nilai Peserta tidak dapat disimpan. Bobot Jabatan belum didefinisikan");
                                             }
                                         }else{
                                             throw new \Exception("Jawaban tidak bisa disimpan");
@@ -891,7 +901,8 @@ use Vinkla\Hashids\Facades\Hashids;
                                 }
                             }catch(\Exception $e){
                                 DB::rollBack();
-                                $msg="Error Sistem Penilaian : ".$e->getMessage()." ".$e->getFile()." ".$e->getLine();
+                                $msg="Error Sistem Penilaian : ".$e->getMessage();
+                                Log::error("Error Program: ".$e->getFile()." ".$e->getLine());
                             }
                         }else{
                             $msg="Data peserta tidak ditemukan";
