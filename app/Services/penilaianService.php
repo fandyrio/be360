@@ -788,6 +788,7 @@ use Vinkla\Hashids\Facades\Hashids;
                                 ->get();
             $bobot=$this->bobotJabatanPeriode($id_periode);
             $nilai_akhir=0;
+            $id_observee_peserta = null;
             foreach($jabatan_peserta as $list_jabatan){
                 $is_plt=false;
                 $is_jabatan_gabungan = false;
