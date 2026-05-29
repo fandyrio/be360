@@ -97,7 +97,7 @@ use Illuminate\Support\Facades\DB;
                 $get_nilai=Trans_nilai_peserta_zonasi::where('id_peserta_zonasi', $list_peserta_zonasi['id_peserta_zonasi'])
                         ->where('nilai', '>', 0)
                         ->where('locked', true)
-                        ->exist();
+                        ->exists();
                 // $nilai_peserta=clone $get_nilai->get();
                 $current_nilai=0;
                 // echo $list_peserta_zonasi['id_peserta_zonasi']."";
