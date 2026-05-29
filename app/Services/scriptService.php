@@ -75,11 +75,21 @@ use Illuminate\Support\Facades\DB;
             foreach($get_peserta_zonasi as $list_peserta_zonasi){
                 $p++;
                 $is_jabatan_gabungan = false;
-                $percent = round(($p/$jumlah_peserta)*100);
-                $bar = str_repeat("=", (int) round($percent/2));
+                // $percent = ($p/$jumlah_peserta)*100;
+                // $bar = str_repeat("=", (int) round($percent/2));
 
-                echo "\r[[$bar]] $p/$jumlah_peserta ($percent%)";
+                // echo "\r[[$bar]] $p/$jumlah_peserta ($percent%)";
 
+                $percent = ($p / $jumlah_peserta) * 100;
+
+                $maxBar = 50;
+                $barLen = (int) round(($p / $jumlah_peserta) * $maxBar);
+
+                $bar = str_repeat("=", $barLen);
+                $space = str_repeat(" ", $maxBar - $barLen);
+
+                echo "\r[{$bar}{$space}] $p/$jumlah_peserta (" . round($percent, 2) . "%)";
+                flush();
                 
                 $data_insert=[];
                 $is_plt=false;
