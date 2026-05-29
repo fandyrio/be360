@@ -260,7 +260,7 @@ use Illuminate\Support\Facades\DB;
             $get_zonasi_satker = Zonasi_satker::where("IdZona", $id_zonasi)->get();
             foreach($get_zonasi_satker as $list_zonasi_satker){
                 $id_zonasi_satker[]=$list_zonasi_satker['IdZonaSatker'];
-                Cache::store("redis")->forget("zonasi_satker_{$id_zonasi_satker}");
+                Cache::store("redis")->forget("zonasi_satker_{$list_zonasi_satker['IdZonaSatker']}");
             }
             Trans_observee::whereIn("IdZonaSatker", $id_zonasi_satker)->update(['send_to_badilum' => true]);
             echo "\nFinisjed. Thankyou.";
