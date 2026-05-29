@@ -196,7 +196,7 @@ class penilaianController extends Controller
                             $peserta=$get_pertanyaan['peserta'];
                             
                         }else{
-                            $msg="Data Zonasi Satker tidak valid ";
+                            $msg="Data Zonasi Satker tidak valid ".$id_zonasi_satker_token[0]." : ".$id_zonasi_satker_params." : ".$get_jabatan;
                             return response()->json(['status'=>$status, 'msg'=>$msg], 500);
                         }
                     }else{
