@@ -43,6 +43,7 @@ use Illuminate\Support\Facades\DB;
             foreach($get_bobot_penilaian_jabatan as $list_bobot_jabatan){
                 $bobot_penilaian_jabatan["bobot_{$list_bobot_jabatan['id_jabatan_penilai']}_{$list_bobot_jabatan['id_jabatan_peserta']}"]=$list_bobot_jabatan['bobot'];
             }
+            $bobot_penilaian_jabatan['bobot_24_1'] = $bobot_penilaian_jabatan['bobot_1_1'];
             echo "==========================================\n";
             echo "Running Script Isi Jawaban\n";
             echo "==========================================\n";
@@ -259,9 +260,9 @@ use Illuminate\Support\Facades\DB;
             $get_zonasi_satker = Zonasi_satker::where("IdZona", $id_zonasi)->get();
             foreach($get_zonasi_satker as $list_zonasi_satker){
                 $id_zonasi_satker[]=$list_zonasi_satker['IdZonaSatker'];
+                Cache::store("redis")->forget("zonasi_satker_{$id_zonasi_satker}");
             }
             Trans_observee::whereIn("IdZonaSatker", $id_zonasi_satker)->update(['send_to_badilum' => true]);
-            Cache::store("redis")->forget("zonasi_satker_{$id_zonasi_satker}");
             echo "\nFinisjed. Thankyou.";
             // echo "\n======================================\n";
             
