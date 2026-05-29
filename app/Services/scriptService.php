@@ -20,6 +20,8 @@ use Illuminate\Support\Facades\DB;
         }
 
         public function runScriptIsiPertanyaan($id_zonasi){
+            ini_set('memory_limit', '-1');
+            DB::disableQueryLog();
             echo "==========================================\n";
             echo "Precondition Isi Jawaban\n";
             echo "==========================================\n";
@@ -80,16 +82,10 @@ use Illuminate\Support\Facades\DB;
 
                 // echo "\r[[$bar]] $p/$jumlah_peserta ($percent%)";
 
-                $percent = ($p / $jumlah_peserta) * 100;
-
-                $maxBar = 50;
-                $barLen = (int) round(($p / $jumlah_peserta) * $maxBar);
-
-                $bar = str_repeat("=", $barLen);
-                $space = str_repeat(" ", $maxBar - $barLen);
-
-                echo "\r[{$bar}{$space}] $p/$jumlah_peserta (" . round($percent, 2) . "%)";
-                flush();
+                if ($p % 200 == 0 || $p == $jumlah_peserta) {
+                    $percent = ($p / $jumlah_peserta) * 100;
+                    echo "Memproses data ke- $p/$jumlah_peserta (" . round($percent, 2) . "%)...\n";
+                }
                 
                 $data_insert=[];
                 $is_plt=false;
@@ -100,11 +96,12 @@ use Illuminate\Support\Facades\DB;
                 
                 $get_nilai=Trans_nilai_peserta_zonasi::where('id_peserta_zonasi', $list_peserta_zonasi['id_peserta_zonasi'])
                         ->where('nilai', '>', 0)
-                        ->where('locked', true);
-                $nilai_peserta=clone $get_nilai->get();
+                        ->where('locked', true)
+                        ->exist();
+                // $nilai_peserta=clone $get_nilai->get();
                 $current_nilai=0;
                 // echo $list_peserta_zonasi['id_peserta_zonasi']."";
-                if($nilai_peserta->count() === 0){
+                if(!$get_nilai){
                     // echo "\nNama Peserta = ".$list_peserta_zonasi["nama_pegawai"]." Dinilai oleh: ".$list_peserta_zonasi['nama_penilai']."\n";
                     #2. Kalau belum ada pertanyaan, generate pertanyaan
                     $id_reference=NULL;
@@ -115,7 +112,7 @@ use Illuminate\Support\Facades\DB;
                                         ->first();
                         $id_reference=$check_pz_plt['id'];
                         $id_jabatan_plt=$list_peserta_zonasi['id_jabatan_plt'];
-                        $get_data=Tref_jabatan_peserta::where("id", $id_jabatan_plt)->first();
+                        $get_data=Tref_jabatan_peserta::select('id_kelompok_jabatan')->where("id", $id_jabatan_plt)->first();
                         $id_kelompok_jabatan_penilai=$get_data['id_kelompok_jabatan'];
                         $id_jabatan_penilai=$list_peserta_zonasi['id_jabatan_plt'];
                         $is_plt=true;
@@ -159,28 +156,28 @@ use Illuminate\Support\Facades\DB;
                         
                         #hitung orang yang ada di jabatan itu
                         if($is_jabatan_gabungan){
-                            $get_data = Tref_jabatan_peserta::where('id_jabatan_gabungan', $id_jabatan_penilai)->get();
-                            $id_kelompok_jabatan_penilai_arr = [];
-                            foreach($get_data as $list_jabatan){
-                                $id_kelompok_jabatan_penilai_arr[]=$list_jabatan['id_kelompok_jabatan'];
-                            }
+                            $id_kelompok_jabatan_penilai_arr = Tref_jabatan_peserta::where('id_jabatan_gabungan', $id_jabatan_penilai)->pluck('id_kelompok_jabatan')->toArray();
+                            // $id_kelompok_jabatan_penilai_arr = [];
+                            // foreach($get_data as $list_jabatan){
+                            //     $id_kelompok_jabatan_penilai_arr[]=$list_jabatan['id_kelompok_jabatan'];
+                            // }
                         }else{
                             $id_kelompok_jabatan_penilai_arr[]=$id_kelompok_jabatan_penilai;
                         }
-                        $get_observee=Trans_observee::join("tref_pegawai as tp", "tp.id_pegawai", "trans_observee.IdPegawai")
+                        $id_observee=Trans_observee::join("tref_pegawai as tp", "tp.id_pegawai", "trans_observee.IdPegawai")
                                             ->whereIn("id_kelompok_jabatan", $id_kelompok_jabatan_penilai_arr)
                                             ->where("IdZonaSatker", $list_peserta_zonasi['id_zona_satker'])
                                             ->select("trans_observee.IdObservee", "tp.nama_pegawai")
-                                            ->get();
+                                            ->pluck("trans_observee.IdObservee")->toArray();
                         // echo "\nid zonasi satker: ".$list_peserta_zonasi['id_zona_satker']."\n";
                         // echo "\nid kelompok jabatan penilai: ".$id_kelompok_jabatan_penilai;
 
-                        $id_observee=[]; 
-                        $nama_penilai=[];                   
-                        foreach($get_observee as $list_observee){
-                            $id_observee[]=$list_observee['IdObservee'];
-                            $nama_penilai[] = $list_observee['nama_pegawai']; 
-                        }
+                        // $id_observee=[]; 
+                        // $nama_penilai=[];                   
+                        // foreach($get_observee as $list_observee){
+                        //     $id_observee[]=$list_observee['IdObservee'];
+                        //     $nama_penilai[] = $list_observee['nama_pegawai']; 
+                        // }
                         $jlh_penilaian=Trans_peserta_zonasi::whereIn("id_pegawai_penilai", $id_observee)
                                                         ->where("id_pegawai_peserta", $list_peserta_zonasi['id_pegawai_peserta'])
                                                         ->count();
@@ -199,8 +196,8 @@ use Illuminate\Support\Facades\DB;
                         if($jlh_penilaian === 0 && $id_jabatan_penilai === 1 && $id_jabatan_peserta === 1){
                             $get_penilaian=Trans_peserta_zonasi::where("id_pegawai_penilai", $id_pegawai_penilai)
                                                 ->where("id_pegawai_peserta", $id_pegawai_peserta)
-                                                ->first();
-                            if(!is_null($get_penilaian)){
+                                                ->exists();
+                            if($get_penilaian){
                                 $jlh_penilaian=1;
                             }
                             // echo "\nKetua Menilai ketua: \n";
@@ -245,7 +242,7 @@ use Illuminate\Support\Facades\DB;
                         exit();
                     }
                 }
-                usleep(50000);
+                // usleep(50000);
             }
             echo "\n";
             echo "==========================================\n";
