@@ -774,9 +774,10 @@ use Vinkla\Hashids\Facades\Hashids;
                                             
         }
 
-        // public function getJabatanDirjen(){
-        //     $getData=Tref_jabatan_peserta::where
-        // }
+        public function getJabatanDirjen(){
+            $getData=Tref_jabatan_peserta::where("id_kelompok_jabatan", 33)->first();
+            return ['id_jabatan'=>$getData->id];
+        }
 
         public function generateNilaiObservee($id_zonasi_satker, $id_peserta_zonasi_arr, $id_periode, $current_nilai_peserta){
             $nilai_akhir=0;
@@ -812,6 +813,10 @@ use Vinkla\Hashids\Facades\Hashids;
                     $id_jabatan_penilai=$list_jabatan['id_jabatan_gabungan_penilai'];
                     $is_jabatan_gabungan = true;
                 }
+
+                $jabatan_dirjen = $this->getJabatanDirjen();
+                $id_jabatan_dirjen = $jabatan_dirjen['id_jabatan'];
+                $bobot["bobot_{$id_jabatan_peserta}_{$id_jabatan_dirjen}"] = $bobot["bobot_1_1"];
 
                 if(isset($bobot["bobot_{$id_jabatan_peserta}_{$id_jabatan_penilai}"])){
                     $bobot_penilaian=$bobot["bobot_{$id_jabatan_peserta}_{$id_jabatan_penilai}"];
