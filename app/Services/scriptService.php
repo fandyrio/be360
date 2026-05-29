@@ -7,7 +7,9 @@ use App\Models\Trans_observee;
 use App\Models\Trans_peserta_zonasi;
 use App\Models\Tref_jabatan_peserta;
 use App\Models\Tref_zonasi;
+use App\Models\Zonasi_satker;
 use Exception;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
     class scriptService{
@@ -235,6 +237,20 @@ use Illuminate\Support\Facades\DB;
                 }
                 usleep(50000);
             }
+            echo "\n";
+            echo "==========================================\n";
+            echo "Sending penilaian to badilum\n";
+            echo "==========================================\n";
+            echo "Please wait ...\n";
+            $id_zonasi_satker = [];
+            Zonasi_satker::where("IdZona", $id_zonasi)->update(['kirim_penilaian' => true]);
+            Trans_peserta_zonasi::where("id_zonasi", $id_zonasi)->update(['status' => true]);
+            $get_zonasi_satker = Zonasi_satker::where("IdZona", $id_zonasi)->get();
+            foreach($get_zonasi_satker as $list_zonasi_satker){
+                $id_zonasi_satker[]=$list_zonasi_satker['IdZonaSatker'];
+            }
+            Trans_observee::whereIn("IdZonaSatker", $id_zonasi_satker)->update(['send_to_badilum' => true]);
+            Cache::store("redis")->forget("zonasi_satker_{$id_zonasi_satker}");
             echo "\nFinisjed. Thankyou.";
             // echo "\n======================================\n";
             
