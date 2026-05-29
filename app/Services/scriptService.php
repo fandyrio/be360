@@ -65,7 +65,7 @@ use Illuminate\Support\Facades\DB;
                                                     "tjp2.id as id_jabatan_penilai")
                                                 ->where('trans_peserta_zonasi.id_zonasi', $id_zonasi)->get();
             $jumlah_peserta=$get_peserta_zonasi->count();
-            // echo "Jumlah Penilaian: ".$jumlah_peserta."\n";
+            echo "Jumlah Penilaian: ".$jumlah_peserta."\n";
             // echo "==========================================\n";
             #1. Get all peserta
             // echo "Mengisi jawaban peserta ...";
