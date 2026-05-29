@@ -67,11 +67,12 @@ use Illuminate\Support\Facades\DB;
             // echo "==========================================\n";
             #1. Get all peserta
             // echo "Mengisi jawaban peserta ...";
-            $range=[1,2,3,4,5];
+            $range=[4,5];
 
             $p=0;
             foreach($get_peserta_zonasi as $list_peserta_zonasi){
                 $p++;
+                $is_jabatan_gabungan = false;
                 $percent = round(($p/$jumlah_peserta)*100);
                 $bar = str_repeat("=", (int) round($percent/2));
 
@@ -117,6 +118,7 @@ use Illuminate\Support\Facades\DB;
 
                     if(!is_null($list_peserta_zonasi['id_jabatan_gabungan_penilai'])){
                         $id_jabatan_penilai=$list_peserta_zonasi['id_jabatan_gabungan_penilai'];
+                        $is_jabatan_gabungan = true;
                     }
 
                     try{
@@ -144,8 +146,17 @@ use Illuminate\Support\Facades\DB;
 
                         
                         #hitung orang yang ada di jabatan itu
+                        if($is_jabatan_gabungan){
+                            $get_data = Tref_jabatan_peserta::where('id_jabatan_gabungan', $id_jabatan_penilai)->get();
+                            $id_kelompok_jabatan_penilai_arr = [];
+                            foreach($get_data as $list_jabatan){
+                                $id_kelompok_jabatan_penilai_arr[]=$list_jabatan['id_kelompok_jabatan'];
+                            }
+                        }else{
+                            $id_kelompok_jabatan_penilai_arr[]=$id_kelompok_jabatan_penilai;
+                        }
                         $get_observee=Trans_observee::join("tref_pegawai as tp", "tp.id_pegawai", "trans_observee.IdPegawai")
-                                            ->where("id_kelompok_jabatan", $id_kelompok_jabatan_penilai)
+                                            ->whereIn("id_kelompok_jabatan", $id_kelompok_jabatan_penilai_arr)
                                             ->where("IdZonaSatker", $list_peserta_zonasi['id_zona_satker'])
                                             ->select("trans_observee.IdObservee", "tp.nama_pegawai")
                                             ->get();
