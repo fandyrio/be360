@@ -850,7 +850,9 @@ use Illuminate\Support\Facades\Crypt;
                 $data['jabatan_penilai']=[];
                 $get_data=Tref_bobot_penilaian::join('tref_jabatan_peserta as tjp', 'tjp.id', '=', 'tref_bobot_penilaian.id_jabatan_penilai')
                             ->select('tref_bobot_penilaian.*', 'tjp.jabatan as jabatan_penilai')
-                            ->where('id_jabatan_peserta', $id_jabatan_peserta)->get();
+                            ->where('id_jabatan_peserta', $id_jabatan_peserta)
+                            ->where('tref_bobot_penilaian.active', true)
+                            ->get();
                 $a=0;
                 $self_assessment = false;
                 foreach($get_data as $list_data){
