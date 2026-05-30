@@ -869,7 +869,7 @@ use Illuminate\Support\Facades\Crypt;
                 }
 
                 if(!$self_assessment){
-                    $data['jabatan_penilai'][$a]['token_id']='new';
+                    $data['jabatan_penilai'][$a]['token_id']='new_self_assessment';
                     $data['jabatan_penilai'][$a]['token_id_jabatan_penilai']=Hashids::encode($get_jabatan['id']);
                     $data['jabatan_penilai'][$a]['jabatan_penilai']=$get_jabatan['jabatan']." (self assessment)";
                     $data['jabatan_penilai'][$a]['active']=$list_data['active'] = 'Y';
@@ -887,7 +887,7 @@ use Illuminate\Support\Facades\Crypt;
             ];
         }
 
-        public function updateDataBobot($id_jabatan_peserta, $id_jabatan_penilai, $id_bobot_arr, $bobot_arr, $new_mapping){
+        public function updateDataBobot($id_jabatan_peserta, $id_jabatan_penilai, $id_bobot_arr, $bobot_arr, $new_mapping, $is_self_assessment){
             $status=false;
             $append_data=false;
             if(!in_array($id_jabatan_peserta, $id_jabatan_penilai)){
@@ -920,6 +920,7 @@ use Illuminate\Support\Facades\Crypt;
                             'id_jabatan_peserta'=>$id_jabatan_peserta,
                             'id_jabatan_penilai'=>$id_jabatan_penilai[$a],
                             'bobot'=>$bobot_arr[$a],
+                            'is_self_assessment'=>$is_self_assessment[$a],
                             'active'=>true
                         ];
                     }else{
