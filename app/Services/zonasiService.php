@@ -793,17 +793,17 @@ use Symfony\Component\CssSelector\Node\HashNode;
                             }
 
                             if($list_peserta['nama_pegawai'] === "Nyimas Zihni Badzlina"){
-                                Log::warning("Nama: ".$list_peserta['nama_pegawai']." Masuk");
+                                // Log::warning("Nama: ".$list_peserta['nama_pegawai']." Masuk");
                             }
 
                             if($list_peserta['nama_pegawai'] !== "Nyimas Zihni Badzlina" && $variable === "pegawai" && ${"index_{$variable}"} === 0 && $index_satker === 0){
-                                Log::warning("Nama: ".$list_peserta['nama_pegawai']." menimpa index 0");
+                                // Log::warning("Nama: ".$list_peserta['nama_pegawai']." menimpa index 0");
                             }
 
                             if($include === "true"){
                                 if($list_peserta['nama_pegawai'] === "Nyimas Zihni Badzlina"){
-                                    Log::warning("Nama: ".$list_peserta['nama_pegawai']." Include ");
-                                    Log::warning("Index satker: ".$index_satker." variable: ".$variable." index ke: ".${"index_{$variable}"});
+                                    // Log::warning("Nama: ".$list_peserta['nama_pegawai']." Include ");
+                                    // Log::warning("Index satker: ".$index_satker." variable: ".$variable." index ke: ".${"index_{$variable}"});
                                 }
                                 //set new variable bila 
                                 $data_peserta[$index_satker][$variable][${"index_{$variable}"}]['nama']=$list_peserta['nama_pegawai'];
@@ -1497,7 +1497,10 @@ use Symfony\Component\CssSelector\Node\HashNode;
                         $data_observee[$x]['diinput_tgl']=date('Y-m-d H:i:s');
                         $data_observee[$x]['diinput_oleh']="system";
                         $pegawai_sikep[]=$dirjen->IdPegawai;
-                        
+                        $x++;
+                    }
+                    if($x === 0){
+                        $is_plt = false;
                     }
                     
                     $get_pegawai=Tref_pegawai::all();

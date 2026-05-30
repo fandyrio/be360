@@ -16,6 +16,7 @@
     use App\Models\Variable_pertanyaan;
     use GuzzleHttp\Promise\Is;
     use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Crypt;
 
     class configService{
         public function listRole($page){
@@ -851,14 +852,29 @@
                             ->select('tref_bobot_penilaian.*', 'tjp.jabatan as jabatan_penilai')
                             ->where('id_jabatan_peserta', $id_jabatan_peserta)->get();
                 $a=0;
+                $self_assessment = false;
                 foreach($get_data as $list_data){
-                   
+                    $label = "";
+                    if($list_data['is_self_assessment']){
+                        $self_assessment = true;
+                        $label = "(self assessment)";
+                    }
                     $data['jabatan_penilai'][$a]['token_id']=Hashids::encode($list_data['id']);
                     $data['jabatan_penilai'][$a]['token_id_jabatan_penilai']=Hashids::encode($list_data['id_jabatan_penilai']);
-                    $data['jabatan_penilai'][$a]['jabatan_penilai']=$list_data['jabatan_penilai'];
+                    $data['jabatan_penilai'][$a]['jabatan_penilai']=$list_data['jabatan_penilai']." ".$label;
                     $data['jabatan_penilai'][$a]['active']=$list_data['active'] === 1 ? 'Y' : 'N';
                     $data['jabatan_penilai'][$a]['bobot']=$list_data['bobot'];
+                    $data['jabatan_penilai'][$a]['self_assessment']=$self_assessment;
                     $a++;
+                }
+
+                if(!$self_assessment){
+                    $data['jabatan_penilai'][$a]['token_id']='new';
+                    $data['jabatan_penilai'][$a]['token_id_jabatan_penilai']=Hashids::encode($get_jabatan['id']);
+                    $data['jabatan_penilai'][$a]['jabatan_penilai']=$get_jabatan['jabatan']." (self assessment)";
+                    $data['jabatan_penilai'][$a]['active']=$list_data['active'] === 'Y';
+                    $data['jabatan_penilai'][$a]['bobot']=0;
+                    $data['jabatan_penilai'][$a]['self_assessment']=true;
                 }
             }else{
                 $msg="Data Jabatan tidak ditemukan";
@@ -924,7 +940,15 @@
                                 DB::table('tref_bobot_penilaian')->insert($data_insert);
                             }
                             if(count($data_delete) > 0){
-                                $update=Tref_bobot_penilaian::whereIn('id', $data_delete)->update(['active'=>false]);
+                                $get_data = Tref_bobot_penilaian::whereIn('id', $data_delete)->get();
+                                
+                                foreach($get_data as $list_data){
+                                    $id_jabatan_penilai_arr[]=$list_data['id_jabatan_penilai'];
+                                }
+                                Tref_mapping_jabatan::where('id_jabatan_peserta', $id_jabatan_peserta)
+                                                        ->whereIn('id_jabatan_penilai', $id_jabatan_penilai_arr)
+                                                        ->update(['active'=>false]);
+                                Tref_bobot_penilaian::whereIn('id', $data_delete)->update(['active'=>false]);
                             }
                             if(count($data_update) > 0){
                                 for($x=0;$x<count($data_update);$x++){
