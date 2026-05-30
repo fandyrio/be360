@@ -872,7 +872,7 @@ use Illuminate\Support\Facades\Crypt;
                     $data['jabatan_penilai'][$a]['token_id']='new';
                     $data['jabatan_penilai'][$a]['token_id_jabatan_penilai']=Hashids::encode($get_jabatan['id']);
                     $data['jabatan_penilai'][$a]['jabatan_penilai']=$get_jabatan['jabatan']." (self assessment)";
-                    $data['jabatan_penilai'][$a]['active']=$list_data['active'] === 'Y';
+                    $data['jabatan_penilai'][$a]['active']=$list_data['active'] = 'Y';
                     $data['jabatan_penilai'][$a]['bobot']=0;
                     $data['jabatan_penilai'][$a]['self_assessment']=true;
                 }
