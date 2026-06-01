@@ -760,14 +760,14 @@ use Illuminate\Support\Facades\Crypt;
                                 ->get();
                
                 foreach($get_data as $list_data){
-                    $label = "";
+                    $label = $list_data['jabatan_penilai'];
                     if($list_data['is_self_assessment']){
-                        $label = "(self assessment)";
+                        $label = "Self Assessment";
                     }
                     $jabatan_penilai[$y]['token_id']=Hashids::encode($list_data['id']);
                     $jabatan_penilai[$y]['jabatan_peserta']=$list_data['jabatan_peserta'];
                     $jabatan_penilai[$y]['id_jabatan_peserta']=$list_data['id_jabatan_peserta'];
-                    $jabatan_penilai[$y]['jabatan_penilai']=$list_data['jabatan_penilai']." ".$label;
+                    $jabatan_penilai[$y]['jabatan_penilai']= $label;
                     $jabatan_penilai[$y]['id_jabatan_penilai']=$list_data['id_jabatan_penilai'];
                     $jabatan_penilai[$y]['active']=$list_data['active'];
                     $jabatan_penilai[$y]['bobot']=$list_data['bobot'];
