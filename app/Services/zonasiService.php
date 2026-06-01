@@ -1107,6 +1107,18 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                     ];
                             }
 
+                            //self assessment
+                            $data[]=[
+                                'id_zonasi'=>$id_zonasi,
+                                'id_zona_satker'=>$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker'],
+                                'id_pegawai_peserta'=>$data_peserta[$s][$variable_jabatan_peserta][$a]['id_pegawai_observee'],
+                                'id_pegawai_penilai'=>$get_dirjen['id_pegawai_dirjen'],
+                                // 'id_jabatan_plt'=>$get_kpt['is_plt'] === "true" ?  1 : null
+                                'id_jabatan_plt'=>$get_dirjen['is_plt'] === "true" ?  $get_jabatan_dirjen->id : null,
+                                'index_plt'=>0
+                            ];
+
+
                             $jlh_mapping=$get_mapping->count();
                             //Looping mapping jabatan dan threshold]
                             foreach($get_mapping as $mapping){
