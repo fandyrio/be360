@@ -889,7 +889,7 @@ use Illuminate\Support\Facades\Crypt;
             ];
         }
 
-        public function updateDataBobot($id_jabatan_peserta, $id_jabatan_penilai, $id_bobot_arr, $bobot_arr, $new_mapping, $is_self_assessment){
+        public function updateDataBobot($id_jabatan_peserta, $id_jabatan_penilai, $id_bobot_arr, $bobot_arr, $new_mapping, $is_new_self_assessment){
             $status=false;
             $append_data=false;
             if(!in_array($id_jabatan_peserta, $id_jabatan_penilai)){
@@ -922,7 +922,7 @@ use Illuminate\Support\Facades\Crypt;
                             'id_jabatan_peserta'=>$id_jabatan_peserta,
                             'id_jabatan_penilai'=>$id_jabatan_penilai[$a],
                             'bobot'=>$bobot_arr[$a],
-                            'is_self_assessment'=>$is_self_assessment[$a],
+                            'is_self_assessment'=>$is_new_self_assessment[$a],
                             'active'=>true
                         ];
                     }else{

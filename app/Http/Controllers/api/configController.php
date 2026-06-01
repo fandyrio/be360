@@ -511,7 +511,7 @@ class configController extends Controller
                 $jlh_penilai=count($request->token_id);
                 $id_bobot_penilai_arr=[];
                 $id_jabatan_penilai_arr=[];
-                $is_self_assessment = [];
+                $is_new_self_assessment = [];
                 $bobot_arr=[];
                 $new_mapping=0;
                 $bobot=0;
@@ -521,9 +521,9 @@ class configController extends Controller
                         $id_bobot_penilai_arr[]="new";
                         $new_mapping+=1;
                         if($request->token_id[$a] === "new_self_assessment"){
-                            $is_self_assessment[]=true;
+                            $is_new_self_assessment[]=true;
                         }else{
-                            $is_self_assessment[]=false;
+                            $is_new_self_assessment[]=false;
                         }
                         
                     }else{
@@ -532,6 +532,7 @@ class configController extends Controller
                             throw new \Exception('Invalid token Penilai');
                         }
                         $id_bobot_penilai_arr[]=$token_penilai[0];
+                        $is_new_self_assessment[]=false;
                     }
                     
                     $id_jabatan_penilai=Hashids::decode($request->id_jabatan_penilai[$a]);
@@ -542,7 +543,7 @@ class configController extends Controller
                     $bobot+=$request->bobot[$a];
                 }
                 if((int)$bobot === 100 || ((int)$id_jabatan_peserta === 1 && (int)$bobot === 40)){
-                    $update_data=$this->configService->updateDataBobot($id_jabatan_peserta, $id_jabatan_penilai_arr, $id_bobot_penilai_arr, $bobot_arr, $new_mapping, $is_self_assessment);
+                    $update_data=$this->configService->updateDataBobot($id_jabatan_peserta, $id_jabatan_penilai_arr, $id_bobot_penilai_arr, $bobot_arr, $new_mapping, $is_new_self_assessment);
                     $update=$update_data['status'];
                     $msg=$update_data['msg'];
                     // $data_update=$update_data['data_update'];
