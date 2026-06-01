@@ -319,7 +319,7 @@ use PDO;
                 $x=0;                                                                           
                 foreach($get_bobot as $list_bobot){
                     $jabatan_penilai = $list_bobot['jabatan_penilai'];
-                    if($list_bobot['is_self_assessment'] === true){
+                    if((int)$list_bobot['is_self_assessment'] === 1){
                         $jabatan_penilai = "Self Assessment";
                     }
 
