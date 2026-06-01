@@ -760,13 +760,18 @@ use Illuminate\Support\Facades\Crypt;
                                 ->get();
                
                 foreach($get_data as $list_data){
+                    $label = "";
+                    if($list_data['is_self_assessment']){
+                        $label = "(self assessment)";
+                    }
                     $jabatan_penilai[$y]['token_id']=Hashids::encode($list_data['id']);
                     $jabatan_penilai[$y]['jabatan_peserta']=$list_data['jabatan_peserta'];
                     $jabatan_penilai[$y]['id_jabatan_peserta']=$list_data['id_jabatan_peserta'];
-                    $jabatan_penilai[$y]['jabatan_penilai']=$list_data['jabatan_penilai'];
+                    $jabatan_penilai[$y]['jabatan_penilai']=$list_data['jabatan_penilai']." ".$label;
                     $jabatan_penilai[$y]['id_jabatan_penilai']=$list_data['id_jabatan_penilai'];
                     $jabatan_penilai[$y]['active']=$list_data['active'];
                     $jabatan_penilai[$y]['bobot']=$list_data['bobot'];
+                    $jabatan_penilai[$y]['is_self_assessment']=$list_data['is_self_assessment'] === 1 ? true : false;
                     $y++;
                 }
             }
@@ -782,6 +787,7 @@ use Illuminate\Support\Facades\Crypt;
                         $data[$x]['jabatan_penilai'][$index_mapping]['active']=$jabatan_penilai[$a]['active'] === 1 ? 'Y' : 'N';
                         $data[$x]['jabatan_penilai'][$index_mapping]['jabatan']=$jabatan_penilai[$a]['jabatan_penilai'];
                         $data[$x]['jabatan_penilai'][$index_mapping]['bobot']=$jabatan_penilai[$a]['bobot'];
+                        $data[$x]['jabatan_penilai'][$index_mapping]['is_self_assessment']=$jabatan_penilai[$a]['is_self_assessment'];
                         $index_mapping++;
                     }
                 }
