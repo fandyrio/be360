@@ -1719,7 +1719,11 @@ use Symfony\Component\CssSelector\Node\HashNode;
                         $data[$x]['token_jabatan_peserta']=Hashids::encode($list_peserta['id']);
                         $data[$x]['jabatan_peserta']=$list_peserta['nama_jabatan_peserta'];
                     }
-                    $data[$x]['penilai'][$y]['nama_penilai']=$list_peserta['nama_penilai'];
+                    $label_self_assessment = "";
+                    if($list_peserta['is_self_assessment']){
+                        $label_self_assessment = "(Self Assessment)";
+                    }
+                    $data[$x]['penilai'][$y]['nama_penilai']=$list_peserta['nama_penilai']." <span style='color:red;'>".$label_self_assessment."</span>";
                     $data[$x]['penilai'][$y]['jabatan_penilai']=$list_peserta['nama_jabatan_penilai'];
                     $data[$x]['penilai'][$y]['is_plt']=is_null($list_peserta['id_jabatan_plt']) ? 'N' : 'Y';
                     $data[$x]['penilai'][$y]['jabatan_plt']=$list_peserta['jabatan_plt'];
