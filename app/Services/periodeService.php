@@ -311,16 +311,21 @@ use PDO;
                                             ->join('tref_bobot_penilaian as bp', 'bp.id', '=', 'trans_bobot_penilaian_periode.id_bobot_penilaian')
                                             ->join('tref_jabatan_peserta as tjp', 'tjp.id', '=', 'bp.id_jabatan_peserta')
                                             ->join('tref_jabatan_peserta as tjp2', 'tjp2.id', '=', 'bp.id_jabatan_penilai')
-                                            ->select('trans_bobot_penilaian_periode.id as id_trans_bobot', 'tjp.jabatan as jabatan_peserta', 'tjp2.jabatan as jabatan_penilai', 'bp.bobot')
+                                            ->select('trans_bobot_penilaian_periode.id as id_trans_bobot', 'tjp.jabatan as jabatan_peserta', 'tjp2.jabatan as jabatan_penilai', 'trans_bobot_penilaian_periode.bobot', 'bp.is_self_assessment')
                                             ->where('id_periode', $periode_id)
                                             ->get();
             $jumlah=$get_bobot->count();
             if($jumlah > 0){
                 $x=0;                                                                           
                 foreach($get_bobot as $list_bobot){
+                    $jabatan_penilai = $list_bobot['jabatan_penilai'];
+                    if($list_bobot['is_self_assessment'] === true){
+                        $jabatan_penilai = "Self Assessment";
+                    }
+
                     $data[$x]['token_trans_bobot']=Hashids::encode($list_bobot['id_trans_bobot']);
                     $data[$x]['jabatan_peserta']=$list_bobot['jabatan_peserta'];
-                    $data[$x]['jabatan_penilai']=$list_bobot['jabatan_penilai'];
+                    $data[$x]['jabatan_penilai']=$jabatan_penilai;
                     $data[$x]['bobot']=$list_bobot['bobot'];
                     $x++;
                 }
@@ -558,6 +563,7 @@ use PDO;
                                                         ->join('tref_jabatan_peserta as tjp2', 'tjp2.id', '=', 'tmj.id_jabatan_penilai')
                                                         ->select('trans_mapping_jabatan_periode.id as id_trans_mapping', 'tjp.jabatan as jabatan_peserta', 'tjp2.jabatan as jabatan_penilai', 'tmj.threshold', 'tmj.id_jabatan_peserta')
                                                         ->where('trans_mapping_jabatan_periode.id_periode', $id_periode)
+                                                        ->where()
                                                         ->orderBy('tmj.id_jabatan_peserta', 'asc')
                                                         ->get();
             $a=$b=0;

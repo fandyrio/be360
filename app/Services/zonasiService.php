@@ -708,7 +708,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                         ];
             }
 
-            Log::warning("Jabatan gabungan pack", $jabatan_gabungan_pack);
+            // Log::warning("Jabatan gabungan pack", $jabatan_gabungan_pack);
                 
             $index_satker=0;
             $satker=[];
