@@ -1087,6 +1087,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                         'id_pegawai_peserta'=>$data_peserta[$s][$variable_jabatan_peserta][$a]['id_pegawai_observee'],
                                         'id_pegawai_penilai'=>$get_kpt['id_pegawai_kpt'],
                                         // 'id_jabatan_plt'=>$get_kpt['is_plt'] === "true" ?  1 : null
+                                        'is_self_assessment'=>false,
                                         'id_jabatan_plt'=>$get_kpt['is_plt'] === "true" ?  1 : null,
                                         'index_plt'=>0
                                     ];
@@ -1102,6 +1103,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                         'id_pegawai_peserta'=>$data_peserta[$s][$variable_jabatan_peserta][$a]['id_pegawai_observee'],
                                         'id_pegawai_penilai'=>$get_dirjen['id_pegawai_dirjen'],
                                         // 'id_jabatan_plt'=>$get_kpt['is_plt'] === "true" ?  1 : null
+                                        'is_self_assessment'=>false,
                                         'id_jabatan_plt'=>$get_dirjen['is_plt'] === "true" ?  $get_jabatan_dirjen->id : null,
                                         'index_plt'=>0
                                     ];
@@ -1210,6 +1212,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                             'id_zona_satker'=>$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker'],
                                             'id_pegawai_peserta'=>$data_peserta[$s][$variable_jabatan_peserta][$a]['id_pegawai_observee'],
                                             'id_pegawai_penilai'=>$id_pegawai_penilai,
+                                            'is_self_assessment'=>false,
                                             'id_jabatan_plt'=>$data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['is_plt'] === "true" ?  $mapping["id_jabatan_penilai"] : null,
                                             "index_plt"=>$data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['is_plt'] === "true" ?  $data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['index_jabatan_plt'] : 0
                                         ];
@@ -1240,6 +1243,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                             'id_zona_satker'=>$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker'],
                                             'id_pegawai_peserta'=>$data_peserta[$s][$variable_jabatan_peserta][$a]['id_pegawai_observee'],
                                             'id_pegawai_penilai'=>null,
+                                            'is_self_assessment'=>false,
                                             'id_jabatan_plt'=>$mapping['id_jabatan_penilai'],
                                             'index_plt'=>0
                                         ];
