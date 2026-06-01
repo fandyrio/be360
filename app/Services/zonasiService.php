@@ -1723,7 +1723,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     if($list_peserta['is_self_assessment']){
                         $label_self_assessment = "(Self Assessment)";
                     }
-                    $data[$x]['penilai'][$y]['nama_penilai']=$list_peserta['nama_penilai']." <span style='color:red;'>".$label_self_assessment."</span>";
+                    $data[$x]['penilai'][$y]['nama_penilai']=$list_peserta['nama_penilai']." ".$label_self_assessment;
                     $data[$x]['penilai'][$y]['jabatan_penilai']=$list_peserta['nama_jabatan_penilai'];
                     $data[$x]['penilai'][$y]['is_plt']=is_null($list_peserta['id_jabatan_plt']) ? 'N' : 'Y';
                     $data[$x]['penilai'][$y]['jabatan_plt']=$list_peserta['jabatan_plt'];
