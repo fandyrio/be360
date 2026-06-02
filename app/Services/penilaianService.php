@@ -707,13 +707,17 @@ use Vinkla\Hashids\Facades\Hashids;
         public function bobotJabatanPeriode($id_periode){
             $get_data=Cache::store("redis")->remember("bobot_periode_{$id_periode}", 3600*24*365, function () use($id_periode){
                 return Trans_bobot_penilaian_periode::join('tref_bobot_penilaian as tbp', 'tbp.id', '=', 'trans_bobot_penilaian_periode.id_bobot_penilaian')
-                                            ->select('tbp.id_jabatan_peserta', 'tbp.id_jabatan_penilai', 'trans_bobot_penilaian_periode.bobot')
+                                            ->select('tbp.id_jabatan_peserta', 'tbp.id_jabatan_penilai', 'trans_bobot_penilaian_periode.bobot', 'tbp.is_self_assessment')
                                             ->where('trans_bobot_penilaian_periode.id_periode', $id_periode)
                                             ->get();
             });
             $bobot=[];
             foreach($get_data as $list_data){
-                $bobot["bobot_{$list_data['id_jabatan_peserta']}_{$list_data['id_jabatan_penilai']}"]=$list_data['bobot'];
+                if((int)$list_data['is_self_assessment'] === 1){
+                    $bobot["bobot_sa_{$list_data['id_jabatan_peserta']}_{$list_data['id_jabatan_penilai']}"]=$list_data['bobot'];
+                }else{
+                    $bobot["bobot_{$list_data['id_jabatan_peserta']}_{$list_data['id_jabatan_penilai']}"]=$list_data['bobot'];
+                }
             }
 
             return $bobot;
