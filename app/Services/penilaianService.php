@@ -377,6 +377,9 @@ use Vinkla\Hashids\Facades\Hashids;
                         $jabatan_peserta[$x]=$list_peserta['NamaJabatan'];
                         $locked=$list_peserta['status'] === 0 ? true : false;
                         $keterangan.=is_null($list_peserta['jabatan']) ? "" : "Juga menilai sebagai: ".$list_peserta['jabatan']."\n";
+                        if($list_peserta['is_self_assessment']){
+                            $keterangan.="Self Assessment";
+                        }
                         $x++;
                     }
                     $peserta['nama']=$nama_peserta[0];
