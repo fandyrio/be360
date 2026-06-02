@@ -796,7 +796,7 @@ use Vinkla\Hashids\Facades\Hashids;
                                             ->join('tref_jabatan_peserta as tjp', 'tjp.id_kelompok_jabatan', '=', 'to.id_kelompok_jabatan')
                                             ->join('trans_observee as to2', 'to2.IdObservee', '=', 'trans_peserta_zonasi.id_pegawai_penilai')
                                             ->join('tref_jabatan_peserta as tjp2', 'tjp2.id_kelompok_jabatan', '=', 'to2.id_kelompok_jabatan')
-                                            ->select('tjp.id as id_jabatan_peserta', 'tjp.id_jabatan_gabungan as id_jabatan_gabungan_peserta', 'tjp2.id as id_jabatan_penilai', 'tjp2.id_jabatan_gabungan as id_jabatan_gabungan_penilai', 'trans_peserta_zonasi.id_jabatan_plt', 'trans_peserta_zonasi.nilai', 'tjp.id_kelompok_jabatan as id_kelompok_jabatan_peserta', 'tjp2.id_kelompok_jabatan as id_kelompok_jabatan_penilai', 'trans_peserta_zonasi.id_pegawai_peserta', 'trans_peserta_zonasi.id_pegawai_penilai')
+                                            ->select('trans_peserta_zonasi.is_self_assessment', 'tjp.id as id_jabatan_peserta', 'tjp.id_jabatan_gabungan as id_jabatan_gabungan_peserta', 'tjp2.id as id_jabatan_penilai', 'tjp2.id_jabatan_gabungan as id_jabatan_gabungan_penilai', 'trans_peserta_zonasi.id_jabatan_plt', 'trans_peserta_zonasi.nilai', 'tjp.id_kelompok_jabatan as id_kelompok_jabatan_peserta', 'tjp2.id_kelompok_jabatan as id_kelompok_jabatan_penilai', 'trans_peserta_zonasi.id_pegawai_peserta', 'trans_peserta_zonasi.id_pegawai_penilai')
                                 ->whereIn('trans_peserta_zonasi.id', $id_peserta_zonasi_arr)
                                 ->get();
             $bobot=$this->bobotJabatanPeriode($id_periode);
@@ -827,8 +827,14 @@ use Vinkla\Hashids\Facades\Hashids;
                 $id_jabatan_dirjen = $jabatan_dirjen['id_jabatan'];
                 $bobot["bobot_{$id_jabatan_peserta}_{$id_jabatan_dirjen}"] = $bobot["bobot_1_1"];
 
-                if(isset($bobot["bobot_{$id_jabatan_peserta}_{$id_jabatan_penilai}"])){
-                    $bobot_penilaian=$bobot["bobot_{$id_jabatan_peserta}_{$id_jabatan_penilai}"];
+                if((int)$list_jabatan['is_self_assessment'] === 1){
+                    $bobot_penilaian =  $bobot["bobot_sa_{$id_jabatan_peserta}_{$id_jabatan_penilai}"];
+                }else{
+                    $bobot_penilaian = $bobot["bobot_{$id_jabatan_peserta}_{$id_jabatan_penilai}"];
+                }
+
+                if(isset($bobot_penilaian)){
+                    // $bobot_penilaian=$bobot["bobot_{$id_jabatan_peserta}_{$id_jabatan_penilai}"];
                     $jumlah_penilai=$this->countJabatanPenilaiSatkerNew($id_zonasi_satker, $id_kelompok_jabatan_penilai, $list_jabatan['id_pegawai_peserta'], $id_jabatan_penilai, $is_jabatan_gabungan);
                     // if($is_plt === true){
                     //     $jumlah_penilai += 1;
