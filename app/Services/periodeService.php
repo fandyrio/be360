@@ -508,6 +508,7 @@ use PDO;
         }
 
         public function regeneratePertanyaanPeriode($id_periode){
+            $status = false;
             $get_periode=Tahun_penilaian::where('IdTahunPenilaian', $id_periode)->first();
             if(!is_null($get_periode)){
                 $proses_id=(int)$get_periode['proses_id'];
@@ -563,7 +564,6 @@ use PDO;
                                                         ->join('tref_jabatan_peserta as tjp2', 'tjp2.id', '=', 'tmj.id_jabatan_penilai')
                                                         ->select('trans_mapping_jabatan_periode.id as id_trans_mapping', 'tjp.jabatan as jabatan_peserta', 'tjp2.jabatan as jabatan_penilai', 'tmj.threshold', 'tmj.id_jabatan_peserta')
                                                         ->where('trans_mapping_jabatan_periode.id_periode', $id_periode)
-                                                        ->where()
                                                         ->orderBy('tmj.id_jabatan_peserta', 'asc')
                                                         ->get();
             $a=$b=0;
