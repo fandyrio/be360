@@ -523,6 +523,7 @@ use PDO;
                                     $data_pertanyaan[]=[
                                         'id_periode'=>$id_periode,
                                         'id_variable'=>$list_pertanyaan['id_variable'],
+                                        'pertanyaan'=>$list_pertanyaan['pertanyaan'],
                                         'id_pertanyaan'=>$list_pertanyaan['id'],
                                     ];
                                 }
