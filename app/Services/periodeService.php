@@ -515,7 +515,7 @@ use PDO;
                 if($proses_id <= 3){
                     try{
                         DB::beginTransaction();
-                            Trans_pertanyaan_periode::where('id_periode', $id_periode)->delete();
+                            Trans_pertanyaan_periode::where('id_periode', $id_periode)->update(['active'=>false]);
                             $get_data_pertanyaan=Tref_pertanyaan::where('active', true)->get();
                             if($get_data_pertanyaan->count() > 0){
                                 $data_pertanyaan=[];
