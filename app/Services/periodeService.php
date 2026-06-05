@@ -436,7 +436,7 @@ use PDO;
                                     ->joinSub($bundle_jawaban, 'b', function($join){
                                             $join->on('tp.bundle_code_jawaban', '=', 'b.bundle_code');
                                         })
-                                    ->select('trans_pertanyaan_periode.id as id_pertanyaan_periode', 'vp.variable', 'tp.id_variable', 'tp.pertanyaan', 'tp.bobot', 'b.bundle_name')
+                                    ->select('trans_pertanyaan_periode.id as id_pertanyaan_periode', 'vp.variable', 'trans_pertanyaan_periode.id_variable', 'trans_pertanyaan_periode.pertanyaan', 'trans_pertanyaan_periode.bobot', 'b.bundle_name')
                                     ->orderBy('vp.id', 'asc')
                                     ->where('trans_pertanyaan_periode.id_periode', $id_periode)
                                     ->get();
@@ -524,6 +524,8 @@ use PDO;
                                         'id_periode'=>$id_periode,
                                         'id_variable'=>$list_pertanyaan['id_variable'],
                                         'pertanyaan'=>$list_pertanyaan['pertanyaan'],
+                                        'bundle_code_jawaban'=>$list_pertanyaan['bundle_code_jawaban'],
+                                        'bobot'=>$list_pertanyaan['bobot'],
                                         'id_pertanyaan'=>$list_pertanyaan['id'],
                                     ];
                                 }
