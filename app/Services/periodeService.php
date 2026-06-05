@@ -522,6 +522,7 @@ use PDO;
                                 foreach($get_data_pertanyaan as $list_pertanyaan){
                                     $data_pertanyaan[]=[
                                         'id_periode'=>$id_periode,
+                                        'id_variable'=>$list_pertanyaan['id_variable'],
                                         'id_pertanyaan'=>$list_pertanyaan['id'],
                                     ];
                                 }
