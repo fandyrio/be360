@@ -144,6 +144,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                     $generate_peserta=$this->getPeserta(Hashids::encode($id_zonasi));
                                     $msg.=" dan ".$generate_peserta['msg'];
                                     Cache::store("redis")->forget("zonasi_periode_{$id_tahun_penilaian}");
+                                    Tahun_penilaian::where("IdTahunPenilaian", $id_tahun_penilaian)->update(['proses_id', 5]);
                                 }
                             }else{
                                 DB::rollBack();

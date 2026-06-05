@@ -513,7 +513,9 @@ use PDO;
             $get_periode=Tahun_penilaian::where('IdTahunPenilaian', $id_periode)->first();
             if(!is_null($get_periode)){
                 $proses_id=(int)$get_periode['proses_id'];
-                if($proses_id <= 3){
+                // $get_zonasi_active=Tref_zonasi::where("IdTahunPenilaian", $id_periode)
+                //                     ->where("proses_id", "")
+                if($proses_id === 1){
                     try{
                         DB::beginTransaction();
                             Trans_pertanyaan_periode::where('id_periode', $id_periode)->update(['active'=>false]);
