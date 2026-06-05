@@ -439,6 +439,7 @@ use PDO;
                                     ->select('trans_pertanyaan_periode.id as id_pertanyaan_periode', 'vp.variable', 'trans_pertanyaan_periode.id_variable', 'trans_pertanyaan_periode.pertanyaan', 'trans_pertanyaan_periode.bobot', 'b.bundle_name')
                                     ->orderBy('vp.id', 'asc')
                                     ->where('trans_pertanyaan_periode.id_periode', $id_periode)
+                                    ->where("trans_pertanyaan_periode.active", true)
                                     ->get();
             $total=$get_data->count();
             if($total > 0){
