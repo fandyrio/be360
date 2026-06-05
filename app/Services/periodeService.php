@@ -533,6 +533,7 @@ use PDO;
                                 DB::commit();
                                 $status=true;
                                 $msg="Berhasil Memperbaharui Data";
+                                Cache::store('redis')->forget("ref_pertanyaan_periode_".$id_periode);
                             }else{
                                 DB::rollBack();
                                 $msg="Master data pertanyaan tidak ditemukan. Silahkan diisi ulang";
