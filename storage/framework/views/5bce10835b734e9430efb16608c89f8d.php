@@ -26,7 +26,7 @@
             </style>
 
     <script>
-        var tryItOutBaseUrl = "http://be_360.local";
+        var tryItOutBaseUrl = "https://be360.pt-bengkulu.go.id";
         var useCsrf = Boolean();
         var csrfUrl = "/sanctum/csrf-cookie";
     </script>
@@ -452,7 +452,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: June 26, 2026</li>
+        <li>Last updated: July 2, 2026</li>
     </ul>
 </div>
 
@@ -461,7 +461,7 @@
     <div class="content">
         <h1 id="introduction">Introduction</h1>
 <aside>
-    <strong>Base URL</strong>: <code>http://be_360.local</code>
+    <strong>Base URL</strong>: <code>https://be360.pt-bengkulu.go.id</code>
 </aside>
 <pre><code>This documentation aims to provide all the information you need to work with our API.
 
@@ -491,7 +491,7 @@ You can switch the language used with the tabs at the top right (or from the nav
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/login" \
+    "https://be360.pt-bengkulu.go.id/api/login" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
@@ -504,7 +504,7 @@ You can switch the language used with the tabs at the top right (or from the nav
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/login"
+    "https://be360.pt-bengkulu.go.id/api/login"
 );
 
 const headers = {
@@ -667,7 +667,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/refresh-token" \
+    "https://be360.pt-bengkulu.go.id/api/refresh-token" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -675,7 +675,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/refresh-token"
+    "https://be360.pt-bengkulu.go.id/api/refresh-token"
 );
 
 const headers = {
@@ -793,7 +793,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/logout" \
+    "https://be360.pt-bengkulu.go.id/api/logout" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -801,7 +801,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/logout"
+    "https://be360.pt-bengkulu.go.id/api/logout"
 );
 
 const headers = {
@@ -919,7 +919,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/user" \
+    --get "https://be360.pt-bengkulu.go.id/api/user" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -927,7 +927,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/user"
+    "https://be360.pt-bengkulu.go.id/api/user"
 );
 
 const headers = {
@@ -955,7 +955,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -1063,7 +1063,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/generate-account/architecto" \
+    --get "https://be360.pt-bengkulu.go.id/api/generate-account/architecto" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -1071,7 +1071,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/generate-account/architecto"
+    "https://be360.pt-bengkulu.go.id/api/generate-account/architecto"
 );
 
 const headers = {
@@ -1099,7 +1099,7 @@ fetch(url, {
             <pre><code class="language-http">content-type: text/html; charset=UTF-8
 cache-control: no-cache, private
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -1218,7 +1218,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/generate-admin-badilum" \
+    --get "https://be360.pt-bengkulu.go.id/api/generate-admin-badilum" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -1226,7 +1226,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/generate-admin-badilum"
+    "https://be360.pt-bengkulu.go.id/api/generate-admin-badilum"
 );
 
 const headers = {
@@ -1254,7 +1254,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -1362,7 +1362,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/list-role/architecto" \
+    --get "https://be360.pt-bengkulu.go.id/api/list-role/architecto" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -1370,7 +1370,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/list-role/architecto"
+    "https://be360.pt-bengkulu.go.id/api/list-role/architecto"
 );
 
 const headers = {
@@ -1398,7 +1398,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -1519,7 +1519,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/save-role" \
+    "https://be360.pt-bengkulu.go.id/api/save-role" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -1527,7 +1527,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/save-role"
+    "https://be360.pt-bengkulu.go.id/api/save-role"
 );
 
 const headers = {
@@ -1645,7 +1645,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/get-role/architecto" \
+    --get "https://be360.pt-bengkulu.go.id/api/get-role/architecto" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -1653,7 +1653,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/get-role/architecto"
+    "https://be360.pt-bengkulu.go.id/api/get-role/architecto"
 );
 
 const headers = {
@@ -1681,7 +1681,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -1802,7 +1802,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/update-role" \
+    "https://be360.pt-bengkulu.go.id/api/update-role" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -1810,7 +1810,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/update-role"
+    "https://be360.pt-bengkulu.go.id/api/update-role"
 );
 
 const headers = {
@@ -1928,7 +1928,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/delete-role" \
+    "https://be360.pt-bengkulu.go.id/api/delete-role" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -1936,7 +1936,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/delete-role"
+    "https://be360.pt-bengkulu.go.id/api/delete-role"
 );
 
 const headers = {
@@ -2054,7 +2054,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/list-satker-banding" \
+    --get "https://be360.pt-bengkulu.go.id/api/list-satker-banding" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -2062,7 +2062,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/list-satker-banding"
+    "https://be360.pt-bengkulu.go.id/api/list-satker-banding"
 );
 
 const headers = {
@@ -2090,7 +2090,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -2198,7 +2198,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/list-satker-pertama/architecto" \
+    --get "https://be360.pt-bengkulu.go.id/api/list-satker-pertama/architecto" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -2206,7 +2206,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/list-satker-pertama/architecto"
+    "https://be360.pt-bengkulu.go.id/api/list-satker-pertama/architecto"
 );
 
 const headers = {
@@ -2234,7 +2234,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -2355,7 +2355,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/get-user/architecto" \
+    --get "https://be360.pt-bengkulu.go.id/api/get-user/architecto" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -2363,7 +2363,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/get-user/architecto"
+    "https://be360.pt-bengkulu.go.id/api/get-user/architecto"
 );
 
 const headers = {
@@ -2391,7 +2391,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -2512,7 +2512,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/save-user-default" \
+    "https://be360.pt-bengkulu.go.id/api/save-user-default" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -2520,7 +2520,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/save-user-default"
+    "https://be360.pt-bengkulu.go.id/api/save-user-default"
 );
 
 const headers = {
@@ -2638,7 +2638,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/get-user-detil/architecto" \
+    --get "https://be360.pt-bengkulu.go.id/api/get-user-detil/architecto" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -2646,7 +2646,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/get-user-detil/architecto"
+    "https://be360.pt-bengkulu.go.id/api/get-user-detil/architecto"
 );
 
 const headers = {
@@ -2674,7 +2674,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -2795,7 +2795,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/update-user" \
+    "https://be360.pt-bengkulu.go.id/api/update-user" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -2803,7 +2803,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/update-user"
+    "https://be360.pt-bengkulu.go.id/api/update-user"
 );
 
 const headers = {
@@ -2921,7 +2921,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/list-all-satker" \
+    --get "https://be360.pt-bengkulu.go.id/api/list-all-satker" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -2929,7 +2929,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/list-all-satker"
+    "https://be360.pt-bengkulu.go.id/api/list-all-satker"
 );
 
 const headers = {
@@ -2957,7 +2957,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -3065,7 +3065,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/generate-user" \
+    "https://be360.pt-bengkulu.go.id/api/generate-user" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -3073,7 +3073,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/generate-user"
+    "https://be360.pt-bengkulu.go.id/api/generate-user"
 );
 
 const headers = {
@@ -3191,7 +3191,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/get-pegawai-sikep" \
+    "https://be360.pt-bengkulu.go.id/api/get-pegawai-sikep" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -3199,7 +3199,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/get-pegawai-sikep"
+    "https://be360.pt-bengkulu.go.id/api/get-pegawai-sikep"
 );
 
 const headers = {
@@ -3317,7 +3317,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/send-wa-token-admin" \
+    "https://be360.pt-bengkulu.go.id/api/send-wa-token-admin" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -3325,7 +3325,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/send-wa-token-admin"
+    "https://be360.pt-bengkulu.go.id/api/send-wa-token-admin"
 );
 
 const headers = {
@@ -3443,7 +3443,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/confirm-token" \
+    "https://be360.pt-bengkulu.go.id/api/confirm-token" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -3451,7 +3451,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/confirm-token"
+    "https://be360.pt-bengkulu.go.id/api/confirm-token"
 );
 
 const headers = {
@@ -3569,7 +3569,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/save-admin-satker" \
+    "https://be360.pt-bengkulu.go.id/api/save-admin-satker" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -3577,7 +3577,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/save-admin-satker"
+    "https://be360.pt-bengkulu.go.id/api/save-admin-satker"
 );
 
 const headers = {
@@ -3695,7 +3695,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/dashboard-satker" \
+    --get "https://be360.pt-bengkulu.go.id/api/dashboard-satker" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -3703,7 +3703,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/dashboard-satker"
+    "https://be360.pt-bengkulu.go.id/api/dashboard-satker"
 );
 
 const headers = {
@@ -3731,7 +3731,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -3839,7 +3839,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/profile" \
+    --get "https://be360.pt-bengkulu.go.id/api/profile" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -3847,7 +3847,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/profile"
+    "https://be360.pt-bengkulu.go.id/api/profile"
 );
 
 const headers = {
@@ -3875,7 +3875,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -3983,7 +3983,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/list-jabatan-kosong-satker/architecto" \
+    --get "https://be360.pt-bengkulu.go.id/api/list-jabatan-kosong-satker/architecto" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -3991,7 +3991,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/list-jabatan-kosong-satker/architecto"
+    "https://be360.pt-bengkulu.go.id/api/list-jabatan-kosong-satker/architecto"
 );
 
 const headers = {
@@ -4019,7 +4019,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -4140,7 +4140,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/detil-jabatan-kosong-satker/architecto" \
+    --get "https://be360.pt-bengkulu.go.id/api/detil-jabatan-kosong-satker/architecto" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -4148,7 +4148,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/detil-jabatan-kosong-satker/architecto"
+    "https://be360.pt-bengkulu.go.id/api/detil-jabatan-kosong-satker/architecto"
 );
 
 const headers = {
@@ -4176,7 +4176,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -4297,7 +4297,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/get-pegawai-local" \
+    "https://be360.pt-bengkulu.go.id/api/get-pegawai-local" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -4305,7 +4305,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/get-pegawai-local"
+    "https://be360.pt-bengkulu.go.id/api/get-pegawai-local"
 );
 
 const headers = {
@@ -4423,7 +4423,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/save-jabatan-kosong" \
+    "https://be360.pt-bengkulu.go.id/api/save-jabatan-kosong" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -4431,7 +4431,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/save-jabatan-kosong"
+    "https://be360.pt-bengkulu.go.id/api/save-jabatan-kosong"
 );
 
 const headers = {
@@ -4549,7 +4549,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/confirm-jabatan-kosong" \
+    "https://be360.pt-bengkulu.go.id/api/confirm-jabatan-kosong" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -4557,7 +4557,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/confirm-jabatan-kosong"
+    "https://be360.pt-bengkulu.go.id/api/confirm-jabatan-kosong"
 );
 
 const headers = {
@@ -4675,7 +4675,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/monitoring-satker/architecto/architecto/architecto" \
+    --get "https://be360.pt-bengkulu.go.id/api/monitoring-satker/architecto/architecto/architecto" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -4683,7 +4683,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/monitoring-satker/architecto/architecto/architecto"
+    "https://be360.pt-bengkulu.go.id/api/monitoring-satker/architecto/architecto/architecto"
 );
 
 const headers = {
@@ -4711,7 +4711,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -4856,7 +4856,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/send-to-badilum" \
+    "https://be360.pt-bengkulu.go.id/api/send-to-badilum" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -4864,7 +4864,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/send-to-badilum"
+    "https://be360.pt-bengkulu.go.id/api/send-to-badilum"
 );
 
 const headers = {
@@ -4982,7 +4982,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/list-zonasi-satker/architecto" \
+    --get "https://be360.pt-bengkulu.go.id/api/list-zonasi-satker/architecto" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -4990,7 +4990,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/list-zonasi-satker/architecto"
+    "https://be360.pt-bengkulu.go.id/api/list-zonasi-satker/architecto"
 );
 
 const headers = {
@@ -5018,7 +5018,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -5139,7 +5139,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/detil-zonasi-satker/architecto" \
+    --get "https://be360.pt-bengkulu.go.id/api/detil-zonasi-satker/architecto" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -5147,7 +5147,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/detil-zonasi-satker/architecto"
+    "https://be360.pt-bengkulu.go.id/api/detil-zonasi-satker/architecto"
 );
 
 const headers = {
@@ -5175,7 +5175,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -5296,7 +5296,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/dashboard-badilum" \
+    --get "https://be360.pt-bengkulu.go.id/api/dashboard-badilum" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -5304,7 +5304,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/dashboard-badilum"
+    "https://be360.pt-bengkulu.go.id/api/dashboard-badilum"
 );
 
 const headers = {
@@ -5332,7 +5332,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -5440,7 +5440,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/list-zonasi/architecto" \
+    --get "https://be360.pt-bengkulu.go.id/api/list-zonasi/architecto" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -5448,7 +5448,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/list-zonasi/architecto"
+    "https://be360.pt-bengkulu.go.id/api/list-zonasi/architecto"
 );
 
 const headers = {
@@ -5476,7 +5476,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -5597,7 +5597,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/save-zonasi" \
+    "https://be360.pt-bengkulu.go.id/api/save-zonasi" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -5605,7 +5605,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/save-zonasi"
+    "https://be360.pt-bengkulu.go.id/api/save-zonasi"
 );
 
 const headers = {
@@ -5723,7 +5723,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/delete-zonasi/architecto" \
+    --get "https://be360.pt-bengkulu.go.id/api/delete-zonasi/architecto" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -5731,7 +5731,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/delete-zonasi/architecto"
+    "https://be360.pt-bengkulu.go.id/api/delete-zonasi/architecto"
 );
 
 const headers = {
@@ -5759,7 +5759,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -5880,7 +5880,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/save-satker-zonasi" \
+    "https://be360.pt-bengkulu.go.id/api/save-satker-zonasi" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -5888,7 +5888,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/save-satker-zonasi"
+    "https://be360.pt-bengkulu.go.id/api/save-satker-zonasi"
 );
 
 const headers = {
@@ -6006,7 +6006,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/detil-zonasi/architecto" \
+    --get "https://be360.pt-bengkulu.go.id/api/detil-zonasi/architecto" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -6014,7 +6014,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/detil-zonasi/architecto"
+    "https://be360.pt-bengkulu.go.id/api/detil-zonasi/architecto"
 );
 
 const headers = {
@@ -6042,7 +6042,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -6163,7 +6163,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/list-satker-zonasi/architecto" \
+    --get "https://be360.pt-bengkulu.go.id/api/list-satker-zonasi/architecto" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -6171,7 +6171,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/list-satker-zonasi/architecto"
+    "https://be360.pt-bengkulu.go.id/api/list-satker-zonasi/architecto"
 );
 
 const headers = {
@@ -6199,7 +6199,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -6320,7 +6320,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/list-peserta-periode/architecto" \
+    --get "https://be360.pt-bengkulu.go.id/api/list-peserta-periode/architecto" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -6328,7 +6328,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/list-peserta-periode/architecto"
+    "https://be360.pt-bengkulu.go.id/api/list-peserta-periode/architecto"
 );
 
 const headers = {
@@ -6356,7 +6356,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -6477,7 +6477,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/remove-satker-zonasi" \
+    "https://be360.pt-bengkulu.go.id/api/remove-satker-zonasi" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -6485,7 +6485,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/remove-satker-zonasi"
+    "https://be360.pt-bengkulu.go.id/api/remove-satker-zonasi"
 );
 
 const headers = {
@@ -6603,7 +6603,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/run-queue" \
+    "https://be360.pt-bengkulu.go.id/api/run-queue" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -6611,7 +6611,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/run-queue"
+    "https://be360.pt-bengkulu.go.id/api/run-queue"
 );
 
 const headers = {
@@ -6729,7 +6729,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/run-queue-peserta" \
+    "https://be360.pt-bengkulu.go.id/api/run-queue-peserta" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -6737,7 +6737,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/run-queue-peserta"
+    "https://be360.pt-bengkulu.go.id/api/run-queue-peserta"
 );
 
 const headers = {
@@ -6855,7 +6855,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/regenerate-peserta" \
+    "https://be360.pt-bengkulu.go.id/api/regenerate-peserta" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -6863,7 +6863,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/regenerate-peserta"
+    "https://be360.pt-bengkulu.go.id/api/regenerate-peserta"
 );
 
 const headers = {
@@ -6981,7 +6981,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/progress-jobs-peserta/architecto" \
+    --get "https://be360.pt-bengkulu.go.id/api/progress-jobs-peserta/architecto" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -6989,7 +6989,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/progress-jobs-peserta/architecto"
+    "https://be360.pt-bengkulu.go.id/api/progress-jobs-peserta/architecto"
 );
 
 const headers = {
@@ -7017,7 +7017,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -7138,7 +7138,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/progress-jobs-notif/architecto" \
+    --get "https://be360.pt-bengkulu.go.id/api/progress-jobs-notif/architecto" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -7146,7 +7146,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/progress-jobs-notif/architecto"
+    "https://be360.pt-bengkulu.go.id/api/progress-jobs-notif/architecto"
 );
 
 const headers = {
@@ -7174,7 +7174,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -7295,7 +7295,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/jabatan-kosong/architecto/architecto" \
+    --get "https://be360.pt-bengkulu.go.id/api/jabatan-kosong/architecto/architecto" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -7303,7 +7303,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/jabatan-kosong/architecto/architecto"
+    "https://be360.pt-bengkulu.go.id/api/jabatan-kosong/architecto/architecto"
 );
 
 const headers = {
@@ -7331,7 +7331,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -7464,7 +7464,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/list-peserta-zonasi-satker/architecto" \
+    --get "https://be360.pt-bengkulu.go.id/api/list-peserta-zonasi-satker/architecto" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -7472,7 +7472,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/list-peserta-zonasi-satker/architecto"
+    "https://be360.pt-bengkulu.go.id/api/list-peserta-zonasi-satker/architecto"
 );
 
 const headers = {
@@ -7500,7 +7500,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -7621,7 +7621,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/save-periode" \
+    "https://be360.pt-bengkulu.go.id/api/save-periode" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -7629,7 +7629,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/save-periode"
+    "https://be360.pt-bengkulu.go.id/api/save-periode"
 );
 
 const headers = {
@@ -7747,7 +7747,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/detil-periode/architecto" \
+    --get "https://be360.pt-bengkulu.go.id/api/detil-periode/architecto" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -7755,7 +7755,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/detil-periode/architecto"
+    "https://be360.pt-bengkulu.go.id/api/detil-periode/architecto"
 );
 
 const headers = {
@@ -7783,7 +7783,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -7904,7 +7904,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/update-periode" \
+    "https://be360.pt-bengkulu.go.id/api/update-periode" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -7912,7 +7912,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/update-periode"
+    "https://be360.pt-bengkulu.go.id/api/update-periode"
 );
 
 const headers = {
@@ -8030,7 +8030,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/delete-periode" \
+    "https://be360.pt-bengkulu.go.id/api/delete-periode" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -8038,7 +8038,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/delete-periode"
+    "https://be360.pt-bengkulu.go.id/api/delete-periode"
 );
 
 const headers = {
@@ -8156,7 +8156,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/list-active-periode" \
+    --get "https://be360.pt-bengkulu.go.id/api/list-active-periode" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -8164,7 +8164,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/list-active-periode"
+    "https://be360.pt-bengkulu.go.id/api/list-active-periode"
 );
 
 const headers = {
@@ -8192,7 +8192,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -8300,7 +8300,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/bobot-penilaian-periode/architecto" \
+    --get "https://be360.pt-bengkulu.go.id/api/bobot-penilaian-periode/architecto" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -8308,7 +8308,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/bobot-penilaian-periode/architecto"
+    "https://be360.pt-bengkulu.go.id/api/bobot-penilaian-periode/architecto"
 );
 
 const headers = {
@@ -8336,7 +8336,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -8457,7 +8457,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/remove-bobot-periode" \
+    "https://be360.pt-bengkulu.go.id/api/remove-bobot-periode" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -8465,7 +8465,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/remove-bobot-periode"
+    "https://be360.pt-bengkulu.go.id/api/remove-bobot-periode"
 );
 
 const headers = {
@@ -8583,7 +8583,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/regenerate-bobot-periode" \
+    "https://be360.pt-bengkulu.go.id/api/regenerate-bobot-periode" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -8591,7 +8591,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/regenerate-bobot-periode"
+    "https://be360.pt-bengkulu.go.id/api/regenerate-bobot-periode"
 );
 
 const headers = {
@@ -8709,7 +8709,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/remove-pertanyaan-periode" \
+    "https://be360.pt-bengkulu.go.id/api/remove-pertanyaan-periode" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -8717,7 +8717,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/remove-pertanyaan-periode"
+    "https://be360.pt-bengkulu.go.id/api/remove-pertanyaan-periode"
 );
 
 const headers = {
@@ -8835,7 +8835,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/mapping-jabatan-periode/architecto" \
+    --get "https://be360.pt-bengkulu.go.id/api/mapping-jabatan-periode/architecto" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -8843,7 +8843,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/mapping-jabatan-periode/architecto"
+    "https://be360.pt-bengkulu.go.id/api/mapping-jabatan-periode/architecto"
 );
 
 const headers = {
@@ -8871,7 +8871,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -8992,7 +8992,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/remove-mapping-jabatan-periode" \
+    "https://be360.pt-bengkulu.go.id/api/remove-mapping-jabatan-periode" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -9000,7 +9000,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/remove-mapping-jabatan-periode"
+    "https://be360.pt-bengkulu.go.id/api/remove-mapping-jabatan-periode"
 );
 
 const headers = {
@@ -9118,7 +9118,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/regenerate-mapping-jabatan-periode" \
+    "https://be360.pt-bengkulu.go.id/api/regenerate-mapping-jabatan-periode" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -9126,7 +9126,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/regenerate-mapping-jabatan-periode"
+    "https://be360.pt-bengkulu.go.id/api/regenerate-mapping-jabatan-periode"
 );
 
 const headers = {
@@ -9244,7 +9244,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/list-kelompok-jabatan-sikep" \
+    --get "https://be360.pt-bengkulu.go.id/api/list-kelompok-jabatan-sikep" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -9252,7 +9252,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/list-kelompok-jabatan-sikep"
+    "https://be360.pt-bengkulu.go.id/api/list-kelompok-jabatan-sikep"
 );
 
 const headers = {
@@ -9280,7 +9280,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -9388,7 +9388,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/gabungkan-jabatan" \
+    "https://be360.pt-bengkulu.go.id/api/gabungkan-jabatan" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -9396,7 +9396,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/gabungkan-jabatan"
+    "https://be360.pt-bengkulu.go.id/api/gabungkan-jabatan"
 );
 
 const headers = {
@@ -9514,7 +9514,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/save-jabatan-peserta" \
+    "https://be360.pt-bengkulu.go.id/api/save-jabatan-peserta" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -9522,7 +9522,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/save-jabatan-peserta"
+    "https://be360.pt-bengkulu.go.id/api/save-jabatan-peserta"
 );
 
 const headers = {
@@ -9640,7 +9640,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/update-jabatan-peserta" \
+    "https://be360.pt-bengkulu.go.id/api/update-jabatan-peserta" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -9648,7 +9648,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/update-jabatan-peserta"
+    "https://be360.pt-bengkulu.go.id/api/update-jabatan-peserta"
 );
 
 const headers = {
@@ -9766,7 +9766,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/list-mapping-observee" \
+    --get "https://be360.pt-bengkulu.go.id/api/list-mapping-observee" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -9774,7 +9774,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/list-mapping-observee"
+    "https://be360.pt-bengkulu.go.id/api/list-mapping-observee"
 );
 
 const headers = {
@@ -9802,7 +9802,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -9910,7 +9910,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/save-mapping-jabatan" \
+    "https://be360.pt-bengkulu.go.id/api/save-mapping-jabatan" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -9918,7 +9918,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/save-mapping-jabatan"
+    "https://be360.pt-bengkulu.go.id/api/save-mapping-jabatan"
 );
 
 const headers = {
@@ -10036,7 +10036,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/update-mapping-jabatan" \
+    "https://be360.pt-bengkulu.go.id/api/update-mapping-jabatan" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -10044,7 +10044,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/update-mapping-jabatan"
+    "https://be360.pt-bengkulu.go.id/api/update-mapping-jabatan"
 );
 
 const headers = {
@@ -10162,7 +10162,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/detil-mapping-jabatan/architecto" \
+    --get "https://be360.pt-bengkulu.go.id/api/detil-mapping-jabatan/architecto" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -10170,7 +10170,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/detil-mapping-jabatan/architecto"
+    "https://be360.pt-bengkulu.go.id/api/detil-mapping-jabatan/architecto"
 );
 
 const headers = {
@@ -10198,7 +10198,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -10319,7 +10319,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/list-bobot/architecto" \
+    --get "https://be360.pt-bengkulu.go.id/api/list-bobot/architecto" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -10327,7 +10327,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/list-bobot/architecto"
+    "https://be360.pt-bengkulu.go.id/api/list-bobot/architecto"
 );
 
 const headers = {
@@ -10355,7 +10355,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -10476,7 +10476,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/detil-bobot/architecto" \
+    --get "https://be360.pt-bengkulu.go.id/api/detil-bobot/architecto" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -10484,7 +10484,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/detil-bobot/architecto"
+    "https://be360.pt-bengkulu.go.id/api/detil-bobot/architecto"
 );
 
 const headers = {
@@ -10512,7 +10512,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -10633,7 +10633,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/update-bobot" \
+    "https://be360.pt-bengkulu.go.id/api/update-bobot" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -10641,7 +10641,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/update-bobot"
+    "https://be360.pt-bengkulu.go.id/api/update-bobot"
 );
 
 const headers = {
@@ -10759,7 +10759,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/list-variable-pertanyaan/architecto" \
+    --get "https://be360.pt-bengkulu.go.id/api/list-variable-pertanyaan/architecto" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -10767,7 +10767,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/list-variable-pertanyaan/architecto"
+    "https://be360.pt-bengkulu.go.id/api/list-variable-pertanyaan/architecto"
 );
 
 const headers = {
@@ -10795,7 +10795,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -10916,7 +10916,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/list-all-variable" \
+    --get "https://be360.pt-bengkulu.go.id/api/list-all-variable" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -10924,7 +10924,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/list-all-variable"
+    "https://be360.pt-bengkulu.go.id/api/list-all-variable"
 );
 
 const headers = {
@@ -10952,7 +10952,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -11060,7 +11060,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/save-variable-pertanyaan" \
+    "https://be360.pt-bengkulu.go.id/api/save-variable-pertanyaan" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -11068,7 +11068,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/save-variable-pertanyaan"
+    "https://be360.pt-bengkulu.go.id/api/save-variable-pertanyaan"
 );
 
 const headers = {
@@ -11186,7 +11186,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/detil-variable-pertanyaan/architecto" \
+    --get "https://be360.pt-bengkulu.go.id/api/detil-variable-pertanyaan/architecto" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -11194,7 +11194,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/detil-variable-pertanyaan/architecto"
+    "https://be360.pt-bengkulu.go.id/api/detil-variable-pertanyaan/architecto"
 );
 
 const headers = {
@@ -11222,7 +11222,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -11343,7 +11343,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/update-variable-pertanyaan" \
+    "https://be360.pt-bengkulu.go.id/api/update-variable-pertanyaan" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -11351,7 +11351,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/update-variable-pertanyaan"
+    "https://be360.pt-bengkulu.go.id/api/update-variable-pertanyaan"
 );
 
 const headers = {
@@ -11469,7 +11469,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/list-bundle-jawaban/architecto" \
+    --get "https://be360.pt-bengkulu.go.id/api/list-bundle-jawaban/architecto" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -11477,7 +11477,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/list-bundle-jawaban/architecto"
+    "https://be360.pt-bengkulu.go.id/api/list-bundle-jawaban/architecto"
 );
 
 const headers = {
@@ -11505,7 +11505,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -11626,7 +11626,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/list-all-bundle-jawaban" \
+    --get "https://be360.pt-bengkulu.go.id/api/list-all-bundle-jawaban" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -11634,7 +11634,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/list-all-bundle-jawaban"
+    "https://be360.pt-bengkulu.go.id/api/list-all-bundle-jawaban"
 );
 
 const headers = {
@@ -11662,7 +11662,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -11770,7 +11770,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/save-bundle-jawaban" \
+    "https://be360.pt-bengkulu.go.id/api/save-bundle-jawaban" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -11778,7 +11778,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/save-bundle-jawaban"
+    "https://be360.pt-bengkulu.go.id/api/save-bundle-jawaban"
 );
 
 const headers = {
@@ -11896,7 +11896,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/bundle-jawaban-detil/architecto" \
+    --get "https://be360.pt-bengkulu.go.id/api/bundle-jawaban-detil/architecto" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -11904,7 +11904,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/bundle-jawaban-detil/architecto"
+    "https://be360.pt-bengkulu.go.id/api/bundle-jawaban-detil/architecto"
 );
 
 const headers = {
@@ -11932,7 +11932,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -12053,7 +12053,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/update-bundle-jawaban" \
+    "https://be360.pt-bengkulu.go.id/api/update-bundle-jawaban" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -12061,7 +12061,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/update-bundle-jawaban"
+    "https://be360.pt-bengkulu.go.id/api/update-bundle-jawaban"
 );
 
 const headers = {
@@ -12179,7 +12179,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/list-pertanyaan/architecto" \
+    --get "https://be360.pt-bengkulu.go.id/api/list-pertanyaan/architecto" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -12187,7 +12187,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/list-pertanyaan/architecto"
+    "https://be360.pt-bengkulu.go.id/api/list-pertanyaan/architecto"
 );
 
 const headers = {
@@ -12215,7 +12215,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -12336,7 +12336,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/save-pertanyaan" \
+    "https://be360.pt-bengkulu.go.id/api/save-pertanyaan" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -12344,7 +12344,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/save-pertanyaan"
+    "https://be360.pt-bengkulu.go.id/api/save-pertanyaan"
 );
 
 const headers = {
@@ -12462,7 +12462,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/pertanyaan-detil/architecto" \
+    --get "https://be360.pt-bengkulu.go.id/api/pertanyaan-detil/architecto" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -12470,7 +12470,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/pertanyaan-detil/architecto"
+    "https://be360.pt-bengkulu.go.id/api/pertanyaan-detil/architecto"
 );
 
 const headers = {
@@ -12498,7 +12498,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -12619,7 +12619,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/update-pertanyaan" \
+    "https://be360.pt-bengkulu.go.id/api/update-pertanyaan" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -12627,7 +12627,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/update-pertanyaan"
+    "https://be360.pt-bengkulu.go.id/api/update-pertanyaan"
 );
 
 const headers = {
@@ -12745,7 +12745,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/monitoring-badilum/architecto/architecto/architecto" \
+    --get "https://be360.pt-bengkulu.go.id/api/monitoring-badilum/architecto/architecto/architecto" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -12753,7 +12753,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/monitoring-badilum/architecto/architecto/architecto"
+    "https://be360.pt-bengkulu.go.id/api/monitoring-badilum/architecto/architecto/architecto"
 );
 
 const headers = {
@@ -12781,7 +12781,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -12926,7 +12926,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/report-satker" \
+    "https://be360.pt-bengkulu.go.id/api/report-satker" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -12934,7 +12934,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/report-satker"
+    "https://be360.pt-bengkulu.go.id/api/report-satker"
 );
 
 const headers = {
@@ -13052,7 +13052,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/all-periode" \
+    --get "https://be360.pt-bengkulu.go.id/api/all-periode" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -13060,7 +13060,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/all-periode"
+    "https://be360.pt-bengkulu.go.id/api/all-periode"
 );
 
 const headers = {
@@ -13088,7 +13088,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -13196,7 +13196,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/zonasi-periode/architecto" \
+    --get "https://be360.pt-bengkulu.go.id/api/zonasi-periode/architecto" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -13204,7 +13204,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/zonasi-periode/architecto"
+    "https://be360.pt-bengkulu.go.id/api/zonasi-periode/architecto"
 );
 
 const headers = {
@@ -13232,7 +13232,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -13353,7 +13353,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/zonasi-satker/architecto/architecto" \
+    --get "https://be360.pt-bengkulu.go.id/api/zonasi-satker/architecto/architecto" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -13361,7 +13361,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/zonasi-satker/architecto/architecto"
+    "https://be360.pt-bengkulu.go.id/api/zonasi-satker/architecto/architecto"
 );
 
 const headers = {
@@ -13389,7 +13389,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -13522,7 +13522,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/report-personal-badilum/architecto" \
+    --get "https://be360.pt-bengkulu.go.id/api/report-personal-badilum/architecto" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -13530,7 +13530,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/report-personal-badilum/architecto"
+    "https://be360.pt-bengkulu.go.id/api/report-personal-badilum/architecto"
 );
 
 const headers = {
@@ -13558,7 +13558,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -13679,7 +13679,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/validate-params" \
+    "https://be360.pt-bengkulu.go.id/api/validate-params" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -13687,7 +13687,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/validate-params"
+    "https://be360.pt-bengkulu.go.id/api/validate-params"
 );
 
 const headers = {
@@ -13805,7 +13805,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/list-pertanyaan" \
+    "https://be360.pt-bengkulu.go.id/api/list-pertanyaan" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -13813,7 +13813,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/list-pertanyaan"
+    "https://be360.pt-bengkulu.go.id/api/list-pertanyaan"
 );
 
 const headers = {
@@ -13931,7 +13931,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/penilaian" \
+    "https://be360.pt-bengkulu.go.id/api/penilaian" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -13939,7 +13939,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/penilaian"
+    "https://be360.pt-bengkulu.go.id/api/penilaian"
 );
 
 const headers = {
@@ -14057,7 +14057,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/save-jawaban" \
+    "https://be360.pt-bengkulu.go.id/api/save-jawaban" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -14065,7 +14065,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/save-jawaban"
+    "https://be360.pt-bengkulu.go.id/api/save-jawaban"
 );
 
 const headers = {
@@ -14183,7 +14183,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/lock-jawaban" \
+    "https://be360.pt-bengkulu.go.id/api/lock-jawaban" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -14191,7 +14191,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/lock-jawaban"
+    "https://be360.pt-bengkulu.go.id/api/lock-jawaban"
 );
 
 const headers = {
@@ -14309,7 +14309,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/report-penilaian-personal/architecto" \
+    --get "https://be360.pt-bengkulu.go.id/api/report-penilaian-personal/architecto" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -14317,7 +14317,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/report-penilaian-personal/architecto"
+    "https://be360.pt-bengkulu.go.id/api/report-penilaian-personal/architecto"
 );
 
 const headers = {
@@ -14345,7 +14345,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -14470,7 +14470,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/list-observee/architecto" \
+    --get "https://be360.pt-bengkulu.go.id/api/list-observee/architecto" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -14478,7 +14478,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/list-observee/architecto"
+    "https://be360.pt-bengkulu.go.id/api/list-observee/architecto"
 );
 
 const headers = {
@@ -14506,7 +14506,7 @@ fetch(url, {
             <pre><code class="language-http">content-type: text/html; charset=UTF-8
 cache-control: no-cache, private
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -14625,7 +14625,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/encdec/architecto/architecto" \
+    --get "https://be360.pt-bengkulu.go.id/api/encdec/architecto/architecto" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -14633,7 +14633,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/encdec/architecto/architecto"
+    "https://be360.pt-bengkulu.go.id/api/encdec/architecto/architecto"
 );
 
 const headers = {
@@ -14661,7 +14661,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -14794,7 +14794,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/test" \
+    --get "https://be360.pt-bengkulu.go.id/api/test" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -14802,7 +14802,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/test"
+    "https://be360.pt-bengkulu.go.id/api/test"
 );
 
 const headers = {
@@ -14830,7 +14830,7 @@ fetch(url, {
             <pre><code class="language-http">content-type: text/html; charset=UTF-8
 cache-control: no-cache, private
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -14936,7 +14936,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/test-wa" \
+    --get "https://be360.pt-bengkulu.go.id/api/test-wa" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -14944,7 +14944,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/test-wa"
+    "https://be360.pt-bengkulu.go.id/api/test-wa"
 );
 
 const headers = {
@@ -14972,7 +14972,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -15082,7 +15082,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/test-wa-badilum" \
+    --get "https://be360.pt-bengkulu.go.id/api/test-wa-badilum" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -15090,7 +15090,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/test-wa-badilum"
+    "https://be360.pt-bengkulu.go.id/api/test-wa-badilum"
 );
 
 const headers = {
@@ -15118,7 +15118,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -15228,7 +15228,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/hash/architecto" \
+    --get "https://be360.pt-bengkulu.go.id/api/hash/architecto" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -15236,7 +15236,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/hash/architecto"
+    "https://be360.pt-bengkulu.go.id/api/hash/architecto"
 );
 
 const headers = {
@@ -15264,7 +15264,7 @@ fetch(url, {
             <pre><code class="language-http">content-type: text/html; charset=UTF-8
 cache-control: no-cache, private
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -15387,7 +15387,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/list-jabatan-peserta/1" \
+    --get "https://be360.pt-bengkulu.go.id/api/list-jabatan-peserta/1" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -15395,7 +15395,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/list-jabatan-peserta/1"
+    "https://be360.pt-bengkulu.go.id/api/list-jabatan-peserta/1"
 );
 
 const headers = {
@@ -15537,7 +15537,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/kelompok-jabatan-detil/OZNEKRbj" \
+    --get "https://be360.pt-bengkulu.go.id/api/kelompok-jabatan-detil/OZNEKRbj" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -15545,7 +15545,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/kelompok-jabatan-detil/OZNEKRbj"
+    "https://be360.pt-bengkulu.go.id/api/kelompok-jabatan-detil/OZNEKRbj"
 );
 
 const headers = {
@@ -15691,7 +15691,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/list-category-pertanyaan" \
+    --get "https://be360.pt-bengkulu.go.id/api/list-category-pertanyaan" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -15699,7 +15699,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/list-category-pertanyaan"
+    "https://be360.pt-bengkulu.go.id/api/list-category-pertanyaan"
 );
 
 const headers = {
@@ -15828,7 +15828,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/list-all-pertanyaan" \
+    --get "https://be360.pt-bengkulu.go.id/api/list-all-pertanyaan" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -15836,7 +15836,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/list-all-pertanyaan"
+    "https://be360.pt-bengkulu.go.id/api/list-all-pertanyaan"
 );
 
 const headers = {
@@ -15965,7 +15965,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/list-pertanyaan-category/architecto" \
+    --get "https://be360.pt-bengkulu.go.id/api/list-pertanyaan-category/architecto" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -15973,7 +15973,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/list-pertanyaan-category/architecto"
+    "https://be360.pt-bengkulu.go.id/api/list-pertanyaan-category/architecto"
 );
 
 const headers = {
@@ -16012,7 +16012,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -16133,7 +16133,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/save-pertanyaan-category" \
+    "https://be360.pt-bengkulu.go.id/api/save-pertanyaan-category" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "X-Signature: signature dari get pertanyaan by category" \
     --header "Content-Type: application/json" \
@@ -16155,7 +16155,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/save-pertanyaan-category"
+    "https://be360.pt-bengkulu.go.id/api/save-pertanyaan-category"
 );
 
 const headers = {
@@ -16366,7 +16366,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/list-periode/16" \
+    --get "https://be360.pt-bengkulu.go.id/api/list-periode/16" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -16374,7 +16374,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/list-periode/16"
+    "https://be360.pt-bengkulu.go.id/api/list-periode/16"
 );
 
 const headers = {
@@ -16515,7 +16515,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/pertanyaan-periode/architecto/architecto" \
+    --get "https://be360.pt-bengkulu.go.id/api/pertanyaan-periode/architecto/architecto" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -16523,7 +16523,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/pertanyaan-periode/architecto/architecto"
+    "https://be360.pt-bengkulu.go.id/api/pertanyaan-periode/architecto/architecto"
 );
 
 const headers = {
@@ -16676,7 +16676,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/regenerate-pertanyaan-periode" \
+    "https://be360.pt-bengkulu.go.id/api/regenerate-pertanyaan-periode" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "X-Signature: signature dari list periode" \
     --header "Content-Type: application/json" \
@@ -16691,7 +16691,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/regenerate-pertanyaan-periode"
+    "https://be360.pt-bengkulu.go.id/api/regenerate-pertanyaan-periode"
 );
 
 const headers = {
