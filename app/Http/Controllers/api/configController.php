@@ -202,22 +202,14 @@ class configController extends Controller
 
     public function saveDataKelompokJabatan(Request $request){
         $status=false;
+        $msg = "";
         try{
             $request->validate([
                 "id_kelompok_jabatan"=>['required', 'string'],
                 "nama_jabatan"=>['required', 'string']
             ]);
             
-            try{
-                $id_kelompok_jabatan_dec=Hashids::decode($request->id_kelompok_jabatan);
-                if(empty($id_kelompok_jabatan_dec)){
-                    throw new \Exception('Invalid token');
-                }
-                $id_kelompok_jabatan=$id_kelompok_jabatan_dec[0];
-                $get_data=$this->configService->saveKelompokJabatan($request, $id_kelompok_jabatan);
-                $status=$get_data['status'];
-                $msg=$get_data['msg'];
-            }catch(\Exception $e){
+            try{ }catch(\Exception $e){
                 $msg=$e->getMessage();
             }
         }catch(ValidationException $e){
