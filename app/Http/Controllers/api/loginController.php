@@ -12,6 +12,24 @@ use App\Models\Tref_users;
 use App\Models\Idtref_roles;
 class loginController extends Controller
 {
+    /**
+     * Login User
+     *
+     * Endpoint untuk melakukan autentikasi pengguna.
+     *
+     * @group Authentication
+     * @anuathenticated
+     *
+     * @bodyParam username string required Username pengguna. Example: 199xxxxxxxxxxxxxxxxxxxxxxx
+     * @bodyParam password string required Password pengguna. Example: 199xxxxxxxxxxxxxxxxxxxxxxx
+     *
+     * @response 200 {
+     *   "message": "Login Berhasil",
+     *   "token": "eyJhbGciOiJIUzI1NiIs...",
+     *   "status": 200
+     * }
+     */
+    
     public function login(Request $request){
         try{
             $validate=$request->validate([
@@ -32,7 +50,7 @@ class loginController extends Controller
                     $user=Tref_users::where('IdUser', $get_data['IdUser'])->first();
                     $token=JWTAuth::fromUser($user);
                     $refreshToken=JWTAuth::customClaims(['type'=>'refresh', 'exp'=>now()->addDays(7)->timestamp])->fromUser($user);
-
+                    
                     return response()->json(['message'=>'Login Berhasil', 'token'=>$token, 'status'=>200])->withCookie((cookie('rft', $refreshToken, 60*24*7, '/', null, true, true, false, 'None')));
                 }else{
                     $msg="Username and Password doesn't matched";

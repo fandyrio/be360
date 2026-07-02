@@ -424,7 +424,7 @@ use PDO;
             ];
         }
 
-        public function getPertanyaanPeriode($id_periode){
+        public function getPertanyaanPeriode($id_periode, $id_category){
             $status=false;
             $data=[];
             $msg="";
@@ -440,8 +440,12 @@ use PDO;
                                     ->orderBy('vp.id', 'asc')
                                     ->where('trans_pertanyaan_periode.id_periode', $id_periode)
                                     ->where("trans_pertanyaan_periode.active", true)
+                                    ->where("trans_pertanyaan_periode.category", $id_category)
                                     ->get();
             $total=$get_data->count();
+            $secret=config('app.hmac_secret');
+            $payload=json_encode(['payload'=>Hashids::encode($id_periode)]);
+            $signature=hash_hmac('sha256', $payload, $secret);
             if($total > 0){
                 $status=true;
                 $x=$a=0;
@@ -462,9 +466,6 @@ use PDO;
                     $a++;
                     $id_variable_before=$list_data['id_variable'];
                 }
-                $secret=config('app.hmac_secret');
-                $payload=json_encode(['payload'=>Hashids::encode($id_periode)]);
-                $signature=hash_hmac('sha256', $payload, $secret);
             }else{
                 $msg="Data tidak ditemukan";
             }
@@ -508,7 +509,7 @@ use PDO;
             ];
         }
 
-        public function regeneratePertanyaanPeriode($id_periode){
+        public function regeneratePertanyaanPeriode($id_periode, $id_category){
             $status = false;
             $get_periode=Tahun_penilaian::where('IdTahunPenilaian', $id_periode)->first();
             if(!is_null($get_periode)){
@@ -518,10 +519,18 @@ use PDO;
                 if($proses_id === 1){
                     try{
                         DB::beginTransaction();
-                            Trans_pertanyaan_periode::where('id_periode', $id_periode)->update(['active'=>false]);
-                            $get_data_pertanyaan=Tref_pertanyaan::where('active', true)->get();
+                            Trans_pertanyaan_periode::where('id_periode', $id_periode)
+                                                    ->where('category', $id_category)
+                                                    ->update(['active'=>false]);
+                            $get_data_pertanyaan=Tref_pertanyaan::join('tref_pertanyaan_category as tpc', 'tpc.id_pertanyaan', 'tref_pertanyaan.id')
+                                                    ->where('tpc.active', true)
+                                                    ->where('tpc.category_id', $id_category)
+                                                    ->where('tref_pertanyaan.active', true)
+                                                    ->select("tref_pertanyaan.*", 'tpc.bobot')
+                                                    ->get();
                             if($get_data_pertanyaan->count() > 0){
                                 $data_pertanyaan=[];
+                                $bobot = 0;
                                 foreach($get_data_pertanyaan as $list_pertanyaan){
                                     $data_pertanyaan[]=[
                                         'id_periode'=>$id_periode,
@@ -529,14 +538,21 @@ use PDO;
                                         'pertanyaan'=>$list_pertanyaan['pertanyaan'],
                                         'bundle_code_jawaban'=>$list_pertanyaan['bundle_code_jawaban'],
                                         'bobot'=>$list_pertanyaan['bobot'],
+                                        'category'=>$id_category,
                                         'id_pertanyaan'=>$list_pertanyaan['id'],
                                     ];
+                                    $bobot += $list_pertanyaan['bobot'];
                                 }
-                                DB::table('trans_pertanyaan_periode')->insert($data_pertanyaan);
-                                DB::commit();
-                                $status=true;
-                                $msg="Berhasil Memperbaharui Data";
-                                Cache::store('redis')->forget("ref_pertanyaan_periode_".$id_periode);
+                                if($bobot === 100){
+                                    DB::table('trans_pertanyaan_periode')->insert($data_pertanyaan);
+                                
+                                    DB::commit();
+                                    $status=true;
+                                    $msg="Berhasil Memperbaharui Data";
+                                    Cache::store('redis')->forget("ref_pertanyaan_periode_".$id_periode);
+                                }else{
+                                    $msg = "Bobot pertanyaan masih ".$bobot."%. Silahkan lengkapi master pertanyaan terlebih dahulu dan tambahkan ke masing - masing kategori";
+                                }
                             }else{
                                 DB::rollBack();
                                 $msg="Master data pertanyaan tidak ditemukan. Silahkan diisi ulang";

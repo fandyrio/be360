@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\configService;
 use Illuminate\Contracts\Encryption\DecryptException;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
+use Tymon\JWTAuth\Facades\JWTAuth;
 use Vinkla\Hashids\Facades\Hashids;
 
 class configController extends Controller
@@ -15,6 +17,15 @@ class configController extends Controller
 
     public function __construct(configService $config_service){
         $this->configService=$config_service;
+    }
+    /**
+     * Get Profile
+     *
+     * @authenticated
+     */
+    public function profile(){
+        // return auth()->user()
+        return JWTAuth::parseToken()->authenticate();
     }
 
     public function listRole($page=null){
@@ -80,6 +91,23 @@ class configController extends Controller
         return response()->json(['status'=>$status, 'message'=>$msg]);
     }
 
+    /**
+     * Get Jabatan all / page
+     *
+     * Endpoint untuk list seluruh jabatan atau per halaman. Gantikan angka page dengan "getall" bila inigin mengambil seluruh list
+     *
+     * @group MasterJabatan
+     *
+     *@authenticated
+     * @urlParam page integer required. Example: 1
+     *
+     * @response 200 {
+     *   "total": "integer",
+     *   "data": [array data],
+     *
+     * }
+     */
+
     public function getDataKelompokJabatan($page){
         if(is_numeric($page)){
             if($page < 1){
@@ -94,6 +122,22 @@ class configController extends Controller
         return response()->json(['page'=>$page,'jumlah'=>$jumlah, 'data'=>$data, 'jumlah_halaman'=>$jumlah_halaman]);
     }
 
+    /**
+     * Get Detil Jabatan
+     *
+     * Endpoint untuk data detil jabatan.
+     *
+     * @group MasterJabatan
+     *
+     *@authenticated
+     * @urlParam id_kelompok_jabatan string required. Example: OZNEKRbj
+     *
+     * @response 200 {
+     *   "total": "integer",
+     *   "data": [array data],
+     *
+     * }
+     */
     public function getKelompokJabatanDetil($id_kelompok_jabatan_hashed){
         $status=false;
         $data=[];
@@ -810,6 +854,28 @@ class configController extends Controller
         return response()->json($get_data);
     }
 
+    /**
+     * Get All Pertanyaan
+     *
+     * Endpoint untuk list seluruh master pertanyaan.
+     *
+     * @group MasterPertanyaan
+     *
+     *@authenticated
+     * 
+     *
+     * @response 200 {
+     *   "total": "integer",
+     *   "data": [array data],
+     *
+     * }
+     */
+
+     public function getAllPertanyaan(){
+        $get_data = $this->configService->getListPertanyaan();
+        return response()->json($get_data);
+     }
+
     public function savePertanyaan(Request $request){
         $status=false;
         try{
@@ -865,6 +931,29 @@ class configController extends Controller
         return response()->json(['status'=>$status, 'msg'=>$msg, 'signature'=>$signature, 'data'=>$data]);
     }
 
+    /**
+     * Get All Category Pertanyaan
+     *
+     * Endpoint untuk data categoru Pertanyaan.
+     *
+     * @group MasterPertanyaan
+     *
+     *@authenticated
+     * 
+     *
+     * @response 200 {
+     *   "total": "integer",
+     *   "data": [array data],
+     *
+     * }
+     */
+
+    public function getAllCategoryPertanyaan(){
+        $get_data = $this->configService->getAllCategoryPertanyaan();
+        $total = count($get_data);
+        return response()->json(['total'=>$total, 'data'=>$get_data]);
+    }
+
     public function updatePertanyaan(Request $request){
         $status=false;
         $msg="";
@@ -876,15 +965,18 @@ class configController extends Controller
                 'bundle_code_jawaban'=>['required', 'string'],
                 'bobot'=>['required', 'integer', 'max:100'],
                 'active'=>['required', 'max:1', 'in:Y,N'],
+                // 'token_category'=>['required', 'string'],
                 'payload'=>['required', 'string']
             ]);
             $token_variable=Hashids::decode($request->token_variable);
             $token_pertanyaan=Hashids::decode($request->token_pertanyaan);
-            if(empty($token_variable) || empty($token_pertanyaan)){
+            // $token_category = Hashids::decode($request->token_category);
+            if(empty($token_variable) || empty($token_pertanyaan) || empty($token_category)){
                 throw new \Exception('Invalid token variable atau token pertanyaan');
             }
             $id_variable=$token_variable[0];
             $id_pertanyaan=$token_pertanyaan[0];
+            $id_category_pertanyaan = $token_category[0];
             $clean=trim($request->pertanyaan);
             $pertanyaan=strip_tags($clean);
             $update_pertanyaan=$this->configService->updatePertanyaan($id_pertanyaan, $id_variable, $pertanyaan, $request->active, $request->bobot, $request->bundle_code_jawaban);
@@ -895,6 +987,128 @@ class configController extends Controller
         }
 
         return response()->json(['status'=>$status, 'msg'=>$msg]);
+    }
+
+     /**
+     * Get Pertanyaan By Category
+     *
+     * Endpoint untuk data pertanyaan berdasarkan kategori.
+     *
+     * @group MasterPertanyaan
+     *
+     *@authenticated
+     *@urlParam token_category string required token_pertanyaan dari get all category
+     *
+     * @response 200 {
+     *   status=>true, 
+     *   msg=>msg, 
+     *   total=>integer, 
+     *   data=>arr
+     * }
+     */
+
+    public function getPertanyaanByCategory($category){
+        $data = null;
+        $total = 0;
+        $msg = "";
+        $signature = null;
+        try{
+            $category_id_dec = Hashids::decode($category);
+            if(empty($category_id_dec)){
+                throw new \Exception('Data tidak ditemukan');
+            }
+            $category_id = $category_id_dec[0];
+            $get_data = $this->configService->getPertanyaanCategory($category_id);
+            $status = true;
+            $total = $get_data['total'];
+            $data = $get_data['data'];
+            $signature = $get_data['signature'];
+            if((int)$total === 0){
+                $msg = "There is no data Available";
+            }
+        }catch(\Exception $e){
+            $status = false;
+            $msg = $e->getMessage();
+        }
+        return response()->json(['status'=>$status, 'msg'=>$msg, 'signature'=>$signature, 'total'=>$total, 'data'=>$data]);
+    }
+
+
+    /**
+     * Save Pertanyaan By Category
+     *
+     * Endpoint untuk Simpan Pertanyaan per kategori.
+     *
+     *@group MasterPertanyaan
+     *
+     *@authenticated
+     *@header X-Signature signature dari get pertanyaan by category
+     *
+     * @bodyParam token_pertanyaan string[] required Array token pertanyaan. Example: ["token1", "token2"]
+     * @bodyParam bobot int[] required Array bobot pertanyaan. Example: [10, 20]
+     * @bodyParam category_id string required ID kategori yang dipilih. Example: cat_001
+     * @bodyParam payload string  value = category_id. Example: category_id
+     * @response 200 {
+     *   "status":true, 
+     *   "msg":"msg"
+     * }
+     */
+    public function savePertanyaanCategory(Request $request){
+        $status = false;
+        
+        $validator = Validator::make($request->all(), [
+            'token_pertanyaan'=>['required', 'array'],
+            'token_pertanyaan.*'=>['string'],
+            'bobot'=>['required', 'array'],
+            'bobot.*'=>['integer'],
+            'category_id'=>['required', 'string'],
+            'payload'=>['required', 'string',]
+        ]);
+
+        if($validator->fails()){
+            return response()->json([
+                    'status'=>false,
+                    'msg'=>$validator->errors()->first()
+                ], 422);
+        }
+
+        $jumlah_pertanyaan = count($request->token_pertanyaan);
+        $jumlah_bobot = count($request->bobot);
+        if((int)$jumlah_bobot === (int)$jumlah_pertanyaan){
+            $total_bobot = array_sum($request->bobot);
+            if($total_bobot <= 100){
+                try{
+                    $id_pertanyaan_int = [];
+                    $bobot = [];
+                    for($x=0;$x<$jumlah_pertanyaan;$x++){
+                        $dec_id_pertanyaan = Hashids::decode($request->token_pertanyaan[$x]);
+                        if(empty($dec_id_pertanyaan)){
+                            throw new \Exception("Data pertanyaan tidak valid");
+                        }
+                        $id_pertanyaan_int[]=$dec_id_pertanyaan[0];
+                        $bobot[]=$request->bobot[$x];
+                    }
+                    $category_id_dec = Hashids::decode($request->category_id);
+                    if(empty($category_id_dec)){
+                        throw new \Exception("Data Category Pertanyaan tidak valid");
+                    }
+                    
+                    $save_data = $this->configService->savePertanyaanCategory($id_pertanyaan_int, $bobot, $category_id_dec[0]);
+                    $status = $save_data['status'];
+                    $msg = $save_data['msg'];
+
+                }catch(\Exception $e){
+                    $msg = $e->getMessage();
+                }
+            }else{
+                $msg = "Total bobot harus 100. Saat ini: ".$total_bobot;
+            }
+        }else{
+            $msg = "Data tidak valid";
+        }
+
+        return response()->json(['status'=>$status, 'msg'=>$msg]);
+
     }
 
 }

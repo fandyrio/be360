@@ -794,7 +794,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                             }
 
                             if($list_peserta['nama_pegawai'] === "Nyimas Zihni Badzlina"){
-                                // Log::warning("Nama: ".$list_peserta['nama_pegawai']." Masuk");
+                                // Log::warning(Gagal mengirim pesan       "Nama: ".$list_peserta['nama_pegawai']." Masuk");
                             }
 
                             if($list_peserta['nama_pegawai'] !== "Nyimas Zihni Badzlina" && $variable === "pegawai" && ${"index_{$variable}"} === 0 && $index_satker === 0){

@@ -19,6 +19,24 @@ class periodeController extends Controller
         $this->periodeService=$periode_service;
     }
 
+    /**
+     * List Periode
+     *
+     * Endpoint untuk ambil data Periode. Untuk bisa menarik data, pastikan bobot sudah 100% di pertanyaan kategori
+     *
+     *@group Periode
+     *
+     *@authenticated
+     *
+     * @urlParam page integer required
+     * 
+     * 
+     * @response 200 {
+     *   "status":true, 
+     *   "msg":"msg"
+     * }
+     */
+
     public function listPeriode($page=null){
         $get_data=$this->periodeService->getListPeriode($page);
         return response()->json($get_data);
@@ -229,17 +247,35 @@ class periodeController extends Controller
         return response()->json(['status'=>$status, 'msg'=>$msg]);
     }
 
-    public function getPertanyaanPeriode($id_periode){
+     /**
+     * Get Pertanyaan per Periode
+     *
+     * Endpoint untuk ambil data pertanyaan periode bedasarkan category (Pejabat atau Umum).
+     *
+     *@group Periode
+     *
+     *@authenticated
+     *
+     * @urlParam id_periode string required. Id Periode adalah hashed id yang dapat diambil dari list_periode
+     * @urlParam id_category string required. Id Category adalah hashed id yang dapat diambil dari MasterPertanyaan -> Get All Category Pertanyaan
+     * 
+     * @response 200 {
+     *   "status":true, 
+     *   "msg":"msg"
+     * }
+     */
+    public function getPertanyaanPeriode($id_periode, $id_category){
         $data=[];
         $status=false;
         $msg="";
         $signature="";
         try{
             $id_periode_dec=Hashids::decode($id_periode);
-            if(empty($id_periode_dec)){
+            $id_category_dec = Hashids::decode($id_category);
+            if(empty($id_periode_dec) || empty($id_category_dec)){
                 throw new \Exception('Invalid token');
             }
-            $get_pertanyaan=$this->periodeService->getPertanyaanPeriode($id_periode_dec[0]);
+            $get_pertanyaan=$this->periodeService->getPertanyaanPeriode($id_periode_dec[0], $id_category_dec[0]);
             $data=$get_pertanyaan['data'];
             $status=$get_pertanyaan['status'];
             $msg=$get_pertanyaan['msg'];
@@ -279,20 +315,40 @@ class periodeController extends Controller
         return response()->json(['status'=>$status, 'msg'=>$msg]);
     }
 
+    /**
+     * Update Pertanyaan
+     *
+     * Endpoint untuk update pertanyaan di periode.
+     *
+     *@group Periode
+     *
+     *@authenticated
+     *@header X-Signature signature dari list periode
+     * 
+     * @bodyParam token_periode string required. Example: eBXeQLXM
+     * @bodyParam token_category string required. Example: q9XMkzaG
+     * @bodyParam payload string required. Example: token_periode
+     * @response 200 {
+     *   "status":true, 
+     *   "msg":"msg"
+     * }
+     */
     public function regeneratePertanyaanPeriode(Request $request){
         $status=false;
         $msg="";
         try{
             $request->validate([
                 'token_periode'=>['required', 'string'],
-                'payload'=>['required', 'string']
+                'token_category'=>['required', 'string'],
+                'payload'=>['required', 'string'],
             ]);
             try{
                 $id_periode=Hashids::decode($request->token_periode);
-                if(empty($id_periode)){
-                    throw new \Exception('Invalid token Periode');
+                $id_category = Hashids::decode($request->token_category);
+                if(empty($id_periode) || empty($id_category)){
+                    throw new \Exception('Invalid token');
                 }
-                $regenerate=$this->periodeService->regeneratePertanyaanPeriode($id_periode[0]);
+                $regenerate=$this->periodeService->regeneratePertanyaanPeriode($id_periode[0], $id_category[0]);
                 $status=$regenerate['status'];
                 $msg=$regenerate['msg'];
             }catch(\Exception $e){

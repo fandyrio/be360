@@ -5,7 +5,7 @@
 use Illuminate\Support\Facades\Crypt;
 use Vinkla\Hashids\Facades\Hashids;
 
-Route::get('generate-admin', 'api\loginController@generateAccount');
+// Route::get('generate-admin', 'api\loginController@generateAccount');
 Route::post('login', 'api\loginController@login');
 Route::post('refresh-token', 'api\loginController@refreshToken');
 Route::post('logout', 'api\loginController@logout')->middleware('jwt.auth');
@@ -63,7 +63,7 @@ Route::middleware(['jwt.auth', 'isAdminBadilum'])->group(function(){
     Route::get('dashboard-badilum', 'api\dashboardController@dashboardAdminBadilum');
     Route::get('list-zonasi/{page?}', 'api\zonasiController@getListZonasi');
     Route::post('save-zonasi', 'api\zonasiController@saveZonasi');
-Route::get('delete-zonasi/{id}', 'api\zonasiController@deleteZonasi');
+    Route::get('delete-zonasi/{id}', 'api\zonasiController@deleteZonasi');
     Route::post('save-satker-zonasi', 'api\zonasiController@addSatkerToZonasi');
     Route::get('detil-zonasi/{id}', 'api\zonasiController@getZonasiById');
     Route::get('list-satker-zonasi/{id}', 'api\zonasiController@getSatkerZonasi');
@@ -89,7 +89,7 @@ Route::get('delete-zonasi/{id}', 'api\zonasiController@deleteZonasi');
     Route::get('bobot-penilaian-periode/{id}', 'api\periodeController@getBobotPenilaianPeriode');
     Route::post('remove-bobot-periode', 'api\periodeController@removeBobotPenilaianPeriode')->middleware('checkSign');
     Route::post('regenerate-bobot-periode', 'api\periodeController@regenerateBobotPenilaianPeriode')->middleware('checkSign');
-    Route::get('pertanyaan-periode/{id}', 'api\periodeController@getPertanyaanPeriode');
+    Route::get('pertanyaan-periode/{id_periode}/{id_category}', 'api\periodeController@getPertanyaanPeriode');
     Route::post('remove-pertanyaan-periode', 'api\periodeController@removePertanyaanPeriode')->middleware('checkSign');
     Route::post('regenerate-pertanyaan-periode', 'api\periodeController@regeneratePertanyaanPeriode')->middleware('checkSign');
     Route::get('mapping-jabatan-periode/{id}', 'api\periodeController@getMappingJabatanPeriode');
@@ -100,7 +100,7 @@ Route::get('delete-zonasi/{id}', 'api\zonasiController@deleteZonasi');
     //mapping kelompok jabatan
     Route::get('list-kelompok-jabatan-sikep', 'api\configController@getKelompokJabatanSIKEP');
     Route::get('list-jabatan-peserta/{page}', 'api\configController@getDataKelompokJabatan');
-    Route::get('kelompok-jabatan-detil/{id}', 'api\configController@getKelompokJabatanDetil');
+    Route::get('kelompok-jabatan-detil/{id_kelompok_jabatan}', 'api\configController@getKelompokJabatanDetil');
     Route::post('gabungkan-jabatan', 'api\configController@gabungkanKelompokJabatan');
     Route::post('save-jabatan-peserta', 'api\configController@saveDataKelompokJabatan');
     Route::post('update-jabatan-peserta', 'api\configController@updateKelompokJabatan')->middleware('checkSign');
@@ -136,6 +136,11 @@ Route::get('delete-zonasi/{id}', 'api\zonasiController@deleteZonasi');
     Route::post('save-pertanyaan', 'api\configController@savePertanyaan');
     Route::get('pertanyaan-detil/{id}', 'api\configController@getPertanyaanDetil');
     Route::post('update-pertanyaan', 'api\configController@updatePertanyaan')->middleware('checkSign');
+    //added on 24 June 2026
+    Route::get("list-category-pertanyaan", "api\configController@getAllCategoryPertanyaan");
+    Route::get("list-all-pertanyaan", "api\configController@getAllPertanyaan");
+    Route::get('list-pertanyaan-category/{token_category}', 'api\configController@getPertanyaanByCategory');
+    Route::post('save-pertanyaan-category', 'api\configController@savePertanyaanCategory')->middleware('checkSign');
 
     //monitoring
     Route::get('monitoring-badilum/{id}/{page}/{refresh?}', 'api\zonasiController@monitoringBadilum');
@@ -162,7 +167,7 @@ Route::get('report-penilaian-personal/{key}', 'api\reportController@reportIndivi
 Route::get('list-observee/{id_zonasi}', 'api\zonasiController@observer');
 Route::get('encdec/{method}/{string}', 'api\zonasiController@enc');
 Route::get('test', function(){
-    return dd(Cache::getPrefix());
+    //return dd(Cache::getPrefix());
 });
 
 Route::get("test-wa", "api\zonasiController@testWaDev")->name('test-wa');

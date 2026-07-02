@@ -1,8 +1,10 @@
 <?php
     namespace App\Services;
 
-    use App\Models\Idtref_roles;
-    use App\Models\Tahun_penilaian;
+use App\Models\Category_pertanyaan;
+use App\Models\Idtref_roles;
+use App\Models\Pertanyaan_category;
+use App\Models\Tahun_penilaian;
     use App\Models\Trans_peserta_zonasi;
     use App\Models\Tref_users;
     use App\Models\Tref_mapping_jabatan;
@@ -15,7 +17,8 @@
     use Vinkla\Hashids\Facades\Hashids;
     use App\Models\Variable_pertanyaan;
     use GuzzleHttp\Promise\Is;
-    use Illuminate\Support\Facades\Cache;
+use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Crypt;
 
     class configService{
@@ -146,6 +149,7 @@ use Illuminate\Support\Facades\Crypt;
                 'msg'=>$msg
             ];
         }
+        
 
         public function getKelompokJabatan($page){
             $limit=10;
@@ -220,13 +224,16 @@ use Illuminate\Support\Facades\Crypt;
             $msg="";
             $signature="";
             $data=[];
-            $get_jabatan=Tref_jabatan_peserta::where('id', $id_jabatan)
+            $get_jabatan=Tref_jabatan_peserta::join("category_pertanyaan as cp", "cp.id", "tref_jabatan_peserta.category_id")
+                                        ->where('tref_jabatan_peserta.id', $id_jabatan)
                                         ->whereRaw('id_jabatan_gabungan is null')
+                                        ->select("tref_jabatan_peserta.*", "cp.category")
                                         ->first();
             $jabatan_digabung=[];
             if(!is_null($get_jabatan)){
                 $data['token_jabatan']=Hashids::encode($get_jabatan['id']);
                 $data['jabatan']=$get_jabatan['jabatan'];
+                $data['category_pertanyaan']=$get_jabatan['category'];
                 $data['active']=$get_jabatan['active'];
                 $data['jabatan_digabung']=[];
                 $get_gabungan=Tref_jabatan_peserta::where('id_jabatan_gabungan', $get_jabatan['id'])->get();
@@ -1346,7 +1353,7 @@ use Illuminate\Support\Facades\Crypt;
             ];
         }
 
-        public function getListPertanyaan($page){
+        public function getListPertanyaan($page = null){
             $data=[];
             $limit = 10;
             $total=Tref_pertanyaan::where('active', true)->count();
@@ -1384,8 +1391,9 @@ use Illuminate\Support\Facades\Crypt;
                     $data[$x]['pertanyaan'][$a]['token_pertanyaan']=Hashids::encode($list_data['id']);
                    
                     $data[$x]['pertanyaan'][$a]['pertanyaan']=$list_data['pertanyaan'];
-                    $data[$x]['pertanyaan'][$a]['bobot']=$list_data['bobot'];
+                    // $data[$x]['pertanyaan'][$a]['bobot']=$list_data['bobot'];
                     $data[$x]['pertanyaan'][$a]['bundle_name_jawaban']=$list_data['bundle_name'];
+                    // $data[$x]['pertanyaan'][$a]['category_pertanyaan']=is_null($list_data['category']) ? "Belum di atur" : $list_data['category'];
 
                     $id_variable_before=$list_data['id_variable'];
                     $a++;
@@ -1444,6 +1452,7 @@ use Illuminate\Support\Facades\Crypt;
                 $data['bundle_code_jawaban']=$get_data['bundle_code_jawaban'];
                 $data['bobot']=$get_data['bobot'];
                 $data['active']=$get_data['bobot'] === 1 ? "Y" : "N";
+                // $data['category_id']=Hashids::encode($get_data['category']);
 
                 $payload=json_encode(['payload'=>Hashids::encode($get_data['id'])]);
                 $secret=config('app.hmac_secret');
@@ -1461,17 +1470,29 @@ use Illuminate\Support\Facades\Crypt;
             ];
         }
 
+        public function getAllCategoryPertanyaan(){
+            $get_data = Category_pertanyaan::all();
+            $data = [];
+            foreach($get_data as $list){
+                $data[]=[
+                    'token_category'=>Hashids::encode($list['id']),
+                    'category'=>$list['category']
+                ];
+            }
+            return $data; 
+        }
+
         public function updatePertanyaan($id_pertanyaan, $id_variable, $pertanyaan, $active, $bobot, $bundle_code){
             $update=false;
             $get_total=Tref_pertanyaan::selectRaw('SUM(bobot) as bobot')->where('active', true)->first();
-            $total_bobot=$get_total['bobot'];
+            // $total_bobot=$get_total['bobot'];
             $get_data=Tref_pertanyaan::where('id', $id_pertanyaan)->first();
             $get_jawaban_bundle=Tref_jawaban_bundle::where('bundle_code', $bundle_code);
             if(!is_null($get_data) || !is_null($get_jawaban_bundle)){
                 $selected_bobot=(int)$get_data['bobot'];
-                $sisa_bobot=$total_bobot - $selected_bobot;
-                $total_bobot_all=$sisa_bobot + (int)$bobot; 
-                if($total_bobot_all <= 100){
+                // $sisa_bobot=$total_bobot - $selected_bobot;
+                // $total_bobot_all=$sisa_bobot + (int)$bobot; 
+                // if($total_bobot_all <= 100){
                     $get_data->id_variable=$id_variable;
                     $get_data->pertanyaan=$pertanyaan;
                     $get_data->bundle_code_jawaban=$bundle_code;
@@ -1483,9 +1504,9 @@ use Illuminate\Support\Facades\Crypt;
                     }else{
                         $msg="Terjadi kesalahan sistem saat mengubah data";
                     }
-                }else{
-                    $msg="Total Bobot melebihi 100";
-                }
+                // }else{
+                //     $msg="Total Bobot melebihi 100";
+                // }
 
             }else{
                 $msg="Data tidak ditemukan ";
@@ -1495,6 +1516,79 @@ use Illuminate\Support\Facades\Crypt;
                 'status'=>$update,
                 'msg'=>$msg
             ];
+        }
+
+        public function getPertanyaanCategory($category_id){
+            $data = null;
+            $get_data = Pertanyaan_category::join('tref_pertanyaan as tp', 'tp.id', 'tref_pertanyaan_category.id_pertanyaan')
+                                            ->join('variable_pertanyaan as vp', 'vp.id', 'tp.id_variable')
+                                            ->where('tp.active', true)
+                                            ->where('vp.active', true)
+                                            ->where('tref_pertanyaan_category.active', true)
+                                            ->where('tref_pertanyaan_category.category_id', $category_id)
+                                            ->select('tref_pertanyaan_category.id as id_pertanyaan_category','tref_pertanyaan_category.bobot', 'tp.pertanyaan', 'vp.variable', 'tp.id_variable', 'tref_pertanyaan_category.active')
+                                            ->orderBy('tp.id_variable', 'asc')
+                                            ->get();
+            $x = 0;
+            $a = 0;
+            $total = $get_data->count();
+            $id_variable_before = null;
+            foreach($get_data as $list){
+                if((int)$id_variable_before !== (int)$list['id_variable']){
+                    $a = 0;
+                    if(!is_null($id_variable_before)){
+                        $x++;
+                    }
+                    $data[$x]['variable']=$list['variable'];
+                    $data[$x]['pertanyaan'] = [];
+                }
+                $data[$x]['pertanyaan'][$a]['token_pertanyaan'] = Hashids::encode($list['id_pertanyaan_category']);
+                $data[$x]['pertanyaan'][$a]['bobot'] = $list['bobot'];
+                $data[$x]['pertanyaan'][$a]['active'] = (int)$list['active'] === 1 ? 'Aktif' : 'Tidak aktif';
+                $id_variable_before = $list['id_variable'];
+                $a++;
+            }
+            $signature = generateSignature(Hashids::encode($category_id));
+            return ['total'=>$total, 'signature'=>$signature, 'data'=>$data];
+        }
+
+        public function savePertanyaanCategory($id_pertanyaan, $bobot, $category_id){
+            $status = false;
+            $get_category = Category_pertanyaan::where("id", $category_id)->exists();
+            if($get_category){
+                //get existed
+                try{
+                    DB::beginTransaction();
+                        Pertanyaan_category::whereNotIn('id_pertanyaan', $id_pertanyaan)->update(['active'=>false]);
+                        $x = 0;
+                        for($x=0;$x<count($id_pertanyaan);$x++){
+                            $data[]= [
+                                'category_id'=>$category_id,
+                                'id_pertanyaan'=>$id_pertanyaan[$x],
+                                'bobot'=>$bobot[$x],
+                                'active'=>true,
+                                'created_at'=>date("Y-m-d H:i:s")
+                            ];
+                        }
+                    
+                        Pertanyaan_category::upsert(
+                            $data,
+                            ['category_id', 'id_pertanyaan'],
+                            ['bobot', 'active']
+                        );
+                        $status = true;
+                        $msg = "Berhasil Memperbaharui data";
+
+                    DB::commit();
+                }catch(\Exception $e){
+                    DB::rollBack();
+                    $msg=$e->getMessage();
+                }
+                
+            }else{
+                $msg = "Data kategori yang anda maksud belum ada";
+            }
+            return ['status'=>$status, 'msg'=>$msg];
         }
 
     }

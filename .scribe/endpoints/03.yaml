@@ -1,0 +1,119 @@
+name: MasterJabatan
+description: ''
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/list-jabatan-peserta/{page}'
+    metadata:
+      custom: []
+      groupName: MasterJabatan
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get Jabatan all / page'
+      description: 'Endpoint untuk list seluruh jabatan atau per halaman. Gantikan angka page dengan "getall" bila inigin mengambil seluruh list'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      page:
+        custom: []
+        name: page
+        description: required.
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      page: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "total": "integer",
+            "data": [array data],
+
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer {YOUR_TOKEN}'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/kelompok-jabatan-detil/{id_kelompok_jabatan}'
+    metadata:
+      custom: []
+      groupName: MasterJabatan
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get Detil Jabatan'
+      description: 'Endpoint untuk data detil jabatan.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id_kelompok_jabatan:
+        custom: []
+        name: id_kelompok_jabatan
+        description: required.
+        required: false
+        example: OZNEKRbj
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id_kelompok_jabatan: OZNEKRbj
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "total": "integer",
+            "data": [array data],
+
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer {YOUR_TOKEN}'
+    controller: null
+    method: null
+    route: null

@@ -1,0 +1,211 @@
+name: Periode
+description: ''
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/list-periode/{page?}'
+    metadata:
+      custom: []
+      groupName: Periode
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'List Periode'
+      description: 'Endpoint untuk ambil data Periode. Untuk bisa menarik data, pastikan bobot sudah 100% di pertanyaan kategori'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      page:
+        custom: []
+        name: page
+        description: ''
+        required: true
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      page: 16
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "status":true,
+            "msg":"msg"
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer {YOUR_TOKEN}'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/pertanyaan-periode/{id_periode}/{id_category}'
+    metadata:
+      custom: []
+      groupName: Periode
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get Pertanyaan per Periode'
+      description: 'Endpoint untuk ambil data pertanyaan periode bedasarkan category (Pejabat atau Umum).'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id_periode:
+        custom: []
+        name: id_periode
+        description: 'required. Id Periode adalah hashed id yang dapat diambil dari list_periode'
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      id_category:
+        custom: []
+        name: id_category
+        description: 'required. Id Category adalah hashed id yang dapat diambil dari MasterPertanyaan -> Get All Category Pertanyaan'
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id_periode: architecto
+      id_category: architecto
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "status":true,
+            "msg":"msg"
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer {YOUR_TOKEN}'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/regenerate-pertanyaan-periode
+    metadata:
+      custom: []
+      groupName: Periode
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Update Pertanyaan'
+      description: 'Endpoint untuk update pertanyaan di periode.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      X-Signature: 'signature dari list periode'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      token_periode:
+        custom: []
+        name: token_periode
+        description: required.
+        required: false
+        example: eBXeQLXM
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      token_category:
+        custom: []
+        name: token_category
+        description: required.
+        required: false
+        example: q9XMkzaG
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      payload:
+        custom: []
+        name: payload
+        description: required.
+        required: false
+        example: token_periode
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      token_periode: eBXeQLXM
+      token_category: q9XMkzaG
+      payload: token_periode
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "status":true,
+            "msg":"msg"
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer {YOUR_TOKEN}'
+    controller: null
+    method: null
+    route: null

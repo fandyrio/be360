@@ -283,7 +283,7 @@ use Illuminate\Support\Facades\Hash;
 
                 $payload=json_encode(['payload'=>Hashids::encode($get_data['IdUser'])]);
                 $secret=config('app.hmac_secret');
-            $signature=hash_hmac('sha256', $payload, $secret);
+                $signature=hash_hmac('sha256', $payload, $secret);
 
             }else{
                 $msg="Data Admin tidak ditemukan";
