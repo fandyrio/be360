@@ -1418,27 +1418,22 @@ use Illuminate\Support\Facades\Crypt;
 
         public function savePertanyaan($id_variable, $pertanyaan, $bundle_code){
             $status=false;
-            $get_bobot=Tref_pertanyaan::selectRaw('SUM(bobot) as total_bobot')->where('active', true)->first();
-            $total_bobot=$get_bobot['total_bobot'] + (int)$bobot;
-            if($total_bobot <= 100){
-                $get_data_variable=Variable_pertanyaan::where('id', $id_variable)->where('active', true)->first();
-                $bundle_jawaban=Tref_jawaban_bundle::where('bundle_code', $bundle_code)->where('active', true)->first();
             
-                if(!is_null($get_data_variable) && !is_null($bundle_jawaban)){
-                    $new_pertanyaan=new Tref_pertanyaan;
-                    $new_pertanyaan->id_variable=$id_variable;
-                    $new_pertanyaan->pertanyaan=$pertanyaan;
-                    $new_pertanyaan->bundle_code_jawaban=$bundle_code;
-                    // $new_pertanyaan->bobot=$bobot;
-                    if($new_pertanyaan->save()){
-                        $status=true;
-                        $msg="Berhasil menyimpan pertanyaan";
-                    }
-                }else{
-                    $msg="Data Variable Pertanyaan atau Bundle Jawaban tidak ditemukan ".$id_variable." : ".$bundle_code;
+            $get_data_variable=Variable_pertanyaan::where('id', $id_variable)->where('active', true)->first();
+            $bundle_jawaban=Tref_jawaban_bundle::where('bundle_code', $bundle_code)->where('active', true)->first();
+        
+            if(!is_null($get_data_variable) && !is_null($bundle_jawaban)){
+                $new_pertanyaan=new Tref_pertanyaan;
+                $new_pertanyaan->id_variable=$id_variable;
+                $new_pertanyaan->pertanyaan=$pertanyaan;
+                $new_pertanyaan->bundle_code_jawaban=$bundle_code;
+                // $new_pertanyaan->bobot=$bobot;
+                if($new_pertanyaan->save()){
+                    $status=true;
+                    $msg="Berhasil menyimpan pertanyaan";
                 }
             }else{
-                $msg="Total Bobot Melebihi 100%";
+                $msg="Data Variable Pertanyaan atau Bundle Jawaban tidak ditemukan ".$id_variable." : ".$bundle_code;
             }
 
             return [
