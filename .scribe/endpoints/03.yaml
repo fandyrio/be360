@@ -117,3 +117,110 @@ endpoints:
     controller: null
     method: null
     route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/update-jabatan-peserta
+    metadata:
+      custom: []
+      groupName: MasterJabatan
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Update detil Jabatan'
+      description: 'Endpoint untuk update detil jabatan.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      X-Signature: 'signature dari get detil jabatan'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      token_jabatan:
+        custom: []
+        name: token_jabatan
+        description: 'token jabatan.'
+        required: true
+        example: OZNEKRbj
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      jabatan:
+        custom: []
+        name: jabatan
+        description: jabatan.
+        required: true
+        example: 'Panitera Muda'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      active:
+        custom: []
+        name: active
+        description: active.
+        required: true
+        example: 'Y'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      token_category:
+        custom: []
+        name: token_category
+        description: 'token category.'
+        required: false
+        example: q9XMkzaG
+        type: required
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      payload:
+        custom: []
+        name: payload
+        description: required.
+        required: false
+        example: token_jabatan
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      token_jabatan: OZNEKRbj
+      jabatan: 'Panitera Muda'
+      active: 'Y'
+      token_category: q9XMkzaG
+      payload: token_jabatan
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "total": "integer",
+            "data": [array data],
+
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer {YOUR_TOKEN}'
+    controller: null
+    method: null
+    route: null

@@ -260,8 +260,33 @@ class periodeController extends Controller
      * @urlParam id_category string required. Id Category adalah hashed id yang dapat diambil dari MasterPertanyaan -> Get All Category Pertanyaan
      * 
      * @response 200 {
-     *   "status":true, 
-     *   "msg":"msg"
+     *    "status": true,
+            *"msg": "",
+            *"signature": "ff3bc24b79cc27e2f67f695120892328f62e6920a5439c4d48a3d93bf0652cbc",
+            *"data": [
+                *{
+                    *"variable_pertanyaan": "Integritas",
+                    *"list_pertanyaan": [
+                        *{
+                            *"token_trans_pertanyaan": "xxxxxxxx",
+                            *"pertanyaan": "Bagaimana tingkat integritas yang bersangkutan?",
+                            *"bobot": 20,
+                            *"bundle_jawaban": "Baik"
+                        *}
+                    *]
+                *},
+                *{
+                    *"variable_pertanyaan": "Komunikasi",
+                    *"list_pertanyaan": [
+                        *{
+                            *"token_trans_pertanyaan": "xxxxxxxx",
+                            *"pertanyaan": "Apakah yang bersangkutan mampu berkomunikasi dengan baik?",
+                            *"bobot": 20,
+                            *"bundle_jawaban": "Baik"
+                        *}
+                    *]
+                *}
+            *]
      * }
      */
     public function getPertanyaanPeriode($id_periode, $id_category){

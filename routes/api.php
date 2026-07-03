@@ -173,8 +173,8 @@ Route::get('test', function(){
 Route::get("test-wa", "api\zonasiController@testWaDev")->name('test-wa');
 Route::get("test-wa-badilum", "api\zonasiController@testWaBadilum")->name("test-wa-badilum");
 Route::get("repair-link-kpt/{id_observee}", "api\zonasiController@regenerateEndPoint");
-Route::get('hash/{str}', function($str){
-    echo Hashids::encode($str);
-    echo "<br />";
-    echo Crypt::encrypt($str);
-});
+// Route::get('hash/{str}', function($str){
+//     echo Hashids::encode($str);
+//     echo "<br />";
+//     echo Crypt::encrypt($str);
+// });

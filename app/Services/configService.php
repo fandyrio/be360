@@ -234,6 +234,7 @@ use Illuminate\Support\Facades\Crypt;
                 $data['token_jabatan']=Hashids::encode($get_jabatan['id']);
                 $data['jabatan']=$get_jabatan['jabatan'];
                 $data['category_pertanyaan']=$get_jabatan['category'];
+                $data['category_pertanyaan_token']=Hashids::encode($get_jabatan['category_id']);
                 $data['active']=$get_jabatan['active'];
                 $data['jabatan_digabung']=[];
                 $get_gabungan=Tref_jabatan_peserta::where('id_jabatan_gabungan', $get_jabatan['id'])->get();
@@ -332,11 +333,15 @@ use Illuminate\Support\Facades\Crypt;
             ];
         }
 
-        public function updateKelompokJabatan($id_jabatan_gabungan_arr, $id_jabatan, $jabatan, $status_aktif){
+
+        
+        public function updateKelompokJabatan($id_jabatan_gabungan_arr, $id_jabatan, $jabatan, $status_aktif, $category_id){
             $status=false;
             $jumlah_gabungan=count($id_jabatan_gabungan_arr);
             $get_jabatan=Tref_jabatan_peserta::where('id', $id_jabatan)->first();
-            if(!is_null($get_jabatan)){
+            $get_category = Category_pertanyaan::where("id", $category_id)->exists();
+
+            if(!is_null($get_jabatan) && $get_category === true){
                 if((int)$get_jabatan['id_kelompok_jabatan'] === 0){
                     //jabatan gabungan
                     if($jumlah_gabungan > 0){
@@ -363,6 +368,7 @@ use Illuminate\Support\Facades\Crypt;
                                         Tref_jabatan_peserta::whereIn('id', $remove_jabatan)->update(['id_jabatan_gabungan'=>null]);
                                         Tref_jabatan_peserta::whereIn('id', $id_jabatan_gabungan_arr)->update(['id_jabatan_gabungan'=>$id_jabatan]);
                                         $get_jabatan->jabatan=$jabatan;
+                                        $get_jabatan->category_id = $category_id;
                                         $get_jabatan->active=$status_aktif === "Y" ? true : false;
                                         $get_jabatan->update(); 
                                     DB::commit();
@@ -385,6 +391,7 @@ use Illuminate\Support\Facades\Crypt;
                             DB::beginTransaction();
                                 $pisahkan=Tref_jabatan_peserta::where('id_jabatan_gabungan', $id_jabatan)->update(['id_jabatan_gabungan'=>null]);
                                 $get_jabatan->active=false;
+                                $get_jabatan->category_id = $category_id;
                                 $get_jabatan->update();
                             DB::commit();
                             $status=true;
@@ -400,6 +407,7 @@ use Illuminate\Support\Facades\Crypt;
                     //bukan jabatan gabungan
                     if($jumlah_gabungan === 0){
                         $get_jabatan->active=$status_aktif === "Y" ? true : false;
+                        $get_jabatan->category_id = $category_id;
                         if($get_jabatan->update()){
                             $status=true;
                             $msg="Berhasil menyimpan data";
@@ -1408,7 +1416,7 @@ use Illuminate\Support\Facades\Crypt;
             ];
         }
 
-        public function savePertanyaan($id_variable, $pertanyaan, $bundle_code, $bobot){
+        public function savePertanyaan($id_variable, $pertanyaan, $bundle_code){
             $status=false;
             $get_bobot=Tref_pertanyaan::selectRaw('SUM(bobot) as total_bobot')->where('active', true)->first();
             $total_bobot=$get_bobot['total_bobot'] + (int)$bobot;
@@ -1421,7 +1429,7 @@ use Illuminate\Support\Facades\Crypt;
                     $new_pertanyaan->id_variable=$id_variable;
                     $new_pertanyaan->pertanyaan=$pertanyaan;
                     $new_pertanyaan->bundle_code_jawaban=$bundle_code;
-                    $new_pertanyaan->bobot=$bobot;
+                    // $new_pertanyaan->bobot=$bobot;
                     if($new_pertanyaan->save()){
                         $status=true;
                         $msg="Berhasil menyimpan pertanyaan";
@@ -1543,6 +1551,7 @@ use Illuminate\Support\Facades\Crypt;
                     $data[$x]['pertanyaan'] = [];
                 }
                 $data[$x]['pertanyaan'][$a]['token_pertanyaan'] = Hashids::encode($list['id_pertanyaan_category']);
+                $data[$x]['pertanyaan'][$a]['pertanyaan'] = $list['pertanyaan'];
                 $data[$x]['pertanyaan'][$a]['bobot'] = $list['bobot'];
                 $data[$x]['pertanyaan'][$a]['active'] = (int)$list['active'] === 1 ? 'Aktif' : 'Tidak aktif';
                 $id_variable_before = $list['id_variable'];

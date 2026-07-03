@@ -8,6 +8,7 @@ use App\Services\configService;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\CssSelector\Node\HashNode;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Vinkla\Hashids\Facades\Hashids;
 
@@ -244,6 +245,28 @@ class configController extends Controller
     //     return response()->json(['status'=>$status, 'msg'=>$msg]);
     // }
 
+    /**
+     * Update detil Jabatan
+     *
+     * Endpoint untuk update detil jabatan.
+     *
+     * @group MasterJabatan
+     *
+     *@authenticated
+     *@header X-Signature signature dari get detil jabatan
+     * @bodyParam token_jabatan string required token jabatan. Example: OZNEKRbj
+     * @bodyParam jabatan string required jabatan. Example: Panitera Muda
+     * @bodyParam active string required active. Example: Y
+     * @bodyParam token_category required token category. Example: q9XMkzaG
+     * @bodyParam payload string required. Example: token_jabatan
+     * 
+     *
+     * @response 200 {
+     *   "total": "integer",
+     *   "data": [array data],
+     *
+     * }
+     */
     public function updateKelompokJabatan(Request $request){
         $status=false;
         try{
@@ -251,15 +274,20 @@ class configController extends Controller
                 'token_jabatan'=>['required', 'string'],
                 'jabatan'=>['required', 'string'],
                 'active'=> ['required', 'in:Y,N'],
-                
+                'token_category'=>['required', 'string'],
+                'payload'=>['required', 'string'],
             ]);
             $jabatan_gabungan=[];
+            $jumlah_jabatan_gabungan = 0;
             try{
                 $token_jabatan=Hashids::decode($request->token_jabatan);
-                if(empty($token_jabatan)){
+                $token_category = Hashids::decode($request->token_category);
+                if(empty($token_jabatan) || empty($token_category)){
                     throw new \Exception("Invalid token :2");
                 }
-                $jumlah_jabatan_gabungan=count($request->jabatan_gabungan);
+                if(isset($request->jabatan_gabungan)){
+                    $jumlah_jabatan_gabungan=count($request->jabatan_gabungan);
+                }
                 if($jumlah_jabatan_gabungan > 1){
                     $jabatan_gabungan=[];
                     for($i=0;$i<$jumlah_jabatan_gabungan;$i++){
@@ -289,7 +317,7 @@ class configController extends Controller
                     $msg="Jabatan yang digabungkan harus lebih dari 1";
                     throw new \Exception($msg);
                 }
-                $update_jabatan=$this->configService->updateKelompokJabatan($jabatan_gabungan, $token_jabatan[0], $request->jabatan, $request->active);
+                $update_jabatan=$this->configService->updateKelompokJabatan($jabatan_gabungan, $token_jabatan[0], $request->jabatan, $request->active, $token_category[0]);
                 $status=$update_jabatan['status'];
                 $msg=$update_jabatan['msg'];
             }catch(\Exception $e){
@@ -875,7 +903,6 @@ class configController extends Controller
                 'id_variable'=>['required', 'string'],
                 'pertanyaan'=>['required', 'string'],
                 'bundle_code_jawaban'=>['required', 'string'],
-                'bobot'=> ['required', 'integer', 'max:100'],
             ]);
             $clean=trim($request->pertanyaan);
             $pertanyaan=strip_tags($clean);
@@ -886,7 +913,7 @@ class configController extends Controller
                     throw new \Exception('Invalid Token Variable');
                 }
                 $id_variable=$id_variable_dec[0];
-                $save_pertanyaan=$this->configService->savePertanyaan($id_variable, $pertanyaan, $request->bundle_code_jawaban, $request->bobot);
+                $save_pertanyaan=$this->configService->savePertanyaan($id_variable, $pertanyaan, $request->bundle_code_jawaban);
                 $status=$save_pertanyaan['status'];
                 $msg=$save_pertanyaan['msg'];
             }catch(\Exception $e){
@@ -991,12 +1018,36 @@ class configController extends Controller
      *@authenticated
      *@urlParam token_category string required token_pertanyaan dari get all category
      *
-     * @response 200 {
-     *   status=>true, 
-     *   msg=>msg, 
-     *   total=>integer, 
-     *   data=>arr
-     * }
+     * @response 200{
+            *"status": true,
+            *"msg": "",
+            *"signature": "c781203173b5ddfe289a71c183b7cdf1bbd173bb381f17930c5e0855ae045138",
+            *"total": 2,
+            *"data": [
+                *{
+                    *"variable": "Integritas",
+                    *"pertanyaan": [
+                        *{
+                            *"token_pertanyaan": "xxxxxxx",
+                            *"pertanyaan": "Bagaimana tingkat integritas yang bersangkutan?",
+                            *"bobot": 20,
+                            *"active": "Aktif"
+                        *}
+                    *]
+                *},
+                *{
+                    *"variable": "Komunikasi",
+                    *"pertanyaan": [
+                        *{
+                            *"token_pertanyaan": "xxxxxxx",
+                            *"pertanyaan": "Apakah yang bersangkutan mampu berkomunikasi dengan baik?",
+                            *"bobot": 20,
+                            *"active": "Aktif"
+                        *}
+                    *]
+                *}
+            *]
+     *   }
      */
 
     public function getPertanyaanByCategory($category){

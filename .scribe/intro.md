@@ -3,7 +3,7 @@
 
 
 <aside>
-    <strong>Base URL</strong>: <code>https://be360.pt-bengkulu.go.id</code>
+    <strong>Base URL</strong>: <code>http://be_360.local</code>
 </aside>
 
     This documentation aims to provide all the information you need to work with our API.
