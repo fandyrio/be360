@@ -240,7 +240,7 @@ use Vinkla\Hashids\Facades\Hashids;
                                                 'vp.variable', 
                                                 'vp.kriteria', 'vp.id as id_variable')
                                                 ->where('id_periode', $id_periode)
-                                                ->where('trans_pertanyaan_periode.status', true)
+                                                ->where('trans_pertanyaan_periode.active', true)
                                                 ->orderBy('trans_pertanyaan_periode.id', 'asc')
                                                 ->get();
                     });
