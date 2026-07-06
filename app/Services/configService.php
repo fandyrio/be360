@@ -980,7 +980,7 @@ use Illuminate\Support\Facades\Crypt;
                         $data_delete[]=$existed_bobot[$x];
                     }
                 }
-                if(count($data_insert) === (int)$new_mapping && count($data_delete) === 0){
+                if(count($data_insert) === (int)$new_mapping && count($data_delete) > 0){
                     try{
                         DB::beginTransaction();
                             if(count($data_insert) > 0){
