@@ -917,7 +917,9 @@ use Illuminate\Support\Facades\Crypt;
                 array_push($id_jabatan_penilai, $id_jabatan_peserta);
                 $append_data=true;
             }
-            $jumlah_jabatan_peserta=Tref_jabatan_peserta::whereIn('id', $id_jabatan_penilai)->count();
+            $jumlah_jabatan_peserta=Tref_jabatan_peserta::whereIn('id', $id_jabatan_penilai)
+                                    ->where("active", true)    
+                                    ->count();
 
             //ditambah self assessment (+1)
             $jumlah_jabatan_peserta+=1;

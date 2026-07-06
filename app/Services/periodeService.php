@@ -83,6 +83,7 @@ use PDO;
 
                             $get_bobot_penilaian=Tref_bobot_penilaian::where('active', true)
                                                         ->whereRaw('tref_bobot_penilaian.bobot is not null')
+                                                        ->where('is_self_assessment', false)
                                                         ->get();
                             $get_mapping_jabatan=Tref_mapping_jabatan::where('active', true)->get();
                             $get_pertanyaan=Tref_pertanyaan::where('active', true)->get();
