@@ -1583,7 +1583,9 @@ use Illuminate\Support\Facades\Crypt;
                 //get existed
                 try{
                     DB::beginTransaction();
-                        Pertanyaan_category::whereNotIn('id_pertanyaan', $id_pertanyaan)->update(['active'=>false]);
+                        Pertanyaan_category::whereNotIn('id_pertanyaan', $id_pertanyaan)
+                                                ->where('category_id', $category_id)
+                                                ->update(['active'=>false]);
                         $x = 0;
                         for($x=0;$x<count($id_pertanyaan);$x++){
                             $data[]= [
