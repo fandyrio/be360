@@ -134,7 +134,7 @@ use PDO;
                                         Redis::del($keys);
                                     }
                                 }else{
-                                    $msg="Masih ada bobot penilaian yang harus diisi";
+                                    $msg="Masih ada bobot penilaian yang harus diisi ".$jlh_bobot_penilaian." : ".$jlh_mapping_jabatan;
                                     throw new \Exception($msg);
                                 }
                             }else{
