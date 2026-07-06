@@ -947,7 +947,9 @@ use Illuminate\Support\Facades\Crypt;
                     $id_peserta_arr=explode(",", $id_jabatan_peserta);
                     $id_jabatan_penilai=array_diff($id_jabatan_penilai, $id_peserta_arr);
                 }
-                $get_existed=Tref_bobot_penilaian::where('id_jabatan_peserta', $id_jabatan_peserta)->get();
+                $get_existed=Tref_bobot_penilaian::where('id_jabatan_peserta', $id_jabatan_peserta)
+                                ->where('active', true)
+                                ->get();
                 $existed_bobot=[];
                 foreach($get_existed as $list_existed){
                     $existed_bobot[]=$list_existed['id'];
@@ -980,7 +982,7 @@ use Illuminate\Support\Facades\Crypt;
                         $data_delete[]=$existed_bobot[$x];
                     }
                 }
-                if(count($data_insert) === (int)$new_mapping && count($data_delete) > 0){
+                if(count($data_insert) === (int)$new_mapping && count($data_delete) === 0){
                     try{
                         DB::beginTransaction();
                             if(count($data_insert) > 0){
