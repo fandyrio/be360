@@ -596,6 +596,7 @@ use Illuminate\Support\Facades\Crypt;
                     $msg="Data Mapping dan bobot tidak ditemukan ";
                 }else{
                     $list_existed_penilai=[];
+                    $list_existed_bobot_penilai=[];
                     $id_mapping_jabatan_peserta=[];
                     $x=0;
                     foreach($get_data_peserta as $list_peserta){
@@ -632,6 +633,7 @@ use Illuminate\Support\Facades\Crypt;
 
 
                     $lookup_existed=array_flip($list_existed_penilai);
+                    $lookup_bobot=array_flip($list_existed_bobot_penilai);
                     $jlh_penilai_input=count($id_jabatan_penilai);
                     $jlh_existed=count($list_existed_penilai);
                     $jlh_existed_bobot=count($list_existed_bobot_penilai);
@@ -641,8 +643,11 @@ use Illuminate\Support\Facades\Crypt;
                     for($x=0;$x<$jlh_penilai_input;$x++){
                         //kalau tida ada data existed di array jabatan penilai maka diinsert
                         if(!isset($lookup_existed[$id_jabatan_penilai[$x]])){
+                            //check apakah bobot sudah ada atau tidak di table master bobot.
                             $inserted_penilai[]=$data_penilai[$x];
-                            $inserted_bobot[]=$data_bobot[$x];
+                            if(!isset($lookup_bobot[$id_jabatan_penilai[$x]])){
+                                $inserted_bobot[]=$data_bobot[$x];
+                            }
                         }else{
                             $data_diupdate[]=$data_penilai[$x];
                         }
