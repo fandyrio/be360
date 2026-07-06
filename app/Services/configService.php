@@ -608,6 +608,7 @@ use Illuminate\Support\Facades\Crypt;
                     foreach($get_data_bobot as $list_bobot){
                         $id_bobot_penilaian[]=$list_bobot['id'];
                         $list_existed_bobot_penilai[]=$list_bobot['id_jabatan_penilai'];
+                        $is_self_assessment[] = $list_bobot['is_self_assessment'];
                     }
 
                     //set data jabatan penilai yang masuk
@@ -634,6 +635,7 @@ use Illuminate\Support\Facades\Crypt;
 
                     $lookup_existed=array_flip($list_existed_penilai);
                     $lookup_bobot=array_flip($list_existed_bobot_penilai);
+                    $lookup_self_assessment = array_flip($is_self_assessment);
                     $jlh_penilai_input=count($id_jabatan_penilai);
                     $jlh_existed=count($list_existed_penilai);
                     $jlh_existed_bobot=count($list_existed_bobot_penilai);
@@ -646,6 +648,7 @@ use Illuminate\Support\Facades\Crypt;
                             //check apakah bobot sudah ada atau tidak di table master bobot.
                             $inserted_penilai[]=$data_penilai[$x];
                             if(!isset($lookup_bobot[$id_jabatan_penilai[$x]])){
+
                                 $inserted_bobot[]=$data_bobot[$x];
                             }
                         }else{
@@ -1545,7 +1548,7 @@ use Illuminate\Support\Facades\Crypt;
                                             ->where('vp.active', true)
                                             ->where('tref_pertanyaan_category.active', true)
                                             ->where('tref_pertanyaan_category.category_id', $category_id)
-                                            ->select('tref_pertanyaan_category.id as id_pertanyaan_category','tref_pertanyaan_category.bobot', 'tp.pertanyaan', 'vp.variable', 'tp.id_variable', 'tref_pertanyaan_category.active')
+                                            ->select('tref_pertanyaan_category.id as id_pertanyaan_category','tref_pertanyaan_category.bobot', 'tp.pertanyaan', 'vp.variable', 'tp.id_variable', 'tref_pertanyaan_category.active', 'tref_pertanyaan_category.id_pertanyaan')
                                             ->orderBy('tp.id_variable', 'asc')
                                             ->get();
             $x = 0;
@@ -1561,6 +1564,7 @@ use Illuminate\Support\Facades\Crypt;
                     $data[$x]['variable']=$list['variable'];
                     $data[$x]['pertanyaan'] = [];
                 }
+                $data[$x]['pertanyaan'][$a]['token_master'] = Hashids::encode($list['id_pertanyaan']);
                 $data[$x]['pertanyaan'][$a]['token_pertanyaan'] = Hashids::encode($list['id_pertanyaan_category']);
                 $data[$x]['pertanyaan'][$a]['pertanyaan'] = $list['pertanyaan'];
                 $data[$x]['pertanyaan'][$a]['bobot'] = $list['bobot'];
