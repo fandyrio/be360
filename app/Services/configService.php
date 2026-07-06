@@ -591,6 +591,7 @@ use Illuminate\Support\Facades\Crypt;
                                                     ->where('active', true)
                                                     ->get();
                 $get_data_bobot=Tref_bobot_penilaian::where('id_jabatan_peserta', $id_jabatan_peserta)
+                                                ->where('is_self_assessment', false)
                                                 ->where('active', true)->get();
                 if($get_data_peserta->count() === 0 || $get_data_bobot->count() === 0){
                     $msg="Data Mapping dan bobot tidak ditemukan ";
@@ -979,7 +980,7 @@ use Illuminate\Support\Facades\Crypt;
                         $data_delete[]=$existed_bobot[$x];
                     }
                 }
-                if(count($data_insert) === (int)$new_mapping){
+                if(count($data_insert) === (int)$new_mapping && count($data_delete) === 0){
                     try{
                         DB::beginTransaction();
                             if(count($data_insert) > 0){
@@ -991,9 +992,9 @@ use Illuminate\Support\Facades\Crypt;
                                 foreach($get_data as $list_data){
                                     $id_jabatan_penilai_arr[]=$list_data['id_jabatan_penilai'];
                                 }
-                                Tref_mapping_jabatan::where('id_jabatan_peserta', $id_jabatan_peserta)
-                                                        ->whereIn('id_jabatan_penilai', $id_jabatan_penilai_arr)
-                                                        ->update(['active'=>false]);
+                                // Tref_mapping_jabatan::where('id_jabatan_peserta', $id_jabatan_peserta)
+                                //                         ->whereIn('id_jabatan_penilai', $id_jabatan_penilai_arr)
+                                //                         ->update(['active'=>false]);
                                 Tref_bobot_penilaian::whereIn('id', $data_delete)->update(['active'=>false]);
                             }
                             if(count($data_update) > 0){
@@ -1019,7 +1020,7 @@ use Illuminate\Support\Facades\Crypt;
                         $msg=$e->getMessage();
                     }
                 }else{
-                    $msg="Data tidak konsisten";
+                    $msg="Tidak dapat menghapus bobot jabatan, atau Jumlah data tidak sesuai";
                 }
             }else{
                 $msg="Data peserta tidak konsisten ".$jumlah_jabatan_peserta." : ".count($id_jabatan_penilai);
