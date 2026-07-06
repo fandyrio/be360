@@ -1005,7 +1005,7 @@ use Illuminate\Support\Facades\Crypt;
                     $msg="Data tidak konsisten";
                 }
             }else{
-                $msg="Data peserta tidak konsisten";
+                $msg="Data peserta tidak konsisten ".$jumlah_jabatan_peserta." : ".count($id_jabatan_penilai);
             }
             return [
                 'status'=>$status,
