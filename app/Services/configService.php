@@ -922,12 +922,21 @@ use Illuminate\Support\Facades\Crypt;
                 array_push($id_jabatan_penilai, $id_jabatan_peserta);
                 $append_data=true;
             }
+            $jlh_jabatan_penilai = count($id_jabatan_penilai);
+            $jabatan_nilai_sendiri = 0;
+            for($a=0;$a<$jlh_jabatan_penilai;$a++){
+                if((int)$id_jabatan_peserta === (int)$id_jabatan_penilai[$a]){
+                    $jabatan_nilai_sendiri+=1;
+                }
+            }
             $jumlah_jabatan_peserta=Tref_jabatan_peserta::whereIn('id', $id_jabatan_penilai)
                                     ->where("active", true)    
                                     ->count();
 
-            //ditambah self assessment (+1)
-            $jumlah_jabatan_peserta+=1;
+            //kalau jabatan_nilai_akhir itu 1, berarti jabatan itu tidak menilai sesama pemangku jabatan sendiri. Jadi jumlah_jabatan_peserta tidak perlu di tambah 1 lagi. 
+            if($jabatan_nilai_sendiri === 2){
+                $jumlah_jabatan_peserta+=1;
+            }
 
             if($jumlah_jabatan_peserta === count($id_jabatan_penilai)){
                 if($append_data){
