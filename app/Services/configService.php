@@ -676,9 +676,11 @@ use Illuminate\Support\Facades\Crypt;
                                 
                                 DB::table('tref_mapping_jabatan')->insert($inserted_penilai);
                                 DB::table('tref_bobot_penilaian')->insert($inserted_bobot);
-                                if(count($nonaktif_bobot) > 0 && count($nonaktif_panilai) > 0){
-                                    Tref_mapping_jabatan::whereIn('id', $nonaktif_panilai)->update(['active'=>false]);
+                                if(count($nonaktif_bobot) > 0){
                                     Tref_bobot_penilaian::whereIn('id', $nonaktif_bobot)->update(['active'=>false]);
+                                }
+                                if(count($nonaktif_panilai) > 0){
+                                    Tref_mapping_jabatan::whereIn('id', $nonaktif_panilai)->update(['active'=>false]);
                                 }
                                 foreach($data_diupdate as $row){
                                     $get_data=Tref_mapping_jabatan::where('id', $row['id'])->first();
