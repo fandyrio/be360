@@ -37,13 +37,15 @@ use PDO;
             $skip=$page * $limit - $limit;
 
             if($total > 0){
-                $get_data=Tahun_penilaian::orderBy('IdTahunPenilaian', 'desc')
+                $get_data=Tahun_penilaian::join("tref_tahapan_proses as ttp", "ttp.id", "tref_tahun_penilaian.proses_id")
+                                    ->select("tref_tahun_penilaian.*", "ttp.proses")
+                                    ->orderBy('IdTahunPenilaian', 'desc')
                                     ->skip($skip)->take($limit)
                                     ->get();
                 $x=0;
                 foreach($get_data as $list_data){
                     $data[$x]['id']=Hashids::encode($list_data['IdTahunPenilaian']);
-                    $data[$x]['tahun']=$list_data['tahun'];
+                    $data[$x]['tahun']=$list_data['tahun']."(".$list_data['proses'].")";
                     $data[$x]['dasar_hukum']=$list_data['dasar_hukum'];
                     $data[$x]['keterangan']=$list_data['keterangan'];
                     $data[$x]['proses']=$status_periode[$list_data['proses_id']-1];

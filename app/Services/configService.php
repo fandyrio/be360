@@ -157,7 +157,9 @@ use Illuminate\Support\Facades\Crypt;
             $keterangan="";
             $jumlahHalaman=1;
             $get_data_params=null;
-            $get_data=Tref_jabatan_peserta::whereRaw('id_jabatan_gabungan is null');
+            $get_data=Tref_jabatan_peserta::join('category_pertanyaan as cp', 'cp.id', 'tref_jabatan_peserta.category_id')
+                                        ->select("tref_jabatan_peserta.*", "cp.category")
+                                        ->whereRaw('id_jabatan_gabungan is null');
             $total=(clone $get_data)->count();
 
             $get_jabatan_digabung=Cache::store('redis')->remember('jabatan_peserta_digabung', 3600*24*365, function(){
@@ -194,6 +196,7 @@ use Illuminate\Support\Facades\Crypt;
                     $keterangan=""; 
                     $data[$x]['id']=Hashids::encode($list_data['id']);
                     $data[$x]['jabatan']=$list_data['jabatan'];
+                    $data[$x]['category_pertanyaan']=$list_data['category'];
                     $data[$x]['active']=$list_data['active'];
                     if((int)$list_data['id_kelompok_jabatan'] === 0 && (int)$list_data['active'] === 1){
                         $jumlah_gabungan=count($jabatan_gabungan["gabungan_{$list_data['id']}"]);
