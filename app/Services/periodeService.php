@@ -1,7 +1,8 @@
 <?php
     namespace App\Services;
 
-    use App\Models\Tahapan_proses;
+use App\Models\Pertanyaan_category;
+use App\Models\Tahapan_proses;
     use App\Models\Tahun_penilaian;
     use App\Models\Tref_zonasi;
     use Vinkla\Hashids\Facades\Hashids;
@@ -89,14 +90,20 @@ use PDO;
                                                         ->get();
                             $get_mapping_jabatan=Tref_mapping_jabatan::where('active', true)->get();
                             $get_pertanyaan=Tref_pertanyaan::where('active', true)->get();
+
+                            $get_pertanyaan_periode = Pertanyaan_category::join('tref_pertanyaan as tp', 'tp.id', 'tref_pertanyaan_category.id_pertanyaan')
+                                                                            ->where('tref_pertanyaan_category.active', true)
+                                                                            ->select("tp.*")
+                                                                            ->get();
+
                             $jlh_mapping_jabatan=$get_mapping_jabatan->count();
                             $jlh_bobot_penilaian=$get_bobot_penilaian->count();
-                            $jlh_pertanyaan=$get_pertanyaan->count();
+                            $jlh_pertanyaan=$get_pertanyaan_periode->count();
                             if($jlh_bobot_penilaian > 0 && $jlh_mapping_jabatan > 0 && $jlh_pertanyaan > 0){
                                 if($jlh_bobot_penilaian === $jlh_mapping_jabatan){
                                     $bobot_penilaian_periode=[];
                                     foreach($get_bobot_penilaian as $list_bobot_penilaian){
-                                        $bobot_penilaian_periode[]=[
+                                        $bobot_penilaian_periode[]=[    
                                             'id_periode'=>$id_periode,
                                             'id_bobot_penilaian'=>$list_bobot_penilaian['id'],
                                             'bobot'=>$list_bobot_penilaian['bobot'],
@@ -113,7 +120,7 @@ use PDO;
                                     }
 
                                     $pertanyaan_periode=[];
-                                    foreach($get_pertanyaan as $list_pertanyaan){
+                                    foreach($get_pertanyaan_periode as $list_pertanyaan){
                                         $pertanyaan_periode[]=[
                                             'id_periode'=>$id_periode,
                                             'id_variable'=>$list_pertanyaan['id_variable'],
