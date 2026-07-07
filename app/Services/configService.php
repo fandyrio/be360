@@ -201,7 +201,7 @@ use Illuminate\Support\Facades\Crypt;
                     $keterangan=""; 
                     $data[$x]['id']=Hashids::encode($list_data['id']);
                     $data[$x]['jabatan']=$list_data['jabatan'];
-                    $data[$x]['category_pertanyaan']=$list_data['category_id'];
+                    $data[$x]['category_pertanyaan']=$list_data['category'];
                     $data[$x]['active']=$list_data['active'];
                     if((int)$list_data['id_kelompok_jabatan'] === 0 && (int)$list_data['active'] === 1){
                         $jumlah_gabungan=count($jabatan_gabungan["gabungan_{$list_data['id']}"]);
