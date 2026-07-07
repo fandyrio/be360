@@ -93,7 +93,7 @@ use PDO;
 
                             $get_pertanyaan_periode = Pertanyaan_category::join('tref_pertanyaan as tp', 'tp.id', 'tref_pertanyaan_category.id_pertanyaan')
                                                                             ->where('tref_pertanyaan_category.active', true)
-                                                                            ->select("tp.*", 'tref_pertanyaan_category.category_id')
+                                                                            ->select("tp.*", 'tref_pertanyaan_category.category_id', 'tref_pertanyaan_category.bobot')
                                                                             ->get();
 
                             $jlh_mapping_jabatan=$get_mapping_jabatan->count();
