@@ -157,10 +157,10 @@ use Illuminate\Support\Facades\Crypt;
             $keterangan="";
             $jumlahHalaman=1;
             $get_data_params=null;
-            $get_data=Tref_jabatan_peserta::join('category_pertanyaan as cp', 'cp.id', 'tref_jabatan_peserta.category_id')
+            $total=Tref_jabatan_peserta::join('category_pertanyaan as cp', 'cp.id', '=', 'tref_jabatan_peserta.category_id')
                                         ->select("tref_jabatan_peserta.*", "cp.category")
-                                        ->whereRaw('id_jabatan_gabungan is null');
-            $total=(clone $get_data)->count();
+                                        ->whereRaw('id_jabatan_gabungan is null')->count();
+            // $total=(clone $get_data)->count();
 
             $get_jabatan_digabung=Cache::store('redis')->remember('jabatan_peserta_digabung', 3600*24*365, function(){
                 return Tref_jabatan_peserta::whereRaw('id_jabatan_gabungan is not null')
@@ -173,7 +173,12 @@ use Illuminate\Support\Facades\Crypt;
                     $page=1;
                 }
                 $skip=$page*$limit-$limit;
-                $get_data_params=(clone $get_data)->skip($skip)->take($limit)->get();
+                // $get_data_params=(clone $get_data)->skip($skip)->take($limit)->get();
+                $get_data_params = Tref_jabatan_peserta::join('category_pertanyaan as cp', 'cp.id', '=', 'tref_jabatan_peserta.category_id')
+                                        ->select("tref_jabatan_peserta.*", "cp.category")
+                                        ->whereRaw('id_jabatan_gabungan is null')
+                                        ->orderBy('tref_jabatan_peserta.category_id', 'desc')
+                                        ->skip($skip)->take($limit)->get();
             }elseif(!is_numeric($page) && $page === "getall"){
                 $get_data_params=Cache::store('redis')->remember('get_all_jabatan', 3600*24*365, function () {
                     return Tref_jabatan_peserta::whereRaw('id_jabatan_gabungan is null')->where('active',true)->get(); 
@@ -196,7 +201,7 @@ use Illuminate\Support\Facades\Crypt;
                     $keterangan=""; 
                     $data[$x]['id']=Hashids::encode($list_data['id']);
                     $data[$x]['jabatan']=$list_data['jabatan'];
-                    $data[$x]['category_pertanyaan']=$list_data['category'];
+                    $data[$x]['category_pertanyaan']=$list_data['category_id'];
                     $data[$x]['active']=$list_data['active'];
                     if((int)$list_data['id_kelompok_jabatan'] === 0 && (int)$list_data['active'] === 1){
                         $jumlah_gabungan=count($jabatan_gabungan["gabungan_{$list_data['id']}"]);
@@ -215,6 +220,7 @@ use Illuminate\Support\Facades\Crypt;
             }
 
             return [
+                'total'=>$total,
                 'jumlah'=>count($data),
                 'data'=>$data,
                 'page'=>$page,
