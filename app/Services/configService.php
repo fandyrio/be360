@@ -649,7 +649,6 @@ use Illuminate\Support\Facades\Crypt;
                             //check apakah bobot sudah ada atau tidak di table master bobot.
                             $inserted_penilai[]=$data_penilai[$x];
                             if(!isset($lookup_bobot[$id_jabatan_penilai[$x]])){
-
                                 $inserted_bobot[]=$data_bobot[$x];
                             }
                         }else{
@@ -666,7 +665,9 @@ use Illuminate\Support\Facades\Crypt;
                         for($x=0;$x<$jlh_existed;$x++){
                             if(!isset($lookup_jabatan_penilain[$list_existed_penilai[$x]])){
                                 $nonaktif_panilai[]=$id_mapping_jabatan_peserta[$x];
-                                $nonaktif_bobot[]=$id_bobot_penilaian[$x];
+                                if(isset($id_bobot_penilaian[$x])){
+                                    $nonaktif_bobot[]=$id_bobot_penilaian[$x];
+                                }
                             }
                         }
 
