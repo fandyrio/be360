@@ -359,11 +359,12 @@ use Vinkla\Hashids\Facades\Hashids;
                                                 ->join('tref_pegawai as tp', 'tp.id_pegawai', '=', 'to2.IdPegawai')
                                                 ->leftJoin('tref_jabatan_peserta as tjp', 'tjp.id', '=', 'trans_peserta_zonasi.id_jabatan_plt')
                                                 ->leftJoin('tref_jabatan_peserta as tjp2', 'tjp2.id_kelompok_jabatan', '=', 'to2.id_kelompok_jabatan')
+                                                ->leftJoin('category_pertanyaan as cp', 'cp.id', '=', 'tjp2.category_id')
                                                 ->where('trans_peserta_zonasi.id_pegawai_peserta', $id_observee_peserta)
                                                 ->where('trans_peserta_zonasi.id_pegawai_penilai', $id_observee_penilai)
                                                 ->where('id_zona_satker', $id_zonasi_satker)
                                                 ->where('to.NIPBaru', $nip_penilai)
-                                                ->select('trans_peserta_zonasi.*', 'tjp.jabatan', 'tp.nama_pegawai', 'tp.nip', 'to2.NamaJabatan', 'tp.foto_pegawai', 'tjp2.category_id as category_pertanyaan_peserta')
+                                                ->select('trans_peserta_zonasi.*', 'tjp.jabatan', 'tp.nama_pegawai', 'tp.nip', 'to2.NamaJabatan', 'tp.foto_pegawai', 'tjp2.category_id as category_pertanyaan_id', 'cp.category as category_pertanyaan_text')
                                                 ->orderBy('trans_peserta_zonasi.id_jabatan_plt', 'asc')
                                                 ->get();
 
@@ -378,7 +379,8 @@ use Vinkla\Hashids\Facades\Hashids;
                         $nip_peserta[$x]=$list_peserta['nip'];
                         $foto_pegawai[$x]=$list_peserta['foto_pegawai'];
                         $jabatan_peserta[$x]=$list_peserta['NamaJabatan'];
-                        $category_pertanyaan[$x] = $list_peserta['category_pertanyaan_peserta'];
+                        $category_pertanyaan_id[$x] = $list_peserta['category_pertanyaan_id'];
+                        $category_pertanyaan_text[$x] = $list_peserta['category_pertanyaan_text'];
                         $locked=$list_peserta['status'] === 0 ? true : false;
                         $keterangan.=is_null($list_peserta['jabatan']) ? "" : "Juga menilai sebagai: ".$list_peserta['jabatan']."\n";
                         if($list_peserta['is_self_assessment']){
@@ -390,7 +392,8 @@ use Vinkla\Hashids\Facades\Hashids;
                     $peserta['nip']=$nip_peserta[0];
                     $peserta['jabatan']=$jabatan_peserta[0];
                     $peserta['foto']=$foto_pegawai[0];
-                    $category_pertanyaan_peserta = $category_pertanyaan[0];
+                    $peserta['category'] = $category_pertanyaan_text[0];
+                    $category_pertanyaan_peserta = $category_pertanyaan_id[0];
 
                     //3. Check Apakah sudah ada dalam table penilaian
                     $get_nilai_exists=Trans_nilai_peserta_zonasi::whereIn('id_peserta_zonasi', $id_peserta_zonasi)->exists();
