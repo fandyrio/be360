@@ -74,7 +74,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
             $save=false;
             $msg="";
             $get_data=Tahun_penilaian::where('IdTahunPenilaian', $id_tahun_penilaian)
-                            ->where('proses_id', '<=', 4)
+                            ->where('proses_id', '<=', 5)
                             ->first();
             if(!is_null($get_data)){
                 //check zonasi yang masih pending penggunaan
