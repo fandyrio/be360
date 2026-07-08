@@ -226,11 +226,11 @@ use Vinkla\Hashids\Facades\Hashids;
             
         }
 
-        public function getPertanyaanPeriode($id_periode, $params = null){
+        public function getPertanyaanPeriode($id_periode, $id_category, $params = null){
             // $get_pertanyaan_periode=Cache::remember("pertanyaan_oer_periode_{$id_periode}", "3600", function () use($id_periode){
             //         return Trans_pertanyaan_periode::where('id_periode', $id_periode)->get(); 
             //     });
-            $get_pertanyaan_periode_static=Cache::store('redis')->remember("ref_pertanyaan_periode_{$id_periode}", 3600*24*365, function () use($id_periode){
+            $get_pertanyaan_periode_static=Cache::store('redis')->remember("ref_pertanyaan_periode_{$id_periode}", 3600*24*365, function () use($id_periode, $id_category){
                         return Trans_pertanyaan_periode::join("variable_pertanyaan as vp", 'vp.id', '=', 'trans_pertanyaan_periode.id_variable')
                                                 ->select('trans_pertanyaan_periode.pertanyaan', 
                                                 'trans_pertanyaan_periode.bundle_code_jawaban', 
@@ -241,6 +241,7 @@ use Vinkla\Hashids\Facades\Hashids;
                                                 'vp.kriteria', 'vp.id as id_variable')
                                                 ->where('id_periode', $id_periode)
                                                 ->where('trans_pertanyaan_periode.active', true)
+                                                ->where('trans_pertanyaan_periode.category', $id_category)
                                                 ->orderBy('trans_pertanyaan_periode.id', 'asc')
                                                 ->get();
                     });
@@ -357,11 +358,12 @@ use Vinkla\Hashids\Facades\Hashids;
                                                 ->join('trans_observee as to2', 'to2.IdObservee', '=', 'trans_peserta_zonasi.id_pegawai_peserta')
                                                 ->join('tref_pegawai as tp', 'tp.id_pegawai', '=', 'to2.IdPegawai')
                                                 ->leftJoin('tref_jabatan_peserta as tjp', 'tjp.id', '=', 'trans_peserta_zonasi.id_jabatan_plt')
+                                                ->leftJoin('tref_jabatan_peserta as tjp2', 'tjp2.id_kelompok_jabatan', '=', 'to2.id_kelompok_jabatan')
                                                 ->where('trans_peserta_zonasi.id_pegawai_peserta', $id_observee_peserta)
                                                 ->where('trans_peserta_zonasi.id_pegawai_penilai', $id_observee_penilai)
                                                 ->where('id_zona_satker', $id_zonasi_satker)
                                                 ->where('to.NIPBaru', $nip_penilai)
-                                                ->select('trans_peserta_zonasi.*', 'tjp.jabatan', 'tp.nama_pegawai', 'tp.nip', 'to2.NamaJabatan', 'tp.foto_pegawai')
+                                                ->select('trans_peserta_zonasi.*', 'tjp.jabatan', 'tp.nama_pegawai', 'tp.nip', 'to2.NamaJabatan', 'tp.foto_pegawai', 'tjp2.category_id as category_pertanyaan_peserta')
                                                 ->orderBy('trans_peserta_zonasi.id_jabatan_plt', 'asc')
                                                 ->get();
 
@@ -376,6 +378,7 @@ use Vinkla\Hashids\Facades\Hashids;
                         $nip_peserta[$x]=$list_peserta['nip'];
                         $foto_pegawai[$x]=$list_peserta['foto_pegawai'];
                         $jabatan_peserta[$x]=$list_peserta['NamaJabatan'];
+                        $category_pertanyaan[$x] = $list_peserta['category_pertanyaan_peserta'];
                         $locked=$list_peserta['status'] === 0 ? true : false;
                         $keterangan.=is_null($list_peserta['jabatan']) ? "" : "Juga menilai sebagai: ".$list_peserta['jabatan']."\n";
                         if($list_peserta['is_self_assessment']){
@@ -387,11 +390,12 @@ use Vinkla\Hashids\Facades\Hashids;
                     $peserta['nip']=$nip_peserta[0];
                     $peserta['jabatan']=$jabatan_peserta[0];
                     $peserta['foto']=$foto_pegawai[0];
+                    $category_pertanyaan_peserta = $category_pertanyaan[0];
 
                     //3. Check Apakah sudah ada dalam table penilaian
                     $get_nilai_exists=Trans_nilai_peserta_zonasi::whereIn('id_peserta_zonasi', $id_peserta_zonasi)->exists();
                     if(!$get_nilai_exists){
-                        $id_pertanyaan_periode=$this->getPertanyaanPeriode($id_periode);
+                        $id_pertanyaan_periode=$this->getPertanyaanPeriode($id_periode, $category_pertanyaan_peserta);
                         $data_insert=[];
                         for($i_peserta=0;$i_peserta<$jumlah_peserta;$i_peserta++){
                             for($y=0;$y<count($id_pertanyaan_periode);$y++){
@@ -436,7 +440,7 @@ use Vinkla\Hashids\Facades\Hashids;
                         $bundle_code_before=$bundle_jawaban['bundle_code'];
                     }
 
-                    $get_pertanyaan_periode_static=$this->getPertanyaanPeriode($id_periode, "getAll");
+                    $get_pertanyaan_periode_static=$this->getPertanyaanPeriode($id_periode, $category_pertanyaan_peserta,  "getAll");
                     $data_pertanyaan_statis=[];
                     $i_static=0;
                     $id_variable_before=null;
@@ -511,7 +515,7 @@ use Vinkla\Hashids\Facades\Hashids;
                                 if((int)$list_pertanyaan['locked'] === 1){
                                     $edit_nilai[$a]=0;
                                 }
-                                $jawaban_bundle_code=$this->getPertanyaanPeriode($id_periode, $list_pertanyaan['id_pertanyaan']);
+                                $jawaban_bundle_code=$this->getPertanyaanPeriode($id_periode, $category_pertanyaan_peserta, $list_pertanyaan['id_pertanyaan']);
                                 $nilai=$list_pertanyaan['nilai'] === 0 ? "Belum dinilai" : $this->getJawabanTextByBundlePoint($jawaban_bundle_code, $list_pertanyaan['nilai']);
                                 $id_nilai_peserta=Hashids::encode($list_pertanyaan['id_nilai_pertanyaan']);
                                 $id_pertanyaan=Hashids::encode($list_pertanyaan['id_pertanyaan']);

@@ -1642,7 +1642,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                 $status=true;
                 $x=0;
                 foreach($get_jabatan_kosong as $list_jabatan){
-                    $data[$x]['nama_satker']=$list_jabatan['NamaSatker']."(".$list_jabatan['KodeSatker'].")";
+                    $data[$x]['nama_satker']=$list_jabatan['NamaSatker']." (".$list_jabatan['KodeSatker'].")";
                     $data[$x]['jabatan']=$list_jabatan['jabatan']." (".$list_jabatan['bagian'].")";
                     $data[$x]['filled']=(int)$list_jabatan['status'] === 1 ? "Y" : "N";
                     $x++;
