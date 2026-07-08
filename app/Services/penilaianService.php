@@ -693,11 +693,11 @@ use Vinkla\Hashids\Facades\Hashids;
         }
 
 
-        private function generateNilaiPeserta($get_nilai, $id_periode){
+        private function generateNilaiPeserta($get_nilai, $category_pertanyaan_id, $id_periode){
             $nilai=$get_nilai->orderBy('id_peserta_zonasi', 'asc')->orderBy('id_pertanyaan', 'asc')->get();
             $id_peserta_zonasi_before=null;
 
-            $get_pertanyaan_periode=$this->getPertanyaanPeriode($id_periode, 'getAll');
+            $get_pertanyaan_periode=$this->getPertanyaanPeriode($id_periode, $category_pertanyaan_id, 'getAll');
             foreach($get_pertanyaan_periode as $list_pertanyaan){
                 $bobot["bobot_{$list_pertanyaan['id_pertanyaan_periode']}"]=$list_pertanyaan['bobot'];
             }
@@ -895,7 +895,15 @@ use Vinkla\Hashids\Facades\Hashids;
                                                             ->where('locked', false);    
                                     
                                     //generate nilai
-                                    $current_nilai_peserta=$this->generateNilaiPeserta(clone $get_nilai, $id_periode);                       
+                                    $id_pz_sample = $id_pz[0];
+                                    $get_data_pz = Trans_peserta_zonasi::join("trans_observee as to", 'to.IdObservee', 'trans_peserta_zonasi.id_pegawai_peserta')
+                                                        ->join("tref_jabatan_peserta as tjp", "tjp.id_kelompok_jabatan", "=", "to.id_kelompok_jabatan")
+                                                        ->select("tjp.category_id")
+                                                        ->where('trans_peserta_zonasiid', $id_pz_sample)->first();
+                                    $category_pertanyaan = $get_data_pz->category_id;
+
+
+                                    $current_nilai_peserta=$this->generateNilaiPeserta(clone $get_nilai, $category_pertanyaan, $id_periode);                       
                                     $affected_locked=(clone $get_nilai)->update(['locked'=>true, 'updated_at'=>date('Y-m-d H:i:s')]);
                                     if($affected_locked === count($id_nilai_peserta)){
                                         //update nilai peserta zonasi satker (a menilai b)
