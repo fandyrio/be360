@@ -230,7 +230,7 @@ use Vinkla\Hashids\Facades\Hashids;
             // $get_pertanyaan_periode=Cache::remember("pertanyaan_oer_periode_{$id_periode}", "3600", function () use($id_periode){
             //         return Trans_pertanyaan_periode::where('id_periode', $id_periode)->get(); 
             //     });
-            $get_pertanyaan_periode_static=Cache::store('redis')->remember("ref_pertanyaan_periode_{$id_periode}", 3600*24*365, function () use($id_periode, $id_category){
+            $get_pertanyaan_periode_static=Cache::store('redis')->remember("ref_pertanyaan_periode_{$id_periode}_{$id_category}", 3600*24*365, function () use($id_periode, $id_category){
                         return Trans_pertanyaan_periode::join("variable_pertanyaan as vp", 'vp.id', '=', 'trans_pertanyaan_periode.id_variable')
                                                 ->select('trans_pertanyaan_periode.pertanyaan', 
                                                 'trans_pertanyaan_periode.bundle_code_jawaban', 
