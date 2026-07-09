@@ -895,6 +895,7 @@ use Vinkla\Hashids\Facades\Hashids;
                                                     ->where("trans_pertanyaan_periode.active", true)
                                                     ->where("tjb.active", true)
                                                     ->groupBy("trans_pertanyaan_periode.bundle_code_jawaban")
+                                                    ->groupBy("trans_pertanyaan_periode.id")
                                                     ->get();
             foreach($get_data as $result){
                 if((int)$result['total'] === 1){

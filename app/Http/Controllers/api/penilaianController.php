@@ -444,18 +444,19 @@ class penilaianController extends Controller
 
 
     /**
-     * List Pertanyaan Penilaian
+     * Lock Jawaban
      *
      * Endpoint untuk mengambil daftar pertanyaan penilaian.
      *
      *@group Penilaian
      *
      *
-     *@header X-Signature signature dari get pertanyaan by category. Example: 61ae3ab38f049cf2675f96fd06a5d60407f0b4b215fec3a77c230cea309fa83b
+     *@header X-Signature signature dari get pertanyaan by category. Example: 3549483789c6ea4914fb842295a0ebead654fc3fa74196e5afd882e5bef27384
      *
      * @bodyParam payload string required  token penilaian. Example: data_variable_pertanyaan
      * @bodyParam token_penilaian string required token penilaian. Example: x4zjgkRa-KNaQQgNe-4XOOxkaX-q7zgPyRr-q9XMkzaG
      * @bodyParam params string required params. Example: 9XMOGwOzx4zjgkRamXx9rlGNx4zjgkRa
+     * @bodyParam jawaban_text string. Example: 
      * @response 200 {
      *  "status":true,
      *  "msg":"Jawaban berhasil disimpan "

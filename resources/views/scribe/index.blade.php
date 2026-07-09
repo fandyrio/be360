@@ -427,7 +427,7 @@
                                 <a href="#penilaian-POSTapi-list-pertanyaan">List Pertanyaan Penilaian</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="penilaian-POSTapi-lock-jawaban">
-                                <a href="#penilaian-POSTapi-lock-jawaban">List Pertanyaan Penilaian</a>
+                                <a href="#penilaian-POSTapi-lock-jawaban">Lock Jawaban</a>
                             </li>
                                                                         </ul>
                             </ul>
@@ -16321,7 +16321,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </div>
         </form>
 
-                    <h2 id="penilaian-POSTapi-lock-jawaban">List Pertanyaan Penilaian</h2>
+                    <h2 id="penilaian-POSTapi-lock-jawaban">Lock Jawaban</h2>
 
 <p>
 <small class="badge badge-darkred">requires authentication</small>
@@ -16337,13 +16337,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
     <pre><code class="language-bash">curl --request POST \
     "http://be_360.local/api/lock-jawaban" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
-    --header "X-Signature: signature dari get pertanyaan by category. Example: 61ae3ab38f049cf2675f96fd06a5d60407f0b4b215fec3a77c230cea309fa83b" \
+    --header "X-Signature: signature dari get pertanyaan by category. Example: 3549483789c6ea4914fb842295a0ebead654fc3fa74196e5afd882e5bef27384" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
     \"payload\": \"data_variable_pertanyaan\",
     \"token_penilaian\": \"x4zjgkRa-KNaQQgNe-4XOOxkaX-q7zgPyRr-q9XMkzaG\",
-    \"params\": \"9XMOGwOzx4zjgkRamXx9rlGNx4zjgkRa\"
+    \"params\": \"9XMOGwOzx4zjgkRamXx9rlGNx4zjgkRa\",
+    \"jawaban_text\": \"architecto\"
 }"
 </code></pre></div>
 
@@ -16355,7 +16356,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 const headers = {
     "Authorization": "Bearer {YOUR_AUTH_KEY}",
-    "X-Signature": "signature dari get pertanyaan by category. Example: 61ae3ab38f049cf2675f96fd06a5d60407f0b4b215fec3a77c230cea309fa83b",
+    "X-Signature": "signature dari get pertanyaan by category. Example: 3549483789c6ea4914fb842295a0ebead654fc3fa74196e5afd882e5bef27384",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -16363,7 +16364,8 @@ const headers = {
 let body = {
     "payload": "data_variable_pertanyaan",
     "token_penilaian": "x4zjgkRa-KNaQQgNe-4XOOxkaX-q7zgPyRr-q9XMkzaG",
-    "params": "9XMOGwOzx4zjgkRamXx9rlGNx4zjgkRa"
+    "params": "9XMOGwOzx4zjgkRamXx9rlGNx4zjgkRa",
+    "jawaban_text": "architecto"
 };
 
 fetch(url, {
@@ -16452,10 +16454,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="X-Signature"                data-endpoint="POSTapi-lock-jawaban"
-               value="signature dari get pertanyaan by category. Example: 61ae3ab38f049cf2675f96fd06a5d60407f0b4b215fec3a77c230cea309fa83b"
+               value="signature dari get pertanyaan by category. Example: 3549483789c6ea4914fb842295a0ebead654fc3fa74196e5afd882e5bef27384"
                data-component="header">
     <br>
-<p>Example: <code>signature dari get pertanyaan by category. Example: 61ae3ab38f049cf2675f96fd06a5d60407f0b4b215fec3a77c230cea309fa83b</code></p>
+<p>Example: <code>signature dari get pertanyaan by category. Example: 3549483789c6ea4914fb842295a0ebead654fc3fa74196e5afd882e5bef27384</code></p>
             </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
@@ -16517,6 +16519,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
                data-component="body">
     <br>
 <p>params. Example: <code>9XMOGwOzx4zjgkRamXx9rlGNx4zjgkRa</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>jawaban_text</code></b>&nbsp;&nbsp;
+<small>string.</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="jawaban_text"                data-endpoint="POSTapi-lock-jawaban"
+               value="architecto"
+               data-component="body">
+    <br>
+<p>Example: Example: <code>architecto</code></p>
         </div>
         </form>
 
