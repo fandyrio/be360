@@ -16249,7 +16249,83 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;status&quot;: true,
-    &quot;msg&quot;: &quot;msg&quot;
+    &quot;can_edit&quot;: true,
+    &quot;msg&quot;: &quot;&quot;,
+    &quot;params&quot;: &quot;0zP8GdAzx4zjgkRadNJYG18Xx4zjgkRa&quot;,
+    &quot;token_penilaian&quot;: &quot;x4zjgkRa-KNaQQgNe-4XOOxkaX-q7zgPyRr-q9XMkzaG&quot;,
+    &quot;signature&quot;: &quot;3549483789c6ea4914fb842295a0ebead654fc3fa74196e5afd882e5bef27384&quot;,
+    &quot;keterangan&quot;: &quot;&quot;,
+    &quot;data&quot;: [
+        {
+            &quot;variable&quot;: &quot;Integritas&quot;,
+            &quot;kriteria&quot;: &quot;1. Kepatuhan terhadap aturan (mentaati peraturan perundangan-undangan dan kebijakan internal organisasi)\n2. Kejujuran dalam Tindakan (menyampaikan laporan, data atau informasi secara jujur dan tidak manipulatif)\n3. Tanggungjawab moral dan etika (menolak gratifikasi, suap atau bentuk pelanggaran etik lainnya)\n4. Keteladanan sikap dan perilaku dinlingkungan kerja (dapat menjadi contoh berperilaku jujur, disiplin dan transparan)&quot;,
+            &quot;daftar_pertanyaan&quot;: [
+                {
+                    &quot;pertanyaan&quot;: &quot;Bagaimana tingkat integritas yang bersangkutan?mm&quot;,
+                    &quot;bobot&quot;: 100,
+                    &quot;token_penilaian&quot;: &quot;2NGYL2oRDZzw80RGBXeP7WZRq9XMkzaGvRvG7vBXq7zgPyRrAtaM0632NGYL2oRAtaM063BXeP7WZRAtaM063vRvG7vBX3d1t4Bl3q9XMkzaGpzh45H3dmzWLLlRl&quot;,
+                    &quot;signature&quot;: &quot;916b39089b9a290e09faa721327069832ab40226e300f8bea5c7076e7e42efa5&quot;,
+                    &quot;pilihan_jawaban&quot;: [
+                        {
+                            &quot;jawaban_text&quot;: &quot;Sangat Baik&quot;,
+                            &quot;id_jawaban_text&quot;: &quot;2MNB0R13-eBXeLRMg2NGYL2oR0zP8GdAzBXeP7WZRDZzw80RGvRvG7vBX4XOOxkaXidZzh45h3dmzWLLlRl&quot;
+                        },
+                        {
+                            &quot;jawaban_text&quot;: &quot;Baik&quot;,
+                            &quot;id_jawaban_text&quot;: &quot;LDNpZRkO-JLz0GND62NGYL2oR0zP8GdAzBXeP7WZRDZzw80RGvRvG7vBX4XOOxkaXidZzh45h3dmzWLLlRl&quot;
+                        },
+                        {
+                            &quot;jawaban_text&quot;: &quot;Cukup Baik&quot;,
+                            &quot;id_jawaban_text&quot;: &quot;BYXd3R07-24XOZREj2NGYL2oR0zP8GdAzBXeP7WZRDZzw80RGvRvG7vBX4XOOxkaXidZzh45h3dmzWLLlRl&quot;
+                        },
+                        {
+                            &quot;jawaban_text&quot;: &quot;Kurang Baik&quot;,
+                            &quot;id_jawaban_text&quot;: &quot;JoXDdX3p-ZmXxVzGe2NGYL2oR0zP8GdAzBXeP7WZRDZzw80RGvRvG7vBX4XOOxkaXidZzh45h3dmzWLLlRl&quot;
+                        },
+                        {
+                            &quot;jawaban_text&quot;: &quot;Tidak Baik&quot;,
+                            &quot;id_jawaban_text&quot;: &quot;24XOWZXE-q9XMkzaG2NGYL2oR0zP8GdAzBXeP7WZRDZzw80RGvRvG7vBX4XOOxkaXidZzh45h3dmzWLLlRl&quot;
+                        }
+                    ],
+                    &quot;is_text_input&quot;: false,
+                    &quot;nilai&quot;: {
+                        &quot;text&quot;: &quot;Sangat Baik&quot;,
+                        &quot;id&quot;: &quot;2MNB0R13-eBXeLRMg2NGYL2oR0zP8GdAzBXeP7WZRDZzw80RGvRvG7vBX4XOOxkaXidZzh45h3dmzWLLlRl&quot;
+                    }
+                }
+            ]
+        },
+        {
+            &quot;variable&quot;: &quot;Perekat bangsa&quot;,
+            &quot;kriteria&quot;: &quot;1.\t Menjunjung  tinggi konstitusi\n2. Kemampuan dalam mempromosikan sikap toleransi, keterbukaan;\n3. Peka terhadap perbedaan individu/kelompok masyarakat;\n4. Mengutamakan kepentingan bangsa/organisasi dibandingkan kepentingan pribadi/golongan\n5. Membangun hubungan sosial psikologis;\n6. Menjaga, mengembangkan, dan mewujudkan rasa persatuan dan kesatuan dalam kehidupan bermasyarakat, berbangsa dan bernegara Indonesia.&quot;,
+            &quot;daftar_pertanyaan&quot;: [
+                {
+                    &quot;pertanyaan&quot;: &quot;Deskripsikan orang yang anda nilai&quot;,
+                    &quot;bobot&quot;: 0,
+                    &quot;token_penilaian&quot;: &quot;2NGYL2oRy9znPjXnBXeP7WZR9bR6MzArvRvG7vBXq7zgPyRrAtaM0632NGYL2oRAtaM063BXeP7WZRAtaM063vRvG7vBX3d1t4Bl3q9XMkzaGpzh45H3dmzWLLlRl&quot;,
+                    &quot;signature&quot;: &quot;41414cc50c6e83e63f2ccc40b01edd2bf15f3bdce3b5b7dbb55b6b32baf93331&quot;,
+                    &quot;pilihan_jawaban&quot;: [
+                        {
+                            &quot;jawaban_text&quot;: &quot;Input Jawaban&quot;,
+                            &quot;id_jawaban_text&quot;: &quot;JLz0lGzD-boRY5RWA2NGYL2oRdNJYG18XBXeP7WZRy9znPjXnvRvG7vBX4XOOxkaXidZzh45h3dmzWLLlRl&quot;
+                        }
+                    ],
+                    &quot;is_text_input&quot;: true,
+                    &quot;nilai&quot;: {
+                        &quot;text&quot;: &quot;Belum dinilai&quot;,
+                        &quot;id&quot;: null
+                    }
+                }
+            ]
+        }
+    ],
+    &quot;peserta&quot;: {
+        &quot;nama&quot;: &quot;Mince Setiawaty Ginting&quot;,
+        &quot;nip&quot;: &quot;198206172006042004&quot;,
+        &quot;jabatan&quot;: &quot;Ketua Pengadilan&quot;,
+        &quot;foto&quot;: &quot;5623.jpg&quot;,
+        &quot;category&quot;: &quot;Pimpinan&quot;
+    }
 }</code>
  </pre>
     </span>
