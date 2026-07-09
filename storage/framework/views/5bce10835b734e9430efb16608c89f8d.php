@@ -449,7 +449,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: July 3, 2026</li>
+        <li>Last updated: July 9, 2026</li>
     </ul>
 </div>
 
@@ -16092,11 +16092,13 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"token_pertanyaan\": [
         \"token1\",
+        \"token2\",
         \"token2\"
     ],
     \"bobot\": [
         10,
-        20
+        20,
+        30
     ],
     \"category_id\": \"cat_001\",
     \"payload\": \"category_id\"
@@ -16119,11 +16121,13 @@ const headers = {
 let body = {
     "token_pertanyaan": [
         "token1",
+        "token2",
         "token2"
     ],
     "bobot": [
         10,
-        20
+        20,
+        30
     ],
     "category_id": "cat_001",
     "payload": "category_id"

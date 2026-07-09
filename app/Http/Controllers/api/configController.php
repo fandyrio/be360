@@ -1087,8 +1087,8 @@ class configController extends Controller
      *@authenticated
      *@header X-Signature signature dari get pertanyaan by category
      *
-     * @bodyParam token_pertanyaan string[] required Array token pertanyaan. Example: ["token1", "token2"]
-     * @bodyParam bobot int[] required Array bobot pertanyaan. Example: [10, 20]
+     * @bodyParam token_pertanyaan string[] required Array token pertanyaan. Example: ["token1", "token2", "token2"]
+     * @bodyParam bobot int[] required Array bobot pertanyaan. Example: [10, 20, 30]
      * @bodyParam category_id string required ID kategori yang dipilih. Example: cat_001
      * @bodyParam payload string  value = category_id. Example: category_id
      * @response 200 {

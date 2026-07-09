@@ -479,7 +479,8 @@ use Vinkla\Hashids\Facades\Hashids;
                                 // 'payload' => "data_variable_pertanyaan",
                                 'signature' => $signature,
                                 "nilai_{$list_static['id_pertanyaan_periode']}" => ${"nilai_{$list_static['id_pertanyaan_periode']}"},
-                                "pilihan_jawaban" => $jawaban[$list_static['bundle_code_jawaban']]
+                                "pilihan_jawaban" => $jawaban[$list_static['bundle_code_jawaban']],
+                                'is_text_input' => count($jawaban[$list_static['bundle_code_jawaban']]) > 1 ? false : true
                         ];
                         $id_variable_before=(int)$list_static['id_variable'];
                     }

@@ -209,6 +209,7 @@ endpoints:
         example:
           - token1
           - token2
+          - token2
         type: 'string[]'
         enumValues: []
         exampleWasSpecified: true
@@ -222,6 +223,7 @@ endpoints:
         example:
           - 10
           - 20
+          - 30
         type: 'integer[]'
         enumValues: []
         exampleWasSpecified: true
@@ -253,9 +255,11 @@ endpoints:
       token_pertanyaan:
         - token1
         - token2
+        - token2
       bobot:
         - 10
         - 20
+        - 30
       category_id: cat_001
       payload: category_id
     fileParameters: []
