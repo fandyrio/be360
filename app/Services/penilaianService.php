@@ -935,7 +935,7 @@ use Vinkla\Hashids\Facades\Hashids;
                                 if($jumlah_pertanyaan_input > 0){
                                     //untuk saat ini id_pertanyaan_periode dianggap 1
                                     (clone $get_nilai)->where('id_pertanyaan', $id_pertanyaan_periode[0])
-                                                        ->update(['nilai_text', $text]);
+                                                        ->update(['nilai_text' => $text]);
                                 }
                                 
                                 $check_nilai = (clone $get_nilai)->where("nilai", 0)->whereRaw('nilai_text is null')->exists();
