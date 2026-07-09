@@ -936,7 +936,7 @@ use Vinkla\Hashids\Facades\Hashids;
                                                         $data_audit=[
                                                             'id_peserta_zonasi'=>$id_zonasi_satker,
                                                             'id_pegawai_penilai'=>$get_data_pz->id_pegawai_penilai,
-                                                            'id_pegawai_peserta'=>$get_data_pz->id_pegawai_peserta,
+                                                            'id_pegawai_dinilai'=>$get_data_pz->id_pegawai_peserta,
                                                             'jumlah_penilai'=>$jumlah_penilai[$z],
                                                             'bobot_jabatan_penilai'=>$bobot_penilaian[$z],
                                                             'nilai_akhir'=>round($total_nilai_terakhir, 2),
