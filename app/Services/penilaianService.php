@@ -904,7 +904,7 @@ use Vinkla\Hashids\Facades\Hashids;
                                     $id_pz_sample = $id_pz[0];
                                     $get_data_pz = Trans_peserta_zonasi::join("trans_observee as to", 'to.IdObservee', 'trans_peserta_zonasi.id_pegawai_peserta')
                                                         ->join("tref_jabatan_peserta as tjp", "tjp.id_kelompok_jabatan", "=", "to.id_kelompok_jabatan")
-                                                        ->select("tjp.category_id")
+                                                        ->select("tjp.category_id", "trans_peserta_zonasi.id_pegawai_penilai", "trans_peserta_zonasi.id_pegawai_peserta")
                                                         ->where('trans_peserta_zonasi.id', $id_pz_sample)->first();
                                     $category_pertanyaan = $get_data_pz->category_id;
 
