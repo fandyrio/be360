@@ -136,6 +136,24 @@ class penilaianController extends Controller
         return response()->json(['status'=>$status, 'msg'=>$msg, 'total'=>$total, 'selesai'=>$selesai, 'token_r'=>$endpoint_penilain, 'data'=>$data]);
     }
 
+    /**
+     * List Pertanyaan Penilaian
+     *
+     * Endpoint untuk mengambil daftar pertanyaan penilaian.
+     *
+     *@group Penilaian
+     *
+     *
+     *@header X-Signature signature dari get pertanyaan by category. Example: 61ae3ab38f049cf2675f96fd06a5d60407f0b4b215fec3a77c230cea309fa83b
+     *
+     * @bodyParam payload string required  token penilaian. Example: token_penilaian
+     * @bodyParam token_penilaian string required token penilaian. Example: xrwPnrm1K3p0atAMObEmzWLLlRl
+     * @bodyParam params string required params. Example: eyJpdiI6IlJMUGR2MkZCUHBTL1FiMzFCSitzS3c9PSIsInZhbHVlIjoiUEtiRnY5WGhQUXFrM3FHTWJrcVZOYjRFVWZ1bnN2MlZwWWZodjl5aW5ERFNlSEV1R091M2Z1OVdoeXFLL3FoNCIsIm1hYyI6Ijc2YzhkZTdkYTlkY2E3NTA0MDA3ZGE5ZTE4NDU2NzA1ZDc1OGQ3ZWE2YTQwYzY5N2EwNjE0YzMzMGJlMGRkY2UiLCJ0YWciOiIifQ
+     * @response 200 {
+     *   "status":true, 
+     *   "msg":"msg"
+     * }
+     */
     public function listPertanyaanPenilaian(Request $request){
         $status=false;
         $keterangan="";
