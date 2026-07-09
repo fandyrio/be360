@@ -799,6 +799,8 @@ use Vinkla\Hashids\Facades\Hashids;
         public function generateNilaiObservee($id_zonasi_satker, $id_peserta_zonasi_arr, $id_periode, $current_nilai_peserta){
             $nilai_akhir=0;
             $id_observee_peserta = null;
+            $jumlah_penilai_arr=[];
+            $bobot_penilaian_arr=[];
             $status = false;
             $jabatan_peserta=Trans_peserta_zonasi::join('trans_observee as to', 'to.IdObservee', '=', 'trans_peserta_zonasi.id_pegawai_peserta')
                                             ->join('tref_jabatan_peserta as tjp', 'tjp.id_kelompok_jabatan', '=', 'to.id_kelompok_jabatan')
@@ -857,6 +859,8 @@ use Vinkla\Hashids\Facades\Hashids;
                     }
                     $nilai_akhir+=(($current_nilai_peserta*$bobot_penilaian) / 100 ) / $jumlah_penilai;
                     $id_observee_peserta=$list_jabatan['id_pegawai_peserta'];
+                    $jumlah_penilai_arr[]=$jumlah_penilai;
+                    $bobot_penilaian_arr[]=$bobot_penilaian;
                     $status = true;
                 }
             }
@@ -864,7 +868,9 @@ use Vinkla\Hashids\Facades\Hashids;
             return [
                 'status'=>$status,
                 'nilai_akhir'=>$nilai_akhir,
-                'id_observee_peserta'=>$id_observee_peserta
+                'id_observee_peserta'=>$id_observee_peserta,
+                'jumlah_penilai'=>$jumlah_penilai_arr,
+                'bobot_penilaian'=>$bobot_penilaian_arr
             ];
         }
 
@@ -902,12 +908,13 @@ use Vinkla\Hashids\Facades\Hashids;
                                                         ->where('trans_peserta_zonasi.id', $id_pz_sample)->first();
                                     $category_pertanyaan = $get_data_pz->category_id;
 
-
+                                    //nilai dari bobot pertnayaan
                                     $current_nilai_peserta=$this->generateNilaiPeserta(clone $get_nilai, $category_pertanyaan, $id_periode);                       
                                     $affected_locked=(clone $get_nilai)->update(['locked'=>true, 'updated_at'=>date('Y-m-d H:i:s')]);
                                     if($affected_locked === count($id_nilai_peserta)){
                                         //update nilai peserta zonasi satker (a menilai b)
                                         $update_nilai_peserta=(clone $peserta_db)->update(['nilai'=>$current_nilai_peserta]);
+
                                         if($update_nilai_peserta === count($id_pz)){
                                             $nilai_observee=$this->generateNilaiObservee($id_zonasi_satker, $id_pz, $id_periode, $current_nilai_peserta);
                                             if($nilai_observee['status'] === true){
@@ -915,12 +922,28 @@ use Vinkla\Hashids\Facades\Hashids;
                                                 $get_observee=Trans_observee::where('IdObservee', $nilai_observee['id_observee_peserta'])
                                                                             ->lockForUpdate()    
                                                                             ->first();
-                                                
+
                                                 $total_nilai_terakhir=$get_observee['total_nilai'];
                                                 $total_nilai_terakhir+=($nilai_observee['nilai_akhir']*20);
                                                 $get_observee->total_nilai=round($total_nilai_terakhir, 2);
                                                 $affected_observee = $get_observee->update();
                                                 if($affected_observee === true){
+                                                    $bobot_penilaian = $nilai_observee['bobot_penilaian'];
+                                                    $jumlah_penilai = $nilai_observee['jumlah_penilai'];
+                                                    //Nama Penilai menilai Nama Peserta dengan nilai $current_nilai_peserta. Total nilai menjadi: $nilai_observee, dengan jumlah penilai: $jumlah_penilai dan bobot: $bobot_penilaian. Sehingga total nilai akhir (x20) menjadi: $total_nilai_akhir
+                                                    $jumlah_bobot = count($bobot_penilaian);
+                                                    for($z=0;$z<$jumlah_bobot;$z++){
+                                                        $data_audit=[
+                                                            'id_peserta_zonasi'=>$id_zonasi_satker,
+                                                            'id_pegawai_penilai'=>$get_data_pz->id_pegawai_penilai,
+                                                            'id_pegawai_peserta'=>$get_data_pz->id_pegawai_peserta,
+                                                            'jumlah_penilai'=>$jumlah_penilai[$z],
+                                                            'bobot_jabatan_penilai'=>$bobot_penilaian[$z],
+                                                            'nilai_akhir'=>round($total_nilai_terakhir, 2),
+                                                            'nilai'=>$current_nilai_peserta
+                                                        ];
+                                                    }
+                                                    DB::table('penilaian_audittrail')->insert($data_audit);
                                                     DB::commit();
                                                     $status=true;
                                                     $msg="Jawaban berhasil disimpan ";
@@ -962,6 +985,10 @@ use Vinkla\Hashids\Facades\Hashids;
                 'status'=>$status,
                 'msg'=>$msg
             ];
+        }
+
+        public function saveAudittrai1(){
+
         }
 
     }
