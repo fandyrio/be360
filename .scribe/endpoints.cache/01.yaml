@@ -4339,41 +4339,6 @@ endpoints:
   -
     custom: []
     httpMethods:
-      - POST
-    uri: api/lock-jawaban
-    metadata:
-      custom: []
-      groupName: Endpoints
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: ''
-      description: ''
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {YOUR_AUTH_KEY}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses: []
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer {YOUR_TOKEN}'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
       - GET
     uri: 'api/report-penilaian-personal/{key}'
     metadata:

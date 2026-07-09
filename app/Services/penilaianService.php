@@ -1,6 +1,7 @@
 <?php
     namespace App\Services;
 
+use App\Models\Pertanyaan_category;
 use App\Models\Satker;
 use App\Models\Trans_bobot_penilaian_periode;
 use App\Models\Trans_nilai_peserta_zonasi;
@@ -12,6 +13,7 @@ use App\Models\Tref_jawaban_bundle;
 use App\Models\Tref_zonasi;
 use App\Models\Zonasi_satker;
 use DateTime;
+use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Crypt;
     use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Support\Facades\Cache;
@@ -876,7 +878,35 @@ use Vinkla\Hashids\Facades\Hashids;
         }
 
 
-        public function lockJawaban($periode_id, $id_zonasi_satker, $id_pz, $id_nilai_peserta){
+        public function checkAdaInputanText($id_periode, $id_pz){
+            $ada_inputan = false;
+            $id_pertanyaan_periode = [];
+            $get_data_category = Trans_peserta_zonasi::join("trans_observee as to", "to.IdObservee", "=", "trans_peserta_zonasi.id_pegawai_peserta")
+                                                ->join("tref_jabatan_peserta as tjp", "tjp.id_kelompok_jabatan", "=", "to.id_kelompok_jabatan")
+                                                ->select("tjp.category_id")
+                                                ->where("trans_peserta_zonasi.id", $id_pz)
+                                                ->first();
+            $category_id = $get_data_category->category_id;
+            $get_data =  Trans_pertanyaan_periode::join("tref_pertanyaan as tp", "tp.id", "=", "trans_pertanyaan_periode.id_pertanyaan")
+                                                    ->join("tref_jawaban_bundle as tjb", "tjb.bundle_code", "=", "trans_pertanyaan_periode.bundle_code_jawaban")
+                                                    ->select("trans_pertanyaan_periode.id as id_pertanyaan_periode", "trans_pertanyaan_periode.bundle_code_jawaban", DB::raw("COUNT(trans_pertanyaan_periode.bundle_code_jawaban) as total"))
+                                                    ->where("trans_pertanyaan_periode.id_periode", $id_periode)
+                                                    ->where("trans_pertanyaan_periode.category", $category_id)
+                                                    ->where("trans_pertanyaan_periode.active", true)
+                                                    ->where("tjb.active", true)
+                                                    ->groupBy("trans_pertanyaan_periode.bundle_code_jawaban")
+                                                    ->get();
+            foreach($get_data as $result){
+                if((int)$result['total'] === 1){
+                    $id_pertanyaan_periode[]=$result['id_pertanyaan_periode'];
+                }
+            }
+
+            return $id_pertanyaan_periode;
+        }
+
+
+        public function lockJawaban($periode_id, $id_zonasi_satker, $id_pz, $id_nilai_peserta, $id_pertanyaan_periode, $text){
             $status=false;
             $get_zonasi_satker=$this->getZonasi($id_zonasi_satker);
             if(!is_null($get_zonasi_satker)){
@@ -895,11 +925,24 @@ use Vinkla\Hashids\Facades\Hashids;
                         if($jumlah_peserta_db === $jumlah_peserta_zonasi){
                             try{
                                 DB::beginTransaction();
-                                $blm_jawab=false;
-                                if($blm_jawab === false){
-                                    $get_nilai=Trans_nilai_peserta_zonasi::whereIn('id', $id_nilai_peserta)
+
+                                $lengkap_jawab=false;
+                                $get_nilai=Trans_nilai_peserta_zonasi::whereIn('id', $id_nilai_peserta)
                                                             ->whereIn('id_peserta_zonasi', $id_pz)
-                                                            ->where('locked', false);    
+                                                            ->where('locked', false);
+                                $jumlah_pertanyaan_input = count($id_pertanyaan_periode);
+                                if($jumlah_pertanyaan_input > 0){
+                                    //untuk saat ini id_pertanyaan_periode dianggap 1
+                                    (clone $get_nilai)->where('id_pertanyaan', $id_pertanyaan_periode[0])
+                                                        ->update(['nilai_text', $text]);
+                                }
+                                
+                                $check_nilai = (clone $get_nilai)->where("nilai", 0)->whereRaw('nilai_text is null')->exists();
+                                if(!$check_nilai){
+                                    $lengkap_jawab = true;
+                                }
+
+                                if($lengkap_jawab === true){    
                                     
                                     //generate nilai
                                     $id_pz_sample = $id_pz[0];

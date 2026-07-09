@@ -363,9 +363,6 @@
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-POSTapi-save-jawaban">
                                 <a href="#endpoints-POSTapi-save-jawaban">POST api/save-jawaban</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-lock-jawaban">
-                                <a href="#endpoints-POSTapi-lock-jawaban">POST api/lock-jawaban</a>
-                            </li>
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-GETapi-report-penilaian-personal--key-">
                                 <a href="#endpoints-GETapi-report-penilaian-personal--key-">GET api/report-penilaian-personal/{key}</a>
                             </li>
@@ -429,6 +426,9 @@
                                                     <li class="tocify-item level-2" data-unique="penilaian-POSTapi-list-pertanyaan">
                                 <a href="#penilaian-POSTapi-list-pertanyaan">List Pertanyaan Penilaian</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="penilaian-POSTapi-lock-jawaban">
+                                <a href="#penilaian-POSTapi-lock-jawaban">List Pertanyaan Penilaian</a>
+                            </li>
                                                                         </ul>
                             </ul>
                     <ul id="tocify-header-periode" class="tocify-header">
@@ -456,7 +456,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: July 9, 2026</li>
+        <li>Last updated: July 10, 2026</li>
     </ul>
 </div>
 
@@ -13921,132 +13921,6 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                         </form>
 
-                    <h2 id="endpoints-POSTapi-lock-jawaban">POST api/lock-jawaban</h2>
-
-<p>
-<small class="badge badge-darkred">requires authentication</small>
-</p>
-
-
-
-<span id="example-requests-POSTapi-lock-jawaban">
-<blockquote>Example request:</blockquote>
-
-
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/lock-jawaban" \
-    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
-    --header "Content-Type: application/json" \
-    --header "Accept: application/json"</code></pre></div>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/lock-jawaban"
-);
-
-const headers = {
-    "Authorization": "Bearer {YOUR_AUTH_KEY}",
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-};
-
-
-fetch(url, {
-    method: "POST",
-    headers,
-}).then(response =&gt; response.json());</code></pre></div>
-
-</span>
-
-<span id="example-responses-POSTapi-lock-jawaban">
-</span>
-<span id="execution-results-POSTapi-lock-jawaban" hidden>
-    <blockquote>Received response<span
-                id="execution-response-status-POSTapi-lock-jawaban"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-POSTapi-lock-jawaban"
-      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
-</span>
-<span id="execution-error-POSTapi-lock-jawaban" hidden>
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-POSTapi-lock-jawaban">
-
-Tip: Check that you&#039;re properly connected to the network.
-If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
-You can check the Dev Tools console for debugging information.</code></pre>
-</span>
-<form id="form-POSTapi-lock-jawaban" data-method="POST"
-      data-path="api/lock-jawaban"
-      data-authed="1"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('POSTapi-lock-jawaban', this);">
-    <h3>
-        Request&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-POSTapi-lock-jawaban"
-                    onclick="tryItOut('POSTapi-lock-jawaban');">Try it out ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-POSTapi-lock-jawaban"
-                    onclick="cancelTryOut('POSTapi-lock-jawaban');" hidden>Cancel 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-POSTapi-lock-jawaban"
-                    data-initial-text="Send Request 💥"
-                    data-loading-text="⏱ Sending..."
-                    hidden>Send Request 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-black">POST</small>
-            <b><code>api/lock-jawaban</code></b>
-        </p>
-                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-lock-jawaban"
-               value="Bearer {YOUR_AUTH_KEY}"
-               data-component="header">
-    <br>
-<p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="POSTapi-lock-jawaban"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="POSTapi-lock-jawaban"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                        </form>
-
                     <h2 id="endpoints-GETapi-report-penilaian-personal--key-">GET api/report-penilaian-personal/{key}</h2>
 
 <p>
@@ -16251,63 +16125,47 @@ fetch(url, {
     &quot;status&quot;: true,
     &quot;can_edit&quot;: true,
     &quot;msg&quot;: &quot;&quot;,
-    &quot;params&quot;: &quot;0zP8GdAzx4zjgkRadNJYG18Xx4zjgkRa&quot;,
-    &quot;token_penilaian&quot;: &quot;x4zjgkRa-KNaQQgNe-4XOOxkaX-q7zgPyRr-q9XMkzaG&quot;,
-    &quot;signature&quot;: &quot;3549483789c6ea4914fb842295a0ebead654fc3fa74196e5afd882e5bef27384&quot;,
+    &quot;params&quot;: &quot;&quot;,
+    &quot;token_penilaian&quot;: &quot;&quot;,
+    &quot;signature&quot;: &quot;&quot;,
     &quot;keterangan&quot;: &quot;&quot;,
     &quot;data&quot;: [
         {
             &quot;variable&quot;: &quot;Integritas&quot;,
-            &quot;kriteria&quot;: &quot;1. Kepatuhan terhadap aturan (mentaati peraturan perundangan-undangan dan kebijakan internal organisasi)\n2. Kejujuran dalam Tindakan (menyampaikan laporan, data atau informasi secara jujur dan tidak manipulatif)\n3. Tanggungjawab moral dan etika (menolak gratifikasi, suap atau bentuk pelanggaran etik lainnya)\n4. Keteladanan sikap dan perilaku dinlingkungan kerja (dapat menjadi contoh berperilaku jujur, disiplin dan transparan)&quot;,
+            &quot;kriteria&quot;: &quot;1. &quot;,
             &quot;daftar_pertanyaan&quot;: [
                 {
                     &quot;pertanyaan&quot;: &quot;Bagaimana tingkat integritas yang bersangkutan?mm&quot;,
                     &quot;bobot&quot;: 100,
-                    &quot;token_penilaian&quot;: &quot;2NGYL2oRDZzw80RGBXeP7WZRq9XMkzaGvRvG7vBXq7zgPyRrAtaM0632NGYL2oRAtaM063BXeP7WZRAtaM063vRvG7vBX3d1t4Bl3q9XMkzaGpzh45H3dmzWLLlRl&quot;,
-                    &quot;signature&quot;: &quot;916b39089b9a290e09faa721327069832ab40226e300f8bea5c7076e7e42efa5&quot;,
+                    &quot;token_penilaian&quot;: &quot;&quot;,
+                    &quot;signature&quot;: &quot;&quot;,
                     &quot;pilihan_jawaban&quot;: [
                         {
                             &quot;jawaban_text&quot;: &quot;Sangat Baik&quot;,
-                            &quot;id_jawaban_text&quot;: &quot;2MNB0R13-eBXeLRMg2NGYL2oR0zP8GdAzBXeP7WZRDZzw80RGvRvG7vBX4XOOxkaXidZzh45h3dmzWLLlRl&quot;
-                        },
-                        {
-                            &quot;jawaban_text&quot;: &quot;Baik&quot;,
-                            &quot;id_jawaban_text&quot;: &quot;LDNpZRkO-JLz0GND62NGYL2oR0zP8GdAzBXeP7WZRDZzw80RGvRvG7vBX4XOOxkaXidZzh45h3dmzWLLlRl&quot;
-                        },
-                        {
-                            &quot;jawaban_text&quot;: &quot;Cukup Baik&quot;,
-                            &quot;id_jawaban_text&quot;: &quot;BYXd3R07-24XOZREj2NGYL2oR0zP8GdAzBXeP7WZRDZzw80RGvRvG7vBX4XOOxkaXidZzh45h3dmzWLLlRl&quot;
-                        },
-                        {
-                            &quot;jawaban_text&quot;: &quot;Kurang Baik&quot;,
-                            &quot;id_jawaban_text&quot;: &quot;JoXDdX3p-ZmXxVzGe2NGYL2oR0zP8GdAzBXeP7WZRDZzw80RGvRvG7vBX4XOOxkaXidZzh45h3dmzWLLlRl&quot;
-                        },
-                        {
-                            &quot;jawaban_text&quot;: &quot;Tidak Baik&quot;,
-                            &quot;id_jawaban_text&quot;: &quot;24XOWZXE-q9XMkzaG2NGYL2oR0zP8GdAzBXeP7WZRDZzw80RGvRvG7vBX4XOOxkaXidZzh45h3dmzWLLlRl&quot;
+                            &quot;id_jawaban_text&quot;: &quot;&quot;
                         }
                     ],
                     &quot;is_text_input&quot;: false,
                     &quot;nilai&quot;: {
                         &quot;text&quot;: &quot;Sangat Baik&quot;,
-                        &quot;id&quot;: &quot;2MNB0R13-eBXeLRMg2NGYL2oR0zP8GdAzBXeP7WZRDZzw80RGvRvG7vBX4XOOxkaXidZzh45h3dmzWLLlRl&quot;
+                        &quot;id&quot;: &quot;&quot;
                     }
                 }
             ]
         },
         {
             &quot;variable&quot;: &quot;Perekat bangsa&quot;,
-            &quot;kriteria&quot;: &quot;1.\t Menjunjung  tinggi konstitusi\n2. Kemampuan dalam mempromosikan sikap toleransi, keterbukaan;\n3. Peka terhadap perbedaan individu/kelompok masyarakat;\n4. Mengutamakan kepentingan bangsa/organisasi dibandingkan kepentingan pribadi/golongan\n5. Membangun hubungan sosial psikologis;\n6. Menjaga, mengembangkan, dan mewujudkan rasa persatuan dan kesatuan dalam kehidupan bermasyarakat, berbangsa dan bernegara Indonesia.&quot;,
+            &quot;kriteria&quot;: &quot;&quot;,
             &quot;daftar_pertanyaan&quot;: [
                 {
                     &quot;pertanyaan&quot;: &quot;Deskripsikan orang yang anda nilai&quot;,
                     &quot;bobot&quot;: 0,
-                    &quot;token_penilaian&quot;: &quot;2NGYL2oRy9znPjXnBXeP7WZR9bR6MzArvRvG7vBXq7zgPyRrAtaM0632NGYL2oRAtaM063BXeP7WZRAtaM063vRvG7vBX3d1t4Bl3q9XMkzaGpzh45H3dmzWLLlRl&quot;,
-                    &quot;signature&quot;: &quot;41414cc50c6e83e63f2ccc40b01edd2bf15f3bdce3b5b7dbb55b6b32baf93331&quot;,
+                    &quot;token_penilaian&quot;: &quot;&quot;,
+                    &quot;signature&quot;: &quot;&quot;,
                     &quot;pilihan_jawaban&quot;: [
                         {
                             &quot;jawaban_text&quot;: &quot;Input Jawaban&quot;,
-                            &quot;id_jawaban_text&quot;: &quot;JLz0lGzD-boRY5RWA2NGYL2oRdNJYG18XBXeP7WZRy9znPjXnvRvG7vBX4XOOxkaXidZzh45h3dmzWLLlRl&quot;
+                            &quot;id_jawaban_text&quot;: &quot;&quot;
                         }
                     ],
                     &quot;is_text_input&quot;: true,
@@ -16320,11 +16178,11 @@ fetch(url, {
         }
     ],
     &quot;peserta&quot;: {
-        &quot;nama&quot;: &quot;Mince Setiawaty Ginting&quot;,
-        &quot;nip&quot;: &quot;198206172006042004&quot;,
-        &quot;jabatan&quot;: &quot;Ketua Pengadilan&quot;,
-        &quot;foto&quot;: &quot;5623.jpg&quot;,
-        &quot;category&quot;: &quot;Pimpinan&quot;
+        &quot;nama&quot;: &quot;&quot;,
+        &quot;nip&quot;: &quot;&quot;,
+        &quot;jabatan&quot;: &quot;&quot;,
+        &quot;foto&quot;: &quot;&quot;,
+        &quot;category&quot;: &quot;&quot;
     }
 }</code>
  </pre>
@@ -16460,6 +16318,205 @@ You can check the Dev Tools console for debugging information.</code></pre>
                data-component="body">
     <br>
 <p>params. Example: <code>eyJpdiI6IlJMUGR2MkZCUHBTL1FiMzFCSitzS3c9PSIsInZhbHVlIjoiUEtiRnY5WGhQUXFrM3FHTWJrcVZOYjRFVWZ1bnN2MlZwWWZodjl5aW5ERFNlSEV1R091M2Z1OVdoeXFLL3FoNCIsIm1hYyI6Ijc2YzhkZTdkYTlkY2E3NTA0MDA3ZGE5ZTE4NDU2NzA1ZDc1OGQ3ZWE2YTQwYzY5N2EwNjE0YzMzMGJlMGRkY2UiLCJ0YWciOiIifQ</code></p>
+        </div>
+        </form>
+
+                    <h2 id="penilaian-POSTapi-lock-jawaban">List Pertanyaan Penilaian</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Endpoint untuk mengambil daftar pertanyaan penilaian.</p>
+
+<span id="example-requests-POSTapi-lock-jawaban">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://be_360.local/api/lock-jawaban" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
+    --header "X-Signature: signature dari get pertanyaan by category. Example: 61ae3ab38f049cf2675f96fd06a5d60407f0b4b215fec3a77c230cea309fa83b" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"payload\": \"data_variable_pertanyaan\",
+    \"token_penilaian\": \"x4zjgkRa-KNaQQgNe-4XOOxkaX-q7zgPyRr-q9XMkzaG\",
+    \"params\": \"9XMOGwOzx4zjgkRamXx9rlGNx4zjgkRa\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://be_360.local/api/lock-jawaban"
+);
+
+const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
+    "X-Signature": "signature dari get pertanyaan by category. Example: 61ae3ab38f049cf2675f96fd06a5d60407f0b4b215fec3a77c230cea309fa83b",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "payload": "data_variable_pertanyaan",
+    "token_penilaian": "x4zjgkRa-KNaQQgNe-4XOOxkaX-q7zgPyRr-q9XMkzaG",
+    "params": "9XMOGwOzx4zjgkRamXx9rlGNx4zjgkRa"
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-lock-jawaban">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;status&quot;: true,
+    &quot;msg&quot;: &quot;Jawaban berhasil disimpan &quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-lock-jawaban" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-lock-jawaban"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-lock-jawaban"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-lock-jawaban" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-lock-jawaban">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-lock-jawaban" data-method="POST"
+      data-path="api/lock-jawaban"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-lock-jawaban', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-lock-jawaban"
+                    onclick="tryItOut('POSTapi-lock-jawaban');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-lock-jawaban"
+                    onclick="cancelTryOut('POSTapi-lock-jawaban');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-lock-jawaban"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/lock-jawaban</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-lock-jawaban"
+               value="Bearer {YOUR_AUTH_KEY}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>X-Signature</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="X-Signature"                data-endpoint="POSTapi-lock-jawaban"
+               value="signature dari get pertanyaan by category. Example: 61ae3ab38f049cf2675f96fd06a5d60407f0b4b215fec3a77c230cea309fa83b"
+               data-component="header">
+    <br>
+<p>Example: <code>signature dari get pertanyaan by category. Example: 61ae3ab38f049cf2675f96fd06a5d60407f0b4b215fec3a77c230cea309fa83b</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-lock-jawaban"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-lock-jawaban"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>payload</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="payload"                data-endpoint="POSTapi-lock-jawaban"
+               value="data_variable_pertanyaan"
+               data-component="body">
+    <br>
+<p>token penilaian. Example: <code>data_variable_pertanyaan</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>token_penilaian</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="token_penilaian"                data-endpoint="POSTapi-lock-jawaban"
+               value="x4zjgkRa-KNaQQgNe-4XOOxkaX-q7zgPyRr-q9XMkzaG"
+               data-component="body">
+    <br>
+<p>token penilaian. Example: <code>x4zjgkRa-KNaQQgNe-4XOOxkaX-q7zgPyRr-q9XMkzaG</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>params</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="params"                data-endpoint="POSTapi-lock-jawaban"
+               value="9XMOGwOzx4zjgkRamXx9rlGNx4zjgkRa"
+               data-component="body">
+    <br>
+<p>params. Example: <code>9XMOGwOzx4zjgkRamXx9rlGNx4zjgkRa</code></p>
         </div>
         </form>
 

@@ -157,63 +157,47 @@ class penilaianController extends Controller
      *   "status": true,
         *"can_edit": true,
         *"msg": "",
-        *"params": "0zP8GdAzx4zjgkRadNJYG18Xx4zjgkRa",
-        *"token_penilaian": "x4zjgkRa-KNaQQgNe-4XOOxkaX-q7zgPyRr-q9XMkzaG",
-        *"signature": "3549483789c6ea4914fb842295a0ebead654fc3fa74196e5afd882e5bef27384",
+        *"params": "",
+        *"token_penilaian": "",
+        *"signature": "",
         *"keterangan": "",
         *"data": [
             *{
                 *"variable": "Integritas",
-                *"kriteria": "1. Kepatuhan terhadap aturan (mentaati peraturan perundangan-undangan dan kebijakan internal organisasi)\n2. Kejujuran dalam Tindakan (menyampaikan laporan, data atau informasi secara jujur dan tidak manipulatif)\n3. Tanggungjawab moral dan etika (menolak gratifikasi, suap atau bentuk pelanggaran etik lainnya)\n4. Keteladanan sikap dan perilaku dinlingkungan kerja (dapat menjadi contoh berperilaku jujur, disiplin dan transparan)",
+                *"kriteria": "1. ",
                 *"daftar_pertanyaan": [
                     *{
                         *"pertanyaan": "Bagaimana tingkat integritas yang bersangkutan?mm",
                         *"bobot": 100,
-                        *"token_penilaian": "2NGYL2oRDZzw80RGBXeP7WZRq9XMkzaGvRvG7vBXq7zgPyRrAtaM0632NGYL2oRAtaM063BXeP7WZRAtaM063vRvG7vBX3d1t4Bl3q9XMkzaGpzh45H3dmzWLLlRl",
-                        *"signature": "916b39089b9a290e09faa721327069832ab40226e300f8bea5c7076e7e42efa5",
+                        *"token_penilaian": "",
+                        *"signature": "",
                         *"pilihan_jawaban": [
                             *{
                                 *"jawaban_text": "Sangat Baik",
-                                *"id_jawaban_text": "2MNB0R13-eBXeLRMg2NGYL2oR0zP8GdAzBXeP7WZRDZzw80RGvRvG7vBX4XOOxkaXidZzh45h3dmzWLLlRl"
-                            *},
-                            *{
-                                *"jawaban_text": "Baik",
-                                *"id_jawaban_text": "LDNpZRkO-JLz0GND62NGYL2oR0zP8GdAzBXeP7WZRDZzw80RGvRvG7vBX4XOOxkaXidZzh45h3dmzWLLlRl"
-                            *},
-                            *{
-                                *"jawaban_text": "Cukup Baik",
-                                *"id_jawaban_text": "BYXd3R07-24XOZREj2NGYL2oR0zP8GdAzBXeP7WZRDZzw80RGvRvG7vBX4XOOxkaXidZzh45h3dmzWLLlRl"
-                            *},
-                            *{
-                                *"jawaban_text": "Kurang Baik",
-                                *"id_jawaban_text": "JoXDdX3p-ZmXxVzGe2NGYL2oR0zP8GdAzBXeP7WZRDZzw80RGvRvG7vBX4XOOxkaXidZzh45h3dmzWLLlRl"
-                            *},
-                            *{
-                                *"jawaban_text": "Tidak Baik",
-                                *"id_jawaban_text": "24XOWZXE-q9XMkzaG2NGYL2oR0zP8GdAzBXeP7WZRDZzw80RGvRvG7vBX4XOOxkaXidZzh45h3dmzWLLlRl"
+                                *"id_jawaban_text": ""
                             *}
                         *],
                         *"is_text_input": false,
                         *"nilai": {
                             *"text": "Sangat Baik",
-                            *"id": "2MNB0R13-eBXeLRMg2NGYL2oR0zP8GdAzBXeP7WZRDZzw80RGvRvG7vBX4XOOxkaXidZzh45h3dmzWLLlRl"
+                            *"id": ""
                         *}
                     *}
                 *]
             *},
             *{
                 *"variable": "Perekat bangsa",
-                *"kriteria": "1.\t Menjunjung  tinggi konstitusi\n2. Kemampuan dalam mempromosikan sikap toleransi, keterbukaan;\n3. Peka terhadap perbedaan individu/kelompok masyarakat;\n4. Mengutamakan kepentingan bangsa/organisasi dibandingkan kepentingan pribadi/golongan\n5. Membangun hubungan sosial psikologis;\n6. Menjaga, mengembangkan, dan mewujudkan rasa persatuan dan kesatuan dalam kehidupan bermasyarakat, berbangsa dan bernegara Indonesia.",
+                *"kriteria": "",
                 *"daftar_pertanyaan": [
                     *{
                         *"pertanyaan": "Deskripsikan orang yang anda nilai",
                         *"bobot": 0,
-                        *"token_penilaian": "2NGYL2oRy9znPjXnBXeP7WZR9bR6MzArvRvG7vBXq7zgPyRrAtaM0632NGYL2oRAtaM063BXeP7WZRAtaM063vRvG7vBX3d1t4Bl3q9XMkzaGpzh45H3dmzWLLlRl",
-                        *"signature": "41414cc50c6e83e63f2ccc40b01edd2bf15f3bdce3b5b7dbb55b6b32baf93331",
+                        *"token_penilaian": "",
+                        *"signature": "",
                         *"pilihan_jawaban": [
                             *{
                                 *"jawaban_text": "Input Jawaban",
-                                *"id_jawaban_text": "JLz0lGzD-boRY5RWA2NGYL2oRdNJYG18XBXeP7WZRy9znPjXnvRvG7vBX4XOOxkaXidZzh45h3dmzWLLlRl"
+                                *"id_jawaban_text": ""
                             *}
                         *],
                         *"is_text_input": true,
@@ -226,11 +210,11 @@ class penilaianController extends Controller
             *}
         *],
         *"peserta": {
-            *"nama": "Mince Setiawaty Ginting",
-            *"nip": "198206172006042004",
-            *"jabatan": "Ketua Pengadilan",
-            *"foto": "5623.jpg",
-            *"category": "Pimpinan"
+            *"nama": "",
+            *"nip": "",
+            *"jabatan": "",
+            *"foto": "",
+            *"category": ""
         *}
      * }
      */
@@ -458,18 +442,42 @@ class penilaianController extends Controller
         ];
     }
 
+
+    /**
+     * List Pertanyaan Penilaian
+     *
+     * Endpoint untuk mengambil daftar pertanyaan penilaian.
+     *
+     *@group Penilaian
+     *
+     *
+     *@header X-Signature signature dari get pertanyaan by category. Example: 61ae3ab38f049cf2675f96fd06a5d60407f0b4b215fec3a77c230cea309fa83b
+     *
+     * @bodyParam payload string required  token penilaian. Example: data_variable_pertanyaan
+     * @bodyParam token_penilaian string required token penilaian. Example: x4zjgkRa-KNaQQgNe-4XOOxkaX-q7zgPyRr-q9XMkzaG
+     * @bodyParam params string required params. Example: 9XMOGwOzx4zjgkRamXx9rlGNx4zjgkRa
+     * @response 200 {
+     *  "status":true,
+     *  "msg":"Jawaban berhasil disimpan "
+     * }
+     */
+
     public function lockJawaban(Request $request)
     {
         $status = false;
         $msg = "";
         $fetch_headers = null;
         $fetch_jawaban = null;
+        $text_inputan = null;
+        // $ada_inputan = false;
+        $id_pertanyaan_periode = null;
         try {
             $request->validate([
                 'payload' => ['required', 'string'],
                 'token_penilaian' => ['required', 'string'],
                 'params' => ['required', 'string']
             ]);
+            
             //fetch Header s
             $fetch_headers = $this->fetchTokenPayloadLocked($request->token_penilaian);
             if ($fetch_headers['status'] === true) {
@@ -479,13 +487,21 @@ class penilaianController extends Controller
                     $id_pz = $fetch_headers['data']['id_pz']; //id peserta zonasi bisa lebih dari 1 karena ada yang mengisi sebagai PLT
                     $id_periode = $fetch_headers['data']['id_periode'];
                     $can_edit = $fetch_headers['data']['can_edit'];
+                    $id_pertanyaan_periode = $this->penilaianService->checkAdaInputanText($id_periode, $id_pz[0]);
+                    if(count($id_pertanyaan_periode) > 0){
+                        // $ada_inputan = true;
+                        if(!isset($request->jawaban_text) || $request->jawaban_text === ""){
+                            return response()->json(['status'=>false, 'msg'=>"Jawaban text belum lengkap"]);
+                        }
+                        $text_inputan = clean($request->jawaban_text);
+                    }
 
                     $id_nilai_peserta = $fetch_jawaban['data'];
 
-                    if ($can_edit === 0) {
+                    if($can_edit === 0) {
                         return response()->json(['status' => false, 'msg' => "Jawaban tidak dapat disimpan"]);
                     }
-                    $save_jawaban = $this->penilaianService->lockJawaban($id_periode, $id_zs_payload, $id_pz, $id_nilai_peserta);
+                    $save_jawaban = $this->penilaianService->lockJawaban($id_periode, $id_zs_payload, $id_pz, $id_nilai_peserta, $id_pertanyaan_periode, $text_inputan);
                     $status = $save_jawaban['status'];
                     $msg = $save_jawaban['msg'];
                 } else {

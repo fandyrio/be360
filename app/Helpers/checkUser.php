@@ -317,6 +317,21 @@ use Vinkla\Hashids\Facades\Hashids;
                 return 0;
             }
         }
+
+        if(!function_exists('clean')){
+            function clean(?string $text): ?string{
+                if ($text === null) {
+                    return null;
+                }
+
+                $text = html_entity_decode($text, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                $text = strip_tags($text);
+                $text = preg_replace('/[\x00-\x1F\x7F]/u', '', $text);
+                $text = preg_replace('/\s+/u', ' ', $text);
+
+                return trim($text);
+            }
+        }
     }
 
 ?>

@@ -73,63 +73,47 @@ endpoints:
             "status": true,
           "can_edit": true,
           "msg": "",
-          "params": "0zP8GdAzx4zjgkRadNJYG18Xx4zjgkRa",
-          "token_penilaian": "x4zjgkRa-KNaQQgNe-4XOOxkaX-q7zgPyRr-q9XMkzaG",
-          "signature": "3549483789c6ea4914fb842295a0ebead654fc3fa74196e5afd882e5bef27384",
+          "params": "",
+          "token_penilaian": "",
+          "signature": "",
           "keterangan": "",
           "data": [
           {
           "variable": "Integritas",
-          "kriteria": "1. Kepatuhan terhadap aturan (mentaati peraturan perundangan-undangan dan kebijakan internal organisasi)\n2. Kejujuran dalam Tindakan (menyampaikan laporan, data atau informasi secara jujur dan tidak manipulatif)\n3. Tanggungjawab moral dan etika (menolak gratifikasi, suap atau bentuk pelanggaran etik lainnya)\n4. Keteladanan sikap dan perilaku dinlingkungan kerja (dapat menjadi contoh berperilaku jujur, disiplin dan transparan)",
+          "kriteria": "1. ",
           "daftar_pertanyaan": [
           {
           "pertanyaan": "Bagaimana tingkat integritas yang bersangkutan?mm",
           "bobot": 100,
-          "token_penilaian": "2NGYL2oRDZzw80RGBXeP7WZRq9XMkzaGvRvG7vBXq7zgPyRrAtaM0632NGYL2oRAtaM063BXeP7WZRAtaM063vRvG7vBX3d1t4Bl3q9XMkzaGpzh45H3dmzWLLlRl",
-          "signature": "916b39089b9a290e09faa721327069832ab40226e300f8bea5c7076e7e42efa5",
+          "token_penilaian": "",
+          "signature": "",
           "pilihan_jawaban": [
           {
           "jawaban_text": "Sangat Baik",
-          "id_jawaban_text": "2MNB0R13-eBXeLRMg2NGYL2oR0zP8GdAzBXeP7WZRDZzw80RGvRvG7vBX4XOOxkaXidZzh45h3dmzWLLlRl"
-          },
-          {
-          "jawaban_text": "Baik",
-          "id_jawaban_text": "LDNpZRkO-JLz0GND62NGYL2oR0zP8GdAzBXeP7WZRDZzw80RGvRvG7vBX4XOOxkaXidZzh45h3dmzWLLlRl"
-          },
-          {
-          "jawaban_text": "Cukup Baik",
-          "id_jawaban_text": "BYXd3R07-24XOZREj2NGYL2oR0zP8GdAzBXeP7WZRDZzw80RGvRvG7vBX4XOOxkaXidZzh45h3dmzWLLlRl"
-          },
-          {
-          "jawaban_text": "Kurang Baik",
-          "id_jawaban_text": "JoXDdX3p-ZmXxVzGe2NGYL2oR0zP8GdAzBXeP7WZRDZzw80RGvRvG7vBX4XOOxkaXidZzh45h3dmzWLLlRl"
-          },
-          {
-          "jawaban_text": "Tidak Baik",
-          "id_jawaban_text": "24XOWZXE-q9XMkzaG2NGYL2oR0zP8GdAzBXeP7WZRDZzw80RGvRvG7vBX4XOOxkaXidZzh45h3dmzWLLlRl"
+          "id_jawaban_text": ""
           }
           ],
           "is_text_input": false,
           "nilai": {
           "text": "Sangat Baik",
-          "id": "2MNB0R13-eBXeLRMg2NGYL2oR0zP8GdAzBXeP7WZRDZzw80RGvRvG7vBX4XOOxkaXidZzh45h3dmzWLLlRl"
+          "id": ""
           }
           }
           ]
           },
           {
           "variable": "Perekat bangsa",
-          "kriteria": "1.\t Menjunjung  tinggi konstitusi\n2. Kemampuan dalam mempromosikan sikap toleransi, keterbukaan;\n3. Peka terhadap perbedaan individu/kelompok masyarakat;\n4. Mengutamakan kepentingan bangsa/organisasi dibandingkan kepentingan pribadi/golongan\n5. Membangun hubungan sosial psikologis;\n6. Menjaga, mengembangkan, dan mewujudkan rasa persatuan dan kesatuan dalam kehidupan bermasyarakat, berbangsa dan bernegara Indonesia.",
+          "kriteria": "",
           "daftar_pertanyaan": [
           {
           "pertanyaan": "Deskripsikan orang yang anda nilai",
           "bobot": 0,
-          "token_penilaian": "2NGYL2oRy9znPjXnBXeP7WZR9bR6MzArvRvG7vBXq7zgPyRrAtaM0632NGYL2oRAtaM063BXeP7WZRAtaM063vRvG7vBX3d1t4Bl3q9XMkzaGpzh45H3dmzWLLlRl",
-          "signature": "41414cc50c6e83e63f2ccc40b01edd2bf15f3bdce3b5b7dbb55b6b32baf93331",
+          "token_penilaian": "",
+          "signature": "",
           "pilihan_jawaban": [
           {
           "jawaban_text": "Input Jawaban",
-          "id_jawaban_text": "JLz0lGzD-boRY5RWA2NGYL2oRdNJYG18XBXeP7WZRy9znPjXnvRvG7vBX4XOOxkaXidZzh45h3dmzWLLlRl"
+          "id_jawaban_text": ""
           }
           ],
           "is_text_input": true,
@@ -142,12 +126,94 @@ endpoints:
           }
           ],
           "peserta": {
-          "nama": "Mince Setiawaty Ginting",
-          "nip": "198206172006042004",
-          "jabatan": "Ketua Pengadilan",
-          "foto": "5623.jpg",
-          "category": "Pimpinan"
+          "nama": "",
+          "nip": "",
+          "jabatan": "",
+          "foto": "",
+          "category": ""
           }
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer {YOUR_TOKEN}'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/lock-jawaban
+    metadata:
+      custom: []
+      groupName: Penilaian
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'List Pertanyaan Penilaian'
+      description: 'Endpoint untuk mengambil daftar pertanyaan penilaian.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      X-Signature: 'signature dari get pertanyaan by category. Example: 61ae3ab38f049cf2675f96fd06a5d60407f0b4b215fec3a77c230cea309fa83b'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      payload:
+        custom: []
+        name: payload
+        description: 'token penilaian.'
+        required: true
+        example: data_variable_pertanyaan
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      token_penilaian:
+        custom: []
+        name: token_penilaian
+        description: 'token penilaian.'
+        required: true
+        example: x4zjgkRa-KNaQQgNe-4XOOxkaX-q7zgPyRr-q9XMkzaG
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      params:
+        custom: []
+        name: params
+        description: params.
+        required: true
+        example: 9XMOGwOzx4zjgkRamXx9rlGNx4zjgkRa
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      payload: data_variable_pertanyaan
+      token_penilaian: x4zjgkRa-KNaQQgNe-4XOOxkaX-q7zgPyRr-q9XMkzaG
+      params: 9XMOGwOzx4zjgkRamXx9rlGNx4zjgkRa
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+           "status":true,
+           "msg":"Jawaban berhasil disimpan "
           }
         headers: []
         description: ''
