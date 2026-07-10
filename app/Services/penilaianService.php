@@ -525,11 +525,12 @@ use Vinkla\Hashids\Facades\Hashids;
                                 $jawaban_bundle_code=$this->getPertanyaanPeriode($id_periode, $category_pertanyaan_peserta, $list_pertanyaan['id_pertanyaan']);
                                 
                                 //$nilai=$list_pertanyaan['nilai'] === 0 ? "Belum dinilai" : $this->getJawabanTextByBundlePoint($jawaban_bundle_code, $list_pertanyaan['nilai']);
-
+                                $isian_text = false;
                                 if((int)$list_pertanyaan['nilai'] === 0 && is_null($list_pertanyaan['nilai_text'])){
                                     $nilai = "Belum dinilai";
                                 }elseif((int)$list_pertanyaan['nilai'] === 0 && !is_null($list_pertanyaan['nilai_text'])){
                                     $nilai = $list_pertanyaan['nilai_text'];
+                                    $isian_text = true;
                                 }elseif((int)$list_pertanyaan['nilai'] > 0 && is_null($list_pertanyaan['nilai_text'])){
                                     $nilai = $this->getJawabanTextByBundlePoint($jawaban_bundle_code, $list_pertanyaan['nilai']);
                                 }
@@ -554,7 +555,12 @@ use Vinkla\Hashids\Facades\Hashids;
                                                 $data_pertanyaan_statis[$i_variable]['daftar_pertanyaan'][$i_pertanyaan]['pilihan_jawaban'][$i_pilihan]['id_jawaban_text']=$kode_jawaban;
                                             }
                                             $data_pertanyaan_statis[$i_variable]['daftar_pertanyaan'][$i_pertanyaan]["nilai"]['text'] = $nilai;
-                                            $data_pertanyaan_statis[$i_variable]['daftar_pertanyaan'][$i_pertanyaan]["nilai"]['id'] = strtolower(str_replace(" ", "_", $nilai)) === "belum_dinilai" ? null : $kode_jawaban_arr[strtolower(str_replace(" ", "_", $nilai))];
+                                            if($isian_text){
+                                                $id_nilai = null;
+                                            }else{
+                                                $id_nilai = strtolower(str_replace(" ", "_", $nilai)) === "belum_dinilai" ? null : $kode_jawaban_arr[strtolower(str_replace(" ", "_", $nilai))];
+                                            }
+                                            $data_pertanyaan_statis[$i_variable]['daftar_pertanyaan'][$i_pertanyaan]["nilai"]['id'] = $id_nilai;
                                             
                                             unset($data_pertanyaan_statis[$i_variable]['daftar_pertanyaan'][$i_pertanyaan]["nilai_{$list_pertanyaan['id_pertanyaan']}"]);
                                         }
