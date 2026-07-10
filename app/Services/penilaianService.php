@@ -492,6 +492,7 @@ use Vinkla\Hashids\Facades\Hashids;
                     $get_existed_nilai=Trans_nilai_peserta_zonasi::select(
                                                     "trans_nilai_peserta_zonasi.id as id_nilai_pertanyaan", 
                                                     'trans_nilai_peserta_zonasi.nilai',  
+                                                    'trans_nilai_peserta_zonasi.nilai_text',
                                                     "trans_nilai_peserta_zonasi.id_peserta_zonasi",
                                                     "trans_nilai_peserta_zonasi.nilai",
                                                     "trans_nilai_peserta_zonasi.id_pertanyaan",
@@ -522,7 +523,17 @@ use Vinkla\Hashids\Facades\Hashids;
                                     $edit_nilai[$a]=0;
                                 }
                                 $jawaban_bundle_code=$this->getPertanyaanPeriode($id_periode, $category_pertanyaan_peserta, $list_pertanyaan['id_pertanyaan']);
-                                $nilai=$list_pertanyaan['nilai'] === 0 ? "Belum dinilai" : $this->getJawabanTextByBundlePoint($jawaban_bundle_code, $list_pertanyaan['nilai']);
+                                
+                                //$nilai=$list_pertanyaan['nilai'] === 0 ? "Belum dinilai" : $this->getJawabanTextByBundlePoint($jawaban_bundle_code, $list_pertanyaan['nilai']);
+
+                                if((int)$list_pertanyaan['nilai'] === 0 && is_null($list_pertanyaan['nilai_text'])){
+                                    $nilai = "Belum dinilai";
+                                }elseif((int)$list_pertanyaan['nilai'] === 0 && !is_null($list_pertanyaan['nilai_text'])){
+                                    $nilai = $list_pertanyaan['nilai_text'];
+                                }elseif((int)$list_pertanyaan['nilai'] > 0 && is_null($list_pertanyaan['nilai_text'])){
+                                    $nilai = $this->getJawabanTextByBundlePoint($jawaban_bundle_code, $list_pertanyaan['nilai']);
+                                }
+
                                 $id_nilai_peserta=Hashids::encode($list_pertanyaan['id_nilai_pertanyaan']);
                                 $id_pertanyaan=Hashids::encode($list_pertanyaan['id_pertanyaan']);
                                 for($i_variable = 0; $i_variable < $jumlah_variable; $i_variable++){
