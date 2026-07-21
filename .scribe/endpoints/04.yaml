@@ -1,111 +1,19 @@
-name: MasterPertanyaan
+name: MasterJabatan
 description: ''
 endpoints:
   -
     custom: []
     httpMethods:
       - GET
-    uri: api/list-category-pertanyaan
+    uri: 'api/list-jabatan-peserta/{page}'
     metadata:
       custom: []
-      groupName: MasterPertanyaan
+      groupName: MasterJabatan
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Get All Category Pertanyaan'
-      description: 'Endpoint untuk data categoru Pertanyaan.'
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {YOUR_AUTH_KEY}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 200
-        content: |-
-          {
-            "total": "integer",
-            "data": [array data],
-
-          }
-        headers: []
-        description: ''
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer {YOUR_TOKEN}'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - GET
-    uri: api/list-all-pertanyaan
-    metadata:
-      custom: []
-      groupName: MasterPertanyaan
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Get All Pertanyaan'
-      description: 'Endpoint untuk list seluruh master pertanyaan.'
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {YOUR_AUTH_KEY}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 200
-        content: |-
-          {
-            "total": "integer",
-            "data": [array data],
-
-          }
-        headers: []
-        description: ''
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer {YOUR_TOKEN}'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - GET
-    uri: 'api/list-pertanyaan-category/{token_category}'
-    metadata:
-      custom: []
-      groupName: MasterPertanyaan
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Get Pertanyaan By Category'
-      description: 'Endpoint untuk data pertanyaan berdasarkan kategori.'
+      title: 'Get Jabatan all / page'
+      description: 'Endpoint untuk list seluruh jabatan atau per halaman. Gantikan angka page dengan "getall" bila inigin mengambil seluruh list'
       authenticated: true
       deprecated: false
     headers:
@@ -113,19 +21,19 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      token_category:
+      page:
         custom: []
-        name: token_category
-        description: 'token_pertanyaan dari get all category'
-        required: true
-        example: architecto
-        type: string
+        name: page
+        description: required.
+        required: false
+        example: 1
+        type: integer
         enumValues: []
-        exampleWasSpecified: false
+        exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      token_category: architecto
+      page: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -137,35 +45,68 @@ endpoints:
         status: 200
         content: |-
           {
-          "status": true,
-          "msg": "",
-          "signature": "c781203173b5ddfe289a71c183b7cdf1bbd173bb381f17930c5e0855ae045138",
-          "total": 2,
-          "data": [
-          {
-          "variable": "Integritas",
-          "pertanyaan": [
-          {
-          "token_pertanyaan": "xxxxxxx",
-          "pertanyaan": "Bagaimana tingkat integritas yang bersangkutan?",
-          "bobot": 20,
-          "active": "Aktif"
+            "total": "integer",
+            "data": [array data],
+
           }
-          ]
-          },
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer {YOUR_TOKEN}'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/kelompok-jabatan-detil/{id_kelompok_jabatan}'
+    metadata:
+      custom: []
+      groupName: MasterJabatan
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get Detil Jabatan'
+      description: 'Endpoint untuk data detil jabatan.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id_kelompok_jabatan:
+        custom: []
+        name: id_kelompok_jabatan
+        description: required.
+        required: false
+        example: OZNEKRbj
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id_kelompok_jabatan: OZNEKRbj
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
           {
-          "variable": "Komunikasi",
-          "pertanyaan": [
-          {
-          "token_pertanyaan": "xxxxxxx",
-          "pertanyaan": "Apakah yang bersangkutan mampu berkomunikasi dengan baik?",
-          "bobot": 20,
-          "active": "Aktif"
+            "total": "integer",
+            "data": [array data],
+
           }
-          ]
-          }
-          ]
-            }
         headers: []
         description: ''
     responseFields: []
@@ -180,20 +121,20 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: api/save-pertanyaan-category
+    uri: api/update-jabatan-peserta
     metadata:
       custom: []
-      groupName: MasterPertanyaan
+      groupName: MasterJabatan
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Save Pertanyaan By Category'
-      description: 'Endpoint untuk Simpan Pertanyaan per kategori.'
+      title: 'Update detil Jabatan'
+      description: 'Endpoint untuk update detil jabatan.'
       authenticated: true
       deprecated: false
     headers:
       Authorization: 'Bearer {YOUR_AUTH_KEY}'
-      X-Signature: 'signature dari get pertanyaan by category'
+      X-Signature: 'signature dari get detil jabatan'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -201,41 +142,46 @@ endpoints:
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      token_pertanyaan:
+      token_jabatan:
         custom: []
-        name: token_pertanyaan
-        description: 'Array token pertanyaan.'
+        name: token_jabatan
+        description: 'token jabatan.'
         required: true
-        example:
-          - token1
-          - token2
-          - token2
-        type: 'string[]'
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      bobot:
-        custom: []
-        name: bobot
-        description: 'Array bobot pertanyaan.'
-        required: true
-        example:
-          - 10
-          - 20
-          - 30
-        type: 'integer[]'
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      category_id:
-        custom: []
-        name: category_id
-        description: 'ID kategori yang dipilih.'
-        required: true
-        example: cat_001
+        example: OZNEKRbj
         type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      jabatan:
+        custom: []
+        name: jabatan
+        description: jabatan.
+        required: true
+        example: 'Panitera Muda'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      active:
+        custom: []
+        name: active
+        description: active.
+        required: true
+        example: 'Y'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      token_category:
+        custom: []
+        name: token_category
+        description: 'token category.'
+        required: false
+        example: q9XMkzaG
+        type: required
         enumValues: []
         exampleWasSpecified: true
         nullable: false
@@ -243,25 +189,20 @@ endpoints:
       payload:
         custom: []
         name: payload
-        description: 'value = category_id.'
+        description: required.
         required: false
-        example: category_id
+        example: token_jabatan
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      token_pertanyaan:
-        - token1
-        - token2
-        - token2
-      bobot:
-        - 10
-        - 20
-        - 30
-      category_id: cat_001
-      payload: category_id
+      token_jabatan: OZNEKRbj
+      jabatan: 'Panitera Muda'
+      active: 'Y'
+      token_category: q9XMkzaG
+      payload: token_jabatan
     fileParameters: []
     responses:
       -
@@ -269,8 +210,9 @@ endpoints:
         status: 200
         content: |-
           {
-            "status":true,
-            "msg":"msg"
+            "total": "integer",
+            "data": [array data],
+
           }
         headers: []
         description: ''

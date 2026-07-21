@@ -108,7 +108,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -166,7 +166,7 @@ endpoints:
           content-type: 'text/html; charset=UTF-8'
           cache-control: 'no-cache, private'
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -212,7 +212,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -270,7 +270,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -363,7 +363,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -479,7 +479,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -537,7 +537,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -595,7 +595,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -688,7 +688,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -769,7 +769,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -990,7 +990,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -1036,65 +1036,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
-          vary: Origin
-        description: null
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer {YOUR_TOKEN}'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - GET
-    uri: 'api/list-jabatan-kosong-satker/{id_zonasi_satker}'
-    metadata:
-      custom: []
-      groupName: Endpoints
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: ''
-      description: ''
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {YOUR_AUTH_KEY}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      id_zonasi_satker:
-        custom: []
-        name: id_zonasi_satker
-        description: ''
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      id_zonasi_satker: architecto
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 401
-        content: '{"message":"Unauthorized"}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -1152,7 +1094,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -1339,7 +1281,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -1432,7 +1374,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -1490,7 +1432,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -1536,65 +1478,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
-          vary: Origin
-        description: null
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer {YOUR_TOKEN}'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - GET
-    uri: 'api/list-zonasi/{page?}'
-    metadata:
-      custom: []
-      groupName: Endpoints
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: ''
-      description: ''
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {YOUR_AUTH_KEY}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      page:
-        custom: []
-        name: page
-        description: ''
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      page: architecto
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 401
-        content: '{"message":"Unauthorized"}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -1687,7 +1571,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -1780,7 +1664,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -1838,7 +1722,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -1896,7 +1780,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -2094,7 +1978,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -2152,77 +2036,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
-          vary: Origin
-        description: null
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer {YOUR_TOKEN}'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - GET
-    uri: 'api/jabatan-kosong/{page}/{id_zonasi}'
-    metadata:
-      custom: []
-      groupName: Endpoints
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: ''
-      description: ''
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {YOUR_AUTH_KEY}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      page:
-        custom: []
-        name: page
-        description: ''
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      id_zonasi:
-        custom: []
-        name: id_zonasi
-        description: ''
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      page: architecto
-      id_zonasi: architecto
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 401
-        content: '{"message":"Unauthorized"}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -2280,7 +2094,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -2373,7 +2187,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -2489,7 +2303,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -2547,7 +2361,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -2710,7 +2524,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -2826,7 +2640,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -2942,7 +2756,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -3070,7 +2884,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -3128,7 +2942,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -3186,7 +3000,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -3279,7 +3093,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -3325,7 +3139,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -3418,7 +3232,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -3511,7 +3325,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -3557,7 +3371,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -3650,7 +3464,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -3743,7 +3557,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -3836,7 +3650,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -3953,7 +3767,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -4034,7 +3848,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -4092,7 +3906,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -4162,7 +3976,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -4220,7 +4034,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -4383,7 +4197,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -4441,7 +4255,7 @@ endpoints:
           content-type: 'text/html; charset=UTF-8'
           cache-control: 'no-cache, private'
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -4514,7 +4328,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -4560,7 +4374,7 @@ endpoints:
           content-type: 'text/html; charset=UTF-8'
           cache-control: 'no-cache, private'
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -4606,7 +4420,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []
@@ -4652,7 +4466,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '150'
-          x-ratelimit-remaining: '149'
+          x-ratelimit-remaining: '148'
           vary: Origin
         description: null
     responseFields: []

@@ -4,6 +4,7 @@
 use App\Jobs\InsertDataPesertaZonasi;
 use App\Models\Jobs;
 use App\Models\Log_msg;
+use App\Models\Majelis_hakim;
 use App\Models\Tref_users;
     use App\Models\Tref_zonasi;
     use Vinkla\Hashids\Facades\Hashids;
@@ -1618,6 +1619,42 @@ use Symfony\Component\CssSelector\Node\HashNode;
             ];
         }
 
+        public function getKelengkapanMajelis($id_zonasi){
+            $data = null;
+            $get_jumlah_hakim = Trans_observee::join("trans_zonasi_satker as tzs", "tzs.IdZonaSatker", "=", "trans_observee.IdZonaSatker")
+                                                ->join("tref_zonasi as tz", "tz.IdZona", "=", "tzs.IdZona")
+                                                ->join("v_satker as vs", "vs.IdSatker", "=", "tzs.IdSatker")
+                                                ->select("vs.IdSatker", DB::raw("COUNT(trans_observee.IdObservee) as jumlah_hakim"))
+                                                ->where("tz.IdZona", $id_zonasi)
+                                                ->where("trans_observee.id_kelompok_jabatan", 30)
+                                                ->groupBy("vs.IdSatker")
+                                                ->get();
+            foreach($get_jumlah_hakim as $data_hakim){
+                ${"jlh_hakim_{$data_hakim['IdSatker']}"} = $data_hakim['jumlah_hakim'];
+            }
+            $get_majelis = Satker::join("trans_zonasi_satker as tzs", "tzs.IdSatker", "=", "v_satker.IdSatker")
+                                    ->join("tref_zonasi as tz", "tz.IdZona", "=", "tzs.IdZona")
+                                    ->leftJoin("tref_majelis_hakim as tmh", function($join){
+                                        $join->on("tmh.id_zonasi_satker", "=", "tzs.IdZonaSatker")
+                                            ->where("status", true);
+                                    })
+                                    ->select("v_satker.IdSatker", "v_satker.NamaSatker", DB::raw("COUNT(tmh.nama_majelis) as jumlah"))
+                                    ->where("tz.IdZona", $id_zonasi)
+                                    ->groupBy("v_satker.NamaSatker")
+                                    ->groupBy("tmh.nama_majelis")
+                                    ->orderBy("v_satker.IdSatker")
+                                    ->get();
+
+            foreach($get_majelis as $majelis){
+                $data[]=[
+                    'nama_satker'=>$majelis['NamaSatker'],
+                    'jumlah_majelis'=>$majelis['jumlah'],
+                    'jumlah_hakim'=>${"jlh_hakim_{$majelis['IdSatker']}"}
+                ];
+            }
+            return $data;
+        }
+
         public function getJabatanKosong($page, $id_zonasi){
             if($page < 1){
                 $page=1;
@@ -1650,6 +1687,9 @@ use Symfony\Component\CssSelector\Node\HashNode;
             }else{
                 $msg="Data tidak ada ".$id_zonasi;
             }
+
+            $get_majelis = $this->getKelengkapanMajelis($id_zonasi);
+
             return [
                 'status'=>$status,
                 'msg'=>$msg,
@@ -1658,6 +1698,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                 'jumlah_halaman'=>$jumlah_halaman,
                 'no'=>$skip+1,
                 'data'=>$data,
+                'data_majelis'=>$get_majelis
             ];
         }
 

@@ -69,11 +69,30 @@ class zonasiSatkerController extends Controller
         return response()->json(['status'=>$status, 'msg'=>$msg, 'signature'=>$signature, 'data'=>$data, 'view'=>$view]);
     }
 
+    /**
+     * Jabatan Kosong(Admin Satker)
+     *
+     * Endpoint untuk mengambil data jabatan kosong dan majelis hakim.
+     *
+     *@group Zonasi
+     *
+     *
+     *
+     * @urlParam id_zonasi_satker_enc integer required.
+     * 
+     * 
+     * @response 200 {
+     * 
+     * }
+     */
     public function getJabatanKosongSatker($id_zonasi_satker_enc, Request $request){
         $status=false;
         $data=[];
         $msg="";
         $id_satker=0;
+        $send_confirm = false;
+        $data_majelis = null;
+        $jumlah_hakim = 0;
         if(isset($request->user()->IdSatker)){
             $id_satker=$request->user()->IdSatker;
         }
@@ -87,11 +106,13 @@ class zonasiSatkerController extends Controller
             $msg=$get_data['msg'];
             $send_confirm=$get_data['send_confirm'];
             $data=$get_data['data'];
+            $data_majelis = $get_data['data_majelis'];
+            $jumlah_hakim = $get_data['jumlah_hakim'];
         }catch(\Exception $e){
             $msg=$e->getMessage();
         }
 
-        return response()->json(['status'=>$status, 'msg'=>$msg, 'send_confirm'=>$send_confirm, 'data'=>$data]);
+        return response()->json(['status'=>$status, 'msg'=>$msg, 'send_confirm'=>$send_confirm, 'data'=>$data, 'data_majelis'=>$data_majelis, 'jumlah_hakim'=>$jumlah_hakim]);
     }
 
     public function detilJabatanKosongSatker($token_jabatan_kosong, Request $request){

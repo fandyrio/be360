@@ -3,6 +3,7 @@
 
 use App\Jobs\SendWhatsappJob;
 use App\Models\Log_msg;
+use App\Models\Majelis_hakim;
 use App\Models\Trans_jabatan_kosong;
 use App\Models\Trans_observee;
 use App\Models\Trans_peserta_zonasi;
@@ -165,12 +166,91 @@ use PDO;
                 $msg="Tidak ada Jabatan Kosong. Mohon menunggu Satuan Kerja lain untuk mengisi jabatan kosong";
             }
 
+            $kelengkapan_majelis = $this->getKelengkapanMajelis($id_zonasi_satker);
+            $lengkap = $kelengkapan_majelis['lengkap'];
+            $jumlah_hakim = $kelengkapan_majelis['jlh_hakim'];
+            $data_majelis = $kelengkapan_majelis['data_majelis'];
+
+            if($send_confirm === true && $lengkap === true){
+                $send_confirm = true;
+            }else{
+                $send_confirm = false;
+            }
+
             return [
                 'status'=>$status,
                 'msg'=>$msg,
                 'send_confirm'=>$send_confirm,
-                'data'=>$data
+                'data'=>$data,
+                'data_majelis'=>$data_majelis,
+                'jumlah_hakim'=>$jumlah_hakim
             ];
+        }
+
+        public function getKelengkapanMajelis($id_zonasi_satker){
+            $lengkap = false;
+            $get_jumlah_hakim = Trans_observee::join("trans_zonasi_satker as tzs", "tzs.IdZonaSatker", "=", "trans_observee.IdZonaSatker")
+                                                ->join("tref_zonasi as tz", "tz.IdZona", "tzs.IdZona")
+                                                ->join("tref_tahun_penilaian as ttp", "ttp.IdTahunPenilaian", "=", "tz.IdTahunPenilaian")
+                                                ->where("trans_observee.id_kelompok_jabatan", 30)
+                                                ->where("tzs.IdZonaSatker", $id_zonasi_satker)
+                                                ->select("ttp.IdTahunPenilaian as id_periode", "trans_observee.IdObservee")
+                                                ->get();
+            $jlh_hakim = $get_jumlah_hakim->count();
+            $id_observee = [];
+            $id_periode = null;
+            foreach($get_jumlah_hakim as $list_hakim){
+                $id_observee[]=$list_hakim['IdObservee'];
+                $id_periode = $list_hakim['id_periode'];
+            }
+
+            $get_majelis = Majelis_hakim::join("trans_observee as to", "to.IdObservee", "=", "tref_majelis_hakim.IdObservee")
+                                        ->join("tref_pegawai as tp", "tp.id_pegawai", "=", "to.IdPegawai")
+                                        ->where("tref_majelis_hakim.id_periode", $id_periode)
+                                        ->where("tref_majelis_hakim.id_zonasi_satker", $id_zonasi_satker)
+                                        ->select("tref_majelis_hakim.*", "tp.nama_pegawai")
+                                        ->orderBy("tref_majelis_hakim.nama_majelis")
+                                        ->get();
+            
+            $id_observee_majelis = [];
+            $data_majelis = null;
+            $nama_majelis_before = null;
+            $x=0;
+            foreach($get_majelis as $list_majelis){
+                $id_observee_majelis[] = $list_majelis['IdObservee'];
+                if($nama_majelis_before !== $list_majelis['nama_majelis']){
+                    $data_majelis[$x] = [
+                        "token_majelis"=>Hashids::encode($list_majelis['IdObservee']),
+                        "nama_majelis"=>$list_majelis['nama_majelis'],
+
+                    ];
+                    $x++;
+                }else{
+                    $data_majelis[$x] = [
+                        'nama_pegawai'=>$list_majelis['nama_pegawai'],
+                        'status'=>(int)$list_majelis['status'] === 1 ? "Confirmed" : "Not Confirmed"
+                    ];
+                }
+            }
+
+            $compare_observee = array_values(array_diff($id_observee, $id_observee_majelis));
+            //jumlah hakim belum masuk ke majelis
+            $jumlah_blm_masuk = count($compare_observee);
+            if($jumlah_blm_masuk === 0){
+                $lengkap = true;
+            }
+            
+            return [
+                'lengkap'=>$lengkap,
+                'jlh_hakim'=>$jlh_hakim,
+                'data_majelis'=>$data_majelis
+            ];
+        }
+
+        public function testingFn(){
+            $array_a = [0, 1, 2, 3, 4, 5];
+            $array_b = [1, 2, 1, 3, 2];
+            print_r(array_values(array_diff($array_a, $array_b)));
         }
 
         public function detilJabatanKosongSatker($id_jabatan_kosong, $id_satker){

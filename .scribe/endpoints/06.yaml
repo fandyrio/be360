@@ -1,0 +1,239 @@
+name: Penilaian
+description: ''
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/list-pertanyaan
+    metadata:
+      custom: []
+      groupName: Penilaian
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'List Pertanyaan Penilaian'
+      description: 'Endpoint untuk mengambil daftar pertanyaan penilaian.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      X-Signature: 'signature dari get pertanyaan by category. Example: 61ae3ab38f049cf2675f96fd06a5d60407f0b4b215fec3a77c230cea309fa83b'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      payload:
+        custom: []
+        name: payload
+        description: 'token penilaian.'
+        required: true
+        example: token_penilaian
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      token_penilaian:
+        custom: []
+        name: token_penilaian
+        description: 'token penilaian.'
+        required: true
+        example: xrwPnrm1K3p0atAMObEmzWLLlRl
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      params:
+        custom: []
+        name: params
+        description: params.
+        required: true
+        example: eyJpdiI6IlJMUGR2MkZCUHBTL1FiMzFCSitzS3c9PSIsInZhbHVlIjoiUEtiRnY5WGhQUXFrM3FHTWJrcVZOYjRFVWZ1bnN2MlZwWWZodjl5aW5ERFNlSEV1R091M2Z1OVdoeXFLL3FoNCIsIm1hYyI6Ijc2YzhkZTdkYTlkY2E3NTA0MDA3ZGE5ZTE4NDU2NzA1ZDc1OGQ3ZWE2YTQwYzY5N2EwNjE0YzMzMGJlMGRkY2UiLCJ0YWciOiIifQ
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      payload: token_penilaian
+      token_penilaian: xrwPnrm1K3p0atAMObEmzWLLlRl
+      params: eyJpdiI6IlJMUGR2MkZCUHBTL1FiMzFCSitzS3c9PSIsInZhbHVlIjoiUEtiRnY5WGhQUXFrM3FHTWJrcVZOYjRFVWZ1bnN2MlZwWWZodjl5aW5ERFNlSEV1R091M2Z1OVdoeXFLL3FoNCIsIm1hYyI6Ijc2YzhkZTdkYTlkY2E3NTA0MDA3ZGE5ZTE4NDU2NzA1ZDc1OGQ3ZWE2YTQwYzY5N2EwNjE0YzMzMGJlMGRkY2UiLCJ0YWciOiIifQ
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "status": true,
+          "can_edit": true,
+          "msg": "",
+          "params": "",
+          "token_penilaian": "",
+          "signature": "",
+          "keterangan": "",
+          "data": [
+          {
+          "variable": "Integritas",
+          "kriteria": "1. ",
+          "daftar_pertanyaan": [
+          {
+          "pertanyaan": "Bagaimana tingkat integritas yang bersangkutan?mm",
+          "bobot": 100,
+          "token_penilaian": "",
+          "signature": "",
+          "pilihan_jawaban": [
+          {
+          "jawaban_text": "Sangat Baik",
+          "id_jawaban_text": ""
+          }
+          ],
+          "is_text_input": false,
+          "nilai": {
+          "text": "Sangat Baik",
+          "id": ""
+          }
+          }
+          ]
+          },
+          {
+          "variable": "Perekat bangsa",
+          "kriteria": "",
+          "daftar_pertanyaan": [
+          {
+          "pertanyaan": "Deskripsikan orang yang anda nilai",
+          "bobot": 0,
+          "token_penilaian": "",
+          "signature": "",
+          "pilihan_jawaban": [
+          {
+          "jawaban_text": "Input Jawaban",
+          "id_jawaban_text": ""
+          }
+          ],
+          "is_text_input": true,
+          "nilai": {
+          "text": "Belum dinilai",
+          "id": null
+          }
+          }
+          ]
+          }
+          ],
+          "peserta": {
+          "nama": "",
+          "nip": "",
+          "jabatan": "",
+          "foto": "",
+          "category": ""
+          }
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer {YOUR_TOKEN}'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/lock-jawaban
+    metadata:
+      custom: []
+      groupName: Penilaian
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Lock Jawaban'
+      description: 'Endpoint untuk mengambil daftar pertanyaan penilaian.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      X-Signature: 'signature dari get pertanyaan by category. Example: 3549483789c6ea4914fb842295a0ebead654fc3fa74196e5afd882e5bef27384'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      payload:
+        custom: []
+        name: payload
+        description: 'token penilaian.'
+        required: true
+        example: data_variable_pertanyaan
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      token_penilaian:
+        custom: []
+        name: token_penilaian
+        description: 'token penilaian.'
+        required: true
+        example: x4zjgkRa-KNaQQgNe-4XOOxkaX-q7zgPyRr-q9XMkzaG
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      params:
+        custom: []
+        name: params
+        description: params.
+        required: true
+        example: 9XMOGwOzx4zjgkRamXx9rlGNx4zjgkRa
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      jawaban_text:
+        custom: []
+        name: jawaban_text
+        description: 'Example:'
+        required: false
+        example: architecto
+        type: string.
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      payload: data_variable_pertanyaan
+      token_penilaian: x4zjgkRa-KNaQQgNe-4XOOxkaX-q7zgPyRr-q9XMkzaG
+      params: 9XMOGwOzx4zjgkRamXx9rlGNx4zjgkRa
+      jawaban_text: architecto
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+           "status":true,
+           "msg":"Jawaban berhasil disimpan "
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer {YOUR_TOKEN}'
+    controller: null
+    method: null
+    route: null

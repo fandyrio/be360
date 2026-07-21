@@ -28,6 +28,21 @@ class zonasiController extends Controller
         $this->zonasiService=$zonasi_service;
     }
 
+     /**
+     * List Zonasi(Admin Badilum)
+     *
+     * Endpoint untuk mengambil daftar zonasi di Admin Badilum.
+     *
+     *@group Zonasi
+     *
+     *
+     *
+     * @urlParam page integer required.
+     * 
+     * @response 200 {
+     * 
+     * }
+     */
     public function getListZonasi($page = null): JsonResponse{
         $get_data=$this->zonasiService->listZonasi($page);
         return response()->json($get_data);
@@ -313,6 +328,55 @@ class zonasiController extends Controller
         return response()->json(['status'=>$status, 'msg'=>$msg]);
     }
 
+    /**
+     * Jabatan Kosong (Admin Badilum)
+     *
+     * Endpoint untuk mengambil daftar jabatan kosong di Admin Badilum.
+     *
+     *@group Zonasi
+     *
+     *
+     *
+     * @urlParam page integer required.
+     * @urlParam id_zonasi string required
+     * @response 200 {
+        *"status": true,
+        *"msg": "",
+        *"total": 3,
+        *"page": "1",
+        *"jumlah_halaman": 1,
+        *"no": 1,
+        *"data": [
+            *{
+                *"nama_satker": "Pengadilan Negeri Tondano (099354)",
+                *"jabatan": "Panitera (Panitera)",
+                *"filled": "Y"
+            *},
+            *{
+                *"nama_satker": "Pengadilan Negeri Bitung (568725)",
+                *"jabatan": "Panitera Muda (Panitera Muda Pidana)",
+                *"filled": "Y"
+            *},
+            *{
+                *"nama_satker": "Pengadilan Negeri Melonguane (401925)",
+                *"jabatan": "Panitera Muda (Panitera Muda Pidana)",
+                *"filled": "Y"
+            *}
+        *],
+        *"data_majelis": [
+            *{
+                *"nama_satker": "Pengadilan Tinggi Manado",
+                *"jumlah_majelis": 0,
+                *"jumlah_hakim": 11
+            *},
+            *{
+                *"nama_satker": "Pengadilan Negeri Manado",
+                *"jumlah_majelis": 0,
+                *"jumlah_hakim": 15
+            *}
+            *]
+     * }
+     */
     public function getJabatanKosong($page, $id_zonasi){
         $status=false;
         $jumlah=0;
@@ -323,22 +387,23 @@ class zonasiController extends Controller
         $no=0;
         try{
             $id_zonasi_dec=Hashids::decode($id_zonasi);
-            if(empty($id_zonasi)){
+            if(empty($id_zonasi_dec)){
                 throw new \Exception('Invalid token Zonasi');
             }
            $get_jabatan_kosong=$this->zonasiService->getJabatanKosong($page, $id_zonasi_dec[0]);
            $status=$get_jabatan_kosong['status'];
            $data=$get_jabatan_kosong['data'];
+           $data_majelis = $get_jabatan_kosong['data_majelis'];
            $total=$get_jabatan_kosong['total'];
            $jumlah_halaman=$get_jabatan_kosong['jumlah_halaman'];
            $page=$get_jabatan_kosong['page'];
            $msg=$get_jabatan_kosong['msg'];
            $no=(int)$get_jabatan_kosong['no'];
         }catch(\Exception $e){
-            $msg=$e->getMessage(). " ".$e->getFile();
+            $msg=$e->getMessage(). " ".$e->getFile()." ".$e->getLine();
         }
 
-        return response()->json(['status'=>$status, 'msg'=>$msg, 'total'=>$total, 'page'=>$page, 'jumlah_halaman'=>$jumlah_halaman, 'no'=>$no, 'data'=>$data]);
+        return response()->json(['status'=>$status, 'msg'=>$msg, 'total'=>$total, 'page'=>$page, 'jumlah_halaman'=>$jumlah_halaman, 'no'=>$no, 'data'=>$data, 'data_majelis'=>$data_majelis]);
     }
     public function getPesertaZonasiSatker($id_zonasi_enc){
         $status=false;
