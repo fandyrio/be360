@@ -74,6 +74,307 @@ endpoints:
   -
     custom: []
     httpMethods:
+      - POST
+    uri: api/save-majelis
+    metadata:
+      custom: []
+      groupName: Zonasi
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Save Majelis(Admin Satker)'
+      description: 'Endpoint untuk menyimpan data majelis hakim.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      token_hakim:
+        custom: []
+        name: token_hakim
+        description: 'Array token hakim'
+        required: true
+        example:
+          - abc123
+          - def456
+          - ghi789
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      nama_majelis:
+        custom: []
+        name: nama_majelis
+        description: required.
+        required: false
+        example: 'Majelis 1'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      token_zonasi_satker:
+        custom: []
+        name: token_zonasi_satker
+        description: required.
+        required: false
+        example: 9zn5pBNn
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      token_hakim:
+        - abc123
+        - def456
+        - ghi789
+      nama_majelis: 'Majelis 1'
+      token_zonasi_satker: 9zn5pBNn
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+               "status": true,
+               "msg": "Berhasil disimpan",
+
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer {YOUR_TOKEN}'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/get-hakim-satker
+    metadata:
+      custom: []
+      groupName: Zonasi
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get Hakim By NIP(Admin Satker)'
+      description: 'Endpoint untuk mengambil data personal hakim.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      identity:
+        custom: []
+        name: identity
+        description: nama_or_nip.
+        required: true
+        example: Ratna
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      token_zonasi_satker:
+        custom: []
+        name: token_zonasi_satker
+        description: 'token_zonasi_satker example: 2892'
+        required: false
+        example: architecto
+        type: required
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      identity: Ratna
+      token_zonasi_satker: architecto
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+               "status": true,
+               "msg": "Data Found",
+               "data": [
+                    "nama": "Ratna Dewi",
+                    "nip": "1992010101010101010",
+                    "token_pegawai": "random_string"
+                ]
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer {YOUR_TOKEN}'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/confirm-jabatan-kosong
+    metadata:
+      custom: []
+      groupName: Zonasi
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Confirm Jabatan Kosong(Admin Satker)'
+      description: 'Endpoint konfirmasi jabatan kosong dan majelis hakim.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      X-Signature: 'signature dari get pertanyaan by category. Example: 3549483789c6ea4914fb842295a0ebead654fc3fa74196e5afd882e5bef27384'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      token_zonasi_satker:
+        custom: []
+        name: token_zonasi_satker
+        description: required.
+        required: false
+        example: Lz0lb6zD
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      payload:
+        custom: []
+        name: payload
+        description: required.
+        required: false
+        example: test
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      token_zonasi_satker: Lz0lb6zD
+      payload: test
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+               "status": true,
+               "msg": "Berhasil disimpan",
+
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer {YOUR_TOKEN}'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/detil-zonasi-satker/{id}'
+    metadata:
+      custom: []
+      groupName: Zonasi
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: '(Admin Satker) Detil Zonasi Satker'
+      description: 'Endpoint untuk mengambil data detil zonasi untuk admin satker.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The ID of the detil zonasi satker.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      id_zonasi_satker_enc:
+        custom: []
+        name: id_zonasi_satker_enc
+        description: required.
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: architecto
+      id_zonasi_satker_enc: architecto
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer {YOUR_TOKEN}'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
       - GET
     uri: 'api/list-zonasi/{page?}'
     metadata:

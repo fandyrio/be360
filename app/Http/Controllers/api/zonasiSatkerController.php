@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Services\zonasiSatkerService;
 use DateTime;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Testing\Fluent\Concerns\Has;
 use Illuminate\Validation\ValidationException;
 use Vinkla\Hashids\Facades\Hashids;
@@ -40,6 +41,22 @@ class zonasiSatkerController extends Controller
         return response()->json(['status'=>$status, 'msg'=>$msg, 'jumlah_halaman'=>$jumlah_halaman, 'total'=>$total, 'page'=>$page, 'data'=>$data]);
     }
 
+    /**
+     * (Admin Satker) Detil Zonasi Satker
+     *
+     * Endpoint untuk mengambil data detil zonasi untuk admin satker.
+     *
+     *@group Zonasi
+     *
+     *
+     *
+     * @urlParam id_zonasi_satker_enc string required.
+     * 
+     * 
+     * @response 200 {
+     * 
+     * }
+     */
     
     public function detilZonasiSatker($id_zonasi_satker_enc, Request $request){
         $status=false;
@@ -172,6 +189,157 @@ class zonasiSatkerController extends Controller
         return response()->json(['status'=>$status, 'msg'=>$msg, 'data'=>$data]);
     }
 
+    /**
+     * Get Hakim By NIP(Admin Satker)
+     *
+     * Endpoint untuk mengambil data personal hakim.
+     *@authenticated
+     *@group Zonasi
+     *
+     *
+     *
+     * @bodyParam identity string required nama_or_nip. Example: Ratna
+     * @bodyParam token_zonasi_satker required token_zonasi_satker example: 2892
+     * 
+     * 
+     * @response 200 {
+     *      "status": true,
+     *      "msg": "Data Found",
+     *      "data": [
+     *           "nama": "Ratna Dewi",
+     *           "nip": "1992010101010101010",
+     *           "token_pegawai": "random_string"
+     *       ]
+     * }
+     */
+    public function getHakimByNameNip(Request $request){
+        $status = false;
+        $data = [];
+        try{
+            $request->validate([
+                'identity'=>['required', 'string'],
+                'token_zonasi_satker'=>['required', 'string']
+            ]);
+            $id_zonasi_satker = Hashids::decode($request->token_zonasi_satker);
+            if(empty($id_zonasi_satker)){
+                return response()->json(['status'=>false, 'msg'=>'Invalid data Hakim']);
+            }
+
+            $id_satker = 0;
+            if(isset($request->user()->IdSatker)){
+                $id_satker = $request->user()->IdSatker;
+            }
+
+            $get_hakim = $this->zonasiSatkerService->getHakimByNameNip($request->identity, $id_satker, $id_zonasi_satker[0]);
+            $status = $get_hakim['status'];
+            $msg = $get_hakim['msg'];
+            $data = $get_hakim['data'];
+
+        }catch(ValidationException $e){
+            $msg = $e->validator->errors()->first();
+        }
+        return response()->json(['status'=>$status, 'msg'=>$msg, 'data'=>$data]);
+    }
+
+
+    /**
+     * Save Majelis(Admin Satker)
+     *
+     * Endpoint untuk menyimpan data majelis hakim.
+     *@authenticated
+     *@group Zonasi
+     *
+     *
+     *
+     * @bodyParam nama_majelis string required. Example: Majelis 1
+     * @bodyParam token_hakim string[] required Array token hakim Example: ["abc123","def456","ghi789"]
+     * @bodyParam token_zonasi_satker string required. Example: 9zn5pBNn
+     * 
+     * 
+     * @response 200 {
+     *      "status": true,
+     *      "msg": "Berhasil disimpan",
+     *      
+     * }
+     */
+    public function saveMejelis(Request $request){
+        $status = false;
+        $validator = Validator::make($request->all(), [
+            'token_hakim'=>['required', 'array', 'size:3'],
+            'token_hakim.*'=>['string'],
+            'nama_majelis'=>['required', 'string'],
+            'token_zonasi_satker'=>['required', 'string']
+        ]);
+
+        if($validator->fails()){
+            return response()->json([
+                'status'=>false,
+                'msg'=>$validator->errors()->first()
+            ], 422);
+        }
+
+        try{
+            $jlh_hakim = count($request->token_hakim);
+            if($jlh_hakim < 3 || $jlh_hakim > 3){
+                throw new \Exception('Jumlah Hakim harus 3 orang');
+            }
+
+            $jlh_hakim_tidak_valid = 0;
+            $data_hakim = [];
+            for($x=0;$x<$jlh_hakim;$x++){
+                $decode_hakim = Hashids::decode($request->token_hakim[$x]);
+                if(empty($decode_hakim)){
+                    $jlh_hakim_tidak_valid+=1;
+                }else{
+                    $data_hakim[] = $decode_hakim[0];
+                }
+            }
+            if($jlh_hakim_tidak_valid > 0){
+                throw new \Exception('Data hakim tidak valid. Pastikan input data hakim melalui form yang tepat');
+            }
+
+            $id_zonasi_satker = Hashids::decode($request->token_zonasi_satker);
+            if(empty($id_zonasi_satker)){
+                throw new \Exception("Data Anda tidak valid");
+            }
+
+            $data_hakim_sama = 0;
+            $jlh_pimpinan_adhoc = 0;
+            for($x=0;$x<count($data_hakim);$x++){
+                if($data_hakim[$x] === 1 || $data_hakim[$x] === 0){
+                    //berarti ada pimpinan atau adhoc
+                    $jlh_pimpinan_adhoc+=1;
+                }
+                for($y=0;$y<count($data_hakim);$y++){
+                    if($data_hakim[$y] === 1 || $data_hakim[$y] === 0){
+                        break;
+                    }
+                    if((int)$data_hakim[$x] === (int)$data_hakim[$y] && $x !== $y){
+                        $data_hakim_sama+=1;
+                    }
+                }
+            }
+
+            if($jlh_pimpinan_adhoc === count($data_hakim)){
+                throw new \Exception("Tidak perlu diinput");
+            }
+
+            if((int)$data_hakim_sama > 0){
+                throw new \Exception("Ada hakim yang sama. Silahkan dilakukan pengecekan ulang");
+            }
+
+            $save_majelis = $this->zonasiSatkerService->saveMejelisHakim(clean($request->nama_majelis), $data_hakim, $id_zonasi_satker[0]);
+            $status = $save_majelis['status'];
+            $msg = $save_majelis['msg'];
+
+        }catch(\Exception $e){
+            $msg = $e->getMessage()." ".$e->getLine();
+        }
+
+        return response()->json(['status'=>$status, 'msg'=>$msg]);
+    }
+
+
     public function saveJabatanKosongSatker(Request $request){
         $status=false;
         try{
@@ -198,8 +366,28 @@ class zonasiSatkerController extends Controller
         return response()->json(['status'=>$status, 'msg'=>$msg]);
     }
 
+    /**
+     * Confirm Jabatan Kosong(Admin Satker)
+     *
+     * Endpoint konfirmasi jabatan kosong dan majelis hakim.
+     *@authenticated
+     *@group Zonasi
+     *
+     *@header X-Signature signature dari dari detil zonasi satker.Example: 3549483789c6ea4914fb842295a0ebead654fc3fa74196e5afd882e5bef27384
+     *
+     * @bodyParam token_zonasi_satker string required. Example: Lz0lb6zD
+     * @bodyParam payload string required. Example: test
+     * 
+     * 
+     * @response 200 {
+     *      "status": true,
+     *      "msg": "Berhasil disimpan",
+     *      
+     * }
+     */
     public function sendConfirmJabatanKosong(Request $request){
         $status=false;
+        $msg = "";
         try{
             $request->validate([
                 'token_zonasi_satker'=> ['required', 'string'],
@@ -209,10 +397,21 @@ class zonasiSatkerController extends Controller
             if(empty($id_zonasi_satker)){
                 return response()->json(['status'=>false, 'msg'=>"Invalid token Zonasi Satker"]);
             }
+            $uname = $request->user()->uname;
 
-            $send=$this->zonasiSatkerService->sendConfirmJabatanKosong($id_zonasi_satker[0], $request->user()->uname);
-            $status=$send['status'];
-            $msg=$send['msg'];
+            $send=$this->zonasiSatkerService->sendConfirmJabatanKosong($id_zonasi_satker[0]);
+            $status_jabatan_kosong=$send['status'];
+            $msg.=$send['msg']."\n";
+            $id_zonasi = $send['id_zonasi'];
+            if($status_jabatan_kosong ===  true){
+                $send_majelis = $this->zonasiSatkerService->sendConfirmMajelisHakim($id_zonasi_satker[0]);
+                $msg.= $send_majelis['msg']."\n";
+                $status_majelis=$send_majelis['status'];
+                if($status_majelis === true){
+                    $id_periode = $send_majelis['id_periode'];
+                    $this->zonasiSatkerService->generateJobSendWA($id_zonasi, $id_periode, $uname);
+                }
+            }
         }catch(ValidationException $e){
             $msg=$e->validator->errors()->first();
         }

@@ -170,6 +170,7 @@ use PDO;
             $lengkap = $kelengkapan_majelis['lengkap'];
             $jumlah_hakim = $kelengkapan_majelis['jlh_hakim'];
             $data_majelis = $kelengkapan_majelis['data_majelis'];
+            $jlh_blm_masuk = $kelengkapan_majelis['jlh_blm_masuk'];
 
             if($send_confirm === true && $lengkap === true){
                 $send_confirm = true;
@@ -182,13 +183,62 @@ use PDO;
                 'msg'=>$msg,
                 'send_confirm'=>$send_confirm,
                 'data'=>$data,
-                'data_majelis'=>$data_majelis,
+                'data_majelis'=>[
+                        'lengkap'=>$lengkap,
+                        'status_kelengkapan'=>$jlh_blm_masuk."/".$jumlah_hakim." Hakim karir belum masuk majelis",
+                        'list_majelis'=>$data_majelis,
+                    ],
                 'jumlah_hakim'=>$jumlah_hakim
+            ];
+        }
+
+        public function getKelengkapanMajelisPeriode($id_periode){
+            $lengkap = false;
+            
+            $get_jumlah_hakim = Trans_observee::join("trans_zonasi_satker as tzs", "tzs.IdZonaSatker", "=", "trans_observee.IdZonaSatker")
+                                                ->join("tref_zonasi as tz", "tz.IdZona", "tzs.IdZona")
+                                                ->join("tref_tahun_penilaian as ttp", "ttp.IdTahunPenilaian", "=", "tz.IdTahunPenilaian")
+                                                ->where("trans_observee.id_kelompok_jabatan", 30)
+                                                ->where("tz.IdTahunPenilaian", $id_periode)
+                                                ->select("ttp.IdTahunPenilaian as id_periode", "trans_observee.IdObservee")
+                                                ->get();
+            $jlh_hakim = $get_jumlah_hakim->count();
+            $id_observee = [];
+
+            foreach($get_jumlah_hakim as $list_hakim){
+                $id_observee[]=$list_hakim['IdObservee'];
+            }
+
+            $get_majelis = Majelis_hakim::leftJoin("trans_observee as to", "to.IdObservee", "=", "tref_majelis_hakim.IdObservee")
+                                        ->leftJoin("tref_pegawai as tp", "tp.id_pegawai", "=", "to.IdPegawai")
+                                        ->where("tref_majelis_hakim.id_periode", $id_periode)
+                                        ->select("tref_majelis_hakim.*", "tp.nama_pegawai")
+                                        ->orderBy("tref_majelis_hakim.nama_majelis")
+                                        ->get();
+            
+            $id_observee_majelis = [];
+           
+            foreach($get_majelis as $list_majelis){
+                $id_observee_majelis[] = $list_majelis['IdObservee'];
+            }
+
+            $compare_observee = array_values(array_diff($id_observee, $id_observee_majelis));
+            //jumlah hakim belum masuk ke majelis
+            $jumlah_blm_masuk = count($compare_observee);
+            if($jumlah_blm_masuk === 0){
+                $lengkap = true;
+            }
+            
+            return [
+                'lengkap'=>$lengkap,
+                'jlh_hakim'=>$jlh_hakim,
+                'jlh_blm_masuk'=>$jumlah_blm_masuk
             ];
         }
 
         public function getKelengkapanMajelis($id_zonasi_satker){
             $lengkap = false;
+            
             $get_jumlah_hakim = Trans_observee::join("trans_zonasi_satker as tzs", "tzs.IdZonaSatker", "=", "trans_observee.IdZonaSatker")
                                                 ->join("tref_zonasi as tz", "tz.IdZona", "tzs.IdZona")
                                                 ->join("tref_tahun_penilaian as ttp", "ttp.IdTahunPenilaian", "=", "tz.IdTahunPenilaian")
@@ -204,8 +254,8 @@ use PDO;
                 $id_periode = $list_hakim['id_periode'];
             }
 
-            $get_majelis = Majelis_hakim::join("trans_observee as to", "to.IdObservee", "=", "tref_majelis_hakim.IdObservee")
-                                        ->join("tref_pegawai as tp", "tp.id_pegawai", "=", "to.IdPegawai")
+            $get_majelis = Majelis_hakim::leftJoin("trans_observee as to", "to.IdObservee", "=", "tref_majelis_hakim.IdObservee")
+                                        ->leftJoin("tref_pegawai as tp", "tp.id_pegawai", "=", "to.IdPegawai")
                                         ->where("tref_majelis_hakim.id_periode", $id_periode)
                                         ->where("tref_majelis_hakim.id_zonasi_satker", $id_zonasi_satker)
                                         ->select("tref_majelis_hakim.*", "tp.nama_pegawai")
@@ -216,21 +266,35 @@ use PDO;
             $data_majelis = null;
             $nama_majelis_before = null;
             $x=0;
+            $y=0;
             foreach($get_majelis as $list_majelis){
                 $id_observee_majelis[] = $list_majelis['IdObservee'];
                 if($nama_majelis_before !== $list_majelis['nama_majelis']){
+                    $y=0;
+                    if(!is_null($nama_majelis_before)){
+                         $x++;
+                    }
                     $data_majelis[$x] = [
                         "token_majelis"=>Hashids::encode($list_majelis['IdObservee']),
                         "nama_majelis"=>$list_majelis['nama_majelis'],
 
                     ];
-                    $x++;
-                }else{
-                    $data_majelis[$x] = [
-                        'nama_pegawai'=>$list_majelis['nama_pegawai'],
-                        'status'=>(int)$list_majelis['status'] === 1 ? "Confirmed" : "Not Confirmed"
-                    ];
                 }
+                if((int)$list_majelis['IdObservee'] === 0){
+                    $nama_pegawai = "Ketua Pengadilan";
+                }elseif((int)$list_majelis['IdObservee'] === 1){
+                    $nama_pegawai = "Wakil Ketua Pengadilan";
+                }elseif((int)$list_majelis['IdObservee'] === 2){
+                    $nama_pegawai = "Hakim Ad Hoc";
+                }else{
+                    $nama_pegawai = $list_majelis['nama_pegawai'];
+                }
+                $data_majelis[$x]['data_hakim'][$y] = [
+                    'nama_pegawai'=>$nama_pegawai,
+                    'status'=>(int)$list_majelis['status'] === 1 ? "Confirmed" : "Not Confirmed"
+                ];
+                $y++;
+                $nama_majelis_before = $list_majelis['nama_majelis'];
             }
 
             $compare_observee = array_values(array_diff($id_observee, $id_observee_majelis));
@@ -243,7 +307,8 @@ use PDO;
             return [
                 'lengkap'=>$lengkap,
                 'jlh_hakim'=>$jlh_hakim,
-                'data_majelis'=>$data_majelis
+                'data_majelis'=>$data_majelis,
+                'jlh_blm_masuk'=>$jumlah_blm_masuk
             ];
         }
 
@@ -336,8 +401,45 @@ use PDO;
                 'msg'=>$msg,
                 'data'=>$data
             ];
+        }
+
+        public function getHakimByNameNip($identitas, $id_satker, $id_zonasi_satker){
+            $status = false;
+            $data = null;
+            $msg = "";
+            $get_data = Tref_pegawai::join("trans_observee as to", function($join) use($id_zonasi_satker){
+                                            $join->on("to.IdPegawai", "=", "tref_pegawai.id_pegawai")
+                                                ->where("to.IdZonaSatker", $id_zonasi_satker)
+                                                ->where("to.id_kelompok_jabatan", 30);
+                                        })
+                                    ->join("trans_zonasi_satker as tzs", function($join) use($id_satker){
+                                        $join->on("tzs.IdZonaSatker", "=", "to.IdZonaSatker")
+                                            ->where("tzs.IdSatker", $id_satker);
+                                    })
+                                    ->select("tref_pegawai.nama_pegawai", "to.IdObservee", "tref_pegawai.nip")
+                                    ->where("tref_pegawai.nip", $identitas)
+                                    ->orWhereRaw("tref_pegawai.nama_pegawai like '".$identitas."%'")
+                                    ->first();
+            
+            if(!is_null($get_data)){
+                $status = true;
+                $msg = "Data Found";
+                $data['nama'] = $get_data->nama_pegawai;
+                $data['nip'] = $get_data->nip;
+                $data['token_pegawai'] = Hashids::encode($get_data->IdObservee);
+            }else{
+                $msg = "Nama atau NIP tidak terdaftar. ".$id_satker;
+            }
+
+            return [
+                'status'=>$status,
+                'msg'=>$msg,
+                'data'=>$data
+            ];
             
         }
+
+        
 
         public function saveJabatanKosongSatker($nip, $id_satker, $id_jabatan_kosong){
             $status=false;
@@ -362,6 +464,9 @@ use PDO;
                             'msg'=>"Tidak dapat menyimpan data. Jabatan ini sudah dikirim"
                         ];
                     }
+
+
+
                     DB::beginTransaction();
                         $id_zonasi_satker=$jabatan_kosong['id_zonasi_satker'];
                         $id_jabatan=$jabatan_kosong['id_jabatan_kosong'];
@@ -390,6 +495,54 @@ use PDO;
             ];
         }
 
+        public function saveMejelisHakim($nama_majelis, $id_hakim_arr, $id_zonasi_satker){
+            //0 : ketua
+            //1 : wakil
+            //2 : adhoc
+            $status = false;
+            $msg = "";
+            try{
+                $get_periode = Zonasi_satker::join("tref_zonasi as tz", "tz.IdZona", "=", "trans_zonasi_satker.IdZona")
+                                            ->select("tz.IdTahunPenilaian")
+                                            ->where("trans_zonasi_satker.IdZonaSatker", $id_zonasi_satker)
+                                            ->first();
+                if(!is_null($get_periode)){
+                    $data = [];
+                    $check_majelis = Majelis_hakim::where("nama_majelis", $nama_majelis)->where('id_zonasi_satker', $id_zonasi_satker)->exists();
+
+                    if(!$check_majelis){
+                        $check_komposisi = Majelis_hakim::whereIn('IdObservee', $id_hakim_arr)->where('id_zonasi_satker', $id_zonasi_satker)->groupBy('IdObservee')->count();
+                        if($check_komposisi < 3){
+                            for($x=0;$x<count($id_hakim_arr);$x++){
+                                $data[] = [
+                                    'nama_majelis'=>$nama_majelis,
+                                    'IdObservee'=>$id_hakim_arr[$x],
+                                    'id_periode'=>$get_periode->IdTahunPenilaian,
+                                    'id_zonasi_satker'=>$id_zonasi_satker,
+                                    'status'=>false,
+                                    'created_at'=>date("Y-m-d H:i:s")
+                                ];
+                            }
+                            DB::table("tref_majelis_hakim")->insert($data);
+                            $status = true;
+                            $msg = "Berhasil menyimpan data Majelis ".$nama_majelis;
+                        }else{
+                            $msg = "Komposisi Majelis sudah ada";
+                        }
+                    }else{
+                        $msg = "Nama Majelis ".$nama_majelis." di periode ini sudah ada";
+                    }
+                }else{
+                    $msg = "Data Zonasi tidak ditemukan";
+                }
+
+            }catch(\Exception $e){
+                $msg = $e->getMessage()." ".$e->getLine();
+            }
+
+            return ['status'=>$status, 'msg'=>$msg];
+        }
+
         public function checkJabatanKosongZonasi($id_zonasi){
             $check_data=Trans_jabatan_kosong::where('id_zonasi', $id_zonasi)
                         ->whereRaw('id_observee is null')
@@ -398,7 +551,88 @@ use PDO;
             return $check_data;
         }
 
-        public function sendConfirmJabatanKosong($id_zonasi_satker, $username){
+        public function sendConfirmMajelisHakim($id_zonasi_satker){
+            $status = false;
+            $msg = "";
+            $id_periode = null;
+            $check_kelengkapan = $this->getKelengkapanMajelis($id_zonasi_satker);
+            $lengkap = $check_kelengkapan['lengkap'];
+            if($lengkap === true){
+                $check = Majelis_hakim::where("id_zonasi_satker", $id_zonasi_satker)->where('status', false)->exists();
+                if($check){
+                    Majelis_hakim::where("id_zonasi_satker", $id_zonasi_satker)->update(['status'=>true]);
+                    $get_periode = Majelis_hakim::where("id_zonasi_satker", $id_zonasi_satker)->select("id_periode")->first();
+                    $status = true;
+                    $msg = "Data Majelis berhasil dikonfirmasi";
+                    $id_periode = $get_periode->id_periode;
+                }else{
+                    $msg = "Data Majelis sudah dikirimkan";
+                }
+            }else{
+                $msg = "Masih ada hakim karir yang belum masuk ke majelis";
+            }
+            return ['status'=>$status, 'msg'=>$msg, 'id_periode'=>$id_periode];
+        }
+
+        public function generateJobSendWA($id_zonasi, $id_periode, $username){
+            $send_notif = false;
+            $status = false;
+            $check_data=$this->checkJabatanKosongZonasi($id_zonasi);
+            $get_majelis = $this->getKelengkapanMajelisPeriode($id_periode);
+            $lengkap = $get_majelis['lengkap'];
+            $blm_masuk = $get_majelis['jlh_blm_masuk'];
+            $jlh_hakim = $get_majelis['jlh_hakim'];
+
+            if($check_data === 0 && $lengkap === true){
+                $get_zonasi=Tref_zonasi::where('IdZona', $id_zonasi)->first();
+                if(!is_null($get_zonasi)){
+                    $start_date=date("Y-m-d", strtotime($get_zonasi['start_date']));
+                    $end_date=date("Y-m-d", strtotime($get_zonasi['end_date']));
+                    $date_now=date("Y-m-d");
+                    if($date_now < $start_date){
+                        $proses_id=4;
+                    }else if($date_now >= $start_date && $date_now <= $end_date){
+                        $proses_id = 5;
+                        $send_notif=true;
+                    }else if($date_now > $start_date && $date_now > $end_date){
+                        $proses_id=6;
+                    }else{
+                        $proses_id=null;
+                    }
+
+                    if(!is_null($proses_id)){
+                        $current_proses_id=(int)$get_zonasi['proses_id'];
+                        if($current_proses_id < (int)$proses_id){
+                            $get_zonasi->proses_id=$proses_id;
+                            $get_zonasi->diperbarui_oleh=$username;
+                            $get_zonasi->diperbarui_tgl=date("Y-m-d H:i:s");
+                            $get_zonasi->update();
+
+                            if($send_notif){
+                                $create_job=$this->createJobSendWA($id_zonasi);
+                                $status_job=$create_job['status'];
+                                $msg_job=$create_job['msg'];
+                                $status_log="error";
+                                if($status_job === true){
+                                    $status_log="finished";
+                                    $msg_job="Berhasil mengirimkan Pesan Whatsapp ke Admin Badilum untuk mengirimkan Notifikasi";
+                                }
+                                $this->zonasiService->saveLog($id_zonasi, "send_notif", $msg_job, $status_log);
+                            }
+
+                        }else{
+                            throw new \Exception("Tahapan Proses tidak boleh Mundur");
+                        }
+                    }else{
+                        throw new \Exception('Proses Tahapan Zonasi tidak dapat didefinisikan');
+                    }
+                }else{
+                    throw new \Exception('Data zonasi tidak ditentukan');
+                }
+            }
+        }
+
+        public function sendConfirmJabatanKosong($id_zonasi_satker){
             $send_notif=false;
             $status=false;
             $not_filled=0;
@@ -407,7 +641,8 @@ use PDO;
                                     ->get();
             $jumlah_jabatan_kosong=$get_data->count();
             $id_zonasi=null;
-            if($jumlah_jabatan_kosong >= 0){
+
+            if($jumlah_jabatan_kosong > 0){
                 foreach($get_data as $list_jabatan_kosong){
                     if(is_null($list_jabatan_kosong['id_observee'])){
                         $not_filled+=1;
@@ -420,83 +655,31 @@ use PDO;
 
                 if($not_filled > 0){
                     $msg="Masih ada Jabatan yang belum diisi";
+                    return ['status'=>false, 'msg'=>$msg];
                 }
                 if((int)$sent === (int)$jumlah_jabatan_kosong){
                     $msg="Seluruh data sudah dikirim";
-                }else if(((int)$sent === 0 || (int)$sent < (int)$jumlah_jabatan_kosong)  && (int)$jumlah_jabatan_kosong > 0){
-                    try{
-                        DB::beginTransaction();
-                            $affected=Trans_jabatan_kosong::where('id_zonasi_satker', $id_zonasi_satker)->update(['status'=>true]);
-                            if($affected > 0){
-                                //check
-                                $check_data=$this->checkJabatanKosongZonasi($id_zonasi);
-                                if($check_data === 0){
-                                    $get_zonasi=Tref_zonasi::where('IdZona', $id_zonasi)->first();
-                                    if(!is_null($get_zonasi)){
-                                        $start_date=date("Y-m-d", strtotime($get_zonasi['start_date']));
-                                        $end_date=date("Y-m-d", strtotime($get_zonasi['end_date']));
-                                        $date_now=date("Y-m-d");
-                                        if($date_now < $start_date){
-                                            $proses_id=4;
-                                        }else if($date_now >= $start_date && $date_now <= $end_date){
-                                            $proses_id = 5;
-                                            $send_notif=true;
-                                        }else if($date_now > $start_date && $date_now > $end_date){
-                                            $proses_id=6;
-                                        }else{
-                                            $proses_id=null;
-                                        }
-
-                                        if(!is_null($proses_id)){
-                                            $current_proses_id=(int)$get_zonasi['proses_id'];
-                                            if($current_proses_id < (int)$proses_id){
-                                                $get_zonasi->proses_id=$proses_id;
-                                                $get_zonasi->diperbarui_oleh=$username;
-                                                $get_zonasi->diperbarui_tgl=date("Y-m-d H:i:s");
-                                                $get_zonasi->update();
-
-                                                if($send_notif){
-                                                    $create_job=$this->createJobSendWA($id_zonasi);
-                                                    $status_job=$create_job['status'];
-                                                    $msg_job=$create_job['msg'];
-                                                    $status_log="error";
-                                                    if($status_job === true){
-                                                        $status_log="finished";
-                                                        $msg_job="Berhasil mengirimkan Pesan Whatsapp ke Admin Badilum untuk mengirimkan Notifikasi";
-                                                    }
-                                                    $this->zonasiService->saveLog($id_zonasi, "send_notif", $msg_job, $status_log);
-                                                }
-
-                                            }else{
-                                                throw new \Exception("Tahapan Proses tidak boleh Mundur");
-                                            }
-                                        }else{
-                                            throw new \Exception('Proses Tahapan Zonasi tidak dapat didefinisikan');
-                                        }
-                                    }else{
-                                        throw new \Exception('Data zonasi tidak ditentukan');
-                                    }
-                                }
-                            }else{
-                                 throw new \Exception('Tidak ada data yang diubah ');
-                            }
-                        DB::commit();
+                }else if(((int)$sent === 0 || (int)$sent < (int)$jumlah_jabatan_kosong)  && (int)$jumlah_jabatan_kosong > 0){    
+                    $affected=Trans_jabatan_kosong::where('id_zonasi_satker', $id_zonasi_satker)->update(['status'=>true]);
+                    if($affected > 0){
                         $status=true;
                         $msg="Berhasil mengirimkan ".$affected." data";
-                    }catch(\Exception $e){
-                        DB::rollBack();
-                        $msg=$e->getMessage();
-                    }
+                    }else{
+                        $msg = "Tidak ada data jabatan yang diubah";
+                    } 
+                
                 }else{
                     $msg="Tidak ada data yang dikirimkan";
                 }
             }else{
+                $status = true;
                 $msg="Tidak ada Jabatan Kosong";
             }
 
             return [
                 'status'=>$status,
-                'msg'=>$msg
+                'msg'=>$msg,
+                'id_zonasi'=>$id_zonasi
             ];
         }
 

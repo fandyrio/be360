@@ -48,6 +48,13 @@ Route::middleware(['jwt.auth', 'isAdminSatker'])->group(function(){
     Route::get('detil-jabatan-kosong-satker/{token_jabatan_kosong}', 'api\zonasiSatkerController@detilJabatanKosongSatker');
     Route::post('get-pegawai-local', 'api\zonasiSatkerController@getPegawaiLocalByNIP');
     Route::post('save-jabatan-kosong', 'api\zonasiSatkerController@saveJabatanKosongSatker')->middleware('checkSign');
+    Route::post("save-majelis", 'api\zonasiSatkerController@saveMejelis');
+
+    //untuk majelis hakim
+    Route::post("get-hakim-satker", 'api\zonasiSatkerController@getHakimByNameNip');
+    // Route::post("")
+    //========
+
     Route::post('confirm-jabatan-kosong', 'api\zonasiSatkerController@sendConfirmJabatanKosong')->middleware('checkSign');
     Route::get('monitoring-satker/{id_zonasi_satker}/{page}/{refresh?}', 'api\zonasiSatkerController@montoringZonasiSatker');
     Route::post('send-to-badilum', 'api\zonasiSatkerController@sendPenilaianToBadilum')->middleware('checkSign');

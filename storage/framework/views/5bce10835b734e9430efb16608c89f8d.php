@@ -162,9 +162,6 @@
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-POSTapi-save-jabatan-kosong">
                                 <a href="#endpoints-POSTapi-save-jabatan-kosong">POST api/save-jabatan-kosong</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-confirm-jabatan-kosong">
-                                <a href="#endpoints-POSTapi-confirm-jabatan-kosong">POST api/confirm-jabatan-kosong</a>
-                            </li>
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-GETapi-monitoring-satker--id_zonasi_satker---page---refresh--">
                                 <a href="#endpoints-GETapi-monitoring-satker--id_zonasi_satker---page---refresh--">GET api/monitoring-satker/{id_zonasi_satker}/{page}/{refresh?}</a>
                             </li>
@@ -173,9 +170,6 @@
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-GETapi-list-zonasi-satker--page-">
                                 <a href="#endpoints-GETapi-list-zonasi-satker--page-">GET api/list-zonasi-satker/{page}</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-detil-zonasi-satker--id-">
-                                <a href="#endpoints-GETapi-detil-zonasi-satker--id-">GET api/detil-zonasi-satker/{id}</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-GETapi-dashboard-badilum">
                                 <a href="#endpoints-GETapi-dashboard-badilum">GET api/dashboard-badilum</a>
@@ -446,6 +440,18 @@
                                                     <li class="tocify-item level-2" data-unique="zonasi-GETapi-list-jabatan-kosong-satker--id_zonasi_satker-">
                                 <a href="#zonasi-GETapi-list-jabatan-kosong-satker--id_zonasi_satker-">Jabatan Kosong(Admin Satker)</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="zonasi-POSTapi-save-majelis">
+                                <a href="#zonasi-POSTapi-save-majelis">Save Majelis(Admin Satker)</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="zonasi-POSTapi-get-hakim-satker">
+                                <a href="#zonasi-POSTapi-get-hakim-satker">Get Hakim By NIP(Admin Satker)</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="zonasi-POSTapi-confirm-jabatan-kosong">
+                                <a href="#zonasi-POSTapi-confirm-jabatan-kosong">Confirm Jabatan Kosong(Admin Satker)</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="zonasi-GETapi-detil-zonasi-satker--id-">
+                                <a href="#zonasi-GETapi-detil-zonasi-satker--id-">(Admin Satker) Detil Zonasi Satker</a>
+                            </li>
                                                                                 <li class="tocify-item level-2" data-unique="zonasi-GETapi-list-zonasi--page--">
                                 <a href="#zonasi-GETapi-list-zonasi--page--">List Zonasi(Admin Badilum)</a>
                             </li>
@@ -463,7 +469,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: July 17, 2026</li>
+        <li>Last updated: July 29, 2026</li>
     </ul>
 </div>
 
@@ -966,7 +972,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -1110,7 +1116,7 @@ fetch(url, {
             <pre><code class="language-http">content-type: text/html; charset=UTF-8
 cache-control: no-cache, private
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -1265,7 +1271,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -1409,7 +1415,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -1692,7 +1698,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -2101,7 +2107,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -2245,7 +2251,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -2402,7 +2408,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -2685,7 +2691,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -2968,7 +2974,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -3742,7 +3748,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -3886,7 +3892,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -4030,7 +4036,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -4389,132 +4395,6 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                         </form>
 
-                    <h2 id="endpoints-POSTapi-confirm-jabatan-kosong">POST api/confirm-jabatan-kosong</h2>
-
-<p>
-<small class="badge badge-darkred">requires authentication</small>
-</p>
-
-
-
-<span id="example-requests-POSTapi-confirm-jabatan-kosong">
-<blockquote>Example request:</blockquote>
-
-
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request POST \
-    "http://be_360.local/api/confirm-jabatan-kosong" \
-    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
-    --header "Content-Type: application/json" \
-    --header "Accept: application/json"</code></pre></div>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/confirm-jabatan-kosong"
-);
-
-const headers = {
-    "Authorization": "Bearer {YOUR_AUTH_KEY}",
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-};
-
-
-fetch(url, {
-    method: "POST",
-    headers,
-}).then(response =&gt; response.json());</code></pre></div>
-
-</span>
-
-<span id="example-responses-POSTapi-confirm-jabatan-kosong">
-</span>
-<span id="execution-results-POSTapi-confirm-jabatan-kosong" hidden>
-    <blockquote>Received response<span
-                id="execution-response-status-POSTapi-confirm-jabatan-kosong"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-POSTapi-confirm-jabatan-kosong"
-      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
-</span>
-<span id="execution-error-POSTapi-confirm-jabatan-kosong" hidden>
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-POSTapi-confirm-jabatan-kosong">
-
-Tip: Check that you&#039;re properly connected to the network.
-If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
-You can check the Dev Tools console for debugging information.</code></pre>
-</span>
-<form id="form-POSTapi-confirm-jabatan-kosong" data-method="POST"
-      data-path="api/confirm-jabatan-kosong"
-      data-authed="1"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('POSTapi-confirm-jabatan-kosong', this);">
-    <h3>
-        Request&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-POSTapi-confirm-jabatan-kosong"
-                    onclick="tryItOut('POSTapi-confirm-jabatan-kosong');">Try it out ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-POSTapi-confirm-jabatan-kosong"
-                    onclick="cancelTryOut('POSTapi-confirm-jabatan-kosong');" hidden>Cancel 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-POSTapi-confirm-jabatan-kosong"
-                    data-initial-text="Send Request 💥"
-                    data-loading-text="⏱ Sending..."
-                    hidden>Send Request 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-black">POST</small>
-            <b><code>api/confirm-jabatan-kosong</code></b>
-        </p>
-                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-confirm-jabatan-kosong"
-               value="Bearer {YOUR_AUTH_KEY}"
-               data-component="header">
-    <br>
-<p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="POSTapi-confirm-jabatan-kosong"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="POSTapi-confirm-jabatan-kosong"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                        </form>
-
                     <h2 id="endpoints-GETapi-monitoring-satker--id_zonasi_satker---page---refresh--">GET api/monitoring-satker/{id_zonasi_satker}/{page}/{refresh?}</h2>
 
 <p>
@@ -4565,7 +4445,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -4872,7 +4752,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -4979,163 +4859,6 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                     </form>
 
-                    <h2 id="endpoints-GETapi-detil-zonasi-satker--id-">GET api/detil-zonasi-satker/{id}</h2>
-
-<p>
-<small class="badge badge-darkred">requires authentication</small>
-</p>
-
-
-
-<span id="example-requests-GETapi-detil-zonasi-satker--id-">
-<blockquote>Example request:</blockquote>
-
-
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request GET \
-    --get "http://be_360.local/api/detil-zonasi-satker/architecto" \
-    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
-    --header "Content-Type: application/json" \
-    --header "Accept: application/json"</code></pre></div>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "http://be_360.local/api/detil-zonasi-satker/architecto"
-);
-
-const headers = {
-    "Authorization": "Bearer {YOUR_AUTH_KEY}",
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-};
-
-
-fetch(url, {
-    method: "GET",
-    headers,
-}).then(response =&gt; response.json());</code></pre></div>
-
-</span>
-
-<span id="example-responses-GETapi-detil-zonasi-satker--id-">
-            <blockquote>
-            <p>Example response (401):</p>
-        </blockquote>
-                <details class="annotation">
-            <summary style="cursor: pointer;">
-                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
-            </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
-content-type: application/json
-x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
-vary: Origin
- </code></pre></details>         <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthorized&quot;
-}</code>
- </pre>
-    </span>
-<span id="execution-results-GETapi-detil-zonasi-satker--id-" hidden>
-    <blockquote>Received response<span
-                id="execution-response-status-GETapi-detil-zonasi-satker--id-"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-GETapi-detil-zonasi-satker--id-"
-      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
-</span>
-<span id="execution-error-GETapi-detil-zonasi-satker--id-" hidden>
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETapi-detil-zonasi-satker--id-">
-
-Tip: Check that you&#039;re properly connected to the network.
-If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
-You can check the Dev Tools console for debugging information.</code></pre>
-</span>
-<form id="form-GETapi-detil-zonasi-satker--id-" data-method="GET"
-      data-path="api/detil-zonasi-satker/{id}"
-      data-authed="1"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('GETapi-detil-zonasi-satker--id-', this);">
-    <h3>
-        Request&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETapi-detil-zonasi-satker--id-"
-                    onclick="tryItOut('GETapi-detil-zonasi-satker--id-');">Try it out ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETapi-detil-zonasi-satker--id-"
-                    onclick="cancelTryOut('GETapi-detil-zonasi-satker--id-');" hidden>Cancel 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETapi-detil-zonasi-satker--id-"
-                    data-initial-text="Send Request 💥"
-                    data-loading-text="⏱ Sending..."
-                    hidden>Send Request 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-green">GET</small>
-            <b><code>api/detil-zonasi-satker/{id}</code></b>
-        </p>
-                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Authorization" class="auth-value"               data-endpoint="GETapi-detil-zonasi-satker--id-"
-               value="Bearer {YOUR_AUTH_KEY}"
-               data-component="header">
-    <br>
-<p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="GETapi-detil-zonasi-satker--id-"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="GETapi-detil-zonasi-satker--id-"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
-                    <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
-<small>string</small>&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="id"                data-endpoint="GETapi-detil-zonasi-satker--id-"
-               value="architecto"
-               data-component="url">
-    <br>
-<p>The ID of the detil zonasi satker. Example: <code>architecto</code></p>
-            </div>
-                    </form>
-
                     <h2 id="endpoints-GETapi-dashboard-badilum">GET api/dashboard-badilum</h2>
 
 <p>
@@ -5186,7 +4909,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -5456,7 +5179,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -5739,7 +5462,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -5896,7 +5619,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -6053,7 +5776,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -6714,7 +6437,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -6871,7 +6594,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -7028,7 +6751,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -7311,7 +7034,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -7720,7 +7443,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -7864,7 +7587,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -8399,7 +8122,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -8808,7 +8531,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -9204,7 +8927,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -9600,7 +9323,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -9757,7 +9480,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -9914,7 +9637,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -10197,7 +9920,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -10354,7 +10077,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -10624,7 +10347,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -10907,7 +10630,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -11064,7 +10787,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -11334,7 +11057,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -11617,7 +11340,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -11900,7 +11623,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -12183,7 +11906,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -12490,7 +12213,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -12634,7 +12357,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -12791,7 +12514,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -12960,7 +12683,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -13495,7 +13218,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -13656,7 +13379,7 @@ fetch(url, {
             <pre><code class="language-http">content-type: text/html; charset=UTF-8
 cache-control: no-cache, private
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -13811,7 +13534,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -13980,7 +13703,7 @@ fetch(url, {
             <pre><code class="language-http">content-type: text/html; charset=UTF-8
 cache-control: no-cache, private
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -14122,7 +13845,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -14268,7 +13991,7 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 150
-x-ratelimit-remaining: 148
+x-ratelimit-remaining: 149
 vary: Origin
  </code></pre></details>         <pre>
 
@@ -16755,6 +16478,722 @@ You can check the Dev Tools console for debugging information.</code></pre>
                data-component="url">
     <br>
 <p>required. Example: <code>16</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="zonasi-POSTapi-save-majelis">Save Majelis(Admin Satker)</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Endpoint untuk menyimpan data majelis hakim.</p>
+
+<span id="example-requests-POSTapi-save-majelis">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://be_360.local/api/save-majelis" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"token_hakim\": [
+        \"abc123\",
+        \"def456\",
+        \"ghi789\"
+    ],
+    \"nama_majelis\": \"Majelis 1\",
+    \"token_zonasi_satker\": \"9zn5pBNn\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://be_360.local/api/save-majelis"
+);
+
+const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "token_hakim": [
+        "abc123",
+        "def456",
+        "ghi789"
+    ],
+    "nama_majelis": "Majelis 1",
+    "token_zonasi_satker": "9zn5pBNn"
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-save-majelis">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+     &quot;status&quot;: true,
+     &quot;msg&quot;: &quot;Berhasil disimpan&quot;,
+
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-save-majelis" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-save-majelis"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-save-majelis"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-save-majelis" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-save-majelis">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-save-majelis" data-method="POST"
+      data-path="api/save-majelis"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-save-majelis', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-save-majelis"
+                    onclick="tryItOut('POSTapi-save-majelis');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-save-majelis"
+                    onclick="cancelTryOut('POSTapi-save-majelis');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-save-majelis"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/save-majelis</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-save-majelis"
+               value="Bearer {YOUR_AUTH_KEY}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-save-majelis"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-save-majelis"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>token_hakim</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="token_hakim[0]"                data-endpoint="POSTapi-save-majelis"
+               data-component="body">
+        <input type="text" style="display: none"
+               name="token_hakim[1]"                data-endpoint="POSTapi-save-majelis"
+               data-component="body">
+    <br>
+<p>Array token hakim</p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>nama_majelis</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="nama_majelis"                data-endpoint="POSTapi-save-majelis"
+               value="Majelis 1"
+               data-component="body">
+    <br>
+<p>required. Example: <code>Majelis 1</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>token_zonasi_satker</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="token_zonasi_satker"                data-endpoint="POSTapi-save-majelis"
+               value="9zn5pBNn"
+               data-component="body">
+    <br>
+<p>required. Example: <code>9zn5pBNn</code></p>
+        </div>
+        </form>
+
+                    <h2 id="zonasi-POSTapi-get-hakim-satker">Get Hakim By NIP(Admin Satker)</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Endpoint untuk mengambil data personal hakim.</p>
+
+<span id="example-requests-POSTapi-get-hakim-satker">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://be_360.local/api/get-hakim-satker" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"identity\": \"Ratna\",
+    \"token_zonasi_satker\": \"architecto\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://be_360.local/api/get-hakim-satker"
+);
+
+const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "identity": "Ratna",
+    "token_zonasi_satker": "architecto"
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-get-hakim-satker">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+     &quot;status&quot;: true,
+     &quot;msg&quot;: &quot;Data Found&quot;,
+     &quot;data&quot;: [
+          &quot;nama&quot;: &quot;Ratna Dewi&quot;,
+          &quot;nip&quot;: &quot;1992010101010101010&quot;,
+          &quot;token_pegawai&quot;: &quot;random_string&quot;
+      ]
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-get-hakim-satker" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-get-hakim-satker"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-get-hakim-satker"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-get-hakim-satker" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-get-hakim-satker">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-get-hakim-satker" data-method="POST"
+      data-path="api/get-hakim-satker"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-get-hakim-satker', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-get-hakim-satker"
+                    onclick="tryItOut('POSTapi-get-hakim-satker');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-get-hakim-satker"
+                    onclick="cancelTryOut('POSTapi-get-hakim-satker');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-get-hakim-satker"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/get-hakim-satker</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-get-hakim-satker"
+               value="Bearer {YOUR_AUTH_KEY}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-get-hakim-satker"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-get-hakim-satker"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>identity</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="identity"                data-endpoint="POSTapi-get-hakim-satker"
+               value="Ratna"
+               data-component="body">
+    <br>
+<p>nama_or_nip. Example: <code>Ratna</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>token_zonasi_satker</code></b>&nbsp;&nbsp;
+<small>required</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="token_zonasi_satker"                data-endpoint="POSTapi-get-hakim-satker"
+               value="architecto"
+               data-component="body">
+    <br>
+<p>token_zonasi_satker example: 2892 Example: <code>architecto</code></p>
+        </div>
+        </form>
+
+                    <h2 id="zonasi-POSTapi-confirm-jabatan-kosong">Confirm Jabatan Kosong(Admin Satker)</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Endpoint konfirmasi jabatan kosong dan majelis hakim.</p>
+
+<span id="example-requests-POSTapi-confirm-jabatan-kosong">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://be_360.local/api/confirm-jabatan-kosong" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
+    --header "X-Signature: signature dari get pertanyaan by category. Example: 3549483789c6ea4914fb842295a0ebead654fc3fa74196e5afd882e5bef27384" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"token_zonasi_satker\": \"Lz0lb6zD\",
+    \"payload\": \"test\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://be_360.local/api/confirm-jabatan-kosong"
+);
+
+const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
+    "X-Signature": "signature dari get pertanyaan by category. Example: 3549483789c6ea4914fb842295a0ebead654fc3fa74196e5afd882e5bef27384",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "token_zonasi_satker": "Lz0lb6zD",
+    "payload": "test"
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-confirm-jabatan-kosong">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+     &quot;status&quot;: true,
+     &quot;msg&quot;: &quot;Berhasil disimpan&quot;,
+
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-confirm-jabatan-kosong" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-confirm-jabatan-kosong"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-confirm-jabatan-kosong"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-confirm-jabatan-kosong" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-confirm-jabatan-kosong">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-confirm-jabatan-kosong" data-method="POST"
+      data-path="api/confirm-jabatan-kosong"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-confirm-jabatan-kosong', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-confirm-jabatan-kosong"
+                    onclick="tryItOut('POSTapi-confirm-jabatan-kosong');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-confirm-jabatan-kosong"
+                    onclick="cancelTryOut('POSTapi-confirm-jabatan-kosong');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-confirm-jabatan-kosong"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/confirm-jabatan-kosong</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-confirm-jabatan-kosong"
+               value="Bearer {YOUR_AUTH_KEY}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>X-Signature</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="X-Signature"                data-endpoint="POSTapi-confirm-jabatan-kosong"
+               value="signature dari get pertanyaan by category. Example: 3549483789c6ea4914fb842295a0ebead654fc3fa74196e5afd882e5bef27384"
+               data-component="header">
+    <br>
+<p>Example: <code>signature dari get pertanyaan by category. Example: 3549483789c6ea4914fb842295a0ebead654fc3fa74196e5afd882e5bef27384</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-confirm-jabatan-kosong"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-confirm-jabatan-kosong"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>token_zonasi_satker</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="token_zonasi_satker"                data-endpoint="POSTapi-confirm-jabatan-kosong"
+               value="Lz0lb6zD"
+               data-component="body">
+    <br>
+<p>required. Example: <code>Lz0lb6zD</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>payload</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="payload"                data-endpoint="POSTapi-confirm-jabatan-kosong"
+               value="test"
+               data-component="body">
+    <br>
+<p>required. Example: <code>test</code></p>
+        </div>
+        </form>
+
+                    <h2 id="zonasi-GETapi-detil-zonasi-satker--id-">(Admin Satker) Detil Zonasi Satker</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Endpoint untuk mengambil data detil zonasi untuk admin satker.</p>
+
+<span id="example-requests-GETapi-detil-zonasi-satker--id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://be_360.local/api/detil-zonasi-satker/architecto" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://be_360.local/api/detil-zonasi-satker/architecto"
+);
+
+const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-detil-zonasi-satker--id-">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-detil-zonasi-satker--id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-detil-zonasi-satker--id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-detil-zonasi-satker--id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-detil-zonasi-satker--id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-detil-zonasi-satker--id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-detil-zonasi-satker--id-" data-method="GET"
+      data-path="api/detil-zonasi-satker/{id}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-detil-zonasi-satker--id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-detil-zonasi-satker--id-"
+                    onclick="tryItOut('GETapi-detil-zonasi-satker--id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-detil-zonasi-satker--id-"
+                    onclick="cancelTryOut('GETapi-detil-zonasi-satker--id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-detil-zonasi-satker--id-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/detil-zonasi-satker/{id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-detil-zonasi-satker--id-"
+               value="Bearer {YOUR_AUTH_KEY}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-detil-zonasi-satker--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-detil-zonasi-satker--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="id"                data-endpoint="GETapi-detil-zonasi-satker--id-"
+               value="architecto"
+               data-component="url">
+    <br>
+<p>The ID of the detil zonasi satker. Example: <code>architecto</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id_zonasi_satker_enc</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="id_zonasi_satker_enc"                data-endpoint="GETapi-detil-zonasi-satker--id-"
+               value="architecto"
+               data-component="url">
+    <br>
+<p>required. Example: <code>architecto</code></p>
             </div>
                     </form>
 
