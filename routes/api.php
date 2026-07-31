@@ -56,7 +56,7 @@ Route::middleware(['jwt.auth', 'isAdminSatker'])->group(function(){
     //========
 
     Route::post('confirm-jabatan-kosong', 'api\zonasiSatkerController@sendConfirmJabatanKosong')->middleware('checkSign');
-    Route::post('delete-jabatan-kosong', 'api\zonasiSatkerController@deleteMajelisHakim')->middleware('checkSign');
+    Route::post('delete-majelis-hakim', 'api\zonasiSatkerController@deleteMajelisHakim')->middleware('checkSign');
     Route::get('monitoring-satker/{id_zonasi_satker}/{page}/{refresh?}', 'api\zonasiSatkerController@montoringZonasiSatker');
     Route::post('send-to-badilum', 'api\zonasiSatkerController@sendPenilaianToBadilum')->middleware('checkSign');
 
