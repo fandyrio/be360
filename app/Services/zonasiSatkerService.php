@@ -165,7 +165,6 @@ use PDO;
                 }
             }else{
                 $msg="Tidak ada Jabatan Kosong. Mohon menunggu Satuan Kerja lain untuk mengisi jabatan kosong";
-                $send_confirm = true;
             }
 
             $kelengkapan_majelis = $this->getKelengkapanMajelis($id_zonasi_satker);
@@ -173,11 +172,14 @@ use PDO;
             $jumlah_hakim = $kelengkapan_majelis['jlh_hakim'];
             $data_majelis = $kelengkapan_majelis['data_majelis'];
             $jlh_blm_masuk = $kelengkapan_majelis['jlh_blm_masuk'];
+            $confirmed = $kelengkapan_majelis['confirmed'];
 
-            if($send_confirm === true && $lengkap === true){
+            //send_confirm = Menampilkan tombol konfirmasi 
+            if($send_confirm === true || ($lengkap === true && $confirmed === false)){
                 $send_confirm = true;
             }else{
                 $send_confirm = false;
+                $status = true;
             }
 
             return [
@@ -239,8 +241,9 @@ use PDO;
         }
 
         public function getKelengkapanMajelis($id_zonasi_satker){
+            $confirmed = true;
             $lengkap = false;
-            
+            $blm_confirm = 0;
             $get_jumlah_hakim = Trans_observee::join("trans_zonasi_satker as tzs", "tzs.IdZonaSatker", "=", "trans_observee.IdZonaSatker")
                                                 ->join("tref_zonasi as tz", "tz.IdZona", "tzs.IdZona")
                                                 ->join("tref_tahun_penilaian as ttp", "ttp.IdTahunPenilaian", "=", "tz.IdTahunPenilaian")
@@ -271,6 +274,9 @@ use PDO;
             $y=0;
             foreach($get_majelis as $list_majelis){
                 $id_observee_majelis[] = $list_majelis['IdObservee'];
+                if((int)$list_majelis['status'] === 0){
+                    $blm_confirm +=1;
+                }
                 if($nama_majelis_before !== $list_majelis['nama_majelis']){
                     $y=0;
                     if(!is_null($nama_majelis_before)){
@@ -305,12 +311,17 @@ use PDO;
             if($jumlah_blm_masuk === 0){
                 $lengkap = true;
             }
+
+            if((int)$get_majelis->count() === (int)$blm_confirm){
+                $confirmed = false;
+            }
             
             return [
                 'lengkap'=>$lengkap,
                 'jlh_hakim'=>$jlh_hakim,
                 'data_majelis'=>$data_majelis,
-                'jlh_blm_masuk'=>$jumlah_blm_masuk
+                'jlh_blm_masuk'=>$jumlah_blm_masuk,
+                'confirmed'=>$confirmed
             ];
         }
 
