@@ -449,6 +449,9 @@
                                                                                 <li class="tocify-item level-2" data-unique="zonasi-POSTapi-confirm-jabatan-kosong">
                                 <a href="#zonasi-POSTapi-confirm-jabatan-kosong">Confirm Jabatan Kosong(Admin Satker)</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="zonasi-POSTapi-delete-jabatan-kosong">
+                                <a href="#zonasi-POSTapi-delete-jabatan-kosong">Admin Satker - Delete Majelis</a>
+                            </li>
                                                                                 <li class="tocify-item level-2" data-unique="zonasi-GETapi-detil-zonasi-satker--id-">
                                 <a href="#zonasi-GETapi-detil-zonasi-satker--id-">(Admin Satker) Detil Zonasi Satker</a>
                             </li>
@@ -469,7 +472,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: July 29, 2026</li>
+        <li>Last updated: July 31, 2026</li>
     </ul>
 </div>
 
@@ -16869,7 +16872,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     <pre><code class="language-bash">curl --request POST \
     "http://be_360.local/api/confirm-jabatan-kosong" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
-    --header "X-Signature: signature dari get pertanyaan by category. Example: 3549483789c6ea4914fb842295a0ebead654fc3fa74196e5afd882e5bef27384" \
+    --header "X-Signature: signature dari dari detil zonasi satker.Example: 3549483789c6ea4914fb842295a0ebead654fc3fa74196e5afd882e5bef27384" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -16886,7 +16889,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 const headers = {
     "Authorization": "Bearer {YOUR_AUTH_KEY}",
-    "X-Signature": "signature dari get pertanyaan by category. Example: 3549483789c6ea4914fb842295a0ebead654fc3fa74196e5afd882e5bef27384",
+    "X-Signature": "signature dari dari detil zonasi satker.Example: 3549483789c6ea4914fb842295a0ebead654fc3fa74196e5afd882e5bef27384",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -16983,10 +16986,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="X-Signature"                data-endpoint="POSTapi-confirm-jabatan-kosong"
-               value="signature dari get pertanyaan by category. Example: 3549483789c6ea4914fb842295a0ebead654fc3fa74196e5afd882e5bef27384"
+               value="signature dari dari detil zonasi satker.Example: 3549483789c6ea4914fb842295a0ebead654fc3fa74196e5afd882e5bef27384"
                data-component="header">
     <br>
-<p>Example: <code>signature dari get pertanyaan by category. Example: 3549483789c6ea4914fb842295a0ebead654fc3fa74196e5afd882e5bef27384</code></p>
+<p>Example: <code>signature dari dari detil zonasi satker.Example: 3549483789c6ea4914fb842295a0ebead654fc3fa74196e5afd882e5bef27384</code></p>
             </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
@@ -17036,6 +17039,206 @@ You can check the Dev Tools console for debugging information.</code></pre>
                data-component="body">
     <br>
 <p>required. Example: <code>test</code></p>
+        </div>
+        </form>
+
+                    <h2 id="zonasi-POSTapi-delete-jabatan-kosong">Admin Satker - Delete Majelis</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-POSTapi-delete-jabatan-kosong">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://be_360.local/api/delete-jabatan-kosong" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
+    --header "X-Signature: signature dari dari detil zonasi satker.Example: 3549483789c6ea4914fb842295a0ebead654fc3fa74196e5afd882e5bef27384" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"token_majelis\": \"architecto\",
+    \"trans_zonasi_satker\": \"Lz0lb6zD\",
+    \"payload\": \"trans_zonasi_satker\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://be_360.local/api/delete-jabatan-kosong"
+);
+
+const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
+    "X-Signature": "signature dari dari detil zonasi satker.Example: 3549483789c6ea4914fb842295a0ebead654fc3fa74196e5afd882e5bef27384",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "token_majelis": "architecto",
+    "trans_zonasi_satker": "Lz0lb6zD",
+    "payload": "trans_zonasi_satker"
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-delete-jabatan-kosong">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+     &quot;status&quot;: true,
+     &quot;msg&quot;: &quot;Berhasil disimpan&quot;,
+
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-delete-jabatan-kosong" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-delete-jabatan-kosong"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-delete-jabatan-kosong"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-delete-jabatan-kosong" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-delete-jabatan-kosong">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-delete-jabatan-kosong" data-method="POST"
+      data-path="api/delete-jabatan-kosong"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-delete-jabatan-kosong', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-delete-jabatan-kosong"
+                    onclick="tryItOut('POSTapi-delete-jabatan-kosong');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-delete-jabatan-kosong"
+                    onclick="cancelTryOut('POSTapi-delete-jabatan-kosong');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-delete-jabatan-kosong"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/delete-jabatan-kosong</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-delete-jabatan-kosong"
+               value="Bearer {YOUR_AUTH_KEY}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>X-Signature</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="X-Signature"                data-endpoint="POSTapi-delete-jabatan-kosong"
+               value="signature dari dari detil zonasi satker.Example: 3549483789c6ea4914fb842295a0ebead654fc3fa74196e5afd882e5bef27384"
+               data-component="header">
+    <br>
+<p>Example: <code>signature dari dari detil zonasi satker.Example: 3549483789c6ea4914fb842295a0ebead654fc3fa74196e5afd882e5bef27384</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-delete-jabatan-kosong"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-delete-jabatan-kosong"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>token_majelis</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="token_majelis"                data-endpoint="POSTapi-delete-jabatan-kosong"
+               value="architecto"
+               data-component="body">
+    <br>
+<p>required. Example: Example: <code>architecto</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>trans_zonasi_satker</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="trans_zonasi_satker"                data-endpoint="POSTapi-delete-jabatan-kosong"
+               value="Lz0lb6zD"
+               data-component="body">
+    <br>
+<p>required. Ambil dari detil zonasi Example: <code>Lz0lb6zD</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>payload</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="payload"                data-endpoint="POSTapi-delete-jabatan-kosong"
+               value="trans_zonasi_satker"
+               data-component="body">
+    <br>
+<p>required. Example: <code>trans_zonasi_satker</code></p>
         </div>
         </form>
 

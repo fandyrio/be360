@@ -9,7 +9,9 @@ use App\Models\Tref_sys_config;
 use Illuminate\Http\Request;
 use App\Services\zonasiSatkerService;
 use DateTime;
+use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Testing\Fluent\Concerns\Has;
 use Illuminate\Validation\ValidationException;
@@ -336,6 +338,68 @@ class zonasiSatkerController extends Controller
             $msg = $e->getMessage()." ".$e->getLine();
         }
 
+        return response()->json(['status'=>$status, 'msg'=>$msg]);
+    }
+
+    /**
+     * Admin Satker - Delete Majelis
+     *@header X-Signature signature dari dari detil zonasi satker.Example: 3549483789c6ea4914fb842295a0ebead654fc3fa74196e5afd882e5bef27384
+     * Endpoint untuk menghapus data majelis hakim.
+     *@authenticated
+     *@group Zonasi
+     *
+     *
+     *
+     * @bodyParam token_majelis string required. Example: 
+     * @bodyParam trans_zonasi_satker string required. Ambil dari detil zonasi Example: Lz0lb6zD
+     * @bodyParam payload string required. Example: trans_zonasi_satker
+     * 
+     * 
+     * @response 200 {
+     *      "status": true,
+     *      "msg": "Berhasil disimpan",
+     *      
+     * }
+     */
+    public function deleteMajelisHakim(Request $request){
+        $status = false;
+        try{
+            $request->validate([
+                'token_majelis'=>['required', 'string'],
+                'trans_zonasi_satker'=>['required', 'string'],
+                'payload'=>['required', 'string']
+
+            ]);
+            $token_majelis = explode("-", $request->token_majelis);
+            $jumlah = count($token_majelis);
+            if($jumlah === 3){
+                $id_periode_enc = $token_majelis[0];
+                $id_zonasi_satker_enc = $token_majelis[1];
+                $nama_majelis_enc = $token_majelis[2];
+
+                $id_periode = Hashids::decode($id_periode_enc);
+                $id_zonasi_satker = Hashids::decode($id_zonasi_satker_enc);
+                
+                try{
+                    $nama_majelis = Crypt::decrypt($nama_majelis_enc);
+                    if(empty($id_periode) || empty($id_zonasi_satker)){
+                        $msg = "Invalid token zonasi anda";
+                    }else{
+                        $delete = $this->zonasiSatkerService->deleteMajelisHakim($id_periode, $id_zonasi_satker, $nama_majelis);
+                        $status = $delete['status'];
+                        $msg = $delete['msg'];
+                    }
+                }catch(DecryptException $e){
+                    $msg = "Invalid token majelis hakim";
+                }
+                
+
+            }else{
+                $msg = "Invalid token majelis";
+            }
+        }catch(ValidationException $e){
+            $msg = $e->validator->errors()->first();
+        }
         return response()->json(['status'=>$status, 'msg'=>$msg]);
     }
 

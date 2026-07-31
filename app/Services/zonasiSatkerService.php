@@ -13,6 +13,7 @@ use Vinkla\Hashids\Facades\Hashids;
     use App\Models\Tref_zonasi;
     use App\Models\Zonasi_satker;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use PDO;
 
@@ -275,7 +276,7 @@ use PDO;
                          $x++;
                     }
                     $data_majelis[$x] = [
-                        "token_majelis"=>Hashids::encode($list_majelis['IdObservee']),
+                        "token_majelis"=>Hashids::encode($list_majelis['id_periode'])."-".Hashids::encode($list_majelis['id_zonasi_satker'])."-".Crypt::encrypt($list_majelis['nama_majelis']),
                         "nama_majelis"=>$list_majelis['nama_majelis'],
 
                     ];
@@ -310,6 +311,28 @@ use PDO;
                 'data_majelis'=>$data_majelis,
                 'jlh_blm_masuk'=>$jumlah_blm_masuk
             ];
+        }
+
+        public function deleteMajelisHakim($id_periode, $id_zonasi_satker, $nama_majelis){
+            $status = false;
+            $get_data = Majelis_hakim::where("nama_majelis", $nama_majelis)
+                        ->where('id_zonasi_satker', $id_zonasi_satker)
+                        ->where('id_periode', $id_periode)
+                        ->where('status', false);
+
+            $jumlah = $get_data->count();
+            if($jumlah === 3){
+                if($get_data->delete()){
+                    $status = true;
+                    $msg = "Berhasil menghapus data";
+                }else{
+                    $msg = "Terjadi kesalahan sistem saat menghapus data";
+                }
+            }else{
+                $msg = "Data majelis tidak dapat dihapus.";
+            }
+
+            return ['status'=>$status, 'msg'=>$msg];
         }
 
         public function testingFn(){
@@ -542,6 +565,8 @@ use PDO;
 
             return ['status'=>$status, 'msg'=>$msg];
         }
+
+        
 
         public function checkJabatanKosongZonasi($id_zonasi){
             $check_data=Trans_jabatan_kosong::where('id_zonasi', $id_zonasi)
