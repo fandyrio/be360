@@ -549,6 +549,7 @@ use PDO;
                         $check_komposisi = DB::table('tref_majelis_hakim')
                                             ->whereIn('IdObservee', $id_hakim_arr)
                                             ->where('id_zonasi_satker', $id_zonasi_satker)
+                                            ->select('nama_majelis')
                                             ->groupBy('nama_majelis')->havingRaw('COUNT(DISTINCT IdObservee) > ?', [3])
                                             ->count();
                         if($check_komposisi < 3){
