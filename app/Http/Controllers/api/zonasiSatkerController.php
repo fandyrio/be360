@@ -351,7 +351,7 @@ class zonasiSatkerController extends Controller
      *
      *
      * @bodyParam token_majelis string required. Example: 
-     * @bodyParam trans_zonasi_satker string required. Ambil dari detil zonasi Example: Lz0lb6zD
+     * @bodyParam token_zonasi_satker string required. Ambil dari detil zonasi Example: Lz0lb6zD
      * @bodyParam payload string required. Example: trans_zonasi_satker
      * 
      * 
@@ -366,7 +366,7 @@ class zonasiSatkerController extends Controller
         try{
             $request->validate([
                 'token_majelis'=>['required', 'string'],
-                'trans_zonasi_satker'=>['required', 'string'],
+                'token_zonasi_satker'=>['required', 'string'],
                 'payload'=>['required', 'string']
 
             ]);
