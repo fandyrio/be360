@@ -541,6 +541,12 @@ use PDO;
                                             ->select("tz.IdTahunPenilaian")
                                             ->where("trans_zonasi_satker.IdZonaSatker", $id_zonasi_satker)
                                             ->first();
+                $check_confirm = Majelis_hakim::where('id_zonasi_satker', $id_zonasi_satker)
+                                                ->where('status', true)
+                                                ->exists();
+                if($check_confirm){
+                    throw new \Exception("Sudah tidak bisa menambahkan Majelis");
+                }
                 if(!is_null($get_periode)){
                     $data = [];
                     $check_majelis = Majelis_hakim::where("nama_majelis", $nama_majelis)->where('id_zonasi_satker', $id_zonasi_satker)->exists();
