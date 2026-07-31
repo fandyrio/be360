@@ -546,7 +546,11 @@ use PDO;
                     $check_majelis = Majelis_hakim::where("nama_majelis", $nama_majelis)->where('id_zonasi_satker', $id_zonasi_satker)->exists();
 
                     if(!$check_majelis){
-                        $check_komposisi = Majelis_hakim::whereIn('IdObservee', $id_hakim_arr)->where('id_zonasi_satker', $id_zonasi_satker)->groupBy('nama_majelis')->havingRaw('COUNT (DISTINCT IdObservee) > ?', [3])->count();
+                        $check_komposisi = DB::table('tref_majelis_hakim')
+                                            ->whereIn('IdObservee', $id_hakim_arr)
+                                            ->where('id_zonasi_satker', $id_zonasi_satker)
+                                            ->groupBy('nama_majelis')->havingRaw('COUNT (DISTINCT IdObservee) > ?', [3])
+                                            ->count();
                         if($check_komposisi < 3){
                             for($x=0;$x<count($id_hakim_arr);$x++){
                                 $data[] = [
