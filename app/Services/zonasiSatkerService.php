@@ -165,6 +165,7 @@ use PDO;
                 }
             }else{
                 $msg="Tidak ada Jabatan Kosong. Mohon menunggu Satuan Kerja lain untuk mengisi jabatan kosong";
+                $send_confirm = true;
             }
 
             $kelengkapan_majelis = $this->getKelengkapanMajelis($id_zonasi_satker);
