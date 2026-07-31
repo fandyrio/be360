@@ -450,7 +450,7 @@ class zonasiSatkerController extends Controller
      * }
      */
     public function sendConfirmJabatanKosong(Request $request){
-        $status=false;
+        $status_majelis=false;
         $msg = "";
         try{
             $request->validate([
@@ -474,14 +474,14 @@ class zonasiSatkerController extends Controller
                 if($status_majelis === true){
                     $id_periode = $send_majelis['id_periode'];
                     $this->zonasiSatkerService->generateJobSendWA($id_zonasi, $id_periode, $uname);
-                    $status = true;
+
                 }
             }
         }catch(ValidationException $e){
             $msg=$e->validator->errors()->first();
         }
 
-        return response()->json(['status'=>$status, 'msg'=>$msg]);
+        return response()->json(['status'=>$status_majelis, 'msg'=>$msg]);
     }
 
     public function sendNotificationPeserta(Request $request){
