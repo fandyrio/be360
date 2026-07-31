@@ -474,6 +474,7 @@ class zonasiSatkerController extends Controller
                 if($status_majelis === true){
                     $id_periode = $send_majelis['id_periode'];
                     $this->zonasiSatkerService->generateJobSendWA($id_zonasi, $id_periode, $uname);
+                    $status = true;
                 }
             }
         }catch(ValidationException $e){
