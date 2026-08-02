@@ -347,7 +347,7 @@ class zonasiController extends Controller
                     }
                 }
             }catch(\Exception $e){
-                $msg=$e->getMessage();
+                $msg=$e->getMessage()." ".$e->getFile()." ".$e->getLine();
             }
         }catch(ValidationException $e){
             $msg=$e->validator->errors()->first();
