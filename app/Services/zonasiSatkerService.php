@@ -38,7 +38,7 @@ use PDO;
             $limit = 10;
             $total=Zonasi_satker::join('tref_zonasi as tz', function($join){
                                         $join->on('tz.IdZona', '=', 'trans_zonasi_satker.IdZona')
-                                            ->whereRaw('tz.proses_id > 2');
+                                            ->whereRaw('tz.proses_id >= 2');
                                     })
                             ->where('IdSatker', $id_satker)->count();
             $jumlah_halaman=ceil($total / $limit);
@@ -52,7 +52,7 @@ use PDO;
                                     ->join('tref_tahapan_proses as thp', 'thp.id', '=', 'tref_zonasi.proses_id')
                                     ->skip($skip)->take($limit)
                                     ->select('tref_zonasi.*', 'vs.NamaSatker', 'tzs.IdZonaSatker', 'thp.proses')
-                                    ->whereRaw('tref_zonasi.proses_id > 2')
+                                    ->whereRaw('tref_zonasi.proses_id >= 2')
                                     ->get();
             if(!is_null($get_zonasi)){
                 $status=true;
@@ -583,7 +583,7 @@ use PDO;
                 }
 
             }catch(\Exception $e){
-                $msg = $e->getMessage()." ".$e->getLine();
+                $msg = $e->getMessage();
             }
 
             return ['status'=>$status, 'msg'=>$msg];
