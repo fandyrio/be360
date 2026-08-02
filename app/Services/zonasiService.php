@@ -1640,6 +1640,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                     })
                                     ->select("v_satker.IdSatker", "v_satker.NamaSatker", DB::raw("COUNT(tmh.nama_majelis) as jumlah"))
                                     ->where("tz.IdZona", $id_zonasi)
+                                    ->groupBy("tmh.nama_zonasi")
                                     ->groupBy("v_satker.NamaSatker")
                                     ->orderBy("v_satker.IdSatker")
                                     ->get();
