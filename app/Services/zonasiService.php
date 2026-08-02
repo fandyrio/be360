@@ -1638,7 +1638,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                         $join->on("tmh.id_zonasi_satker", "=", "tzs.IdZonaSatker")
                                             ->where("status", true);
                                     })
-                                    ->select("v_satker.IdSatker", "v_satker.NamaSatker", DB::raw("COUNT(tmh.nama_majelis) as jumlah"))
+                                    ->select("v_satker.IdSatker", "v_satker.NamaSatker", DB::raw("COUNT(*) as jumlah"))
                                     ->where("tz.IdZona", $id_zonasi)
                                     ->groupBy("v_satker.NamaSatker")
                                     ->orderBy("v_satker.IdSatker")
