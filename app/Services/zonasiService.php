@@ -159,11 +159,11 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                         $sent=0;
                                         foreach($get_data as $list_admin){
                                             //wa MA
-                                            $msg=getWAMsg("notif_isi_majelis", "");
+                                            $msg_wa=getWAMsg("notif_isi_majelis", "");
                                             $no_hp=$list_admin['no_hp'];
                                             $nip=$list_admin['nip'];
                                             $nama_pegawai=$list_admin['nama_pegawai'];
-                                            $sendWa=sendWa($msg, $nip, $nama_pegawai, $no_hp);
+                                            $sendWa=sendWa($msg_wa, $nip, $nama_pegawai, $no_hp);
                                             $status_kirim=$sendWa['status'];
                                             if($status_kirim === true){
                                                 $sent+=1;

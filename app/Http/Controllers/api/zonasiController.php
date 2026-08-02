@@ -103,6 +103,15 @@ class zonasiController extends Controller
                 if(empty($id_zonasi)){
                     throw new \Exception('Ivalid Token Zonasi');
                 }
+
+                $zonasi_detil = $this->zonasiService->getZonasiDetil($id_zonasi[0]);
+                $id_periode = $zonasi_detil->IdTahunPenilaian;
+                $check_majelis = $this->zonasiSatkerService->getKelengkapanMajelisPeriode($id_periode);
+                $status_majelis = $check_majelis['lengkap'];
+                if($status_majelis === false){
+                    return response()->json(['status'=>false, 'msg'=>'Data Majelis Hakim belum lengkap']);
+                }
+
                 $regenerate=$this->zonasiService->regeneratePeserta($id_zonasi[0]);
                 $status=$regenerate['status'];
                 $msg=$regenerate['msg'];
