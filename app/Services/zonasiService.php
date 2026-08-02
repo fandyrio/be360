@@ -140,12 +140,57 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                     DB::rollBack();
                                     $msg="Data satker tidak ditemukan ";
                                 }else{
+                                    $status_sent = "error";
                                     $save=true;
                                     $msg="Berhasil menyimpan Data Awal Zonasi ";
-                                    $generate_peserta=$this->getPeserta(Hashids::encode($id_zonasi));
-                                    $msg.=" dan ".$generate_peserta['msg'];
-                                    Cache::store("redis")->forget("zonasi_periode_{$id_tahun_penilaian}");
-                                    Tahun_penilaian::where("IdTahunPenilaian", $id_tahun_penilaian)->update(['proses_id' => 5]);
+
+                                    //send notif ke admin satker untuk melengkapi majelis
+                                    $get_data=Zonasi_satker::join('tref_users as tu', 'tu.IdSatker', '=', 'trans_zonasi_satker.IdSatker')
+                                                    ->join('tref_pegawai as tp', 'tp.id_pegawai', '=', 'tu.IdPegawai')
+                                                    ->select('tp.no_hp', 'tp.nama_pegawai', 'tp.nip', 'tp.nama_pegawai')
+                                                    ->where('trans_zonasi_satker.IdZona', $id_zonasi)
+                                                    ->groupBy('id_zonasi_satker')
+                                                    ->groupBy('tp.no_hp')
+                                                    ->groupBy('tp.nama_pegawai')
+                                                    ->groupBy("tp.nip")
+                                                    ->get();
+                                    $jumlah=$get_data->count();
+                                    if($jumlah > 0){
+                                        $sent=0;
+                                        foreach($get_data as $list_admin){
+                                            //wa MA
+                                            $msg=getWAMsg("notif_isi_majelis", "");
+                                            $no_hp=$list_admin['no_hp'];
+                                            $nip=$list_admin['nip'];
+                                            $nama_pegawai=$list_admin['nama_pegawai'];
+                                            $sendWa=sendWa($msg, $nip, $nama_pegawai, $no_hp);
+                                            $status_kirim=$sendWa['status'];
+                                            if($status_kirim === true){
+                                                $sent+=1;
+                                            }
+                                            #test wa hanya 1 kali kirim
+                                            // if($sent === 1){
+                                            //     break;
+                                            // }
+                                        }
+                                        if($sent === $jumlah){
+                                            $status_sent = "success";
+                                        }
+                                        $data_log = [
+                                                'data_id'=>$id_zonasi,
+                                                'categpry'=>'send_notif_majelis',
+                                                'msg'=>$sent." / ".$jumlah." Berhasil dikirimkan",
+                                                'status'=>$status_sent,
+                                                'activity'=>'finished',
+
+                                            ];
+                                        DB::table("log_msg")->insert($data_log);
+                                    }
+                                    $msg.=" dan ".$status_sent." mengirimkan pesan ke admin satuan kerja";
+                                    // $generate_peserta=$this->getPeserta(Hashids::encode($id_zonasi));
+                                    // $msg.=" dan ".$generate_peserta['msg'];
+                                    // Cache::store("redis")->forget("zonasi_periode_{$id_tahun_penilaian}");
+                                    // Tahun_penilaian::where("IdTahunPenilaian", $id_tahun_penilaian)->update(['proses_id' => 5]);
                                 }
                             }else{
                                 DB::rollBack();
@@ -166,6 +211,18 @@ use Symfony\Component\CssSelector\Node\HashNode;
                 'status'=>$save,
                 'msg'=>$msg
             ];
+        }
+
+        public function getZonasiDetil($id_zonasi){
+            $get_zonasi = Tref_zonasi::where("IdZona", $id_zonasi)->first();
+            return $get_zonasi;
+        }
+
+        public function generatePeserta($id_zonasi, $id_tahun_penilaian){
+            $generate_peserta=$this->getPeserta(Hashids::encode($id_zonasi));
+            Cache::store("redis")->forget("zonasi_periode_{$id_tahun_penilaian}");
+            Tahun_penilaian::where("IdTahunPenilaian", $id_tahun_penilaian)->update(['proses_id' => 5]);
+            return ['status'=>$generate_peserta['status'], 'msg'=>$generate_peserta['msg'], 'id_periode'=>$id_tahun_penilaian];
         }
 
         public function addSatkerToZonasi($request, $id_zonasi){

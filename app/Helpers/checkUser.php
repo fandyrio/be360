@@ -205,6 +205,10 @@ use Vinkla\Hashids\Facades\Hashids;
                 $msg="Mata360 - Pemberitahuan !!!\nKepada Yth. Bapak / Ibu ".$kode."\nAnda merupakan salah satu Peserta Penilaian Mata - 360.\n\nPenilaian 360 dapat diakses melalui alamat:\n\n".$url."/penilaian/".$additional_data."\n\nSilahan melakukan penilaian melalui Link tersebut. Terimakasih.\n\nDirektorat Jenderal Badan Peradilan Umum - Pembinaan Tenaga Teknis\n\nSilahkan menjawab pesan ini denga YA, untuk konfirmasi peserta";
             }else if($category === "notif_send_penilaian_badilum"){
                 $msg="Mata360 - Pemberitahuan !!!\nKepada Yth. Bapak / Ibu Admin Badilum.\n\nSeluruh Data Persiapan untuk memulai Penilaian sudah lengkap. Silahkan  mengirimkan notifikasi pesan Whatsapp ke peserta untuk tahapan selanjutnya\n\nTerimakasih";
+            }else if($category === "notif_isi_majelis"){
+                $get_config=Tref_sys_config::where('config_name', 'web_url')->first();
+                $url=$get_config['config_value_str'];
+                $msg="Mata360 - Pemberitahuan !!!\nKepada Yth. Admin Satuan Kerja Pengadilan.\n\nDalam rangka akan dilaksanakannya Penilaian Mata 360, diharapkan Bapak / Ibu Admin Satuan Kerja untuk mengisi data Majelis Hakim yang sesuai dengan SK Ketua Pengadilan yang ada di satuan kerja Bapak / Ibu masing - masing.\n\nSilahkan akses halaman Mata360 melalui link dibawah ini:\n\n\n".$url."\n\n\nTerimakasih.";
             }
 
             

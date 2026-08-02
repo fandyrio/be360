@@ -13,6 +13,7 @@ use Vinkla\Hashids\Facades\Hashids;
 use App\Models\Satker;
 use App\Models\Trans_jabatan_kosong;
 use App\Models\Tref_users;
+use App\Services\zonasiSatkerService;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Cache;
@@ -23,9 +24,11 @@ use Illuminate\Support\Facades\Log;
 class zonasiController extends Controller
 {
     protected $zonasiService;
+    protected $zonasiSatkerService;
 
-    public function __construct(zonasiService $zonasi_service){
+    public function __construct(zonasiService $zonasi_service, zonasiSatkerService $zonasi_satker_service){
         $this->zonasiService=$zonasi_service;
+        $this->zonasiSatkerService = $zonasi_satker_service;
     }
 
      /**
@@ -300,23 +303,38 @@ class zonasiController extends Controller
                 if(empty($id_zonasi)){
                     throw new \Exception('Invalid Token Zonasi');
                 }
-                $get_entry_job=$this->zonasiService->checkEntryJobTransZonasiSatker($id_zonasi[0]);
-                $jlh_entry_job_false=$get_entry_job['entry_job_false'];
-                $status=$get_entry_job['status'];
-                $msg=$get_entry_job['msg'];
-                if($status === true){
-                    $status=false;
-                    $jlh_jobs=Jobs::where('queue', 'insert_data_peserta_'.$id_zonasi[0])->count();
-                    if($jlh_jobs > 0){
-                        if($jlh_entry_job_false === 0){
-                            Artisan::call("queue:work --queue=insert_data_peserta_".$id_zonasi[0]." --stop-when-empty");
-                            $status=true;
-                            $msg = 'Queue sedang dijalankan...';
+
+                $zonasi_detil = $this->zonasiService->getZonasiDetil($id_zonasi[0]);
+                $id_periode = $zonasi_detil->IdTahunPenilaian;
+                $check_majelis = $this->zonasiSatkerService->getKelengkapanMajelisPeriode($id_periode);
+                $status_majelis = $check_majelis['lengkap'];
+                if($status_majelis === false){
+                    return response()->json(['status'=>false, 'msg'=>'Data Majelis Hakim belum lengkap']);
+                }
+
+                //generate peserta
+                $generate = $this->zonasiService->generatePeserta($id_zonasi[0],$id_periode);
+                $status_generate = $generate['status'];
+                $msg = $generate['msg'];
+                if($status_generate === true){
+                    $get_entry_job=$this->zonasiService->checkEntryJobTransZonasiSatker($id_zonasi[0]);
+                    $jlh_entry_job_false=$get_entry_job['entry_job_false'];
+                    $status=$get_entry_job['status'];
+                    $msg=$get_entry_job['msg'];
+                    if($status === true){
+                        $status=false;
+                        $jlh_jobs=Jobs::where('queue', 'insert_data_peserta_'.$id_zonasi[0])->count();
+                        if($jlh_jobs > 0){
+                            if($jlh_entry_job_false === 0){
+                                Artisan::call("queue:work --queue=insert_data_peserta_".$id_zonasi[0]." --stop-when-empty");
+                                $status=true;
+                                $msg = 'Queue sedang dijalankan...';
+                            }else{
+                                $msg="Ada Satker yang belum di generate Pesertanya. Silahkan regenerate Data Peserta terlebih dahulu";
+                            }
                         }else{
-                            $msg="Ada Satker yang belum di generate Pesertanya. Silahkan regenerate Data Peserta terlebih dahulu";
+                            $msg="Tidak ada Antrian Data";
                         }
-                    }else{
-                        $msg="Tidak ada Antrian Data";
                     }
                 }
             }catch(\Exception $e){
