@@ -322,10 +322,14 @@ class zonasiController extends Controller
                 }
 
                 //generate peserta
-                $generate = $this->zonasiService->generatePeserta($id_zonasi[0],$id_periode);
-                $status_generate = $generate['status'];
-                $msg = $generate['msg'];
-                if($status_generate === true){
+                // $generate = $this->zonasiService->generatePeserta($id_zonasi[0],$id_periode);
+                // $status_generate = $generate['status'];
+                // $msg = $generate['msg'];
+
+                // Tahun_penilaian::where("IdTahunPenilaian", $id_tahun_penilaian)->update(['proses_id' => 5]);
+                $queue_name = "insert_data_peserta_".$id_zonasi[0];
+                $get_queue_jobs = Jobs::where('queue', $queue_name)->exists();
+                if($get_queue_jobs === true){
                     $get_entry_job=$this->zonasiService->checkEntryJobTransZonasiSatker($id_zonasi[0]);
                     $jlh_entry_job_false=$get_entry_job['entry_job_false'];
                     $status=$get_entry_job['status'];
@@ -345,6 +349,8 @@ class zonasiController extends Controller
                             $msg="Tidak ada Antrian Data";
                         }
                     }
+                }else{
+                    $msg = "Tidak ada antrian data";
                 }
             }catch(\Exception $e){
                 $msg=$e->getMessage()." ".$e->getFile()." ".$e->getLine();
