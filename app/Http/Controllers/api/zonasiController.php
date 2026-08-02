@@ -385,6 +385,7 @@ class zonasiController extends Controller
         $total=0;
         $jumlah_halaman=0;
         $no=0;
+        $data_majelis = null;
         try{
             $id_zonasi_dec=Hashids::decode($id_zonasi);
             if(empty($id_zonasi_dec)){
