@@ -149,7 +149,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                                     ->join('tref_pegawai as tp', 'tp.id_pegawai', '=', 'tu.IdPegawai')
                                                     ->select('tp.no_hp', 'tp.nama_pegawai', 'tp.nip', 'tp.nama_pegawai')
                                                     ->where('trans_zonasi_satker.IdZona', $id_zonasi)
-                                                    ->groupBy('id_zonasi_satker')
+                                                    ->groupBy('IdZonaSatker')
                                                     ->groupBy('tp.no_hp')
                                                     ->groupBy('tp.nama_pegawai')
                                                     ->groupBy("tp.nip")
@@ -178,7 +178,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                         }
                                         $data_log = [
                                                 'data_id'=>$id_zonasi,
-                                                'categpry'=>'send_notif_majelis',
+                                                'category'=>'send_notif_majelis',
                                                 'msg'=>$sent." / ".$jumlah." Berhasil dikirimkan",
                                                 'status'=>$status_sent,
                                                 'activity'=>'finished',
