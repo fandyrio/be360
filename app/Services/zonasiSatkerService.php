@@ -216,6 +216,7 @@ use PDO;
             $get_majelis = Majelis_hakim::leftJoin("trans_observee as to", "to.IdObservee", "=", "tref_majelis_hakim.IdObservee")
                                         ->leftJoin("tref_pegawai as tp", "tp.id_pegawai", "=", "to.IdPegawai")
                                         ->where("tref_majelis_hakim.id_periode", $id_periode)
+                                        ->where("tref_majelis_hakim.status", true)
                                         ->select("tref_majelis_hakim.*", "tp.nama_pegawai")
                                         ->orderBy("tref_majelis_hakim.nama_majelis")
                                         ->get();
