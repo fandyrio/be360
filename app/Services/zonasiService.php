@@ -191,6 +191,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                     // $msg.=" dan ".$generate_peserta['msg'];
                                     // Cache::store("redis")->forget("zonasi_periode_{$id_tahun_penilaian}");
                                     // Tahun_penilaian::where("IdTahunPenilaian", $id_tahun_penilaian)->update(['proses_id' => 5]);
+                                    Tref_zonasi::where("IdTahunPenilaian", $id_tahun_penilaian)->update(['proses_id'=>2]);
                                 }
                             }else{
                                 DB::rollBack();
@@ -1401,7 +1402,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
             $msg="Menjalankan ".$total_batch+$current_job." Jobs Insert Peserta. Total data: ".count($data)+$total_data;
             try{
                 DB::beginTransaction();
-                     $this->updateProsesZonasi($id_zonasi, 2);
+                    //  $this->updateProsesZonasi($id_zonasi, 2);
                      if(count($data_kosong) > 0){
                         DB::table('trans_jabatan_kosong')->insert($data_kosong);
                      }
