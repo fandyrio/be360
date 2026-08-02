@@ -209,6 +209,10 @@ use Vinkla\Hashids\Facades\Hashids;
                 $get_config=Tref_sys_config::where('config_name', 'web_url')->first();
                 $url=$get_config['config_value_str'];
                 $msg="Mata360 - Pemberitahuan !!!\nKepada Yth. Admin Satuan Kerja Pengadilan.\n\nDalam rangka akan dilaksanakannya Penilaian Mata 360, diharapkan Bapak / Ibu Admin Satuan Kerja untuk mengisi data Majelis Hakim yang sesuai dengan SK Ketua Pengadilan yang ada di satuan kerja Bapak / Ibu masing - masing.\n\nSilahkan akses halaman Mata360 melalui link dibawah ini:\n\n\n".$url."\n\n\nTerimakasih.";
+            }else if($category === "majelis_lengkap"){
+                $get_config=Tref_sys_config::where('config_name', 'web_url')->first();
+                $url=$get_config['config_value_str'];
+                $msg="Mata360 - Pemberitahuan !!!\nKepada Yth. Admin mata360.\n\Seluruh Satuan Kerja telah selesai melakukan pengisian data Majelis Hakim. Untuk melanjutkan proses selanjutnya, silahkan lakukan Generate data Peserta.\n\nSilahkan akses halaman Mata360 melalui link dibawah ini:\n\n\n".$url."\n\n\nTerimakasih.";
             }
 
             

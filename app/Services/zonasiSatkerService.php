@@ -614,6 +614,29 @@ use PDO;
                     $status = true;
                     $msg = "Data Majelis berhasil dikonfirmasi";
                     $id_periode = $get_periode->id_periode;
+
+                    //check kelengkapan seluruhnya
+                    $check_lengkap_all = $this->getKelengkapanMajelisPeriode($id_periode);
+                    $lengkap = $check_lengkap_all['lengkap'];
+                    if($lengkap){
+                        $msg_wa = getWAMsg("majelis_lengkap", "");
+                        $get_admin_badilum=Tref_users::join('tref_pegawai as tp', 'tp.id_pegawai', '=', 'tref_users.IdPegawai')
+                                    ->select("tp.no_hp", "tp.nama_pegawai", "tp.nip")
+                                    ->where("tref_users.uname", "097450")
+                                    ->first();
+                        if(!is_null($get_admin_badilum)){
+                            $no_hp=$get_admin_badilum['no_hp'];
+                            $nama_admin=$get_admin_badilum['nama_pegawai'];
+                            $nip_admin=$get_admin_badilum['nip'];
+                            $send_wa=sendWa($msg_wa, $nip_admin, $nama_admin, $no_hp);
+                        }else{
+                            $msg_wa="Urgent !!!.\n\nData Admin Badilum tidak memliki no handphone atau data nya tidak ada. Silahkan lakukan trace data pada data admin badilum.";
+                            $send_wa=sendWa($msg_wa, "199306242019031004", "Fandy Juniario Simorangkir", "085880037948");
+                            $msg_log_sent="Data Admin badilum tidak memiliki no handphone atau data nya belum ada. Silahkan lakukan trace data admin badilum";
+                            // $this->zonasiService->saveLog($id_zonasi, "jobs_notif", $msg_log_sent, "error");
+                        }
+                    }
+
                 }else{
                     $msg = "Data Majelis sudah dikirimkan";
                 }
