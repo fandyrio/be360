@@ -484,6 +484,49 @@ class zonasiSatkerController extends Controller
         return response()->json(['status'=>$status_majelis, 'msg'=>$msg]);
     }
 
+     /**
+     * Confirm Majelis Hakim(Admin Satker)
+     *
+     * Endpoint konfirmasi data majelis hakim.
+     *@authenticated
+     *@group Zonasi
+     *
+     *@header X-Signature signature dari dari detil zonasi satker.Example: 3549483789c6ea4914fb842295a0ebead654fc3fa74196e5afd882e5bef27384
+     *
+     * @bodyParam token_zonasi_satker string required. Example: Lz0lb6zD
+     * @bodyParam payload string required. Example: test
+     * 
+     * 
+     * @response 200 {
+     *      "status": true,
+     *      "msg": "Berhasil disimpan",
+     *      
+     * }
+     */
+    public function sendConfirmMajelisHakim(Request $request){
+        $status_majelis=false;
+        $msg = "";
+        try{
+            $request->validate([
+                'token_zonasi_satker'=> ['required', 'string'],
+                'payload'=>['required']
+            ]);
+            $id_zonasi_satker=Hashids::decode($request->token_zonasi_satker);
+            if(empty($id_zonasi_satker)){
+                return response()->json(['status'=>false, 'msg'=>"Invalid token Zonasi Satker"]);
+            }
+            // $uname = $request->user()->uname;
+
+            $send_majelis = $this->zonasiSatkerService->sendConfirmMajelisHakim($id_zonasi_satker[0]);
+            $msg= $send_majelis['msg']."\n";
+            $status_majelis=$send_majelis['status'];
+        }catch(ValidationException $e){
+            $msg=$e->validator->errors()->first();
+        }
+
+        return response()->json(['status'=>$status_majelis, 'msg'=>$msg]);
+    }
+
     public function sendNotificationPeserta(Request $request){
         $status=false;
         try{
