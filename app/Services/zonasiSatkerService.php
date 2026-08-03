@@ -191,15 +191,20 @@ use PDO;
         }
 
         public function getMajelisHakim($id_zonasi_satker){
+            $send_confirm = false;
             $kelengkapan_majelis = $this->getKelengkapanMajelis($id_zonasi_satker);
             $lengkap = $kelengkapan_majelis['lengkap'];
             $jumlah_hakim = $kelengkapan_majelis['jlh_hakim'];
             $data_majelis = $kelengkapan_majelis['data_majelis'];
             $jlh_blm_masuk = $kelengkapan_majelis['jlh_blm_masuk'];
             $confirmed = $kelengkapan_majelis['confirmed'];
-
+            
+            if($confirmed === false && $lengkap === true){
+                $send_confirm = true;
+            }
+            
             return [
-                'confirmed'=>$confirmed,
+                'confirmed'=>$send_confirm,
                 'data_majelis'=>[
                         'lengkap'=>$lengkap,
                         'status_kelengkapan'=>$jlh_blm_masuk."/".$jumlah_hakim." Hakim karir belum masuk majelis",
