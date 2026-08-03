@@ -168,8 +168,8 @@ class zonasiSatkerController extends Controller
                 throw new \Exception("Invalid token Zonasi Satker");
             }
             $get_data=$this->zonasiSatkerService->getMajelisHakim($id_zonasi_satker, $id_satker);
-            $status=$get_data['status'];
-            $msg=$get_data['msg'];
+            $status=true;
+            $msg="Data Found";
             $send_confirm=$get_data['send_confirm'];
             $data=$get_data['data'];
             $data_majelis = $get_data['data_majelis'];
