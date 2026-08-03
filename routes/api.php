@@ -44,7 +44,7 @@ Route::middleware(['jwt.auth', 'isSuperAdminSatker'])->group(function(){
 Route::middleware(['jwt.auth', 'isAdminSatker'])->group(function(){
     Route::get('dashboard-satker', 'api\dashboardController@dashboardAdminSatker');
     Route::get('profile', 'api\userController@getDetilUserSatker');
-    Route::get('list-jabatan-kosong-satker/{id_zonasi_satker}', 'api\zonasiSatkerController@getJabatanKosongSatker');
+    Route::get('list-jabatan-kosong-satker/{id_zonasi_satker_enc}', 'api\zonasiSatkerController@getJabatanKosongSatker');
     Route::get("list-majelis-hakim/{id_zonasi_satker}", "api\zonasiSatkerController@getMajelisHakimSatker");
     Route::get('detil-jabatan-kosong-satker/{token_jabatan_kosong}', 'api\zonasiSatkerController@detilJabatanKosongSatker');
     Route::post('get-pegawai-local', 'api\zonasiSatkerController@getPegawaiLocalByNIP');
