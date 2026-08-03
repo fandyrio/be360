@@ -97,7 +97,7 @@ class zonasiSatkerController extends Controller
      *
      *
      *
-     * @urlParam id_zonasi_satker_enc integer required.
+     * @urlParam id_zonasi_satker_enc string required.
      * 
      * 
      * @response 200 {
@@ -144,7 +144,7 @@ class zonasiSatkerController extends Controller
      *
      *
      *
-     * @urlParam id_zonasi_satker_enc string required.
+     * @urlParam id_zonasi_satker_enc string required. Example: oRqKKENk
      * 
      * 
      * @response 200 {
@@ -169,7 +169,7 @@ class zonasiSatkerController extends Controller
             }
             $get_data=$this->zonasiSatkerService->getMajelisHakim($id_zonasi_satker);
             $status=true;
-            $msg="Data Found";
+            $msg=$get_data['status_kelengkapan'];
             $send_confirm=$get_data['send_confirm'];
             $data_majelis = $get_data['list_majelis'];
             $jumlah_hakim = $get_data['jumlah_hakim'];
