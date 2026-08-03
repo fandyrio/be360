@@ -205,11 +205,9 @@ use PDO;
             
             return [
                 'send_confirm'=>$send_confirm,
-                'data_majelis'=>[
-                        'lengkap'=>$lengkap,
-                        'status_kelengkapan'=>$jlh_blm_masuk."/".$jumlah_hakim." Hakim karir belum masuk majelis",
-                        'list_majelis'=>$data_majelis,
-                    ],
+                'lengkap'=>$lengkap,
+                'status_kelengkapan'=>$jlh_blm_masuk."/".$jumlah_hakim." Hakim karir belum masuk majelis",
+                'list_majelis'=>$data_majelis,
                 'jumlah_hakim'=>$jumlah_hakim
             ];
         }

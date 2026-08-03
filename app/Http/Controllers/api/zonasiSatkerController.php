@@ -171,14 +171,13 @@ class zonasiSatkerController extends Controller
             $status=true;
             $msg="Data Found";
             $send_confirm=$get_data['send_confirm'];
-            $data=$get_data['data'];
-            $data_majelis = $get_data['data_majelis'];
+            $data_majelis = $get_data['list_majelis'];
             $jumlah_hakim = $get_data['jumlah_hakim'];
         }catch(\Exception $e){
             $msg=$e->getMessage();
         }
 
-        return response()->json(['status'=>$status, 'msg'=>$msg, 'send_confirm'=>$send_confirm, 'data'=>$data, 'data_majelis'=>$data_majelis, 'jumlah_hakim'=>$jumlah_hakim]);
+        return response()->json(['status'=>$status, 'msg'=>$msg, 'send_confirm'=>$send_confirm, 'data_majelis'=>$data_majelis, 'jumlah_hakim'=>$jumlah_hakim]);
     }
 
     public function detilJabatanKosongSatker($token_jabatan_kosong, Request $request){
