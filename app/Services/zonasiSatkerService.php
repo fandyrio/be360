@@ -204,7 +204,7 @@ use PDO;
             }
             
             return [
-                'confirmed'=>$send_confirm,
+                'send_confirm'=>$send_confirm,
                 'data_majelis'=>[
                         'lengkap'=>$lengkap,
                         'status_kelengkapan'=>$jlh_blm_masuk."/".$jumlah_hakim." Hakim karir belum masuk majelis",

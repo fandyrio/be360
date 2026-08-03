@@ -167,7 +167,7 @@ class zonasiSatkerController extends Controller
             if(empty($id_zonasi_satker)){
                 throw new \Exception("Invalid token Zonasi Satker");
             }
-            $get_data=$this->zonasiSatkerService->getMajelisHakim($id_zonasi_satker, $id_satker);
+            $get_data=$this->zonasiSatkerService->getMajelisHakim($id_zonasi_satker);
             $status=true;
             $msg="Data Found";
             $send_confirm=$get_data['send_confirm'];
