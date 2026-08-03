@@ -134,6 +134,53 @@ class zonasiSatkerController extends Controller
         return response()->json(['status'=>$status, 'msg'=>$msg, 'send_confirm'=>$send_confirm, 'data'=>$data, 'data_majelis'=>$data_majelis, 'jumlah_hakim'=>$jumlah_hakim]);
     }
 
+
+    /**
+     * Majelis Hakim(Admin Satker)
+     *
+     * Endpoint untuk mengambil data  majelis hakim.
+     *
+     *@group Zonasi
+     *
+     *
+     *
+     * @urlParam id_zonasi_satker_enc integer required.
+     * 
+     * 
+     * @response 200 {
+     * 
+     * }
+     */
+    public function getMajelisHakimSatker($id_zonasi_satker_enc, Request $request){
+        $status=false;
+        $data=[];
+        $msg="";
+        $id_satker=0;
+        $send_confirm = false;
+        $data_majelis = null;
+        $jumlah_hakim = 0;
+        if(isset($request->user()->IdSatker)){
+            $id_satker=$request->user()->IdSatker;
+        }
+        try{
+            $id_zonasi_satker=Hashids::decode($id_zonasi_satker_enc);
+            if(empty($id_zonasi_satker)){
+                throw new \Exception("Invalid token Zonasi Satker");
+            }
+            $get_data=$this->zonasiSatkerService->getMajelisHakim($id_zonasi_satker, $id_satker);
+            $status=$get_data['status'];
+            $msg=$get_data['msg'];
+            $send_confirm=$get_data['send_confirm'];
+            $data=$get_data['data'];
+            $data_majelis = $get_data['data_majelis'];
+            $jumlah_hakim = $get_data['jumlah_hakim'];
+        }catch(\Exception $e){
+            $msg=$e->getMessage();
+        }
+
+        return response()->json(['status'=>$status, 'msg'=>$msg, 'send_confirm'=>$send_confirm, 'data'=>$data, 'data_majelis'=>$data_majelis, 'jumlah_hakim'=>$jumlah_hakim]);
+    }
+
     public function detilJabatanKosongSatker($token_jabatan_kosong, Request $request){
         $status=false;
         $data=null;

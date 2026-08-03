@@ -45,6 +45,7 @@ Route::middleware(['jwt.auth', 'isAdminSatker'])->group(function(){
     Route::get('dashboard-satker', 'api\dashboardController@dashboardAdminSatker');
     Route::get('profile', 'api\userController@getDetilUserSatker');
     Route::get('list-jabatan-kosong-satker/{id_zonasi_satker}', 'api\zonasiSatkerController@getJabatanKosongSatker');
+    Route::get("list-majelis-hakim/{id_zonasi_satker}", "api\zonasiSatkerController@getMajelisHakimSatker");
     Route::get('detil-jabatan-kosong-satker/{token_jabatan_kosong}', 'api\zonasiSatkerController@detilJabatanKosongSatker');
     Route::post('get-pegawai-local', 'api\zonasiSatkerController@getPegawaiLocalByNIP');
     Route::post('save-jabatan-kosong', 'api\zonasiSatkerController@saveJabatanKosongSatker')->middleware('checkSign');

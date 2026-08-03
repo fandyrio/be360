@@ -167,15 +167,15 @@ use PDO;
                 $msg="Tidak ada Jabatan Kosong. Mohon menunggu Satuan Kerja lain untuk mengisi jabatan kosong";
             }
 
-            $kelengkapan_majelis = $this->getKelengkapanMajelis($id_zonasi_satker);
-            $lengkap = $kelengkapan_majelis['lengkap'];
-            $jumlah_hakim = $kelengkapan_majelis['jlh_hakim'];
-            $data_majelis = $kelengkapan_majelis['data_majelis'];
-            $jlh_blm_masuk = $kelengkapan_majelis['jlh_blm_masuk'];
-            $confirmed = $kelengkapan_majelis['confirmed'];
+            // $kelengkapan_majelis = $this->getKelengkapanMajelis($id_zonasi_satker);
+            // $lengkap = $kelengkapan_majelis['lengkap'];
+            // $jumlah_hakim = $kelengkapan_majelis['jlh_hakim'];
+            // $data_majelis = $kelengkapan_majelis['data_majelis'];
+            // $jlh_blm_masuk = $kelengkapan_majelis['jlh_blm_masuk'];
+            // $confirmed = $kelengkapan_majelis['confirmed'];
 
             //send_confirm = Menampilkan tombol konfirmasi 
-            if($send_confirm === true || ($lengkap === true && $confirmed === false)){
+            if($send_confirm === true){
                 $send_confirm = true;
             }else{
                 $send_confirm = false;
@@ -187,6 +187,19 @@ use PDO;
                 'msg'=>$msg,
                 'send_confirm'=>$send_confirm,
                 'data'=>$data,
+            ];
+        }
+
+        public function getMajelisHakim($id_zonasi_satker){
+            $kelengkapan_majelis = $this->getKelengkapanMajelis($id_zonasi_satker);
+            $lengkap = $kelengkapan_majelis['lengkap'];
+            $jumlah_hakim = $kelengkapan_majelis['jlh_hakim'];
+            $data_majelis = $kelengkapan_majelis['data_majelis'];
+            $jlh_blm_masuk = $kelengkapan_majelis['jlh_blm_masuk'];
+            $confirmed = $kelengkapan_majelis['confirmed'];
+
+            return [
+                'confirmed'=>$confirmed,
                 'data_majelis'=>[
                         'lengkap'=>$lengkap,
                         'status_kelengkapan'=>$jlh_blm_masuk."/".$jumlah_hakim." Hakim karir belum masuk majelis",
