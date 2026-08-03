@@ -144,7 +144,7 @@ class zonasiSatkerController extends Controller
      *
      *
      *
-     * @urlParam id_zonasi_satker_enc integer required.
+     * @urlParam id_zonasi_satker_enc string required.
      * 
      * 
      * @response 200 {
