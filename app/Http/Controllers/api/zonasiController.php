@@ -439,6 +439,54 @@ class zonasiController extends Controller
 
         return response()->json(['status'=>$status, 'msg'=>$msg, 'total'=>$total, 'page'=>$page, 'jumlah_halaman'=>$jumlah_halaman, 'no'=>$no, 'data'=>$data, 'data_majelis'=>$data_majelis]);
     }
+
+    /**
+     * Admin Badilum - Majelis Hakim
+     *
+     * Endpoint untuk mengambil daftar Majelis Hakim di admin Badilum.
+     *
+     *@group Zonasi
+     *
+     *
+     *
+     * @urlParam id_zonasi string required
+     * @response 200 {
+     *      "status"=>true,
+     *      "msg"=>"data_found",
+     *      "data_majelis"=>[
+     *          *"nama_satker": "Pengadilan Tinggi Manado",
+                *"jumlah_majelis": 0,
+                *"jumlah_hakim": 11
+     *      ]
+     * 
+     * }
+     */
+    public function getMajelisHakim($id_zonasi){
+        $status=false;
+        $get_majelis=null;
+        $msg="";
+        $total=0;
+        try{
+            $id_zonasi_dec=Hashids::decode($id_zonasi);
+            if(empty($id_zonasi_dec)){
+                throw new \Exception('Invalid token Zonasi');
+            }
+            
+           $get_majelis = $this->zonasiService->getKelengkapanMajelis($id_zonasi_dec[0]);
+           $total = count($get_majelis);
+           if($total > 0){
+                $msg = "Data Found";
+           }else{
+                $msg = "Data tidak ditemukan"; 
+           }
+           $status = true;
+        }catch(\Exception $e){
+            $msg=$e->getMessage(). " ".$e->getFile()." ".$e->getLine();
+        }
+
+        return response()->json(['status'=>$status, 'msg'=>$msg, 'total'=>$total, 'data_majelis'=>$get_majelis]);
+    }
+
     public function getPesertaZonasiSatker($id_zonasi_enc){
         $status=false;
         $data=[];

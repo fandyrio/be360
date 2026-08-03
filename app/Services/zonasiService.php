@@ -1745,7 +1745,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                 $msg="Data tidak ada ".$id_zonasi;
             }
 
-            $get_majelis = $this->getKelengkapanMajelis($id_zonasi);
+            // $get_majelis = $this->getKelengkapanMajelis($id_zonasi);
 
             return [
                 'status'=>$status,
@@ -1754,8 +1754,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                 'total'=>$total,
                 'jumlah_halaman'=>$jumlah_halaman,
                 'no'=>$skip+1,
-                'data'=>$data,
-                'data_majelis'=>$get_majelis
+                'data'=>$data
             ];
         }
 

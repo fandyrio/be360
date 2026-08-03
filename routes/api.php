@@ -85,6 +85,7 @@ Route::middleware(['jwt.auth', 'isAdminBadilum'])->group(function(){
     Route::get('progress-jobs-peserta/{id}', 'api\zonasiController@getProgressLog');
     Route::get('progress-jobs-notif/{id}', 'api\zonasiSatkerController@progressJobsNotif');
     Route::get('jabatan-kosong/{page}/{id_zonasi}', 'api\zonasiController@getJabatanKosong');
+    Route::get("majelis-hakim/{id_zonasi}", "api\zonasiController@getMajelisHakim");
     Route::get('list-peserta-zonasi-satker/{id}', 'api\zonasiController@getPesertaZonasiSatker');
 
     //periode
