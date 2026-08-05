@@ -739,6 +739,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
 
         public function generateDataPenilaianHakim($id_zonasi, $id_zonasi_satker, $id_observee_peserta, $data_hakim){
             $data = [];
+            $id_observee_hakim_penilai = [];
             if(is_null($data_hakim)){
                 $data_hakim = $this->getDataHakimZonasi($id_zonasi_satker);
             }
@@ -783,7 +784,6 @@ use Symfony\Component\CssSelector\Node\HashNode;
                 }
             }elseif($jumlah_hakim_penilai <= 2){
                 $jumlah_kekurangan = 3 - $jumlah_hakim_penilai;
-                $id_observee_hakim_penilai = [];
                 for($x = 0;$x<$jumlah_hakim_penilai;$x++){
                     $data[]=[
                                 'id_zonasi'=>$id_zonasi,
@@ -853,7 +853,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
             return [
                 'data_hakim'=>$data_hakim,
                 'data_penilaian'=>$data,
-                'hakim_penilai'=>$id_observee_hakim_penilai
+                'hakim_penilai'=>$jumlah_hakim_penilai
             ];
         }
 
