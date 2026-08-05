@@ -211,7 +211,7 @@ use PDO;
                 'jumlah_hakim'=>$jumlah_hakim
             ];
         }
-
+    
         public function getKelengkapanMajelisPeriode($id_periode){
             $lengkap = false;
             

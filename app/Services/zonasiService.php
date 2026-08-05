@@ -719,6 +719,147 @@ use Symfony\Component\CssSelector\Node\HashNode;
             ];
         }
 
+        public function getDataHakimZonasi($id_zonasi_satker){
+            $data_hakim = [];
+            $get_data_hakim = Trans_observee::join("trans_zonasi_satker as tzs", "tzs.IdZonaSatker", "=", "trans_observee.IdZonaSatker")
+                                                ->join("tref_zonasi as tz", "tz.IdZona", "tzs.IdZona")
+                                                ->join("tref_tahun_penilaian as ttp", "ttp.IdTahunPenilaian", "=", "tz.IdTahunPenilaian")
+                                                ->where("trans_observee.id_kelompok_jabatan", 30)
+                                                ->where("tzs.IdZonaSatker", $id_zonasi_satker)
+                                                ->select("ttp.IdTahunPenilaian as id_periode", "trans_observee.IdObservee")
+                                                ->get();
+            foreach($get_data_hakim as $list_hakim){
+                $data_hakim[]=[
+                    'id_observee'=>$list_hakim['IdObservee'],
+                    'jumlah_penilaian'=>0
+                ];
+            }
+            return $data_hakim;
+        }
+
+        public function generateDataPenilaianHakim($id_zonasi, $id_zonasi_satker, $id_observee_peserta, $data_hakim){
+            $data = [];
+            //1. Ambil nama majelis yang ada hakim yang bersangkutan
+            // $id_observee_peserta = $data_peserta[$s][$variable_jabatan_peserta][$a]['id_pegawai_observee'];
+            $get_data_majelis = Majelis_hakim::whereIn("nama_majelis", function($query) use($id_observee_peserta){
+                $query->select("nama_majelis")
+                        ->from("tref_majelis_hakim")
+                        ->where("IdObservee", $id_observee_peserta);
+            })
+            ->select("nama_majelis", "IdObservee")
+            ->get();
+            $id_observee_hakim = [];
+            $id_observee_exception = [0,1,2];
+            foreach($get_data_majelis as $list_majelis){
+                if(!in_array($list_majelis['IdObservee'], $id_observee_exception) && (int)$id_observee_peserta !== (int)$list_majelis['IdObservee'] && !in_array($list_majelis['IdObservee'], $id_observee_hakim)){
+                    $id_observee_hakim[]=$list_majelis['IdObservee'];
+                }
+            }
+            $jumlah_hakim_penilai = count($id_observee_hakim);
+            //2,ambil hakim yang ada dimajelis
+            // for($h=0;$h<$jumlah_hakim_majelis;$h++){
+                
+            // }
+            $data_hakim_arg = $this->arrangeHakimJumlahPenilaiaan($data_hakim);
+            if($jumlah_hakim_penilai === 3){
+                for($x = 0;$x<$jumlah_hakim_penilai;$x++){
+                    $data[]=[
+                                'id_zonasi'=>$id_zonasi,
+                                'id_zona_satker'=>$id_zonasi_satker,
+                                'id_pegawai_peserta'=>$id_observee_peserta,
+                                'id_pegawai_penilai'=>$id_observee_hakim[$x],
+                                'is_self_assessment'=>false,
+                                'id_jabatan_plt'=>null,
+                                "index_plt"=> 0
+                            ];
+                    for($dh=0;$dh<count($data_hakim);$dh++){
+                        if($data_hakim[$dh]['id_observee'] === $id_observee_hakim[$x]){
+                            $data_hakim[$dh]['jumlah_penilaian'] += 1;
+                        }
+                    }
+                }
+            }elseif($jumlah_hakim_penilai <= 2){
+                $jumlah_kekurangan = 3- $jumlah_hakim_penilai;
+                $id_observee_hakim_penilai = [];
+                for($x = 0;$x<$jumlah_hakim_penilai;$x++){
+                    $data[]=[
+                                'id_zonasi'=>$id_zonasi,
+                                'id_zona_satker'=>$id_zonasi_satker,
+                                'id_pegawai_peserta'=>$id_observee_peserta,
+                                'id_pegawai_penilai'=>$id_observee_hakim[$x],
+                                'is_self_assessment'=>false,
+                                'id_jabatan_plt'=>null,
+                                "index_plt"=> 0
+                            ];
+                    for($dh=0;$dh<count($data_hakim);$dh++){
+                        if($data_hakim[$dh]['id_observee'] === $id_observee_hakim[$x]){
+                            $data_hakim[$dh]['jumlah_penilaian'] += 1;
+                        }
+                    }
+                    $id_observee_hakim_penilai[]=$id_observee_hakim[$x];
+                }
+                for($k = 0; $k<$jumlah_kekurangan;$k++){
+                    for($jh_arg = 0;$jh_arg < count($data_hakim_arg);$jh_arg++){
+                        if($data_hakim_arg[$jh_arg]['id_observee'] !== $id_observee_peserta && !in_array($data_hakim_arg[$jh_arg]['id_observee'], $id_observee_hakim_penilai)){
+                            $data[]=[
+                                'id_zonasi'=>$id_zonasi,
+                                'id_zona_satker'=>$id_zonasi_satker,
+                                'id_pegawai_peserta'=>$id_observee_peserta,
+                                'id_pegawai_penilai'=>$data_hakim_arg[$jh_arg]['id_observee'],
+                                'is_self_assessment'=>false,
+                                'id_jabatan_plt'=>null,
+                                "index_plt"=> 0
+                            ];
+                            for($dh=0;$dh<count($data_hakim);$dh++){
+                                if($data_hakim[$dh]['id_observee'] === $data_hakim_arg[$jh_arg]['id_observee']){
+                                    $data_hakim[$dh]['jumlah_penilaian'] += 1;
+                                }
+                            }
+                            $id_observee_hakim_penilai[]=$data_hakim_arg[$jh_arg]['id_observee'];
+                            break;
+                        }
+                    }
+                }
+            }elseif($jumlah_hakim_penilai > 3){
+                $limit = 0;
+                for($y=0;$y<count($data_hakim_arg);$y++){
+                    if($limit <= 3){
+                        for($x=0;$x<$jumlah_hakim_penilai;$x++){
+                            if((int)$data_hakim_arg[$y]['id_observee'] === (int)$id_observee_hakim[$x]){
+                                $data[]=[
+                                    'id_zonasi'=>$id_zonasi,
+                                    'id_zona_satker'=>$id_zonasi_satker,
+                                    'id_pegawai_peserta'=>$id_observee_peserta,
+                                    'id_pegawai_penilai'=>$data_hakim_arg[$y]['id_observee'],
+                                    'is_self_assessment'=>false,
+                                    'id_jabatan_plt'=>null,
+                                    "index_plt"=> 0
+                                ];
+                                for($dh=0;$dh<count($data_hakim);$dh++){
+                                    if($data_hakim[$dh]['id_observee'] === $data_hakim_arg[$y]['id_observee']){
+                                        $data_hakim[$dh]['jumlah_penilaian'] += 1;
+                                    }
+                                }
+                                $limit+=1;
+                            }
+                        }
+                    }
+                }
+                
+            }
+            return [
+                'data_hakim'=>$data_hakim,
+                'data_penilaian'=>$data
+            ];
+        }
+
+        public function arrangeHakimJumlahPenilaiaan($data_hakim){
+            return collect($data_hakim)
+                        ->sortBy("jumlah_penilaian")
+                        ->values()
+                        ->toArray();
+        }
+
         public function getPeserta($id_zonasi_enc){
             ini_set('memory_limit', '2G');
             $status=false;
@@ -1087,6 +1228,10 @@ use Symfony\Component\CssSelector\Node\HashNode;
             $id_periode=$get_periode['IdTahunPenilaian'];
             // var_dump($data_peserta[0]["pegawai"]);
             for($s=0;$s<=$jumlah_satker;$s++){
+                $data_hakim = null;
+                $data_hakim = $this->getDataHakimZonasi($id_zonasi_satker[$s]);
+                $jumlah_hakim = count($data_hakim);
+
                 // echo "<b>".$satker[$s]."</b><br />";
                 $jlh_jabatan_peserta=count($variable_jabatan_peserta_arr[$s]);
 
@@ -1105,7 +1250,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                 }
                 
                 //pertama: looping berdasarkan jabatan peserta yang ada di satker itu
-                for($x=0;$x<$jlh_jabatan_peserta;$x++){   
+                for($x=0;$x<$jlh_jabatan_peserta;$x++){
                     $variable_jabatan_peserta=$variable_jabatan_peserta_arr[$s][$x];
                     $id_jabatan_peserta=$id_jabatan_peserta_arr[$s][$x];
                     $jlh_pegawai_perjabatan=0;
@@ -1214,73 +1359,85 @@ use Symfony\Component\CssSelector\Node\HashNode;
                                     if($variable_penilai === $variable_jabatan_peserta){
                                         //disini kpt tidak dinilai oleh kpt begitu juga kpn
                                         // Log::warning("jabatan penilai: ".$variable_penilai." = ".$variable_jabatan_peserta);
-                                        ${"batas_{$variable_penilai}"}=0;
+                                        ${"batas_{$variable_penilai}"}=0;   
                                     }
                                 }
                                 // echo $variable_penilai." ".$jlh_penilai."<br />";
                                 if($jlh_penilai > 0){
                                     //looping batas penilaian berdasarkan threshold
-                                    for($c=0;$c<${"batas_{$variable_penilai}"};$c++){
-                                        //check kalau pointer penilai lebih besar dari jumlah penilai
-                                        if(${"pointer_{$variable_penilai}"} > $jlh_penilai -1){
-                                            ${"pointer_{$variable_penilai}"}=0;
+                                    if($jlh_penilai > 2 && $variable_penilai === "hakim" && $variable_jabatan_peserta === "hakim"){
+                                        $id_observee_peserta = $data_peserta[$s][$variable_jabatan_peserta][$a]['id_pegawai_observee'];
+                                        $id_zonasi_satker_hakim = $data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker'];
+                                        $generate = $this->generateDataPenilaianHakim($id_zonasi, $id_zonasi_satker_hakim, $id_observee_peserta, $data_hakim);
+                                        $data_hakim = $generate['data_hakim'];
+                                        $data_penilaian = $generate['data_penilaian'];
+                                        for($dp=0;$dp<count($data_penilaian);$dp++){
+                                            $data[]=$data_penilaian[$dp];
+                                            $data_hakim_penilaian[]=$data_penilaian[$dp];
                                         }
-                                        //check peserta penilai jangan sampai menilai dirinya sendiri
-                                        // var_dump($data_peserta[$s][$variable_jabatan_peserta][$a]['id_pegawai']);
-                                        // echo $variable_penilai." ".$jlh_penilai."<br />";
-                                        // Log::warning("satker ke: ".$s.", jabatan: ".$variable_penilai.", pointer: ".$variable_penilai);
-                                      
-                                        if((int)$data_peserta[$s][$variable_jabatan_peserta][$a]['id_pegawai'] === 
-                                        (int)$data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['id_pegawai']){
-                                            // echo "penilai dan dinilai sama: ".$$variable_jabatan_peserta[$a]['nama']." : ".$$variable_penilai[${"pointer_{$variable_penilai}"}]['nama'];
-                                            if(${"pointer_{$variable_penilai}"} >= $jlh_penilai -1){
-                                                // echo "set ".$variable_penilai." ke 0, ";
+                                    }else{
+                                        for($c=0;$c<${"batas_{$variable_penilai}"};$c++){
+                                            //check kalau pointer penilai lebih besar dari jumlah penilai
+                                            if(${"pointer_{$variable_penilai}"} > $jlh_penilai -1){
                                                 ${"pointer_{$variable_penilai}"}=0;
+                                            }
+                                            //check peserta penilai jangan sampai menilai dirinya sendiri
+                                            // var_dump($data_peserta[$s][$variable_jabatan_peserta][$a]['id_pegawai']);
+                                            // echo $variable_penilai." ".$jlh_penilai."<br />";
+                                            // Log::warning("satker ke: ".$s.", jabatan: ".$variable_penilai.", pointer: ".$variable_penilai);
+                                        
+                                            if((int)$data_peserta[$s][$variable_jabatan_peserta][$a]['id_pegawai'] === 
+                                            (int)$data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['id_pegawai']){
+                                                // echo "penilai dan dinilai sama: ".$$variable_jabatan_peserta[$a]['nama']." : ".$$variable_penilai[${"pointer_{$variable_penilai}"}]['nama'];
+                                                if(${"pointer_{$variable_penilai}"} >= $jlh_penilai -1){
+                                                    // echo "set ".$variable_penilai." ke 0, ";
+                                                    ${"pointer_{$variable_penilai}"}=0;
+                                                }else{
+                                                    if($data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['is_plt'] === "false"){
+                                                        ${"pointer_{$variable_penilai}"}+=1;
+                                                    }
+                                                }
+                                            }
+                                            // var_dump($data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]);echo "<br />";
+                                            //echo $a." : ".${"pointer_{$variable_penilai}"}."   ".$variable_penilai."<br />   ";
+                                            if($data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['is_plt'] === 
+                                            "true" && (int)$data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['id_pegawai'] === 0){
+                                                $id_pegawai_penilai=null; 
+                                                $mapping_jabatan_kosong=$mapping['id_jabatan_penilai']."-".$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker']."-".$data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['index_jabatan_plt'];
+                                                if(!in_array($mapping_jabatan_kosong, $id_jabatan_kosong)){
+                                                    if((int)$mapping['ada_plt'] === 1){
+                                                        $data_kosong[]=[
+                                                            'id_zonasi'=>$id_zonasi,
+                                                            'id_zonasi_satker'=>$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker'],
+                                                            'id_jabatan_kosong'=>$mapping['id_jabatan_penilai'],
+                                                            'bagian'=>$data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['bagian'],
+                                                            'index_plt'=>$data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['index_jabatan_plt'],
+                                                            'id_observee'=>null,
+                                                            'created_at'=> date('Y-m-d H:i:s')
+                                                        ];
+                                                        $id_jabatan_kosong[]=$mapping_jabatan_kosong;
+                                                    }
+                                                }
                                             }else{
-                                                if($data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['is_plt'] === "false"){
-                                                    ${"pointer_{$variable_penilai}"}+=1;
-                                                }
+                                                $index_plt=0;
+                                                $id_pegawai_penilai=$data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]["id_pegawai_observee"];
                                             }
-                                        }
-                                        // var_dump($data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]);echo "<br />";
-                                        //echo $a." : ".${"pointer_{$variable_penilai}"}."   ".$variable_penilai."<br />   ";
-                                        if($data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['is_plt'] === 
-                                        "true" && (int)$data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['id_pegawai'] === 0){
-                                            $id_pegawai_penilai=null; 
-                                            $mapping_jabatan_kosong=$mapping['id_jabatan_penilai']."-".$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker']."-".$data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['index_jabatan_plt'];
-                                            if(!in_array($mapping_jabatan_kosong, $id_jabatan_kosong)){
-                                                if((int)$mapping['ada_plt'] === 1){
-                                                    $data_kosong[]=[
-                                                        'id_zonasi'=>$id_zonasi,
-                                                        'id_zonasi_satker'=>$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker'],
-                                                        'id_jabatan_kosong'=>$mapping['id_jabatan_penilai'],
-                                                        'bagian'=>$data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['bagian'],
-                                                        'index_plt'=>$data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['index_jabatan_plt'],
-                                                        'id_observee'=>null,
-                                                        'created_at'=> date('Y-m-d H:i:s')
-                                                    ];
-                                                    $id_jabatan_kosong[]=$mapping_jabatan_kosong;
-                                                }
-                                            }
-                                        }else{
-                                            $index_plt=0;
-                                            $id_pegawai_penilai=$data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]["id_pegawai_observee"];
-                                        }
 
-                                        $data[]=[
-                                            'id_zonasi'=>$id_zonasi,
-                                            'id_zona_satker'=>$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker'],
-                                            'id_pegawai_peserta'=>$data_peserta[$s][$variable_jabatan_peserta][$a]['id_pegawai_observee'],
-                                            'id_pegawai_penilai'=>$id_pegawai_penilai,
-                                            'is_self_assessment'=>false,
-                                            'id_jabatan_plt'=>$data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['is_plt'] === "true" ?  $mapping["id_jabatan_penilai"] : null,
-                                            "index_plt"=>$data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['is_plt'] === "true" ?  $data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['index_jabatan_plt'] : 0
-                                        ];
-                                        // echo $data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['nama'].", "; 
-                                        $data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['jlh_menilai']+=1;
-                                        ${"pointer_{$variable_penilai}"}++;
+                                            $data[]=[
+                                                'id_zonasi'=>$id_zonasi,
+                                                'id_zona_satker'=>$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker'],
+                                                'id_pegawai_peserta'=>$data_peserta[$s][$variable_jabatan_peserta][$a]['id_pegawai_observee'],
+                                                'id_pegawai_penilai'=>$id_pegawai_penilai,
+                                                'is_self_assessment'=>false,
+                                                'id_jabatan_plt'=>$data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['is_plt'] === "true" ?  $mapping["id_jabatan_penilai"] : null,
+                                                "index_plt"=>$data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['is_plt'] === "true" ?  $data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['index_jabatan_plt'] : 0
+                                            ];
+                                            // echo $data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['nama'].", "; 
+                                            $data_peserta[$s][$variable_penilai][${"pointer_{$variable_penilai}"}]['jlh_menilai']+=1;
+                                            ${"pointer_{$variable_penilai}"}++;
+                                        }
+                                        //end looping batas penilaian berdasarkan threshold
                                     }
-                                    //end looping batas penilaian berdasarkan threshold
                                 }else{
                                     //panitera, pegawai masuk sini kalau ga ada (Khusus yang ga di definisikan di data_peserta) hanya untuk 1 orang dalam jabatan. seperti panitera
                                      $mapping_jabatan_kosong=$mapping['id_jabatan_penilai']."-".$data_peserta[$s][$variable_jabatan_peserta][$a]['id_zona_satker'];
@@ -1381,6 +1538,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                         }
                     }
                 }
+                // return $data_hakim_penilaian;
                 Trans_observee::where('IdZonaSatker', $id_zonasi_satker[$s])->update(['entry_job'=>true]);
                 $get_zonasi_satker=Zonasi_satker::where('IdZonaSatker', $id_zonasi_satker[$s])->first();
                 $get_zonasi_satker->entry_job=true;
