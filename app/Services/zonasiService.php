@@ -751,6 +751,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                         ->where("IdObservee", $id_observee_peserta);
             })
             ->select("nama_majelis", "IdObservee")
+            ->where("id_zonasi_satker", $id_zonasi_satker)
             ->get();
             $id_observee_hakim = [];
             $id_observee_exception = [0,1,2];
