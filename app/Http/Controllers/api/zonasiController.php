@@ -427,7 +427,6 @@ class zonasiController extends Controller
            $get_jabatan_kosong=$this->zonasiService->getJabatanKosong($page, $id_zonasi_dec[0]);
            $status=$get_jabatan_kosong['status'];
            $data=$get_jabatan_kosong['data'];
-           $data_majelis = $get_jabatan_kosong['data_majelis'];
            $total=$get_jabatan_kosong['total'];
            $jumlah_halaman=$get_jabatan_kosong['jumlah_halaman'];
            $page=$get_jabatan_kosong['page'];
@@ -437,7 +436,7 @@ class zonasiController extends Controller
             $msg=$e->getMessage(). " ".$e->getFile()." ".$e->getLine();
         }
 
-        return response()->json(['status'=>$status, 'msg'=>$msg, 'total'=>$total, 'page'=>$page, 'jumlah_halaman'=>$jumlah_halaman, 'no'=>$no, 'data'=>$data, 'data_majelis'=>$data_majelis]);
+        return response()->json(['status'=>$status, 'msg'=>$msg, 'total'=>$total, 'page'=>$page, 'jumlah_halaman'=>$jumlah_halaman, 'no'=>$no, 'data'=>$data]);
     }
 
     /**
