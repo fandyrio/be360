@@ -739,6 +739,9 @@ use Symfony\Component\CssSelector\Node\HashNode;
 
         public function generateDataPenilaianHakim($id_zonasi, $id_zonasi_satker, $id_observee_peserta, $data_hakim){
             $data = [];
+            if(is_null($data_hakim)){
+                $data_hakim = $this->getDataHakimZonasi($id_zonasi_satker);
+            }
             //1. Ambil nama majelis yang ada hakim yang bersangkutan
             // $id_observee_peserta = $data_peserta[$s][$variable_jabatan_peserta][$a]['id_pegawai_observee'];
             $get_data_majelis = Majelis_hakim::whereIn("nama_majelis", function($query) use($id_observee_peserta){
@@ -779,7 +782,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     }
                 }
             }elseif($jumlah_hakim_penilai <= 2){
-                $jumlah_kekurangan = 3- $jumlah_hakim_penilai;
+                $jumlah_kekurangan = 3 - $jumlah_hakim_penilai;
                 $id_observee_hakim_penilai = [];
                 for($x = 0;$x<$jumlah_hakim_penilai;$x++){
                     $data[]=[
@@ -800,7 +803,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                 }
                 for($k = 0; $k<$jumlah_kekurangan;$k++){
                     for($jh_arg = 0;$jh_arg < count($data_hakim_arg);$jh_arg++){
-                        if($data_hakim_arg[$jh_arg]['id_observee'] !== $id_observee_peserta && !in_array($data_hakim_arg[$jh_arg]['id_observee'], $id_observee_hakim_penilai)){
+                        if((int)$data_hakim_arg[$jh_arg]['id_observee'] !== (int)$id_observee_peserta && !in_array($data_hakim_arg[$jh_arg]['id_observee'], $id_observee_hakim_penilai)){
                             $data[]=[
                                 'id_zonasi'=>$id_zonasi,
                                 'id_zona_satker'=>$id_zonasi_satker,
@@ -821,7 +824,7 @@ use Symfony\Component\CssSelector\Node\HashNode;
                     }
                 }
             }elseif($jumlah_hakim_penilai > 3){
-                $limit = 0;
+                $limit = 1;
                 for($y=0;$y<count($data_hakim_arg);$y++){
                     if($limit <= 3){
                         for($x=0;$x<$jumlah_hakim_penilai;$x++){
