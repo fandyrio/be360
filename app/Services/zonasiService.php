@@ -852,7 +852,8 @@ use Symfony\Component\CssSelector\Node\HashNode;
             }
             return [
                 'data_hakim'=>$data_hakim,
-                'data_penilaian'=>$data
+                'data_penilaian'=>$data,
+                'hakim_penilai'=>$id_observee_hakim_penilai
             ];
         }
 
