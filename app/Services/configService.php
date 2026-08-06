@@ -474,9 +474,17 @@ use Illuminate\Support\Facades\Crypt;
         //     ];
         // }
 
-        public function getListMappingJabatan(){
+        public function getListMappingJabatan($tingkat_satker){
+            $is_pt = false;
+            $is_pn = false;
+            if((int)$tingkat_satker === 1){
+                $is_pt = true;
+            }elseif((int)$tingkat_satker === 2){
+                $is_pn = true;
+            }
             $get_data_peserta=Tref_jabatan_peserta::where('active', true)
                                 ->whereRaw('id_jabatan_gabungan is null')    
+                                     
                                 ->get();
             $get_data_mapping=Tref_mapping_jabatan::join('tref_jabatan_peserta as a', 'a.id', '=', 'tref_mapping_jabatan.id_jabatan_peserta')
                                                 ->join('tref_jabatan_peserta as b', 'b.id', '=', 'tref_mapping_jabatan.id_jabatan_penilai')

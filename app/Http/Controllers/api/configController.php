@@ -214,7 +214,7 @@ class configController extends Controller
             
             try{
                 $id_kelompok_jabatan = Hashids::decode($request->id_kelompok_jabatan);
-                if(!empty($id_kelompok_jabatan)){
+                if(empty($id_kelompok_jabatan)){
                     throw new \Exception("Invalid token");
                 }
                 $save = $this->configService->saveKelompokJabatan($request, $id_kelompok_jabatan[0]);
@@ -351,10 +351,23 @@ class configController extends Controller
         return response()->json(['status'=>$status, 'msg'=>$msg]);
     }
 
-    public function listMappingObservee(){
-        $get_mapping=$this->configService->getListMappingJabatan();
+    public function listMappingObservee($tingkat_satker){
+        $status=false;
+        try{
+            $tingkat_satker_dec = Hashids::decode($tingkat_satker);
+            if(empty($tingkat_satker_dec)){
+                throw new \Exception("Invalid token");    
+            }
+            if((int)$tingkat_satker_dec[0] >= 1 && $tingkat_satker_dec[0] <= 2){
+                $get_mapping=$this->configService->getListMappingJabatan($tingkat_satker_dec[0]);
 
-        return response()->json(['data'=>$get_mapping['data_mapping']]);
+            }else{
+                throw new \Exception("Kategori tidak dikenali");
+            }
+        }catch(\Exception $e){
+            $msg = $e->getMessage();
+        }
+        return response()->json(['status'=>$status, 'msg'=>$msg, 'data'=>$get_mapping['data_mapping']]);
     }
 
     public function saveMappingJabatan(Request $request){
