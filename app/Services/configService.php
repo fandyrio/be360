@@ -474,21 +474,28 @@ use Illuminate\Support\Facades\Crypt;
         //     ];
         // }
 
+        
+
         public function getListMappingJabatan($tingkat_satker){
             $is_pt = false;
             $is_pn = false;
+            $mapping_satker = 0;
             if((int)$tingkat_satker === 1){
                 $is_pt = true;
+                $mapping_satker = 1;
             }elseif((int)$tingkat_satker === 2){
                 $is_pn = true;
+                $mapping_satker = 2;
             }
             $get_data_peserta=Tref_jabatan_peserta::where('active', true)
                                 ->whereRaw('id_jabatan_gabungan is null')    
-                                     
+                                ->where("pt", $is_pt)
+                                ->where("pn", $is_pn)     
                                 ->get();
             $get_data_mapping=Tref_mapping_jabatan::join('tref_jabatan_peserta as a', 'a.id', '=', 'tref_mapping_jabatan.id_jabatan_peserta')
                                                 ->join('tref_jabatan_peserta as b', 'b.id', '=', 'tref_mapping_jabatan.id_jabatan_penilai')
                                                 ->where('tref_mapping_jabatan.active', true)
+                                                ->where("tref_mapping_jabatan.mapping_jabatan_peserta", $mapping_satker)
                                                 ->select('tref_mapping_jabatan.*', 'a.jabatan as jabatan_peserta', 'b.jabatan as jabatan_penilai')
                                                 ->get();
             $data_penilaian=[];
@@ -508,7 +515,7 @@ use Illuminate\Support\Facades\Crypt;
 
             $jumlah_penilai=count($data_penilaian);
 
-            foreach($get_data_peserta as $list_data){
+            fid_jabatan_pesertaoreach($get_data_peserta as $list_data){
                 $mapping[$y]['jabatan_peserta']=$list_data['jabatan'];
                 $mapping[$y]['id_jabatan_peserta']=Hashids::encode($list_data['id']);
                 $mapping[$y]['penilai']=[];

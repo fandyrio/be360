@@ -351,6 +351,26 @@ class configController extends Controller
         return response()->json(['status'=>$status, 'msg'=>$msg]);
     }
 
+    /**
+     * Master Mapping Jabatan
+     *
+     * Endpoint untuk update detil jabatan.
+     *
+     * @group MasterJabatan
+     *
+     *@authenticated
+     * @response 200 {
+     *   "total": "integer",
+     *   "data": [array data],
+     *
+     * }
+     */
+    public function masterMappingJabatan(){
+        $tingkat_pertama = Hashids::encode("1");
+        $tingkat_banding = Hashids::encode("2");
+        return response()->json(['token_tk_pertama'=>$tingkat_pertama, 'token_tk_banding'=>$tingkat_banding]);
+    }
+
     public function listMappingObservee($tingkat_satker){
         $status=false;
         try{
