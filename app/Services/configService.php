@@ -787,7 +787,11 @@ use Illuminate\Support\Facades\Crypt;
         public function getMappingJabatanByIdJabatanPeserta($id_jabatan_peserta, $tingkat_satker){
             $data=[];
             $tingkat_satker_str = "";
-            $get_jabatan=Tref_jabatan_peserta::where('id', $id_jabatan_peserta)->first();
+            if((int)$tingkat_satker === 1){
+                $get_jabatan=Tref_jabatan_peserta::where('id', $id_jabatan_peserta)->where('pt', true)->first();
+            }elseif((int)$tingkat_satker === 2){
+                $get_jabatan=Tref_jabatan_peserta::where('id', $id_jabatan_peserta)->where('pn', true)->first();
+            }
             if(!is_null($get_jabatan)){
                 if((int)$tingkat_satker === 1){
                     $tingkat_satker_str = "Pengadilan Tinggi";
