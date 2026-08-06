@@ -286,7 +286,7 @@ class configController extends Controller
                 'active'=> ['required', 'in:Y,N'],
                 'token_category'=>['required', 'string'],
                 'payload'=>['required', 'string'],
-                'is_pn'=>['required', 'boolean'],
+                'is_pn'=>['required', 'boolean:strict'],
                 'is_pt'=>['required', 'boolean']
             ]);
             $jabatan_gabungan=[];
