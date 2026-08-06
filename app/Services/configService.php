@@ -577,7 +577,7 @@ use Illuminate\Support\Facades\Crypt;
                         'mapping_tingkat_satker'=>$tingkat_satker,
                         'id_jabatan_penilai'=>$id_jabatan_penilai[$x],
                         'tingkat_satker_peserta'=>0,
-                        'tingkat_satker_pnilai'=>0,
+                        'tingkat_satker_penilai'=>0,
                         'active'=>true,
                         'threshold'=>$threshold[$x]
                     ];
