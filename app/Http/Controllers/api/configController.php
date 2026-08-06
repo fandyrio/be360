@@ -410,6 +410,23 @@ class configController extends Controller
         return response()->json(['status'=>$status, 'msg'=>$msg, 'data'=>$data_mapping]);
     }
 
+    /**
+     * Save Mapping Jabatan
+     *
+     * Endpoint menyimpan mapping jabatan berdasarkan tingkatan satker.
+     *
+     * @group Master Mapping Jabatan
+     *@bodyParam id_jabatan_peserta string required.
+     *@bodyParam id_jabatan_penilai string[] required Array.
+     *@bodyParam threshold string[] required Array.
+     *@bodyParam token_tingkat_satker required string.
+     *@authenticated
+     * @response 200 {
+     *   "total": "integer",
+     *   "data": [array data],
+     *
+     * }
+     */
     public function saveMappingJabatan(Request $request){
         $status=false;
         try{
@@ -418,12 +435,14 @@ class configController extends Controller
                 'id_jabatan_penilai'=>['required', 'array'],
                 'id_jabatan_penilai.*'=>['string'],
                 'threshold'=>['required', 'array'],
-                'threshold.*'=>['integer']
+                'threshold.*'=>['integer'],
+                'token_tingkat_satker'=>['required', 'strings']
             ]);
             try{
                 $id_jabatan_peserta=Hashids::decode($request->id_jabatan_peserta);
-                if(empty($id_jabatan_peserta)){
-                    throw new \Exception('Invalid token Id Jabatan Peserta');
+                $tingkat_satker = Hashids::decode($request->token_tingkat_satker);
+                if(empty($id_jabatan_peserta) || empty($tingkat_satker)){
+                    throw new \Exception('Invalid token Found');
                 }
 
                 $jumlah_penilai=count($request->id_jabatan_penilai);
@@ -439,7 +458,7 @@ class configController extends Controller
                         }
                         $id_jabatan_penilai_arr[]=$id_jabatan_penilai[0];
                     }
-                    $save_mapping=$this->configService->saveMappingJabatan($id_jabatan_peserta[0], $id_jabatan_penilai_arr, $request->threshold);
+                    $save_mapping=$this->configService->saveMappingJabatan($id_jabatan_peserta[0], $id_jabatan_penilai_arr, $request->threshold, $tingkat_satker[0]);
                     $status=$save_mapping['status'];
                     $msg=$save_mapping['msg'];
                 }else{

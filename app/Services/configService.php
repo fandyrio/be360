@@ -538,19 +538,31 @@ use Illuminate\Support\Facades\Crypt;
             ];
         }
 
-        public function saveMappingJabatan($id_jabatan_peserta, $id_jabatan_penilai, $threshold){
+        public function saveMappingJabatan($id_jabatan_peserta, $id_jabatan_penilai, $threshold, $tingkat_satker){
             //id_jabatan_peserta: id table jabatan_peserta
             //id_jabatan_penilai= id table jabatan_peserta
             // array_push($id_jabatan_penilai, $id_jabatan_peserta);
             $status=false;
+            if($tingkat_satker > 2 && $tingkat_satker < 1){
+                return ['status'=>false, 'msg'=>'Data Mapping Jabatan Satker tidak valid'];
+            }
+            
             $append_data_peserta=false;
             if(!in_array($id_jabatan_peserta, $id_jabatan_penilai)){
                 array_push($id_jabatan_penilai, $id_jabatan_peserta);
                 $append_data_peserta=true;
             }
-            $get_data=Tref_jabatan_peserta::whereIn('id', $id_jabatan_penilai)
+            if($tingkat_satker === 1){
+                $get_data=Tref_jabatan_peserta::whereIn('id', $id_jabatan_penilai)
                                     ->where('active', true)
+                                    ->where('pt', true)
                                     ->get();
+            }elseif($tingkat_satker === 2){
+                $get_data=Tref_jabatan_peserta::whereIn('id', $id_jabatan_penilai)
+                                    ->where('active', true)
+                                    ->where('pn', true)
+                                    ->get();
+            }
             $jumlah=$get_data->count();
             if($jumlah > 0 && $jumlah === count($id_jabatan_penilai)){
                 if($append_data_peserta === true){
@@ -562,7 +574,10 @@ use Illuminate\Support\Facades\Crypt;
                 for($x=0;$x<count($id_jabatan_penilai);$x++){
                     $data[]=[
                         'id_jabatan_peserta'=>$id_jabatan_peserta,
+                        'mapping_tingkat_satker'=>$tingkat_satker,
                         'id_jabatan_penilai'=>$id_jabatan_penilai[$x],
+                        'tingkat_satker_peserta'=>0,
+                        'tingkat_satker_pnilai'=>0,
                         'active'=>true,
                         'threshold'=>$threshold[$x]
                     ];
@@ -578,6 +593,7 @@ use Illuminate\Support\Facades\Crypt;
                 //check existed
                 $jlh_existed_mapping=Tref_mapping_jabatan::where('id_jabatan_peserta', $id_jabatan_peserta)
                                                     ->whereIn('id_jabatan_penilai', $id_jabatan_penilai)
+                                                    ->where('mapping_tingkat_satker', $tingkat_satker)
                                                     ->count();
                 if($jlh_existed_mapping > 0){
                     $msg="Data Observee yang dimasukkan sudah ada pada table mapping jabatan";
