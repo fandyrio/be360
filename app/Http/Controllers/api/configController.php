@@ -296,7 +296,7 @@ class configController extends Controller
                 $token_jabatan=Hashids::decode($request->token_jabatan);
                 $token_category = Hashids::decode($request->token_category);
                 if(empty($token_jabatan) || empty($token_category)){
-                    throw new \Exception("Invalid token :2");
+                    throw new \Exception("Invalid token :2".$request->is_pn);
                 }
                 if(isset($request->jabatan_gabungan)){
                     $jumlah_jabatan_gabungan=count($request->jabatan_gabungan);
