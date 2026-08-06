@@ -387,6 +387,7 @@ class configController extends Controller
      */
     public function listMappingObservee($tingkat_satker){
         $status=false;
+        $data_mapping = [];
         try{
             $tingkat_satker_dec = Hashids::decode($tingkat_satker);
             if(empty($tingkat_satker_dec)){
@@ -394,14 +395,19 @@ class configController extends Controller
             }
             if((int)$tingkat_satker_dec[0] >= 1 && $tingkat_satker_dec[0] <= 2){
                 $get_mapping=$this->configService->getListMappingJabatan($tingkat_satker_dec[0]);
-
+                $data_mapping = $get_mapping['data_mapping'];
+                $msg = "Data tidak ditemukan";
+                if(count($data_mapping) > 0){
+                    $msg = "Data ditemukan";
+                }
+                $status = true;
             }else{
                 throw new \Exception("Kategori tidak dikenali");
             }
         }catch(\Exception $e){
             $msg = $e->getMessage();
         }
-        return response()->json(['status'=>$status, 'msg'=>$msg, 'data'=>$get_mapping['data_mapping']]);
+        return response()->json(['status'=>$status, 'msg'=>$msg, 'data'=>$data_mapping]);
     }
 
     public function saveMappingJabatan(Request $request){
