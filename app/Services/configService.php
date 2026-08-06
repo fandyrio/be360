@@ -584,7 +584,10 @@ use Illuminate\Support\Facades\Crypt;
 
                     $data_bobot[]=[
                         'id_jabatan_peserta'=>$id_jabatan_peserta,
+                        'mapping_tingkat_satker'=>$tingkat_satker,
                         'id_jabatan_penilai'=>$id_jabatan_penilai[$x],
+                        'tingkat_satker_peserta'=>0,
+                        'tingkat_satker_penilai'=>0,
                         'active'=>true,
                         'bobot'=>null
                     ];
