@@ -425,6 +425,8 @@ use Illuminate\Support\Facades\Crypt;
                     if($jumlah_gabungan === 0){
                         $get_jabatan->active=$status_aktif === "Y" ? true : false;
                         $get_jabatan->category_id = $category_id;
+                        $get_jabatan->pn = $is_pn;
+                        $get_jabatan->pt = $is_pt;
                         if($get_jabatan->update()){
                             $status=true;
                             $msg="Berhasil menyimpan data";
