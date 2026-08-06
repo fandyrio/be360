@@ -117,6 +117,7 @@ Route::middleware(['jwt.auth', 'isAdminBadilum'])->group(function(){
     Route::post('update-jabatan-peserta', 'api\configController@updateKelompokJabatan')->middleware('checkSign');
 
     //mapping jabatan
+    Route::get("list-master-mapping", 'api\configController@masterMappingJabatan');
     Route::get('list-mapping-observee/{tingkat_satker}', 'api\configController@listMappingObservee');
     Route::post('save-mapping-jabatan', 'api\configController@saveMappingJabatan');
     Route::post('update-mapping-jabatan', 'api\configController@updateMappingJabatan');
