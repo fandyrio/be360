@@ -365,7 +365,7 @@ class configController extends Controller
      *
      * }
      */
-    public function masterMappingJabatan(){
+    public function masterMappingTingkatSatker(){
         $tingkat_pertama = Hashids::encode("2");
         $tingkat_banding = Hashids::encode("1");
         return response()->json(['token_tk_pertama'=>$tingkat_pertama, 'token_tk_banding'=>$tingkat_banding]);
@@ -590,6 +590,25 @@ class configController extends Controller
         return response()->json(['jumlah'=>$jumlah, 'msg'=>$msg, 'data'=>$data]);
     }
 
+    /**
+     * Master Bobot Penilaian
+     *
+     * Endpoint untuk ambil tingkat satker jabatan.
+     *
+     * @group Master Bobot Penilaian
+     *
+     *@authenticated
+     * @response 200 {
+     *   "total": "integer",
+     *   "data": [array data],
+     *
+     * }
+     */
+    public function masterMappingTingkatSatkerBobot(){
+        $tingkat_pertama = Hashids::encode("2");
+        $tingkat_banding = Hashids::encode("1");
+        return response()->json(['token_tk_pertama'=>$tingkat_pertama, 'token_tk_banding'=>$tingkat_banding]);
+    }
 
     public function getAllBobot($page){
         if($page < 1){
