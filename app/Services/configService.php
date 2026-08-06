@@ -493,7 +493,7 @@ use Illuminate\Support\Facades\Crypt;
             $get_data_mapping=Tref_mapping_jabatan::join('tref_jabatan_peserta as a', 'a.id', '=', 'tref_mapping_jabatan.id_jabatan_peserta')
                                                 ->join('tref_jabatan_peserta as b', 'b.id', '=', 'tref_mapping_jabatan.id_jabatan_penilai')
                                                 ->where('tref_mapping_jabatan.active', true)
-                                                ->where("tref_mapping_jabatan.mapping_jabatan_peserta", $mapping_satker)
+                                                ->where("tref_mapping_jabatan.mapping_tingkat_satker", $mapping_satker)
                                                 ->select('tref_mapping_jabatan.*', 'a.jabatan as jabatan_peserta', 'b.jabatan as jabatan_penilai')
                                                 ->get();
             $data_penilaian=[];
