@@ -835,22 +835,22 @@ use Illuminate\Support\Facades\Crypt;
             $data=array();
             $jabatan_penilai=array();
             $limit = 15;
-            if($tingkat_satker === 1){
+            if((int)$tingkat_satker === 1){
                 $total=Tref_jabatan_peserta::where('active', true)
                         ->where("pt", $tingkat_satker)
                         ->count();
                 $get_jabatan=Tref_jabatan_peserta::where('active', true)
                             ->whereRaw('id_jabatan_gabungan is null')
-                            ->where('pt', $tingkat_satker)
+                            ->where('pt', true)
                             ->get();
-            }else{
+            }elseif((int)$tingkat_satker === 2){
                 $total=Tref_jabatan_peserta::where('active', true)
                         ->where("pn", $tingkat_satker)
                         ->count();
                 
                 $get_jabatan=Tref_jabatan_peserta::where('active', true)
                             ->whereRaw('id_jabatan_gabungan is null')
-                            ->where("pn", $tingkat_satker)
+                            ->where("pn", true)
                             ->get();
             }
 
