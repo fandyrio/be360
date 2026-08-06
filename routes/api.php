@@ -125,7 +125,7 @@ Route::middleware(['jwt.auth', 'isAdminBadilum'])->group(function(){
 
     //bobot penilaian
     Route::get('master-bobot', 'api\configController@masterMappingTingkatSatkerBobot');
-    Route::get("list-bobot/{tingkat_satker}", 'api\configController@getAllBobot');
+    Route::get("list-bobot/{token_tingkat_satker}", 'api\configController@getAllBobot');
     // Route::post('save-bobot', 'api\configController@saveNewBobot');
     Route::get('detil-bobot/{id}', 'api\configController@getDetilBobot');
     Route::post('update-bobot', 'api\configController@updateBobot');
