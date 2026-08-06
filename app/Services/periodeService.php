@@ -589,14 +589,21 @@ use PDO;
             ];
         }
         
-        public function getMappingJabatanPeriode($id_periode){
+        public function getMappingJabatanPeriode($id_periode, $tingkat_satker){
             $data=[];
             $data_jabatan=[];
             $status=false;
             $msg="";
             $signature="";
-            $get_data_jabatan=Tref_jabatan_peserta::where('active', true)
+            if((int)$tingkat_satker === 1){
+                $get_data_jabatan=Tref_jabatan_peserta::where('active', true)
+                                ->where("pt", true)
                             ->get();
+            }elseif((int)$tingkat_satker === 2){
+                $get_data_jabatan=Tref_jabatan_peserta::where('active', true)
+                                ->where("pn", true)
+                            ->get();
+            }
             $get_data=Trans_mapping_jabatan_periode::join('tref_mapping_jabatan as tmj', 'tmj.id', '=', 'trans_mapping_jabatan_periode.id_mapping_jabatan')
                                                         ->join('tref_jabatan_peserta as tjp', 'tjp.id', '=', 'tmj.id_jabatan_peserta')
                                                         ->join('tref_jabatan_peserta as tjp2', 'tjp2.id', '=', 'tmj.id_jabatan_penilai')
@@ -696,7 +703,7 @@ use PDO;
             ];
         }
 
-        public function regenerateMappingJabatanPeriode($id_periode){
+        public function regenerateMappingJabatanPeriode($id_periode, $tingkat_satker){
             $data=[];
             $msg="";
             $status=false;
@@ -707,7 +714,10 @@ use PDO;
                     try{
                         DB::beginTransaction();
                             Trans_mapping_jabatan_periode::where('id_periode', $id_periode)->delete();
-                            $get_data_mapping=Tref_mapping_jabatan::where('active', true)->get();
+                            $get_data_mapping=Tref_mapping_jabatan::where('active', true)
+                                                    ->where("mapping_tingkat_satker", $tingkat_satker)
+                                                    ->get();
+                            
                             $jlh_mapping=$get_data_mapping->count();
                             if($jlh_mapping > 0){
                                 $data_mapping=[];

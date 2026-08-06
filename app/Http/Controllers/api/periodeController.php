@@ -430,7 +430,25 @@ class periodeController extends Controller
         return response()->json(['status'=>$status, 'msg'=>$msg]);
     }
 
-    public function getMappingJabatanPeriode($id_periode){
+    /**
+     * ListMapping Jabatan per Periode
+     *
+     * Endpoint untuk ambil data Mapping jabatan per Periode.
+     *
+     *@group Periode
+     *
+     *@authenticated
+     *
+     * @urlParam id_periode string required
+     * @urlParam token_tingkat_satker string required
+     * 
+     * 
+     * @response 200 {
+     *   "status":true, 
+     *   "msg":"msg"
+     * }
+     */
+    public function getMappingJabatanPeriode($id_periode, $token_tingkat_satker){
         $data=[];
         $status=false;
         $jumlah=0;
@@ -438,10 +456,11 @@ class periodeController extends Controller
         $signature="";
         try{
             $id_periode_dec=Hashids::decode($id_periode);
-            if(empty($id_periode_dec)){
+            $tingkat_satker = Hashids::decode($token_tingkat_satker);
+            if(empty($id_periode_dec) || empty($tingkat_satker)){
                 throw new \Exception('Invalid Token Periode');
             }
-            $get_data=$this->periodeService->getMappingJabatanPeriode($id_periode_dec[0]);
+            $get_data=$this->periodeService->getMappingJabatanPeriode($id_periode_dec[0], $tingkat_satker[0]);
             $data=$get_data['data'];
             $status=$get_data['status'];
             $msg=$get_data['msg'];
@@ -478,19 +497,41 @@ class periodeController extends Controller
         return response()->json(['status'=>$status, 'msg'=>$msg]);
     }
 
+    /**
+     * Regenerate Mapping Jabatan Penilaian Periode
+     *
+     * Endpoint untuk regenerate mapping jabatan penilaian periode.
+     *
+     *@group Periode
+     *
+     *@authenticated
+     *@header X-Signature signature dari dari detil zonasi satker.Example: 3549483789c6ea4914fb842295a0ebead654fc3fa74196e5afd882e5bef27384
+     *
+     * @bodyParam token_periode string required
+     * @bodyParam payload string required. Example: token_periodes
+     * @bodyParam token_tingkat_satker string required
+     * 
+     * 
+     * @response 200 {
+     *   "status":true, 
+     *   "msg":"msg"
+     * }
+     */
     public function regenerateMappingJabatanPeriode(Request $request){
       $status=false;
       $msg="";
       try{
         $request->validate([
             'token_periode'=>['required', 'string'],
-            'payload'=>['required', 'string']
+            'payload'=>['required', 'string'],
+            'token_tingkat_satker'=>['required', 'string']
         ]);
         $id_periode=Hashids::decode($request->token_periode);
+        $tingkat_satker = Hashids::decode($request->token_tingkat_satker);
         if(empty($id_periode)){
             throw new \Exception('Invalid token Periode');
         }
-        $regenerate=$this->periodeService->regenerateMappingJabatanPeriode($id_periode[0]);
+        $regenerate=$this->periodeService->regenerateMappingJabatanPeriode($id_periode[0], $tingkat_satker[0]);
         $status=$regenerate['status'];
         $msg=$regenerate['msg'];
       }catch(ValidationException $e){
