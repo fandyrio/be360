@@ -807,7 +807,7 @@ class configController extends Controller
                     $bobot+=$request->bobot[$a];
                 }
                 if((int)$bobot === 100 || ((int)$id_jabatan_peserta === 1 && (int)$bobot === 40)){
-                    $update_data=$this->configService->updateDataBobot($id_jabatan_peserta, $id_jabatan_penilai_arr, $id_bobot_penilai_arr, $bobot_arr, $new_mapping, $is_new_self_assessment, $tingkat_satker);
+                    $update_data=$this->configService->updateDataBobot($id_jabatan_peserta, $id_jabatan_penilai_arr, $id_bobot_penilai_arr, $bobot_arr, $new_mapping, $is_new_self_assessment, $tingkat_satker[0]);
                     $update=$update_data['status'];
                     $msg=$update_data['msg'];
                     // $data_update=$update_data['data_update'];
