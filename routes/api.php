@@ -97,7 +97,7 @@ Route::middleware(['jwt.auth', 'isAdminBadilum'])->group(function(){
     Route::get('list-active-periode', 'api\periodeController@listActivePeriode');
 
     //Periode - Detil
-    Route::get('bobot-penilaian-periode/{id}', 'api\periodeController@getBobotPenilaianPeriode');
+    Route::get('bobot-penilaian-periode/{id_periode}/{token_tingkat_satker}', 'api\periodeController@getBobotPenilaianPeriode');
     Route::post('remove-bobot-periode', 'api\periodeController@removeBobotPenilaianPeriode')->middleware('checkSign');
     Route::post('regenerate-bobot-periode', 'api\periodeController@regenerateBobotPenilaianPeriode')->middleware('checkSign');
     Route::get('pertanyaan-periode/{id_periode}/{id_category}', 'api\periodeController@getPertanyaanPeriode');

@@ -313,7 +313,7 @@ use PDO;
             ];
         }
 
-        public function getBobotPenilaianPeriode($periode_id){  
+        public function getBobotPenilaianPeriode($periode_id, $tingkat_satker){  
             $status=false;
             $data=[];
             $msg="";
@@ -324,6 +324,7 @@ use PDO;
                                             ->join('tref_jabatan_peserta as tjp2', 'tjp2.id', '=', 'bp.id_jabatan_penilai')
                                             ->select('trans_bobot_penilaian_periode.id as id_trans_bobot', 'tjp.jabatan as jabatan_peserta', 'tjp2.jabatan as jabatan_penilai', 'trans_bobot_penilaian_periode.bobot', 'bp.is_self_assessment')
                                             ->where('id_periode', $periode_id)
+                                            ->where("bp.mapping_tingkat_satker", $tingkat_satker)
                                             ->get();
             $jumlah=$get_bobot->count();
             if($jumlah > 0){

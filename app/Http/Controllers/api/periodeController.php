@@ -168,17 +168,38 @@ class periodeController extends Controller
         return response()->json($get_data);
     }
 
-    public function getBobotPenilaianPeriode($id_periode){
+    
+    /**
+     * List Bobot Penilaian per Periode
+     *
+     * Endpoint untuk ambil data bobot penilaian per Periode.
+     *
+     *@group Periode
+     *
+     *@authenticated
+     *
+     * @urlParam id_periode string required
+     * @urlParam token_tingkat_satker string required
+     * 
+     * 
+     * @response 200 {
+     *   "status":true, 
+     *   "msg":"msg"
+     * }
+     */
+
+    public function getBobotPenilaianPeriode($id_periode, $token_tingkat_satker){
         $data=[];
         $signature="";
         $status=false;
         try{
             $id_periode_dec=Hashids::decode($id_periode);
-            if(empty($id_periode_dec)){
-                throw new \Exception('Invalid token Periode');
+            $tingkat_satker = Hashids::decode($token_tingkat_satker);
+            if(empty($id_periode_dec) || empty($tingkat_satker)){
+                throw new \Exception('Invalid token data');
             }
             $id_periode_=$id_periode_dec[0];
-            $get_bobot=$this->periodeService->getBobotPenilaianPeriode($id_periode_);
+            $get_bobot=$this->periodeService->getBobotPenilaianPeriode($id_periode_, $tingkat_satker[0]);
             $data=$get_bobot['data'];
             $status=$get_bobot['status'];
             $msg=$get_bobot['msg'];
