@@ -784,21 +784,30 @@ use Illuminate\Support\Facades\Crypt;
             return $data;
         }
 
-        public function getMappingJabatanByIdJabatanPeserta($id_jabatan_peserta){
+        public function getMappingJabatanByIdJabatanPeserta($id_jabatan_peserta, $tingkat_satker){
             $data=[];
+            $tingkat_satker_str = "";
             $get_jabatan=Tref_jabatan_peserta::where('id', $id_jabatan_peserta)->first();
             if(!is_null($get_jabatan)){
+                if((int)$tingkat_satker === 1){
+                    $tingkat_satker_str = "Pengadilan Tinggi";
+                }elseif((int)$tingkat_satker === 2){
+                    $tingkat_satker_str = "Pengadilan Negeri";
+                }
                 $data['id_jabatan_peserta']=Hashids::encode($get_jabatan['id']);
                 $data['jabatan_peserta']=$get_jabatan['jabatan'];
+                $data['tingkat_satker'] = $tingkat_satker_str;
                 $data['penilai']=[];
                 $get_data=Tref_mapping_jabatan::join('tref_jabatan_peserta as tjp', 'tjp.id', '=', 'tref_mapping_jabatan.id_jabatan_peserta')
                             ->join('tref_jabatan_peserta as tjp2', 'tjp2.id', '=', 'tref_mapping_jabatan.id_jabatan_penilai')
                             ->select('tref_mapping_jabatan.*', 'tjp.jabatan as jabatan_peserta', 'tjp2.jabatan as jabatan_penilai')
+                            ->where("tref_mapping_jabatan.mapping_tingkat_satker", $tingkat_satker)
                             ->where('tref_mapping_jabatan.id_jabatan_peserta', $id_jabatan_peserta)->get();
                 $jumlah=$get_data->count();
                 $x=0;
                 if($jumlah > 0){
                     foreach($get_data as $list_data){
+                        
                         $data['penilai'][$x]['id_mapping']=Hashids::encode($list_data['id']);
                         $data['penilai'][$x]['id_jabatan_penilai']=Hashids::encode($list_data['id_jabatan_penilai']);
                         $data['penilai'][$x]['jabatan_penilai']=$list_data['jabatan_penilai'];

@@ -474,6 +474,23 @@ class configController extends Controller
         return response()->json(['status'=>$status, 'msg'=>$msg]);
     }
 
+    /**
+     * Save Mapping Jabatan
+     *
+     * Endpoint menyimpan mapping jabatan berdasarkan tingkatan satker.
+     *
+     *@group Master Mapping Jabatan
+     *@bodyParam id_jabatan_peserta string required.
+     *@bodyParam id_jabatan_penilai string[] required Array.
+     *@bodyParam threshold string[] required Array.
+     *@bodyParam token_tingkat_satker required string.
+     *@authenticated
+     * @response 200 {
+     *   "total": "integer",
+     *   "data": [array data],
+     *
+     * }
+     */
     public function updateMappingJabatan(Request $request){
         $status=false;
         try{
@@ -485,6 +502,7 @@ class configController extends Controller
                 'id_jabatan_penilai.*'=>['string'],
                 'threshold'=>['required', 'array'],
                 'threshold.*'=>['integer'],
+                'token_tingkat_satker'=>['required', 'string']
             ]);
             try{
                 $jlh_mapping_jabatan=count($request->id_mapping_jabatan);
@@ -536,17 +554,33 @@ class configController extends Controller
         return response()->json(['status'=>$status, 'msg'=>$msg]);
     }
 
-    public function getMappingJabatan($id_jabatan_peserta){
+    /**
+     * Detil Mapping Jabatan
+     *
+     * Endpoint mengambil detil mapping jabatan berdasarkan tingkatan satker.
+     *
+     *@group Master Mapping Jabatan
+     *@urlParam id_jabatan_peserta string required.
+     *@urlParam tingkat_satker string required.
+     *@authenticated
+     * @response 200 {
+     *   "total": "integer",
+     *   "data": [array data],
+     *
+     * }
+     */
+    public function getMappingJabatan($id_jabatan_peserta, $tingkat_satker){
         $data=[];
         $jumlah=0;
         $msg="";
         try{
             $id_jabatan_peserta_dec=Hashids::decode($id_jabatan_peserta);
-            if(empty($id_jabatan_peserta)){
-                throw new \Exception('Invalid token Id Jabatan Peserta');
+            $tingkat_satker_dec = Hashids::decode($tingkat_satker);
+            if(empty($id_jabatan_peserta) || empty($tingkat_satker_dec)){
+                throw new \Exception('Invalid token Data');
             }
             $id_jabatan_peserta_enc=$id_jabatan_peserta_dec[0];
-            $get_data_mapping=$this->configService->getMappingJabatanByIdJabatanPeserta($id_jabatan_peserta_enc);
+            $get_data_mapping=$this->configService->getMappingJabatanByIdJabatanPeserta($id_jabatan_peserta_enc, $tingkat_satker_dec[0]);
             $data=$get_data_mapping['data'];
             $jumlah=$get_data_mapping['jumlah'];
         }catch(\Exception $e){
