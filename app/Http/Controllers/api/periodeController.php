@@ -192,6 +192,7 @@ class periodeController extends Controller
         $data=[];
         $signature="";
         $status=false;
+        $token_periode = null;
         try{
             $id_periode_dec=Hashids::decode($id_periode);
             $tingkat_satker = Hashids::decode($token_tingkat_satker);
@@ -243,19 +244,40 @@ class periodeController extends Controller
         return response()->json(['status'=>$status, 'msg'=>$msg]);
     }
 
+    /**
+     * Regenerate Bobot Penilaian Periode
+     *
+     * Endpoint untuk regenerate penilaian periode.
+     *
+     *@group Periode
+     *
+     *@authenticated
+     *
+     * @bodyParam token_periode string required
+     * @bodyParam payload string required. Example: token_periode
+     * @bodyParam token_tingkat_satker string required
+     * 
+     * 
+     * @response 200 {
+     *   "status":true, 
+     *   "msg":"msg"
+     * }
+     */
     public function regenerateBobotPenilaianPeriode(Request $request){
         $status=false;
         try{
             $request->validate([
                 'token_periode'=>['required', 'string'],
-                'payload'=>['required']
+                'payload'=>['required'],
+                'token_tingkat_satker'=>['required', 'string']
             ]);
             try{
                 $id_periode=Hashids::decode($request->token_periode);
-                if(empty($id_periode)){
+                $tingkat_satker = Hashids::decode($request->token_tingkat_satker);
+                if(empty($id_periode) || empty($tingkat_satker)){
                     throw new \Exception('Invalid token Periode');
                 }
-                $regenerate=$this->periodeService->regenerateBobotPenilaian($id_periode[0]);
+                $regenerate=$this->periodeService->regenerateBobotPenilaian($id_periode[0], $tingkat_satker[0]);
                 $status=$regenerate['status'];
                 $msg=$regenerate['msg'];
             }catch(\Exception $e){

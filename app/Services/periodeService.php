@@ -390,7 +390,7 @@ use PDO;
             ];
         }
 
-        public function regenerateBobotPenilaian($id_periode){
+        public function regenerateBobotPenilaian($id_periode, $tingkat_satker){
             $status=false;
             $get_periode=Tahun_penilaian::where('IdTahunPenilaian', $id_periode)->first();
             if(!is_null($get_periode)){
@@ -399,7 +399,9 @@ use PDO;
                     try{
                         DB::beginTransaction();
                             Trans_bobot_penilaian_periode::where('id_periode', $id_periode)->delete();
-                            $get_ref_bobot=Tref_bobot_penilaian::where('active', true)->get();
+                            $get_ref_bobot=Tref_bobot_penilaian::where('active', true)
+                                            ->where("mapping_tingkat_satker", $tingkat_satker)
+                                            ->get();
                             $data_bobot=[];
                             $total=$get_ref_bobot->count();
                             if($total > 0){
