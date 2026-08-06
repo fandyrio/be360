@@ -245,8 +245,8 @@ use Illuminate\Support\Facades\Crypt;
                 $data['category_pertanyaan']=$get_jabatan['category'];
                 $data['category_pertanyaan_token']=Hashids::encode($get_jabatan['category_id']);
                 $data['active']=$get_jabatan['active'];
-                $data['is_pn'] = $get_jabatan['is_pn'];
-                $data['is_pt'] = $get_jabatan['is_pt'];
+                $data['is_pn'] = $get_jabatan['pn'];
+                $data['is_pt'] = $get_jabatan['pt'];
                 $data['jabatan_digabung']=[];
                 $get_gabungan=Tref_jabatan_peserta::where('id_jabatan_gabungan', $get_jabatan['id'])->get();
                 if($get_gabungan->count() > 0){
