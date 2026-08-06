@@ -330,15 +330,15 @@ class configController extends Controller
                     $msg="Jabatan yang digabungkan harus lebih dari 1";
                     throw new \Exception($msg);
                 }
-                $is_pn = false;
-                $is_pt = false;
+                $is_pn = 0;
+                $is_pt = 0;
                 if($request->is_pn === true){
-                    $is_pn = true;
+                    $is_pn = 1;
                 }
                 if($request->is_pt === true){
-                    $is_pt = true;
+                    $is_pt = 1;
                 }
-                $update_jabatan=$this->configService->updateKelompokJabatan($jabatan_gabungan, $token_jabatan[0], $request->jabatan, $request->active, $token_category[0], true, true);
+                $update_jabatan=$this->configService->updateKelompokJabatan($jabatan_gabungan, $token_jabatan[0], $request->jabatan, $request->active, $token_category[0], $is_pn, $is_pt);
                 $status=$update_jabatan['status'];
                 $msg=$update_jabatan['msg'];
             }catch(\Exception $e){
