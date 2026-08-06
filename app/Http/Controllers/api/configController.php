@@ -694,17 +694,35 @@ class configController extends Controller
         return response()->json(['status'=>$status, 'msg'=>$msg]);
     }
 
-    public function getDetilBobot($id_jabatan_peserta){
+    /**
+     * Detil Bobot Penilaian
+     *
+     * Endpoint untuk ambil detil bobot penilaian per jabatan.
+     *
+     * @group Master Bobot Penilaian
+     *
+     *@authenticated
+     *@urlParam id_jabatan_peserta required string.
+     *@urlParam token_tingkat_satker required string.
+     * @response 200 {
+     *   "total": "integer",
+     *   "data": [array data],
+     *
+     * }
+     */
+    public function getDetilBobot($id_jabatan_peserta, $token_tingkat_satker){
         $data=[];
         $msg="";
         $status=false;
         try{
             $id_jabatan_peserta_enc=Hashids::decode($id_jabatan_peserta);
-            if(empty($id_jabatan_peserta_enc)){
-                throw new \Exception('Invalid token Bobot');
+            $tingkat_satker = Hashids::decode($token_tingkat_satker);
+
+            if(empty($id_jabatan_peserta_enc) || empty($tingkat_satker)){
+                throw new \Exception('Invalid token ');
             }
             $id_jabatan_peserta_dec=$id_jabatan_peserta_enc[0];
-            $data=$this->configService->getDetilBobot($id_jabatan_peserta_dec);
+            $data=$this->configService->getDetilBobot($id_jabatan_peserta_dec, $tingkat_satker);
             $status=$data['status'];
             $msg=$data['msg'];
             $data=$data['data'];
@@ -715,6 +733,24 @@ class configController extends Controller
         return response()->json(['status'=>$status, 'msg'=>$msg, 'data'=>$data]);
     }
 
+     /**
+     * Update bobot penilaian
+     *
+     * Endpoint mengubah data bobot penilaian.
+     *
+     *@group Master Bobot Penilaian
+     *@bodyParam token_id string[] required Array.
+     *@bodyParam id_jabatan_penilai string[] required Array.
+     *@bodyParam bobot string[] integer Array.
+     *@bodyParam token_peserta required string.
+     *@bodyParam token_tingkat_satker required string.
+     *@authenticated
+     * @response 200 {
+     *   "total": "integer",
+     *   "data": [array data],
+     *
+     * }
+     */
     public function updateBobot(Request $request){
         $update=false;
         try{
@@ -725,11 +761,13 @@ class configController extends Controller
                 'id_jabatan_penilai.*'=>['string'],
                 'token_peserta'=>['required', 'string'],
                 'bobot'=>['required', 'array'],
-                'bobot.*'=>['integer', 'min:1', 'max:100']
+                'bobot.*'=>['integer', 'min:1', 'max:100'],
+                'token_tingkat_satker'=>['required', 'string']
             ]);
             try{
                 $token_peserta_dec=Hashids::decode($request->token_peserta);
-                if(empty($token_peserta_dec)){
+                $tingkat_satker = Hashids::decode($request->token_tingkat_satker);
+                if(empty($token_peserta_dec) || empty($tingkat_satker)){
                     throw new \Exception('Invalid token Peserta');
                 }
                 $id_jabatan_peserta=$token_peserta_dec[0];
@@ -769,7 +807,7 @@ class configController extends Controller
                     $bobot+=$request->bobot[$a];
                 }
                 if((int)$bobot === 100 || ((int)$id_jabatan_peserta === 1 && (int)$bobot === 40)){
-                    $update_data=$this->configService->updateDataBobot($id_jabatan_peserta, $id_jabatan_penilai_arr, $id_bobot_penilai_arr, $bobot_arr, $new_mapping, $is_new_self_assessment);
+                    $update_data=$this->configService->updateDataBobot($id_jabatan_peserta, $id_jabatan_penilai_arr, $id_bobot_penilai_arr, $bobot_arr, $new_mapping, $is_new_self_assessment, $tingkat_satker);
                     $update=$update_data['status'];
                     $msg=$update_data['msg'];
                     // $data_update=$update_data['data_update'];

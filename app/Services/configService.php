@@ -947,11 +947,19 @@ use Illuminate\Support\Facades\Crypt;
             ];
         }
 
-        public function getDetilBobot($id_jabatan_peserta){
+        public function getDetilBobot($id_jabatan_peserta, $tingkat_satker){
             $msg="";
             $data=array();
             $status=false;
-            $get_jabatan=Tref_jabatan_peserta::where('id', $id_jabatan_peserta)->first();
+            if($tingkat_satker === 1){
+                $get_jabatan=Tref_jabatan_peserta::where('id', $id_jabatan_peserta)
+                            ->where("pt", true)
+                            ->first();
+            }elseif($tingkat_satker === 2){
+                $get_jabatan=Tref_jabatan_peserta::where('id', $id_jabatan_peserta)
+                            ->where("pn", true)
+                            ->first();
+            }
             if(!is_null($get_jabatan)){
                 $status=true;
                 $data['token_peserta']=Hashids::encode($get_jabatan['id']);
@@ -960,6 +968,7 @@ use Illuminate\Support\Facades\Crypt;
                 $get_data=Tref_bobot_penilaian::join('tref_jabatan_peserta as tjp', 'tjp.id', '=', 'tref_bobot_penilaian.id_jabatan_penilai')
                             ->select('tref_bobot_penilaian.*', 'tjp.jabatan as jabatan_penilai')
                             ->where('id_jabatan_peserta', $id_jabatan_peserta)
+                            ->where("mapping_tingkat_satker", $tingkat_satker)
                             ->where('tref_bobot_penilaian.active', true)
                             ->get();
                 $a=0;
@@ -998,7 +1007,7 @@ use Illuminate\Support\Facades\Crypt;
             ];
         }
 
-        public function updateDataBobot($id_jabatan_peserta, $id_jabatan_penilai, $id_bobot_arr, $bobot_arr, $new_mapping, $is_new_self_assessment){
+        public function updateDataBobot($id_jabatan_peserta, $id_jabatan_penilai, $id_bobot_arr, $bobot_arr, $new_mapping, $is_new_self_assessment, $tingkat_satker){
             $status=false;
             $append_data=false;
             if(!in_array($id_jabatan_peserta, $id_jabatan_penilai)){
@@ -1012,10 +1021,19 @@ use Illuminate\Support\Facades\Crypt;
                     $jabatan_nilai_sendiri+=1;
                 }
             }
-            $jumlah_jabatan_peserta=Tref_jabatan_peserta::whereIn('id', $id_jabatan_penilai)
-                                    ->where("active", true)    
+            if((int)$tingkat_satker === 1){
+                $jumlah_jabatan_peserta=Tref_jabatan_peserta::whereIn('id', $id_jabatan_penilai)
+                                    ->where("active", true)
+                                    ->where("pt", true)
                                     ->count();
 
+            }elseif((int)$tingkat_satker === 2){
+                $jumlah_jabatan_peserta=Tref_jabatan_peserta::whereIn('id', $id_jabatan_penilai)
+                                    ->where("active", true)    
+                                    ->where("pn", true)
+                                    ->count();
+
+            }
             //kalau jabatan_nilai_akhir itu 1, berarti jabatan itu tidak menilai sesama pemangku jabatan sendiri. Jadi jumlah_jabatan_peserta tidak perlu di tambah 1 lagi. 
             if($jabatan_nilai_sendiri === 2){
                 $jumlah_jabatan_peserta+=1;
@@ -1027,6 +1045,7 @@ use Illuminate\Support\Facades\Crypt;
                     $id_jabatan_penilai=array_diff($id_jabatan_penilai, $id_peserta_arr);
                 }
                 $get_existed=Tref_bobot_penilaian::where('id_jabatan_peserta', $id_jabatan_peserta)
+                                ->where('mapping_tingkat_satker', $tingkat_satker)
                                 ->where('active', true)
                                 ->get();
                 $existed_bobot=[];
@@ -1041,8 +1060,11 @@ use Illuminate\Support\Facades\Crypt;
                 for($a=0;$a<count($id_bobot_arr);$a++){
                     if(!isset($lookup[$id_bobot_arr[$a]])){
                         $data_insert[]=[
+                            'mapping_tingkat_satker'=>$tingkat_satker,
                             'id_jabatan_peserta'=>$id_jabatan_peserta,
                             'id_jabatan_penilai'=>$id_jabatan_penilai[$a],
+                            'tingkat_satker_peserta'=>0,
+                            'tingkat_satker_penilai'=>0,
                             'bobot'=>$bobot_arr[$a],
                             'is_self_assessment'=>$is_new_self_assessment[$a],
                             'active'=>true
