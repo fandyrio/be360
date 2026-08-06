@@ -366,8 +366,8 @@ class configController extends Controller
      * }
      */
     public function masterMappingJabatan(){
-        $tingkat_pertama = Hashids::encode("1");
-        $tingkat_banding = Hashids::encode("2");
+        $tingkat_pertama = Hashids::encode("2");
+        $tingkat_banding = Hashids::encode("1");
         return response()->json(['token_tk_pertama'=>$tingkat_pertama, 'token_tk_banding'=>$tingkat_banding]);
     }
 

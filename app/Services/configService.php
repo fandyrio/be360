@@ -481,15 +481,18 @@ use Illuminate\Support\Facades\Crypt;
             if((int)$tingkat_satker === 1){
                 $is_pt = true;
                 $mapping_satker = 1;
+                $get_data_peserta=Tref_jabatan_peserta::where('active', true)
+                                ->whereRaw('id_jabatan_gabungan is null')    
+                                ->where("pt", $is_pt)     
+                                ->get();
             }elseif((int)$tingkat_satker === 2){
                 $is_pn = true;
                 $mapping_satker = 2;
-            }
-            $get_data_peserta=Tref_jabatan_peserta::where('active', true)
+                $get_data_peserta=Tref_jabatan_peserta::where('active', true)
                                 ->whereRaw('id_jabatan_gabungan is null')    
-                                ->where("pt", $is_pt)
                                 ->where("pn", $is_pn)     
                                 ->get();
+            }
             $get_data_mapping=Tref_mapping_jabatan::join('tref_jabatan_peserta as a', 'a.id', '=', 'tref_mapping_jabatan.id_jabatan_peserta')
                                                 ->join('tref_jabatan_peserta as b', 'b.id', '=', 'tref_mapping_jabatan.id_jabatan_penilai')
                                                 ->where('tref_mapping_jabatan.active', true)
