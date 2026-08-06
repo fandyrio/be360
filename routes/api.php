@@ -103,7 +103,7 @@ Route::middleware(['jwt.auth', 'isAdminBadilum'])->group(function(){
     Route::get('pertanyaan-periode/{id_periode}/{id_category}', 'api\periodeController@getPertanyaanPeriode');
     Route::post('remove-pertanyaan-periode', 'api\periodeController@removePertanyaanPeriode')->middleware('checkSign');
     Route::post('regenerate-pertanyaan-periode', 'api\periodeController@regeneratePertanyaanPeriode')->middleware('checkSign');
-    Route::get('mapping-jabatan-periode/{id}', 'api\periodeController@getMappingJabatanPeriode');
+    Route::get('mapping-jabatan-periode/{id_periode}/{token_tingkat_satker}', 'api\periodeController@getMappingJabatanPeriode');
     Route::post('remove-mapping-jabatan-periode', 'api\periodeController@removeMappingJabatanPeriode')->middleware('checkSign');
     Route::post('regenerate-mapping-jabatan-periode', 'api\periodeController@regenerateMappingJabatanPeriode')->middleware('checkSign');
     
