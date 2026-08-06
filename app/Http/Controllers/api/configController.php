@@ -415,7 +415,7 @@ class configController extends Controller
      *
      * Endpoint menyimpan mapping jabatan berdasarkan tingkatan satker.
      *
-     * @group Master Mapping Jabatan
+     *@group Master Mapping Jabatan
      *@bodyParam id_jabatan_peserta string required.
      *@bodyParam id_jabatan_penilai string[] required Array.
      *@bodyParam threshold string[] required Array.
@@ -436,7 +436,7 @@ class configController extends Controller
                 'id_jabatan_penilai.*'=>['string'],
                 'threshold'=>['required', 'array'],
                 'threshold.*'=>['integer'],
-                'token_tingkat_satker'=>['required', 'strings']
+                'token_tingkat_satker'=>['required', 'string']
             ]);
             try{
                 $id_jabatan_peserta=Hashids::decode($request->id_jabatan_peserta);
