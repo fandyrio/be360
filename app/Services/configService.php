@@ -245,6 +245,8 @@ use Illuminate\Support\Facades\Crypt;
                 $data['category_pertanyaan']=$get_jabatan['category'];
                 $data['category_pertanyaan_token']=Hashids::encode($get_jabatan['category_id']);
                 $data['active']=$get_jabatan['active'];
+                $data['is_pn'] = $get_jabatan['is_pn'];
+                $data['is_pt'] = $get_jabatan['is_pt'];
                 $data['jabatan_digabung']=[];
                 $get_gabungan=Tref_jabatan_peserta::where('id_jabatan_gabungan', $get_jabatan['id'])->get();
                 if($get_gabungan->count() > 0){
@@ -346,7 +348,7 @@ use Illuminate\Support\Facades\Crypt;
 
 
         
-        public function updateKelompokJabatan($id_jabatan_gabungan_arr, $id_jabatan, $jabatan, $status_aktif, $category_id){
+        public function updateKelompokJabatan($id_jabatan_gabungan_arr, $id_jabatan, $jabatan, $status_aktif, $category_id, $is_pn, $is_pt){
             $status=false;
             $jumlah_gabungan=count($id_jabatan_gabungan_arr);
             $get_jabatan=Tref_jabatan_peserta::where('id', $id_jabatan)->first();
@@ -380,6 +382,8 @@ use Illuminate\Support\Facades\Crypt;
                                         Tref_jabatan_peserta::whereIn('id', $id_jabatan_gabungan_arr)->update(['id_jabatan_gabungan'=>$id_jabatan]);
                                         $get_jabatan->jabatan=$jabatan;
                                         $get_jabatan->category_id = $category_id;
+                                        $get_jabatan->is_pn =$is_pn;
+                                        $get_jabatan->is_pt = $is_pt;
                                         $get_jabatan->active=$status_aktif === "Y" ? true : false;
                                         $get_jabatan->update(); 
                                     DB::commit();

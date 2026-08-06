@@ -286,6 +286,8 @@ class configController extends Controller
                 'active'=> ['required', 'in:Y,N'],
                 'token_category'=>['required', 'string'],
                 'payload'=>['required', 'string'],
+                'is_pn'=>['required', 'boolean'],
+                'is_pt'=>['required', 'boolean']
             ]);
             $jabatan_gabungan=[];
             $jumlah_jabatan_gabungan = 0;
@@ -327,7 +329,7 @@ class configController extends Controller
                     $msg="Jabatan yang digabungkan harus lebih dari 1";
                     throw new \Exception($msg);
                 }
-                $update_jabatan=$this->configService->updateKelompokJabatan($jabatan_gabungan, $token_jabatan[0], $request->jabatan, $request->active, $token_category[0]);
+                $update_jabatan=$this->configService->updateKelompokJabatan($jabatan_gabungan, $token_jabatan[0], $request->jabatan, $request->active, $token_category[0], $request->is_pn, $request->is_pt);
                 $status=$update_jabatan['status'];
                 $msg=$update_jabatan['msg'];
             }catch(\Exception $e){
