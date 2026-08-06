@@ -951,11 +951,11 @@ use Illuminate\Support\Facades\Crypt;
             $msg="";
             $data=array();
             $status=false;
-            if($tingkat_satker === 1){
+            if((int)$tingkat_satker === 1){
                 $get_jabatan=Tref_jabatan_peserta::where('id', $id_jabatan_peserta)
                             ->where("pt", true)
                             ->first();
-            }elseif($tingkat_satker === 2){
+            }elseif((int)$tingkat_satker === 2){
                 $get_jabatan=Tref_jabatan_peserta::where('id', $id_jabatan_peserta)
                             ->where("pn", true)
                             ->first();
