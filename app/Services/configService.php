@@ -831,26 +831,37 @@ use Illuminate\Support\Facades\Crypt;
             ];
         }
 
-        public function getAllBobot($page){
+        public function getAllBobot($tingkat_satker){
             $data=array();
             $jabatan_penilai=array();
             $limit = 15;
-            $total=Tref_jabatan_peserta::where('active', true)
+            if($tingkat_satker === 1){
+                $total=Tref_jabatan_peserta::where('active', true)
+                        ->where("pt", $tingkat_satker)
                         ->count();
-            $jumlahHalaman=ceil($total / $limit);
-            if($page < 1 || $page > $jumlahHalaman){
-                $page=1;
-            }
-            $skip=$page * $limit - $limit;
-            $get_jabatan=Tref_jabatan_peserta::where('active', true)
+                $get_jabatan=Tref_jabatan_peserta::where('active', true)
                             ->whereRaw('id_jabatan_gabungan is null')
+                            ->where('pt', $tingkat_satker)
                             ->get();
+            }else{
+                $total=Tref_jabatan_peserta::where('active', true)
+                        ->where("pn", $tingkat_satker)
+                        ->count();
+                
+                $get_jabatan=Tref_jabatan_peserta::where('active', true)
+                            ->whereRaw('id_jabatan_gabungan is null')
+                            ->where("pn", $tingkat_satker)
+                            ->get();
+            }
+
+            
             $x=$y=0;
             if($total > 0){
                 $get_data=Tref_bobot_penilaian::join('tref_jabatan_peserta as tjp1', 'tjp1.id', '=', 'tref_bobot_penilaian.id_jabatan_peserta')
                                 ->join('tref_jabatan_peserta as tjp2', 'tjp2.id', '=', 'tref_bobot_penilaian.id_jabatan_penilai')
                                 ->select('tref_bobot_penilaian.*', 'tjp1.jabatan as jabatan_peserta', 'tjp2.jabatan as jabatan_penilai')
                                 ->where('tref_bobot_penilaian.active', true)
+                                ->where("tref_bobot_penialaian.mapping_tingkat_satker", $tingkat_satker)
                                 ->get();
                
                 foreach($get_data as $list_data){
@@ -889,8 +900,6 @@ use Illuminate\Support\Facades\Crypt;
             }
             return [
                 'total'=>$total,
-                'jumlahHalaman'=>$jumlahHalaman,
-                'page'=>$page,
                 'data'=>$data,
             ];
         }

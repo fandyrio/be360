@@ -610,14 +610,30 @@ class configController extends Controller
         return response()->json(['token_tk_pertama'=>$tingkat_pertama, 'token_tk_banding'=>$tingkat_banding]);
     }
 
-    public function getAllBobot($page){
-        if($page < 1){
-            $page = 1;
+    /**
+     * List All Bobot
+     *
+     * Endpoint untuk ambil daftar bobot penilaian per jabatan.
+     *
+     * @group Master Bobot Penilaian
+     *
+     *@authenticated
+     *@urlParam token_tingkat_satker required string.
+     * @response 200 {
+     *   "total": "integer",
+     *   "data": [array data],
+     *
+     * }
+     */
+    public function getAllBobot($token_tingkat_satker){
+        $tingkat_satker = Hashids::decode($token_tingkat_satker);
+        if(empty($tingkat_satker)){
+            return response()->json(['status'=>false, 'msg'=>'Invalid token']);
         }
-        $get_data=$this->configService->getAllBobot($page);
-        $data=$get_data['data'];
-        $jumlah_halaman=$get_data['jumlahHalaman'];
-        $total=$get_data['total'];
+        $get_data=$this->configService->getAllBobot($tingkat_satker[0]);
+        // $data=$get_data['data'];
+        // $jumlah_halaman=$get_data['jumlahHalaman'];
+        // $total=$get_data['total'];
         return response()->json($get_data);
     }
 

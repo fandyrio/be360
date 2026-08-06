@@ -124,7 +124,8 @@ Route::middleware(['jwt.auth', 'isAdminBadilum'])->group(function(){
     Route::get('detil-mapping-jabatan/{id_jabatan_peserta}/{tingkat_satker}', 'api\configController@getMappingJabatan');
 
     //bobot penilaian
-    Route::get('list-bobot/{page}', 'api\configController@masterMappingTingkatSatkerBobot');
+    Route::get('master-bobot', 'api\configController@masterMappingTingkatSatkerBobot');
+    Route::get("list-bobot/{tingkat_satker}", 'api\configController@getAllBobot');
     // Route::post('save-bobot', 'api\configController@saveNewBobot');
     Route::get('detil-bobot/{id}', 'api\configController@getDetilBobot');
     Route::post('update-bobot', 'api\configController@updateBobot');
