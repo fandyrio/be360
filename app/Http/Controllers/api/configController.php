@@ -287,7 +287,7 @@ class configController extends Controller
                 'token_category'=>['required', 'string'],
                 'payload'=>['required', 'string'],
                 'is_pn'=>['required', 'boolean:strict'],
-                'is_pt'=>['required', 'boolean']
+                'is_pt'=>['required', 'boolean:strict']
             ]);
             $jabatan_gabungan=[];
             $jumlah_jabatan_gabungan = 0;
