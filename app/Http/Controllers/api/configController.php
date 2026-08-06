@@ -210,7 +210,15 @@ class configController extends Controller
                 "nama_jabatan"=>['required', 'string']
             ]);
             
-            try{ }catch(\Exception $e){
+            try{
+                $id_kelompok_jabatan = Hashids::decode($request->id_kelompok_jabatan);
+                if(!empty($id_kelompok_jabatan)){
+                    throw new \Exception("Invalid token");
+                }
+                $save = $this->configService->saveKelompokJabatan($request, $id_kelompok_jabatan[0]);
+                $status = $save['status'];
+                $msg = $save['msg'];
+            }catch(\Exception $e){
                 $msg=$e->getMessage();
             }
         }catch(ValidationException $e){
