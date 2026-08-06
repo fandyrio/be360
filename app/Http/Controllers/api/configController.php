@@ -338,7 +338,7 @@ class configController extends Controller
                 if($request->is_pt === true){
                     $is_pt = true;
                 }
-                $update_jabatan=$this->configService->updateKelompokJabatan($jabatan_gabungan, $token_jabatan[0], $request->jabatan, $request->active, $token_category[0], $is_pn, $is_pt);
+                $update_jabatan=$this->configService->updateKelompokJabatan($jabatan_gabungan, $token_jabatan[0], $request->jabatan, $request->active, $token_category[0], true, true);
                 $status=$update_jabatan['status'];
                 $msg=$update_jabatan['msg'];
             }catch(\Exception $e){
