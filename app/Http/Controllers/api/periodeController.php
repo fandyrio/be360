@@ -252,9 +252,10 @@ class periodeController extends Controller
      *@group Periode
      *
      *@authenticated
+     *@header X-Signature signature dari dari detil zonasi satker.Example: 3549483789c6ea4914fb842295a0ebead654fc3fa74196e5afd882e5bef27384
      *
      * @bodyParam token_periode string required
-     * @bodyParam payload string required. Example: token_periode
+     * @bodyParam payload string required. Example: token_periodes
      * @bodyParam token_tingkat_satker string required
      * 
      * 
