@@ -861,7 +861,7 @@ use Illuminate\Support\Facades\Crypt;
                                 ->join('tref_jabatan_peserta as tjp2', 'tjp2.id', '=', 'tref_bobot_penilaian.id_jabatan_penilai')
                                 ->select('tref_bobot_penilaian.*', 'tjp1.jabatan as jabatan_peserta', 'tjp2.jabatan as jabatan_penilai')
                                 ->where('tref_bobot_penilaian.active', true)
-                                ->where("tref_bobot_penialaian.mapping_tingkat_satker", $tingkat_satker)
+                                ->where("tref_bobot_penilaian.mapping_tingkat_satker", $tingkat_satker)
                                 ->get();
                
                 foreach($get_data as $list_data){
