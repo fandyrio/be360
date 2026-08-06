@@ -380,7 +380,7 @@ use Illuminate\Support\Facades\Crypt;
                                         //remove
                                         Tref_jabatan_peserta::whereIn('id', $remove_jabatan)->update(['id_jabatan_gabungan'=>null]);
                                         Tref_jabatan_peserta::whereIn('id', $id_jabatan_gabungan_arr)->update(['id_jabatan_gabungan'=>$id_jabatan]);
-                                        $get_jabatan->jabatan=$jabatan;
+                                        $get_jabatan->jabatan='testing';
                                         $get_jabatan->category_id = $category_id;
                                         $get_jabatan->pn=1;
                                         $get_jabatan->pt=1;
