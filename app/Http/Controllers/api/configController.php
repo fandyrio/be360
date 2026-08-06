@@ -269,8 +269,8 @@ class configController extends Controller
      * @bodyParam active string required active. Example: Y
      * @bodyParam token_category required token category. Example: q9XMkzaG
      * @bodyParam payload string required. Example: token_jabatan
-     * @bodyParam pn boolean required. Example: true
-     * @bodyParam pt boolean required. Example: true
+     * @bodyParam is_pn boolean required. Example: true
+     * @bodyParam is_pt boolean required. Example: true
      *
      * @response 200 {
      *   "total": "integer",
