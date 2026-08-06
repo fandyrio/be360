@@ -474,8 +474,6 @@ use Illuminate\Support\Facades\Crypt;
         //     ];
         // }
 
-        
-
         public function getListMappingJabatan($tingkat_satker){
             $is_pt = false;
             $is_pn = false;
@@ -515,7 +513,7 @@ use Illuminate\Support\Facades\Crypt;
 
             $jumlah_penilai=count($data_penilaian);
 
-            fid_jabatan_pesertaoreach($get_data_peserta as $list_data){
+            foreach($get_data_peserta as $list_data){
                 $mapping[$y]['jabatan_peserta']=$list_data['jabatan'];
                 $mapping[$y]['id_jabatan_peserta']=Hashids::encode($list_data['id']);
                 $mapping[$y]['penilai']=[];
