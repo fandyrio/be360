@@ -277,6 +277,8 @@ use Illuminate\Support\Facades\Crypt;
                 $jabatan_peserta=new Tref_jabatan_peserta;
                 $jabatan_peserta->id_kelompok_jabatan=$id_kelompok_jabatan;
                 $jabatan_peserta->jabatan=$request->nama_jabatan;
+                $jabatan_peserta->pt = $request->is_pt;
+                $jabatan_peserta->pn = $request->is_pn;
                 if($jabatan_peserta->save()){
                     $status=true;
                     $msg="Berhasil menyimpan data";

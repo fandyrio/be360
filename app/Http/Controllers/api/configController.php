@@ -207,7 +207,9 @@ class configController extends Controller
         try{
             $request->validate([
                 "id_kelompok_jabatan"=>['required', 'string'],
-                "nama_jabatan"=>['required', 'string']
+                "nama_jabatan"=>['required', 'string'],
+                "is_pn"=>['required', 'boolean'],
+                "is_pt"=>['required', 'boolean']
             ]);
             
             try{
